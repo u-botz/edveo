@@ -1,0 +1,106 @@
+/* ============================================
+   SITE NAVBAR — shared across all pages
+   ============================================ */
+
+.stickyWrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #ffffff;
+}
+
+.navbar {
+  background-color: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 48px;
+  border-bottom: 1px solid rgba(13, 45, 78, 0.08);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.navBrand {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.navLinks {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--body-text);
+}
+
+.navLinks a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.navLinks a:hover {
+  color: var(--secondary);
+}
+
+.navLinkActive {
+  color: var(--secondary) !important;
+  font-weight: 600;
+}
+
+.navActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btnLogin {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.btnLogin:hover {
+  background: var(--accent-light);
+}
+
+.btnTrial {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #fff;
+  background: var(--primary-cta-gradient);
+  border: none;
+  cursor: pointer;
+  padding: 11px 24px;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btnTrial:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13, 45, 78, 0.2);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 14px 20px;
+  }
+
+  .navLinks {
+    display: none;
+  }
+}

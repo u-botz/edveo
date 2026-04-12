@@ -1,0 +1,180 @@
+/* ============================================
+   CTA BANNER — dark card, green strip, navy bg
+   ============================================ */
+
+/* ---- Variants ---- */
+.dark {
+  background-color: #0b1221;
+  border-radius: 32px;
+  padding: 90px 48px;
+  text-align: center;
+  margin: 0 24px 80px;
+}
+
+.green {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-top: 1px solid #bbf7d0;
+  border-bottom: 1px solid #bbf7d0;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.navy {
+  background: var(--primary);
+  padding: 80px 24px;
+  text-align: center;
+}
+
+/* ---- Typography ---- */
+.headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-bottom: 14px;
+}
+
+.dark .headline {
+  color: #fff;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+}
+
+.green .headline {
+  color: var(--primary);
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+}
+
+.navy .headline {
+  color: #fff;
+  font-size: clamp(1.9rem, 3.5vw, 3rem);
+}
+
+.navy .headline span {
+  color: var(--accent);
+}
+
+.sub {
+  font-size: 1rem;
+  line-height: 1.65;
+  margin-bottom: 36px;
+}
+
+.dark .sub {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.green .sub {
+  color: #374151;
+}
+
+.navy .sub {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* ---- Accent sub (e.g. "There's a Better Way.") ---- */
+.accentSub {
+  color: var(--accent);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 36px;
+}
+
+/* ---- Button group ---- */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 15px 36px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dark .btnPrimary,
+.navy .btnPrimary {
+  background: #fff;
+  color: #0b1221;
+}
+
+.green .btnPrimary {
+  background: var(--primary-cta-gradient);
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 15px 32px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btnSecondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.35);
+}
+
+/* Trust line below buttons */
+.trustLine {
+  margin-top: 24px;
+  font-size: 0.82rem;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.dark .trustLine,
+.navy .trustLine {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.green .trustLine {
+  color: #6b7280;
+}
+
+.trustLine span::after {
+  content: "·";
+  margin-left: 4px;
+  opacity: 0.5;
+}
+
+.trustLine span:last-child::after {
+  content: none;
+}
+
+@media (max-width: 480px) {
+  .dark {
+    margin: 0 16px 60px;
+    padding: 64px 24px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}

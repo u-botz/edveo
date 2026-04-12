@@ -1,0 +1,90 @@
+/* ============================================
+   SITE FOOTER — shared across all pages
+   ============================================ */
+
+.footer {
+  background-color: var(--primary);
+  color: #fff;
+  padding: 80px 48px 40px;
+  border-top: 3px solid rgba(46, 170, 110, 0.45);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.footerLinkCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footerLinkCol h4 {
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.footerLinkCol a {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footerLinkCol a:hover {
+  color: #fff;
+}
+
+.footerBrandLink {
+  display: inline-block;
+  text-decoration: none;
+  line-height: 0;
+  margin-bottom: 4px;
+}
+
+.footerDesc {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 240px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.footerBottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 1024px) {
+  .footerGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 60px 24px 32px;
+  }
+
+  .footerGrid {
+    grid-template-columns: 1fr;
+  }
+}
