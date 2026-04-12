@@ -2,12 +2,11 @@
 
 import styles from "./pricing.module.css";
 
-export type Segment = "coaching" | "online" | "teachers";
+export type Segment = "online" | "teachers";
 export type Billing = "monthly" | "annual";
 
 export function createPlanPanelIds(prefix: string): Record<Segment, string> {
   return {
-    coaching: `${prefix}plans-panel-coaching`,
     online: `${prefix}plans-panel-online`,
     teachers: `${prefix}plans-panel-teachers`,
   };
@@ -58,16 +57,6 @@ export function SegmentTabBar({
   return (
     <div className={styles.segmentWrap}>
       <div className={styles.segmentPills} role="tablist" aria-label={ariaLabel}>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={segment === "coaching"}
-          aria-controls={panelIds.coaching}
-          className={`${styles.segmentBtn} ${segment === "coaching" ? styles.segmentBtnActive : ""}`}
-          onClick={() => onSegmentChange("coaching")}
-        >
-          Coaching Institutes
-        </button>
         <button
           type="button"
           role="tab"
@@ -140,104 +129,6 @@ export default function PricingCardsBlock({
           ariaLabel="Plans by audience"
           panelIds={planPanelIds}
         />
-
-        <div
-          className={`${styles.cardsGrid} ${segment !== "coaching" ? styles.tabPanelHidden : ""}`}
-          role="tabpanel"
-          id={planPanelIds.coaching}
-          aria-hidden={segment !== "coaching"}
-        >
-          <article className={styles.planCard}>
-            <h3 className={styles.planName}>Starter</h3>
-            <p className={styles.planWho}>For small institutes getting started</p>
-            <div className={styles.priceBlock}>
-              <PriceArea billing={billing} monthly="₹3,499" annual="₹2,916" />
-            </div>
-            <button type="button" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
-              Start Free Trial
-            </button>
-            <p className={styles.ctaSub}>14-day free trial · No credit card</p>
-            <div className={styles.divider} />
-            <div className={styles.featuresHeading}>What&apos;s included</div>
-            <ul className={styles.featureList}>
-              {[
-                "Up to 200 students",
-                "Fee collection & basic invoicing",
-                "Attendance management",
-                "Timetable & batch scheduling",
-                "Live classes (up to 3 concurrent)",
-                "WhatsApp CRM (basic)",
-              ].map((t) => (
-                <li key={t} className={styles.featureItem}>
-                  <CheckIcon />
-                  {t}
-                </li>
-              ))}
-            </ul>
-            <a href={featuresComparisonHref} className={styles.seeAllLink}>
-              See all features ↓
-            </a>
-          </article>
-
-          <article className={`${styles.planCard} ${styles.planCardPopular}`}>
-            <span className={styles.popularBadge}>Most Popular</span>
-            <h3 className={styles.planName}>Professional</h3>
-            <p className={styles.planWho}>For growing institutes scaling operations</p>
-            <div className={styles.priceBlock}>
-              <PriceArea billing={billing} monthly="₹6,999" annual="₹5,832" />
-            </div>
-            <button type="button" className={`${styles.ctaFull} ${styles.ctaGreen}`}>
-              Get Started
-            </button>
-            <p className={styles.ctaSub}>14-day free trial · No credit card</p>
-            <div className={styles.divider} />
-            <div className={styles.featuresHeading}>Everything in Starter, plus</div>
-            <ul className={styles.featureList}>
-              {[
-                "Up to 500 students",
-                "Full fee management & GST invoicing",
-                "Advanced CRM & lead pipeline",
-                "Meta Ads lead capture integration",
-                "Unlimited live classes",
-                "Branded mobile app (white-label)",
-              ].map((t) => (
-                <li key={t} className={styles.featureItem}>
-                  <CheckIcon />
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </article>
-
-          <article className={styles.planCard}>
-            <h3 className={styles.planName}>Business</h3>
-            <p className={styles.planWho}>For large institutes & multi-branch operations</p>
-            <div className={styles.priceBlock}>
-              <div className={styles.customPrice}>Custom Pricing</div>
-              <div className={styles.customSub}>Based on student volume & branches</div>
-            </div>
-            <button type="button" className={`${styles.ctaFull} ${styles.ctaOutline}`}>
-              Contact Sales
-            </button>
-            <p className={styles.ctaSub}>Typically responds within 2 hours</p>
-            <div className={styles.divider} />
-            <div className={styles.featuresHeading}>Everything in Professional, plus</div>
-            <ul className={styles.featureList}>
-              {[
-                "Unlimited students",
-                "Multi-branch management",
-                "Dedicated account manager",
-                "Custom domain & full white-label",
-                "Priority support & SLA guarantee",
-              ].map((t) => (
-                <li key={t} className={styles.featureItem}>
-                  <CheckIcon />
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </article>
-        </div>
 
         <div
           className={`${styles.cardsGrid} ${segment !== "online" ? styles.tabPanelHidden : ""}`}

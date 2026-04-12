@@ -1,13 +1,14 @@
+import Link from "next/link";
+import EdveoLogo from "../components/EdveoLogo";
 import styles from "./institutions.module.css";
 
 export default function InstitutionsFooter() {
   return (
     <footer className={styles.instFooter}>
       <div className={styles.instFooterInner}>
-        <div className={styles.instFooterBrand}>
-          <span className={styles.instFooterMark} aria-hidden />
-          <span className={styles.instFooterName}>Edveo</span>
-        </div>
+        <Link href="/" className={styles.instFooterBrandLink}>
+          <EdveoLogo variant="footer" />
+        </Link>
         <p className={styles.instFooterContact}>
           Questions?{" "}
           <a href="mailto:hello@edveo.com">hello@edveo.com</a>

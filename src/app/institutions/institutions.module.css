@@ -42,22 +42,9 @@
 .instLogoLink {
   display: flex;
   align-items: center;
-  gap: 8px;
+  line-height: 0;
   text-decoration: none;
   color: var(--primary);
-}
-
-.instLogoMark {
-  width: 32px;
-  height: 32px;
-  background: var(--accent);
-  border-radius: 8px;
-}
-
-.instLogoText {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 800;
 }
 
 .instNavActions {
@@ -916,24 +903,11 @@
   gap: 20px;
 }
 
-.instFooterBrand {
-  display: flex;
+.instFooterBrandLink {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-}
-
-.instFooterMark {
-  width: 28px;
-  height: 28px;
-  background: var(--accent);
-  border-radius: 6px;
-}
-
-.instFooterName {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.15rem;
-  color: #fff;
+  line-height: 0;
+  text-decoration: none;
 }
 
 .instFooterContact {

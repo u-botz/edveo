@@ -7,7 +7,7 @@ import PricingCardsBlock, { createPlanPanelIds, type Billing, type Segment } fro
 
 export default function HomePricingSection() {
   const [billing, setBilling] = useState<Billing>("annual");
-  const [segment, setSegment] = useState<Segment>("coaching");
+  const [segment, setSegment] = useState<Segment>("online");
   const planPanelIds = createPlanPanelIds("home-");
 
   const showTab = useCallback((tabName: Segment) => {

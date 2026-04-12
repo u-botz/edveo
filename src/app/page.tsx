@@ -1,4 +1,5 @@
 import styles from "./page.module.css";
+import EdveoLogo from "./components/EdveoLogo";
 import HeroSlider from "./components/HeroSlider";
 import HomePricingSection from "./components/HomePricingSection";
 import SegmentNav from "./components/SegmentNav";
@@ -9,10 +10,9 @@ export default function Home() {
       <div className={styles.navHeaderSticky}>
         <SegmentNav active="teachers" />
         <nav className={styles.navbar}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <div style={{ width: "32px", height: "32px", backgroundColor: "var(--accent)", borderRadius: "8px" }}></div>
-            <span style={{ fontSize: "1.5rem", fontWeight: "800", color: "var(--primary)" }}>Edveo</span>
-          </div>
+          <a href="/" className={styles.navBrand}>
+            <EdveoLogo variant="nav" />
+          </a>
           <div className={styles.navLinks}>
             <a href="#solutions">Solutions</a>
             <a href="/pricing">Pricing</a>
@@ -248,41 +248,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Audiences Section */}
-      <section className={styles.audiencesSection}>
-        <div className={styles.container}>
-          <h2 className={styles.textCenter} style={{ fontSize: "2.5rem" }}>Tailored for Your Ambition</h2>
-          <div className={styles.audiencesGrid}>
-            <div className={styles.audienceCard}>
-              <div className={styles.audienceIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg>
-              </div>
-              <h3>Coaching Institutes</h3>
-              <p>Scale physical branches with biometric sync and fee automation.</p>
-              <div className={styles.audienceBadge}>500+ Institutes</div>
-            </div>
-
-            <div className={styles.audienceCard}>
-              <div className={styles.audienceIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
-              </div>
-              <h3>Online Academies</h3>
-              <p>Grow globally with high-retention live classes and marketing CRM.</p>
-              <div className={styles.audienceBadge}>20k+ Active Students</div>
-            </div>
-
-            <div className={styles.audienceCard}>
-              <div className={styles.audienceIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-              </div>
-              <h3>Standalone Teachers</h3>
-              <p>Simple tools to manage your batches, content, and earnings.</p>
-              <div className={styles.audienceBadge}>Flexible Pricing</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Ecosystem Section */}
       <section className={styles.ecosystemSection}>
         <div className={styles.container}>
@@ -365,10 +330,9 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.footerGrid}>
             <div className={styles.footerLinkCol} style={{ flex: 2 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
-                <div style={{ width: "24px", height: "24px", backgroundColor: "var(--accent)", borderRadius: "4px" }}></div>
-                <span style={{ fontSize: "1.2rem", fontWeight: "800", color: "#fff" }}>Edveo</span>
-              </div>
+              <a href="/" className={styles.footerBrandLink}>
+                <EdveoLogo variant="footer" />
+              </a>
               <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", maxWidth: "250px" }}>Transforming Education for the Indian Coaching Institutes. Connecting workflow, elevating results, and managing scale smoothly.</p>
             </div>
             <div className={styles.footerLinkCol}>

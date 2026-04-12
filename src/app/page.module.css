@@ -48,6 +48,19 @@
   border-bottom: 1px solid rgba(13, 45, 78, 0.08);
 }
 
+.navBrand {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.footerBrandLink {
+  display: inline-block;
+  text-decoration: none;
+  line-height: 0;
+}
+
 .navLinks {
   display: flex;
   gap: 32px;
@@ -233,11 +246,11 @@
   font-family: var(--font-data);
 }
 
-/* Pillars Section — no bottom padding so navy callout meets timeline (no page-bg gap) */
+/* Pillars Section — bottom padding separates card row from timeline (visual rhythm) */
 .pillarsSection.section,
 .pillarsSection {
   background-color: var(--page-bg);
-  padding: 80px 24px 0;
+  padding: 80px 24px clamp(56px, 7vw, 96px);
   overflow-x: hidden;
 }
 
@@ -365,11 +378,11 @@
   color: #6B7280;
 }
 
-/* Timeline Section — flush under pillars callout (same navy as #0d2d4e) */
+/* Timeline Section */
 .timelineSection {
   background-color: var(--primary);
   color: #fff;
-  padding: 72px 24px 100px;
+  padding: 80px 24px 100px;
   margin-top: 0;
   text-align: center;
 }
@@ -565,64 +578,6 @@
   font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
-}
-
-.audiencesSection {
-  padding: 100px 24px;
-  background-color: #ffffff;
-}
-
-.audiencesGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 60px;
-}
-
-.audienceCard {
-  background-color: #F3F4F6;
-  padding: 40px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  transition: transform 0.2s ease;
-}
-
-.audienceCard:hover {
-  transform: translateY(-4px);
-}
-
-.audienceIcon {
-  color: #2EAA6E;
-  margin-bottom: 8px;
-}
-
-.audienceCard h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #111827;
-  margin: 0;
-}
-
-.audienceCard p {
-  font-size: 1rem;
-  color: #4B5563;
-  line-height: 1.6;
-  margin: 0;
-  margin-bottom: 8px;
-}
-
-.audienceBadge {
-  display: inline-flex;
-  width: fit-content;
-  background-color: #E5E7EB;
-  color: #374151;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-top: auto;
 }
 
 /* Ecosystem / Bento */
@@ -970,7 +925,6 @@
 
   .pillarsGrid,
   .timelineGrid,
-  .audiencesGrid,
   .pricingGrid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -999,7 +953,6 @@
   .pillarsGrid,
   .timelineGrid,
   .comparisonGrid,
-  .audiencesGrid,
   .pricingGrid,
   .footerGrid {
     grid-template-columns: 1fr;
@@ -1577,18 +1530,6 @@
   }
 }
 
-@media (max-width: 640px) {
-  .heroVisualCluster {
-    padding: 0 12px 24px;
-    margin-top: 32px;
-  }
-
-  .heroFloatBadgeLeft,
-  .heroFloatBadgeRight {
-    display: none;
-  }
-}
-
 /* Floating WhatsApp (site-wide) */
 .whatsappFloat {
   position: fixed;
@@ -1615,6 +1556,10 @@
 }
 
 @media (max-width: 768px) {
+  .heroVisualCluster {
+    display: none !important;
+  }
+
   .whatsappFloat {
     bottom: 80px;
   }

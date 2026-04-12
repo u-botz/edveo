@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import EdveoLogo from "../components/EdveoLogo";
 import homeStyles from "../page.module.css";
 import styles from "./pricing.module.css";
 import PricingCardsBlock, { createPlanPanelIds, SegmentTabBar, type Billing, type Segment } from "./PricingCardsBlock";
@@ -32,7 +33,7 @@ const FAQS = [
   },
   {
     q: "Can I white-label the platform with my institute's brand?",
-    a: "Custom domain and branding is available on Professional and above for Coaching Institutes, and Educator and above for Teachers. The Business and Scale plans include full white-labeling including the mobile app.",
+    a: "Custom domain and branding is available on Academy and Scale for online academies, and Educator and above for teachers. Scale (academies) and Pro (teachers) include the strongest white-label options, including the branded mobile app.",
   },
   {
     q: "What support is available?",
@@ -55,14 +56,13 @@ function renderCompareCell(cell: string) {
 }
 
 const COMPARE_PANEL_IDS: Record<Segment, string> = {
-  coaching: "compare-panel-coaching",
   online: "compare-panel-online",
   teachers: "compare-panel-teachers",
 };
 
 export default function PricingPageClient() {
   const [billing, setBilling] = useState<Billing>("annual");
-  const [segment, setSegment] = useState<Segment>("coaching");
+  const [segment, setSegment] = useState<Segment>("online");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const showTab = useCallback((tabName: Segment) => {
@@ -76,9 +76,8 @@ export default function PricingPageClient() {
   return (
     <main className={homeStyles.main}>
       <nav className={homeStyles.navbar}>
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
-          <div style={{ width: "32px", height: "32px", backgroundColor: "var(--accent)", borderRadius: "8px" }} />
-          <span style={{ fontSize: "1.5rem", fontWeight: "800", color: "var(--primary)" }}>Edveo</span>
+        <a href="/" className={homeStyles.navBrand}>
+          <EdveoLogo variant="nav" />
         </a>
         <div className={homeStyles.navLinks}>
           <a href="/#solutions">Solutions</a>
@@ -119,46 +118,6 @@ export default function PricingPageClient() {
             <p className={styles.comparisonSub}>See exactly what&apos;s included in every plan</p>
 
             <SegmentTabBar segment={segment} onSegmentChange={showTab} ariaLabel="Comparison by audience" panelIds={COMPARE_PANEL_IDS} />
-
-            <div
-              className={`${styles.tableWrap} ${segment !== "coaching" ? styles.tabPanelHidden : ""}`}
-              id="compare-panel-coaching"
-              role="tabpanel"
-              aria-hidden={segment !== "coaching"}
-            >
-              <table className={styles.compareTable}>
-                <thead>
-                  <tr>
-                    <th>Feature</th>
-                    <th>Starter</th>
-                    <th>Professional</th>
-                    <th>Business</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    ["Students", "200", "500", "Unlimited"],
-                    ["Fee Collection", "✓", "✓", "✓"],
-                    ["GST Invoicing", "Basic", "Full", "Full"],
-                    ["Attendance", "✓", "✓", "✓"],
-                    ["Timetable", "✓", "✓", "✓"],
-                    ["Live Classes", "3 concurrent", "Unlimited", "Unlimited"],
-                    ["CRM & Lead Pipeline", "Basic", "Advanced", "Advanced"],
-                    ["Meta Ads Integration", "✗", "✓", "✓"],
-                    ["Branded Mobile App", "✗", "✓", "✓"],
-                    ["Custom Domain", "✗", "✓", "✓"],
-                    ["Multi-branch", "✗", "✗", "✓"],
-                    ["Dedicated Support", "✗", "✗", "✓"],
-                  ].map((row) => (
-                    <tr key={row[0]}>
-                      {row.map((cell, j) => (
-                        <td key={j}>{renderCompareCell(cell)}</td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
 
             <div
               className={`${styles.tableWrap} ${segment !== "online" ? styles.tabPanelHidden : ""}`}
@@ -284,10 +243,9 @@ export default function PricingPageClient() {
         <div className={homeStyles.container}>
           <div className={homeStyles.footerGrid}>
             <div className={homeStyles.footerLinkCol} style={{ flex: 2 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
-                <div style={{ width: "24px", height: "24px", backgroundColor: "var(--accent)", borderRadius: "4px" }} />
-                <span style={{ fontSize: "1.2rem", fontWeight: "800", color: "#fff" }}>Edveo</span>
-              </div>
+              <a href="/" className={homeStyles.footerBrandLink}>
+                <EdveoLogo variant="footer" />
+              </a>
               <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)", maxWidth: "250px" }}>
                 Transforming Education for the Indian Coaching Institutes. Connecting workflow, elevating results, and managing scale smoothly.
               </p>
