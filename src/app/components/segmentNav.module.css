@@ -1,0 +1,97 @@
+/* Learnyst-style audience switcher — sits above main navbar */
+
+.rail {
+  background: #eceff4;
+  border-bottom: 1px solid rgba(13, 45, 78, 0.06);
+}
+
+.railInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px;
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  min-height: 44px;
+}
+
+.tabActive {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #0d2d4e;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  padding: 10px 20px 11px;
+  border-radius: 12px 12px 0 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.tabIcon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  background: #2eaa6e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.segmentLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 22px 11px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: #0d2d4e;
+  text-decoration: none;
+  border-radius: 12px 12px 0 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.segmentLink:hover {
+  color: #2eaa6e;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 768px) {
+  .railInner {
+    padding: 0 24px;
+    min-height: 40px;
+  }
+
+  .tabActive,
+  .segmentLink {
+    font-size: 12px;
+    padding: 8px 14px 9px;
+  }
+
+  .tabIcon {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .railInner {
+    padding: 0 16px;
+  }
+
+  .tabActive span:last-child {
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

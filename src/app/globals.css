@@ -1,34 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --surface-container-lowest: #FFFFFF;
+  --surface-container-low: #F2F3F7;
+  --surface-container: #EDEEF2;
+  --surface: #F8F9FD;
+  --page-bg: #F5F6FA;
+  --tertiary-fixed: #D6E4EF;
+  --accent-light: #EAF6F1;
+  
+  --primary: #0D2D4E;
+  --secondary: #006D41;
+  --accent: #2EAA6E;
+  --error: #E53E3E;
+  --body-text: #1A1A2E;
+  --outline-variant: rgba(195, 198, 207, 0.15); /* for ghost border */
+  
+  --primary-cta-gradient: linear-gradient(135deg, #001831 0%, #0D2D4E 100%);
+  
+  --shadow-navy: 0 4px 20px rgba(13, 45, 78, 0.08); /* Max opacity 8% */
+  --shadow-navy-hover: 0 10px 40px rgba(13, 45, 78, 0.08); /* Extra diffused when float needed */
+  --shadow-green: 0 4px 20px rgba(46, 170, 110, 0.08);
+  
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-data: 'JetBrains Mono', monospace;
 }
 
 * {
@@ -37,13 +33,75 @@ body {
   margin: 0;
 }
 
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--page-bg);
+  color: var(--body-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-weight: 800; /* Hero statements */
+  font-size: 3.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-weight: 700; /* Section headers */
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+h3 {
+  font-weight: 600; /* Card titles */
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+p {
+  font-family: var(--font-body);
+  font-weight: 400; /* Paragraphs provide breathing room */
+  margin-bottom: 1rem;
+}
+
+label {
+  font-weight: 500; /* Labels ensure clarity */
+}
+
+/* Utilities */
+.data-text {
+  font-family: var(--font-data);
+  font-weight: 400; /* Statistics, prices, timestamps */
+}
+
+button {
+  font-family: var(--font-body);
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+/* Grid/Container basics */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }

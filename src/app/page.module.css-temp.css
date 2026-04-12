@@ -1,0 +1,338 @@
+/* NEW HERO SLIDER STYLES */
+.heroLayout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 48px;
+  min-height: 80vh;
+  gap: 40px;
+  position: relative;
+}
+
+.heroLeft {
+  flex: 1;
+  max-width: 600px;
+}
+
+.heroRight {
+  flex: 1.2;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroTagSlide {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.tagGreen {
+  background-color: var(--accent-light);
+  color: var(--secondary);
+}
+
+.tagBlue {
+  background-color: var(--tertiary-fixed);
+  color: var(--primary);
+}
+
+.tagIconWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.heroHeadingSlide {
+  font-size: 4rem;
+  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: 24px;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+}
+
+.heroSubtextSlide {
+  font-size: 1.25rem;
+  color: var(--body-text);
+  margin-bottom: 16px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.heroSmallText {
+  font-size: 0.9rem;
+  color: rgba(26, 26, 46, 0.6); /* Body text with opacity */
+  margin-bottom: 24px;
+}
+
+.heroCheckList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.heroCheckList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 1rem;
+  color: var(--body-text);
+}
+
+.heroCheckList li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.heroActionsRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.heroMicroCopy {
+  font-size: 0.8rem;
+  color: rgba(26, 26, 46, 0.5);
+  margin-bottom: 24px;
+}
+
+.sliderDots {
+  display: flex;
+  gap: 8px;
+}
+
+.sliderDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--outline-variant);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.sliderDotActive {
+  background-color: var(--primary);
+  width: 24px;
+  border-radius: 8px;
+}
+
+/* Mockup Variations */
+.mockupContainer {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+}
+
+.mockupWindow {
+  background-color: var(--primary);
+  border-radius: 16px;
+  box-shadow: var(--shadow-navy-hover);
+  overflow: hidden;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mockupHeaderSlide {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 8px;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.mockupDotSlide {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.mockupBodySlide {
+  flex: 1;
+  padding: 32px;
+  position: relative;
+}
+
+/* Slide 1 - Default Cards */
+.mockupDefault {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+}
+
+.mockupRow {
+  display: flex;
+  gap: 24px;
+}
+
+.mCard {
+  flex: 1;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 20px;
+  height: 100px;
+}
+
+.mLineFull {
+  width: 100%;
+  height: 12px;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 6px;
+}
+
+.mCardLarge {
+  flex: 1;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 12px;
+}
+
+/* Slide 2 - ERP View */
+.mockupErp {
+  height: 100%;
+}
+
+.mStatCard {
+  flex: 1;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mStatLabel {
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 700;
+}
+
+.mStatValue {
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--font-data);
+}
+
+/* Slide 3 - Video View */
+.mockupVideo {
+  background-color: #051424;
+  height: 100%;
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playButtonWrapper {
+  width: 64px;
+  height: 64px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(46, 170, 110, 0.4);
+}
+
+.videoLabel {
+  position: absolute;
+  top: 50%;
+  margin-top: 50px;
+  color: #fff;
+  font-family: var(--font-data);
+  font-size: 0.9rem;
+}
+
+.recDot {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  color: #ff5f56;
+  font-family: var(--font-data);
+  font-size: 0.8rem;
+}
+
+/* Floating Stats Box */
+.floatingStat {
+  position: absolute;
+  background-color: var(--surface-container-lowest);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-navy-hover);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  z-index: 10;
+  animation: floatUp 0.5s ease-out;
+}
+
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-right {
+  top: 60px;
+  right: -40px;
+}
+
+.stat-bottom-left {
+  bottom: -30px;
+  left: -20px;
+}
+
+.fValue {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: var(--font-data);
+  line-height: 1;
+}
+
+.fLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--body-text);
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 1024px) {
+  .heroLayout {
+    flex-direction: column;
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .heroLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .heroCheckList li {
+    text-align: left;
+  }
+  .stat-right, .stat-bottom-left {
+    position: static;
+    margin-top: 20px;
+  }
+}
