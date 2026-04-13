@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import RegisterFlowClient from "./RegisterFlowClient";
+import SignupContinueClient from "./SignupContinueClient";
 
-function RegisterFallback() {
+function ContinueFallback() {
   return (
     <div
       style={{
@@ -20,10 +20,10 @@ function RegisterFallback() {
   );
 }
 
-export default function RegisterPage() {
+export default function SignupContinuePage() {
   return (
-    <Suspense fallback={<RegisterFallback />}>
-      <RegisterFlowClient />
+    <Suspense fallback={<ContinueFallback />}>
+      <SignupContinueClient />
     </Suspense>
   );
 }

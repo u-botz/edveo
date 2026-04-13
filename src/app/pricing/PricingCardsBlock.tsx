@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import styles from "./pricing.module.css";
 
 export type Segment = "online" | "teachers";
@@ -142,9 +143,9 @@ export default function PricingCardsBlock({
             <div className={styles.priceBlock}>
               <PriceArea billing={billing} monthly="₹1,999" annual="₹1,666" />
             </div>
-            <button type="button" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
               Start Free Trial
-            </button>
+            </Link>
             <p className={styles.ctaSub}>14-day free trial · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>What&apos;s included</div>
@@ -175,9 +176,9 @@ export default function PricingCardsBlock({
             <div className={styles.priceBlock}>
               <PriceArea billing={billing} monthly="₹4,999" annual="₹4,166" />
             </div>
-            <button type="button" className={`${styles.ctaFull} ${styles.ctaGreen}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGreen}`}>
               Get Started
-            </button>
+            </Link>
             <p className={styles.ctaSub}>14-day free trial · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>Everything in Creator, plus</div>
@@ -243,9 +244,9 @@ export default function PricingCardsBlock({
                 <span className={styles.perMonth}>/month</span>
               </div>
             </div>
-            <button type="button" className={`${styles.ctaFull} ${styles.ctaGreen} ${styles.ctaFullNoSub}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGreen} ${styles.ctaFullNoSub}`}>
               Get Started Free
-            </button>
+            </Link>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>What&apos;s included</div>
             <ul className={styles.featureList}>
@@ -274,9 +275,9 @@ export default function PricingCardsBlock({
             <div className={styles.priceBlock}>
               <PriceArea billing={billing} monthly="₹999" annual="₹832" />
             </div>
-            <button type="button" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
               Start Free Trial
-            </button>
+            </Link>
             <p className={styles.ctaSub}>14-day free trial · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>Everything in Free, plus</div>
@@ -303,9 +304,9 @@ export default function PricingCardsBlock({
             <div className={styles.priceBlock}>
               <PriceArea billing={billing} monthly="₹2,499" annual="₹2,082" />
             </div>
-            <button type="button" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
               Start Free Trial
-            </button>
+            </Link>
             <p className={styles.ctaSub}>14-day free trial · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>Everything in Educator, plus</div>

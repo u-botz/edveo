@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./institutions.module.css";
 
 function IconWhatsApp() {
@@ -389,9 +390,9 @@ export default function InstitutionsSalesContent() {
                 <li>Fee collection + attendance</li>
                 <li>Digital timetable</li>
               </ul>
-              <button type="button" className={styles.instPriceBtn}>
+              <Link href="/register" className={styles.instPriceBtn}>
                 Start Free Trial
-              </button>
+              </Link>
             </div>
             <div className={`${styles.instPriceCard} ${styles.instPriceCardFeatured}`}>
               <div className={styles.instPriceTier}>Professional</div>
@@ -401,9 +402,9 @@ export default function InstitutionsSalesContent() {
                 <li>Everything in Starter</li>
                 <li>WhatsApp CRM + AI scoring</li>
               </ul>
-              <button type="button" className={styles.instPriceBtn}>
+              <Link href="/register" className={styles.instPriceBtn}>
                 Start Free Trial
-              </button>
+              </Link>
             </div>
             <div className={styles.instPriceCard}>
               <div className={styles.instPriceTier}>Business</div>
@@ -435,9 +436,9 @@ export default function InstitutionsSalesContent() {
             <br />
             We&apos;ll set up your institute profile together — it takes 7 minutes.
           </p>
-          <button type="button" className={styles.instFinalBtn}>
+          <Link href="/register" className={styles.instFinalBtn}>
             Start Free Trial →
-          </button>
+          </Link>
           <p className={styles.instFinalWa}>Questions? Our team is here. Chat on WhatsApp</p>
           <p className={styles.instFinalTrust}>98.9% uptime SLA · Local Kerala support · Data security certified</p>
         </div>

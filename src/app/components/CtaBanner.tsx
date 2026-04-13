@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./ctaBanner.module.css";
 
 const WA_ICON = (
@@ -45,9 +46,9 @@ export default function CtaBanner({
       {subheadline && <p className={styles.sub}>{subheadline}</p>}
 
       <div className={styles.buttons}>
-        <button type="button" className={styles.btnPrimary} id={primaryId}>
+        <Link href="/register" className={styles.btnPrimary} id={primaryId}>
           {primaryLabel}
-        </button>
+        </Link>
         <a
           href={secondaryHref}
           target="_blank"
