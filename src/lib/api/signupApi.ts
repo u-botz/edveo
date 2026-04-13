@@ -137,7 +137,14 @@ export async function submitSignup(
   payload: TrialSignupPayload
 ): Promise<TrialSignupResponse> {
   const prefix = CATEGORY_PREFIX[category];
-  const res = await fetch(`${prefix}/initiate`, {
+  const CATEGORY_SUBMIT_ENDPOINT: Record<TenantCategory, string> = {
+    standalone_teacher: "trial",
+    offline_institution: "initiate",
+    edtech: "initiate",
+  };
+
+  const endpoint = CATEGORY_SUBMIT_ENDPOINT[category];
+  const res = await fetch(`${prefix}/${endpoint}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
