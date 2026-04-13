@@ -46,12 +46,12 @@ export default function SiteNavbar({ activePage }: Props) {
         </div>
 
         <div className={styles.navActions}>
-          <button type="button" className={styles.btnLogin}>
+          <Link href="/login" className={styles.btnLogin}>
             Login
-          </button>
-          <button type="button" className={styles.btnTrial}>
+          </Link>
+          <Link href="/register" className={styles.btnTrial}>
             Start Free Trial
-          </button>
+          </Link>
         </div>
       </nav>
     </div>

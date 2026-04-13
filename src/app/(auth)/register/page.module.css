@@ -1,0 +1,391 @@
+.pageWrapper {
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  color: #0D2D4E;
+  font-family: var(--font-body, system-ui, sans-serif);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.headerCenter {
+  justify-content: center;
+}
+
+.backButton {
+  position: absolute;
+  left: 24px;
+  background: none;
+  border: none;
+  color: #0D2D4E;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.backButton:hover {
+  background-color: rgba(13, 45, 78, 0.05);
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.5px;
+  color: #0D2D4E;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px 64px 24px;
+  max-width: 100vw;
+  position: relative;
+}
+
+/* Dots indicator */
+.progressIndicator {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  margin-bottom: 48px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #D6E4EF;
+  transition: background-color 0.3s ease;
+}
+
+.dotActive {
+  background-color: #1B6B3A;
+}
+
+/* Animation wrappers */
+.screenContainer {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.slideInRight {
+  animation-name: slideInRight;
+}
+
+.slideInLeft {
+  animation-name: slideInLeft;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Headings */
+.heading {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  color: #0D2D4E;
+}
+
+.subheading {
+  font-size: 14px;
+  color: #64748B;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Cards */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+  .cardsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  background-color: #F8F9FD;
+  border: 1px solid #D6E4EF;
+  border-left: 4px solid transparent;
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 150ms ease;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  outline: none;
+}
+
+.card:hover {
+  border-color: #c0d1e0;
+}
+
+.card:focus-visible {
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #1B6B3A;
+}
+
+.cardSelected {
+  background-color: #F0FAF5;
+  border-color: #1B6B3A;
+  border-left: 4px solid #1B6B3A;
+}
+
+.cardSelected:hover {
+  border-color: #1B6B3A;
+}
+
+.cardIcon {
+  color: #0D2D4E;
+  margin-bottom: 16px;
+  transition: color 150ms ease;
+}
+
+.cardSelected .cardIcon {
+  color: #1B6B3A;
+}
+
+.cardCheck {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: #1B6B3A;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #0D2D4E;
+}
+
+.cardSelected .cardTitle {
+  color: #1B6B3A;
+}
+
+.cardDesc {
+  font-size: 14px;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.primaryButton {
+  background-color: #1B6B3A;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 200ms, transform 100ms;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .primaryButton.buttonDesktopCenter {
+    width: 320px;
+  }
+}
+
+.primaryButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primaryButton:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Links */
+.footerText {
+  color: #64748B;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.linkGreen {
+  color: #1B6B3A;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.linkGreen:hover {
+  text-decoration: underline;
+}
+
+.linkDark {
+  color: #0D2D4E;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.linkDark:hover {
+  text-decoration: underline;
+}
+
+/* Form Styles */
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0D2D4E;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  background-color: #FFFFFF;
+  border: 1px solid #D6E4EF;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #0D2D4E;
+  font-size: 15px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  outline: none;
+  font-family: inherit;
+}
+
+.input:focus {
+  border-color: #1B6B3A;
+  box-shadow: 0 0 0 3px rgba(27, 107, 58, 0.1);
+}
+
+.inputError {
+  border-color: #EF4444;
+}
+
+.input::placeholder {
+  color: #A0AABF;
+  opacity: 1;
+}
+
+.inputWithPrefix {
+  padding-left: 64px;
+}
+
+.inputPrefix {
+  position: absolute;
+  left: 16px;
+  color: #64748B;
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.inputAction {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #64748B;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 150ms ease;
+}
+
+.inputAction:hover {
+  color: #0D2D4E;
+}
+
+.helperText {
+  font-size: 11px;
+  color: #64748B;
+}
+
+.errorText {
+  font-size: 11px;
+  color: #EF4444;
+  margin-top: 4px;
+}
+
+.subdomainPreview {
+  font-size: 12px;
+  color: #64748B;
+  margin-top: 4px;
+  animation: fadeIn 300ms ease;
+}
+
+.subdomainSlug {
+  color: #1B6B3A;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

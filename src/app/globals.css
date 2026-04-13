@@ -18,9 +18,14 @@
   
   --primary-cta-gradient: linear-gradient(135deg, #001831 0%, #0D2D4E 100%);
   
-  --shadow-navy: 0 4px 20px rgba(13, 45, 78, 0.08); /* Max opacity 8% */
-  --shadow-navy-hover: 0 10px 40px rgba(13, 45, 78, 0.08); /* Extra diffused when float needed */
+  --shadow-navy: 0 4px 20px rgba(13, 45, 78, 0.08);
+  --shadow-navy-hover: 0 10px 40px rgba(13, 45, 78, 0.08);
   --shadow-green: 0 4px 20px rgba(46, 170, 110, 0.08);
+
+  /* Hero section */
+  --edveo-green-tint:   #F0FAF5;
+  --hero-shadow: 0 40px 80px rgba(13, 45, 78, 0.18), 0 8px 24px rgba(13, 45, 78, 0.12);
+  --hero-float-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   
   --font-display: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Inter', sans-serif;

@@ -1,0 +1,616 @@
+/* ================================================
+   HERO SECTION — hero.module.css
+   ================================================ */
+
+/* ── Outer section ── */
+.heroSection {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 20px;
+  overflow-x: hidden;   /* FIX 7: was overflow:hidden — now only clips horizontal, not the floating cards */
+}
+
+/* Solid white background with no split */
+.heroSection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  z-index: 0;
+}
+
+/* ── Container ── */
+.heroContainer {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 40px 48px;   /* Fix 3: 60px top — badges start ≤80px below nav */
+  width: 100%;
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: 48px;
+  align-items: stretch;      /* Fix 2: both cells same height so center works */
+}
+
+/* ═══════════════════════════════════════
+   LEFT COLUMN — copy
+   ═══════════════════════════════════════ */
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 600px;           /* Issue 3: wider to fit both badges side-by-side */
+}
+
+/* Fix 1 — badges always side by side on desktop */
+.badgeRow {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badgeImageNavy {
+  background: #1E293B;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 8px 16px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.iconYellow {
+  color: #FBBF24;
+}
+
+.heroPreHeadline {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.5vw, 24px);
+  font-weight: 700;
+  color: #111827;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+/* ── Headline ── */
+.heroHeadline {
+  font-family: var(--font-display);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.headlineLine1 {
+  font-size: clamp(34px, 4vw, 54px);  /* Issue 4: max 54px, won't break */
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.headlineLine2 {
+  font-size: clamp(34px, 4vw, 54px);
+  font-weight: 800;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.headlineLine3 {
+  font-size: clamp(34px, 4vw, 54px);
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.greenText {
+  color: var(--accent);
+}
+
+/* ── Sub-headline ── */
+.heroSub {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--body-text);
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 0 0 0;
+}
+
+/* Fix 4 — wider max-width so text fits on one line */
+.aiLine {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  color: #111827;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 12px 0;
+  margin: 16px 0 24px 0;
+  max-width: 560px;
+  width: 100%;
+  white-space: nowrap;        /* Fix 4: prevent wrapping on desktop */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.aiIcon {
+  color: var(--accent);
+  font-size: 14px;
+}
+
+/* ── CTA Buttons ── */
+.ctaRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-decoration: none;
+}
+
+.btnPrimary:hover {
+  background: #1a4a6e;
+}
+
+.btnPrimary:hover .btnArrow {
+  transform: translateX(3px);
+}
+
+.btnArrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+/* FIX 5 — 2px border, 18px icon, correct green */
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #2EAA6E;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 2px solid #2EAA6E;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+}
+
+.btnSecondary:hover {
+  background: #2EAA6E;
+  color: #ffffff;
+}
+
+/* ── Micro-copy ── */
+.microCopy {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════
+   RIGHT COLUMN — mockup
+   FIX 1: flex + center alignment
+   FIX 7: overflow visible so cards aren't clipped
+   ═══════════════════════════════════════ */
+
+/* Fix 2 — right column: flex + center, fills full grid cell height */
+.heroRight {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+.heroRight::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 0;
+  width: 110%;
+  height: 90%;
+  background: #EAF4FD;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  transform: rotate(-5deg);
+  z-index: 0;
+}
+
+/* Inner wrapper — floating cards attach here */
+.mockWrap {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Dashboard frame — FIX 6: explicit shadow ── */
+.mockFrame {
+  background: #111B29;
+  border-radius: 12px;
+  overflow: hidden;           /* clips internal chrome only */
+  box-shadow:
+    0 40px 80px rgba(13, 45, 78, 0.18),
+    0 8px 24px rgba(13, 45, 78, 0.12);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Browser chrome ── */
+.chromeBar {
+  background: #1A2635;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 6px;
+}
+
+.chromeDots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.chromeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
+}
+
+.chromeUrl {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 8px;
+}
+
+/* ── App body ── */
+.appBody {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  min-height: 280px;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px 0;
+}
+
+.sideGroupLabel {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  padding: 8px 14px 4px;
+}
+
+.sideNavDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin: 8px 14px;
+}
+
+.sideItem {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 7px 14px;
+}
+
+.sideItemActive {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 7px 12px;
+  border-left: 2px solid var(--accent);
+  background: rgba(46, 170, 110, 0.08);
+}
+
+/* ── Main content area ── */
+.dashMain {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Stat cards — 2 cards only (Issue 7: prevent cramping) ── */
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.statCard {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.statLabel {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 3px;
+}
+
+.statSub {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--accent);
+  line-height: 1.3;
+}
+
+/* ── Course list ── */
+.courseList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.courseRow {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.courseTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.courseName {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.courseStudents {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--accent);
+}
+
+.progressTrack {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ═══════════════════════════════════════
+   FLOATING CARDS — on mockWrap, not mockFrame
+   FIX 7: cards are siblings to mockFrame, clipped only by mockWrap
+   ═══════════════════════════════════════ */
+
+/* Card 1 — Your Domain (bottom-right) */
+.floatDomain {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+}
+
+.floatDomainHead {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+}
+
+.floatDomainDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.floatDomainLabel {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.floatDomainName {
+  display: flex;
+  align-items: baseline;
+}
+
+.floatDomainHandle {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.floatDomainTld {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Card 2 — AI Active (top-right) */
+.floatAi {
+  position: absolute;
+  top: -14px;
+  right: 20px;
+  background: #1A2635;
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 8px 24px rgba(13, 45, 78, 0.25);
+  z-index: 10;
+}
+
+.iconOrange {
+  color: #F97316;
+}
+
+.floatAiLine1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.floatAiLine2 {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--accent);
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .heroContainer {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    padding: 40px 32px;
+  }
+
+  .headlineLine1,
+  .headlineLine2 {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection::before {
+    background: #ffffff;
+  }
+
+  .heroSection {
+    min-height: unset;
+  }
+
+  .heroContainer {
+    grid-template-columns: 1fr;
+    padding: 40px 20px 32px;
+    gap: 40px;
+  }
+
+  .heroLeft {
+    max-width: 100%;
+  }
+
+  .headlineLine1,
+  .headlineLine2,
+  .headlineLine3 {
+    font-size: clamp(32px, 8vw, 42px);
+    white-space: normal;
+  }
+
+  /* badges wrap to column only on very narrow mobile */
+
+  .floatAi {
+    display: none;
+  }
+
+  .heroRight {
+    padding: 16px 0 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctaRow {
+    flex-direction: column;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

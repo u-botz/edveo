@@ -3,7 +3,7 @@ import SiteNavbar from "./components/SiteNavbar";
 import SiteFooter from "./components/SiteFooter";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import CtaBanner from "./components/CtaBanner";
-import HeroSlider from "./components/HeroSlider";
+import HeroSection from "./components/HeroSection";
 import HomePricingSection from "./components/HomePricingSection";
 
 export default function Home() {
@@ -11,21 +11,19 @@ export default function Home() {
     <main className={styles.main}>
       <SiteNavbar activePage="home" />
 
-      {/* Hero Slider Component */}
-      <HeroSlider />
+      {/* Hero */}
+      <HeroSection />
 
       {/* Pillars — Edveo Intelligence (AI-first) */}
       <section className={`${styles.section} ${styles.pillarsSection}`}>
         <div className={styles.container}>
           <h2 className={`${styles.textCenter} ${styles.sectionTitleWithLine} ${styles.pillarsHeadlineAi}`}>
-            Meet Edveo Intelligence.
-            <br />
-            <span>AI Built Into Everything You Do.</span>
+            <span style={{ color: "#111827", display: "block" }}>Meet Edveo Intelligence.</span>
+            <span style={{ color: "var(--accent)" }}>AI Built Into Everything You Do.</span>
           </h2>
           <p className={styles.pillarsSubhead}>
-            Not a chatbot. Not a bolt-on feature.
-            <br />
-            AI that runs your courses, your revenue, and your students — automatically.
+            Not a chatbot. Not a bolt-on feature.<br />
+            AI that runs your courses, your revenue, and your students —
           </p>
           <div className={styles.pillarsGrid}>
             <div className={styles.pillarCard}>
@@ -161,7 +159,7 @@ export default function Home() {
       {/* Timeline Section */}
       <section className={styles.timelineSection}>
         <div className={styles.container}>
-          <h2 style={{ fontSize: "2.5rem", marginBottom: "12px" }}>Go Live in 24 Hours</h2>
+          <h2 style={{ fontSize: "2.5rem", marginBottom: "12px" }}>Go Live in 5 Min</h2>
           <p style={{ color: "#9CA3AF", marginBottom: "40px" }}>No complex coding. No lengthy migrations.</p>
 
           <div className={styles.timelineGrid}>
@@ -173,7 +171,7 @@ export default function Home() {
             <div className={styles.timelineItem}>
               <div className={styles.timelineNumber}>2</div>
               <h3>Configure</h3>
-              <p>Upload student data & setup your fee structure.</p>
+              <p>Upload student data &amp; setup your fee structure.</p>
             </div>
             <div className={styles.timelineItem}>
               <div className={`${styles.timelineNumber} ${styles.timelineNumberSuccess}`}>3</div>
@@ -190,7 +188,7 @@ export default function Home() {
               </div>
               <div className={styles.trustBarItem}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="M22 4L12 14.01l-3-3" /></svg>
-                Local Support (Kerala)
+                24 x 7 Support
               </div>
               <div className={styles.trustBarItem}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="M22 4L12 14.01l-3-3" /></svg>
@@ -204,47 +202,97 @@ export default function Home() {
       {/* Comparison Section */}
       <section className={styles.comparisonSection}>
         <div className={styles.container}>
-          <div className={styles.comparisonGrid}>
-            <div className={`${styles.compareCard} ${styles.compareRed}`}>
-              <h3>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></svg>
-                Stop The Tool Fatigue
-              </h3>
-              <ul className={styles.compareList}>
-                <li><span>Zoom Pro Subscriptions</span> <span className={styles.badgeRed}>EXHAUSTING</span></li>
-                <li><span>Endless Excel Attendance Sheets</span> <span className={styles.badgeRed}>CHAOTIC</span></li>
-                <li><span>WhatsApp API Costs & Spam</span> <span className={styles.badgeRed}>EXPENSIVE</span></li>
-                <li><span>Classplus Generic Apps</span> <span className={styles.badgeRed}>LIMITING</span></li>
-              </ul>
-            </div>
+          <div className={styles.compareHeader}>
+            <h2 className={styles.compareTitle}>The only platform that runs your entire institute — not just your content.</h2>
+            <p className={styles.compareSubtitle}>Classplus gives you courses. Classpro gives you operations. <strong>Edveo gives you both.</strong></p>
+          </div>
 
-            <div className={`${styles.compareCard} ${styles.compareGreen}`}>
-              <h3>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="M22 4L12 14.01l-3-3" /></svg>
-                The Edveo Advantage
-              </h3>
-              <ul className={styles.compareList}>
-                <li><span>Leads tracked from first inquiry to enrollment</span> <span className={styles.badgeGreen}>UNLIMITED</span></li>
-                <li><span>Your brand, your domain, your platform</span> <span className={styles.badgeGreen}>AUTOMATED</span></li>
-                <li><span>Automated WhatsApp + SMS fee reminders</span> <span className={styles.badgeGreen}>ZERO COST</span></li>
-                <li><span>Student app under your institute&apos;s name</span> <span className={styles.badgeGreen}>PREMIUM</span></li>
-              </ul>
-            </div>
+          <div className={styles.tableWrapper}>
+            <table className={styles.competitorTable}>
+              <thead>
+                <tr>
+                  <th className={styles.colFeature}>Feature</th>
+                  <th className={styles.colEdveo}>Edveo</th>
+                  <th>Classplus</th>
+                  <th>Learnyst</th>
+                  <th>Classpro</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className={styles.featureName}>LMS + ERP + CRM in one platform</td>
+                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                </tr>
+                <tr>
+                  <td className={styles.featureName}>Attendance &amp; Timetable</td>
+                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.check}>✓</span></td>
+                </tr>
+                <tr>
+                  <td className={styles.featureName}>CRM / Lead Pipeline</td>
+                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.check}>✓</span></td>
+                </tr>
+                <tr>
+                  <td className={styles.featureName}>Online Course Delivery</td>
+                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                </tr>
+                <tr>
+                  <td className={styles.featureName}>Fee Collection</td>
+                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.partial}>Partial</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.check}>✓</span></td>
+                </tr>
+                <tr>
+                  <td className={styles.featureName}>Parent Portal</td>
+                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.check}>✓</span></td>
+                </tr>
+                <tr>
+                  <td className={styles.featureName}>WhatsApp Integration</td>
+                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.partial}>Partial</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                  <td><span className={styles.check}>✓</span></td>
+                </tr>
+                <tr>
+                  <td className={styles.featureName}>Custom Domain</td>
+                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.check}>✓</span></td>
+                  <td><span className={styles.checkLabel}>✓ (paid)</span></td>
+                  <td><span className={styles.cross}>✗</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
+
       {/* Ecosystem Section */}
       <section className={styles.ecosystemSection}>
         <div className={styles.container}>
-          <h2 style={{ fontSize: "2.5rem", marginBottom: "40px" }}>One Ecosystem. Every Feature.</h2>
-          
+          <h2 style={{ fontSize: "2.5rem", marginBottom: "40px", textAlign: "center" }}>One Ecosystem. Every Feature.</h2>
+
           <div className={styles.bentoGrid}>
             {/* 1. Smart Live Classes (Span 2x2) */}
             <div className={`${styles.bentoCard} ${styles.bentoWhite} ${styles.bentoSpan2x2}`}>
               <div style={{ flex: 1 }}>
                 <div className={styles.bentoIconBox}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 8-6 4 6 4V8Z" /><rect width="14" height="12" x="2" y="6" rx="2" ry="2" /></svg>
                 </div>
                 <h3>Smart Live Classes</h3>
                 <p style={{ maxWidth: "280px" }}>Integrated Zoom/Meet alternative with auto-recording, attendance logs, and interactive whiteboards.</p>
@@ -273,7 +321,7 @@ export default function Home() {
                 <p>Your logo on PlayStore & AppStore.</p>
               </div>
               <div style={{ color: "#2EAA6E" }}>
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
               </div>
             </div>
 
