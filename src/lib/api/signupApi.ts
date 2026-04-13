@@ -97,10 +97,13 @@ export async function fetchInstitutionTypesForCategory(
   category: Exclude<TenantCategory, "edtech">
 ): Promise<InstitutionType[]> {
   const prefix = CATEGORY_PREFIX[category];
-  const res = await fetch(`${prefix}/institution-types`, {
-    headers: { Accept: "application/json" },
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${prefix}/institution-types?category=${encodeURIComponent(category)}`,
+    {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+    }
+  );
   if (!res.ok) throw new Error("Failed to load institution types");
   const json = await res.json();
   return (json.data ?? []) as InstitutionType[];
