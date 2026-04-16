@@ -15,7 +15,7 @@ import {
   X,
 } from "lucide-react";
 import styles from "./page.module.css";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import {
   fetchPlansForCategory,
   fetchInstitutionTypesForCategory,
@@ -23,6 +23,8 @@ import {
   submitSignup,
   buildGoogleSignupUrl,
   generateIdempotencyKey,
+  isInitiateSignupResponse,
+  selfSignupAuxStorageKey,
   type TenantCategory,
   type TrialPlan,
   type InstitutionType,
@@ -62,6 +64,7 @@ type SubdomainStatus = "idle" | "checking" | "available" | "taken" | "error";
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function RegisterFlowClient() {
+  const router = useRouter();
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [direction, setDirection] = useState<"right" | "left">("right");
 
@@ -81,6 +84,8 @@ export default function RegisterFlowClient() {
     email: "",
     phone: "",
     institution_type_id: "",
+    password: "",
+    password_confirm: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
@@ -255,6 +260,13 @@ export default function RegisterFlowClient() {
     setPlans([]);
     setInstitutionTypes([]);
     setBootstrapError(null);
+    setFormData((prev) => ({ ...prev, password: "", password_confirm: "" }));
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next.password;
+      delete next.password_confirm;
+      return next;
+    });
     window.scrollTo(0, 0);
   };
 
@@ -299,6 +311,15 @@ export default function RegisterFlowClient() {
       newErrors.institution_type_id = "Please select your institution type";
     }
 
+    if (category === "edtech" || category === "offline_institution") {
+      if (formData.password.length < 10) {
+        newErrors.password = "Password must be at least 10 characters";
+      }
+      if (formData.password !== formData.password_confirm) {
+        newErrors.password_confirm = "Passwords do not match";
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -321,7 +342,7 @@ export default function RegisterFlowClient() {
 
     setIsSubmitting(true);
     try {
-      await submitSignup(category!, {
+      const result = await submitSignup(category!, {
         name: formData.full_name.trim(),
         email: formData.email.trim().toLowerCase(),
         phone: formData.phone.trim(),
@@ -333,7 +354,33 @@ export default function RegisterFlowClient() {
         idempotency_key: idempotencyKeyRef.current,
         captcha_token: null, // CAPTCHA deferred for production
         website_url: "", // honeypot — always empty
+        ...(category === "edtech" || category === "offline_institution"
+          ? { password: formData.password }
+          : {}),
       });
+
+      if (
+        isInitiateSignupResponse(result) &&
+        (category === "edtech" || category === "offline_institution")
+      ) {
+        const aux = {
+          googleContinuationToken: null as string | null,
+          planId: trialPlan.id,
+          billingCycle: "monthly" as const,
+        };
+        try {
+          sessionStorage.setItem(
+            selfSignupAuxStorageKey(result.token),
+            JSON.stringify(aux)
+          );
+        } catch {
+          /* ignore */
+        }
+        router.push(
+          `/signup/verify?token=${encodeURIComponent(result.token)}&category=${encodeURIComponent(category)}`
+        );
+        return;
+      }
 
       setSubmittedEmail(formData.email.trim().toLowerCase());
       setDirection("right");
@@ -346,7 +393,13 @@ export default function RegisterFlowClient() {
         const serverErrors = error.serverErrors ?? {};
         const fieldErrors: Record<string, string> = {};
         Object.entries(serverErrors).forEach(([field, msgs]) => {
-          fieldErrors[field === "subdomain" ? "institute_name" : field] = msgs[0] ?? "Invalid value";
+          const key =
+            field === "subdomain"
+              ? "institute_name"
+              : field === "password" || field === "password_confirm"
+                ? field
+                : field;
+          fieldErrors[key] = msgs[0] ?? "Invalid value";
         });
         if (Object.keys(fieldErrors).length > 0) {
           setErrors((prev) => ({ ...prev, ...fieldErrors }));
@@ -687,14 +740,59 @@ export default function RegisterFlowClient() {
                 }
               </div>
 
-              {/* Credential info — replaces password field */}
-              <div className={styles.credentialInfoBox}>
-                <Info size={16} className={styles.credentialInfoIcon} />
-                <span>
-                  After verifying your email, we&apos;ll send your login credentials
-                  to your email address. You can set a permanent password on first login.
-                </span>
-              </div>
+              {(category === "edtech" || category === "offline_institution") ? (
+                <>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="password" className={styles.label}>Create password</label>
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="new-password"
+                      minLength={10}
+                      className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
+                      value={formData.password}
+                      onChange={handleChange}
+                      aria-invalid={!!errors.password}
+                      aria-describedby={errors.password ? "password_error" : "password_helper"}
+                    />
+                    {errors.password ? (
+                      <span id="password_error" className={styles.errorText}>{errors.password}</span>
+                    ) : (
+                      <span id="password_helper" className={styles.helperText}>
+                        At least 10 characters. Used with your work email after you verify.
+                      </span>
+                    )}
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="password_confirm" className={styles.label}>Confirm password</label>
+                    <input
+                      id="password_confirm"
+                      name="password_confirm"
+                      type="password"
+                      autoComplete="new-password"
+                      className={`${styles.input} ${errors.password_confirm ? styles.inputError : ""}`}
+                      value={formData.password_confirm}
+                      onChange={handleChange}
+                      aria-invalid={!!errors.password_confirm}
+                      aria-describedby={errors.password_confirm ? "password_confirm_error" : undefined}
+                    />
+                    {errors.password_confirm && (
+                      <span id="password_confirm_error" className={styles.errorText}>
+                        {errors.password_confirm}
+                      </span>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <div className={styles.credentialInfoBox}>
+                  <Info size={16} className={styles.credentialInfoIcon} />
+                  <span>
+                    After verifying your email, we&apos;ll send your login credentials
+                    to your email address. You can set a permanent password on first login.
+                  </span>
+                </div>
+              )}
 
               {/* Submit */}
               <button

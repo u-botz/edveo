@@ -18,6 +18,63 @@ const CATEGORY_PREFIX: Record<TenantCategory, string> = {
   edtech: `${BASE_URL}/api/public/edtech-signup`,
 };
 
+// ─── Google OAuth continuation (Redis peek — S-1, no PII in redirect URL) ─────
+
+export type GoogleSignupContinuationCategory = TenantCategory;
+
+export interface GoogleSignupContinuationPayload {
+  name: string;
+  email: string;
+  category: GoogleSignupContinuationCategory;
+}
+
+/**
+ * GET /api/public/signup/continuation/{token} — peeks Redis payload for pre-fill (does not consume).
+ */
+export async function fetchGoogleSignupContinuation(
+  token: string
+): Promise<GoogleSignupContinuationPayload> {
+  const trimmed = token.trim();
+  const res = await fetch(
+    `${BASE_URL}/api/public/signup/continuation/${encodeURIComponent(trimmed)}`,
+    { headers: { Accept: "application/json" }, cache: "no-store" }
+  );
+  if (res.status === 404) {
+    const err = new Error("Session expired") as Error & { status: number };
+    err.status = 404;
+    throw err;
+  }
+  if (!res.ok) {
+    let msg = "Failed to load signup session";
+    try {
+      const j = (await res.json()) as { message?: string };
+      if (typeof j.message === "string") msg = j.message;
+    } catch {
+      /* ignore */
+    }
+    throw new Error(msg);
+  }
+  const json = (await res.json()) as { data?: Partial<GoogleSignupContinuationPayload> };
+  const d = json.data;
+  const cat = d?.category;
+  if (
+    !d ||
+    typeof d.name !== "string" ||
+    typeof d.email !== "string" ||
+    typeof cat !== "string"
+  ) {
+    throw new Error("Invalid signup session response");
+  }
+  if (
+    cat !== "standalone_teacher" &&
+    cat !== "offline_institution" &&
+    cat !== "edtech"
+  ) {
+    throw new Error("Invalid signup session response");
+  }
+  return { name: d.name, email: d.email, category: cat };
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface TrialPlan {
@@ -55,12 +112,137 @@ export interface TrialSignupPayload {
   captcha_token: string | null;
   website_url: string; // honeypot — always empty
   google_continuation_token?: string | null; // TSO-3 OAuth path
+  /** Required for edtech / offline `initiate` when `google_continuation_token` is absent (backend min 10). */
+  password?: string;
 }
 
+/** Teacher trial endpoint — enumeration-safe, no session token in body. */
 export interface TrialSignupResponse {
   message: string;
   status: "pending_verification";
   meta: { enumeration_safe: boolean };
+}
+
+/** Edtech / offline `initiate` — session key for verify-email + complete. */
+export interface InitiateSignupResponse {
+  token: string;
+  message: string;
+}
+
+export type SignupSubmitResult = TrialSignupResponse | InitiateSignupResponse;
+
+export function isInitiateSignupResponse(
+  r: SignupSubmitResult
+): r is InitiateSignupResponse {
+  return typeof (r as InitiateSignupResponse).token === "string";
+}
+
+/** sessionStorage key: `${prefix}${signupToken}` — holds plan + Google continuation for complete(). */
+export const SELF_SIGNUP_AUX_STORAGE_PREFIX = "edveo.self_signup.aux:";
+
+export type SelfSignupAuxPayload = {
+  googleContinuationToken: string | null;
+  planId: number;
+  billingCycle: "monthly" | "annual";
+};
+
+export function selfSignupAuxStorageKey(signupToken: string): string {
+  return `${SELF_SIGNUP_AUX_STORAGE_PREFIX}${signupToken}`;
+}
+
+export type InstitutionEmailVerifyCategory = "edtech" | "offline_institution";
+
+/**
+ * POST …/verify-email — moves signup to email_verified.
+ */
+export async function verifyInstitutionSignupEmail(
+  category: InstitutionEmailVerifyCategory,
+  signupToken: string,
+  emailVerificationCode: string
+): Promise<{ token: string; status: string }> {
+  const prefix = CATEGORY_PREFIX[category];
+  const res = await fetch(`${prefix}/verify-email`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      token: signupToken,
+      email_verification_code: emailVerificationCode,
+    }),
+  });
+  const json = (await res.json()) as { token?: string; status?: string; message?: string };
+  if (!res.ok) {
+    throw new Error(json?.message ?? "Verification failed");
+  }
+  if (!json.token || !json.status) {
+    throw new Error("Unexpected verification response");
+  }
+  return { token: json.token, status: json.status };
+}
+
+export type CompleteSignupProvisionedResponse = {
+  status: "provisioned";
+  dashboard_url: string;
+};
+
+export type CompleteSignupPendingPaymentResponse = {
+  status: "pending_payment";
+  razorpay_order_id: string;
+  amount_paise: number;
+  key_id: string;
+  currency: string;
+};
+
+/**
+ * POST …/complete — provisions tenant (trial) or returns Razorpay order (paid).
+ */
+export async function completeInstitutionSignup(
+  category: InstitutionEmailVerifyCategory,
+  body: {
+    token: string;
+    plan_id: number;
+    billing_cycle: "monthly" | "annual";
+    google_continuation_token?: string | null;
+  }
+): Promise<CompleteSignupProvisionedResponse | CompleteSignupPendingPaymentResponse> {
+  const prefix = CATEGORY_PREFIX[category];
+  const res = await fetch(`${prefix}/complete`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  const json = (await res.json()) as Record<string, unknown>;
+  if (!res.ok) {
+    throw new Error(
+      typeof json.message === "string"
+        ? json.message
+        : "Could not complete signup"
+    );
+  }
+  if (json.status === "provisioned" && typeof json.dashboard_url === "string") {
+    return {
+      status: "provisioned",
+      dashboard_url: json.dashboard_url,
+    };
+  }
+  if (
+    json.status === "pending_payment" &&
+    typeof json.razorpay_order_id === "string"
+  ) {
+    return {
+      status: "pending_payment",
+      razorpay_order_id: json.razorpay_order_id,
+      amount_paise: Number(json.amount_paise),
+      key_id: String(json.key_id ?? ""),
+      currency: String(json.currency ?? ""),
+    };
+  }
+  throw new Error("Unexpected complete response");
 }
 
 export interface ApiValidationError extends Error {
@@ -135,7 +317,7 @@ export async function checkSubdomainForCategory(
 export async function submitSignup(
   category: TenantCategory,
   payload: TrialSignupPayload
-): Promise<TrialSignupResponse> {
+): Promise<SignupSubmitResult> {
   const prefix = CATEGORY_PREFIX[category];
   const CATEGORY_SUBMIT_ENDPOINT: Record<TenantCategory, string> = {
     standalone_teacher: "trial",
@@ -168,7 +350,7 @@ export async function submitSignup(
     throw new Error(json?.message ?? "Registration failed. Please try again.");
   }
 
-  return json as TrialSignupResponse;
+  return json as SignupSubmitResult;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

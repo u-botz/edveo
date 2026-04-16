@@ -10,6 +10,9 @@ import {
   checkSubdomainForCategory,
   submitSignup,
   generateIdempotencyKey,
+  isInitiateSignupResponse,
+  selfSignupAuxStorageKey,
+  fetchGoogleSignupContinuation,
   type TenantCategory,
   type TrialPlan,
   type InstitutionType,
@@ -26,22 +29,51 @@ export default function SignupContinueClient() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Read from query params
+  /** Opaque Redis continuation id (never put name/email in the URL — S-1). */
   const googleToken = searchParams.get("token") ?? "";
-  const rawCategory = searchParams.get("category") ?? "";
-  const prefillName = decodeURIComponent(searchParams.get("name") ?? "");
-  const prefillEmail = decodeURIComponent(searchParams.get("email") ?? "");
+  const [continuationPhase, setContinuationPhase] = useState<
+    "loading" | "ready" | "error"
+  >("loading");
+  const [category, setCategory] = useState<TenantCategory | null>(null);
+  const [prefillName, setPrefillName] = useState("");
+  const [prefillEmail, setPrefillEmail] = useState("");
 
-  const category = VALID_CATEGORIES.includes(rawCategory as TenantCategory)
-    ? (rawCategory as TenantCategory)
-    : null;
-
-  // Redirect if invalid params
   useEffect(() => {
-    if (!category || !googleToken) {
+    if (!googleToken.trim()) {
       router.replace("/register?error=session_expired");
     }
-  }, [category, googleToken, router]);
+  }, [googleToken, router]);
+
+  useEffect(() => {
+    if (!googleToken.trim()) return;
+    let cancelled = false;
+    setContinuationPhase("loading");
+    (async () => {
+      try {
+        const payload = await fetchGoogleSignupContinuation(googleToken);
+        if (cancelled) return;
+        if (!VALID_CATEGORIES.includes(payload.category)) {
+          setContinuationPhase("error");
+          return;
+        }
+        setCategory(payload.category);
+        setPrefillName(payload.name);
+        setPrefillEmail(payload.email);
+        setContinuationPhase("ready");
+      } catch {
+        if (!cancelled) setContinuationPhase("error");
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [googleToken, router]);
+
+  useEffect(() => {
+    if (continuationPhase === "error") {
+      router.replace("/register?error=session_expired");
+    }
+  }, [continuationPhase, router]);
 
   // State
   const [step, setStep] = useState<"form" | "success">("form");
@@ -62,9 +94,10 @@ export default function SignupContinueClient() {
   const idempotencyKeyRef = useRef<string>(generateIdempotencyKey());
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Bootstrap
+  // Bootstrap plans / institution types after continuation is resolved
   useEffect(() => {
-    if (!category) return;
+    if (!category || continuationPhase !== "ready") return;
+    setLoading(true);
     (async () => {
       try {
         const tasks: Promise<unknown>[] = [fetchPlansForCategory(category)];
@@ -86,7 +119,7 @@ export default function SignupContinueClient() {
         setLoading(false);
       }
     })();
-  }, [category]);
+  }, [category, continuationPhase]);
 
   // Slug generation from subdomain input
   useEffect(() => {
@@ -111,7 +144,7 @@ export default function SignupContinueClient() {
 
   // Subdomain check
   const checkSub = useCallback(async (s: string) => {
-    if (!s || s.length < 2 || !category) return;
+    if (!s || s.length < 2 || !category || continuationPhase !== "ready") return;
     setSubdomainStatus("checking");
     try {
       const result = await checkSubdomainForCategory(category, s);
@@ -120,7 +153,7 @@ export default function SignupContinueClient() {
     } catch {
       setSubdomainStatus("error");
     }
-  }, [category]);
+  }, [category, continuationPhase]);
 
   useEffect(() => {
     if (!slug) return;
@@ -130,6 +163,7 @@ export default function SignupContinueClient() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!category || continuationPhase !== "ready") return;
     const newErrors: Record<string, string> = {};
     if (!slug || slug.length < 2) newErrors.subdomain = "Required — min 2 characters";
     if (subdomainStatus === "taken") {
@@ -149,7 +183,7 @@ export default function SignupContinueClient() {
 
     setIsSubmitting(true);
     try {
-      await submitSignup(category!, {
+      const result = await submitSignup(category, {
         name: prefillName,
         email: prefillEmail,
         phone: "",           // not collected in Google path
@@ -163,6 +197,31 @@ export default function SignupContinueClient() {
         website_url: "",
         google_continuation_token: googleToken,
       });
+
+      // Edtech / offline initiate returns a 64-char session token required for verify-email + complete.
+      if (
+        isInitiateSignupResponse(result) &&
+        (category === "edtech" || category === "offline_institution")
+      ) {
+        const aux = {
+          googleContinuationToken: googleToken || null,
+          planId: trialPlan.id,
+          billingCycle: "monthly" as const,
+        };
+        try {
+          sessionStorage.setItem(
+            selfSignupAuxStorageKey(result.token),
+            JSON.stringify(aux)
+          );
+        } catch {
+          /* private / quota — URL still carries signup token */
+        }
+        router.replace(
+          `/signup/verify?token=${encodeURIComponent(result.token)}&category=${encodeURIComponent(category)}`
+        );
+        return;
+      }
+
       setStep("success");
       window.scrollTo(0, 0);
     } catch (err: unknown) {
@@ -186,7 +245,28 @@ export default function SignupContinueClient() {
     }
   };
 
-  if (!category) return null; // redirect in progress
+  if (continuationPhase === "loading") {
+    return (
+      <div className={styles.pageWrapper}>
+        <header className={`${styles.header} ${styles.headerCenter}`}>
+          <div className={styles.logo}>edveo</div>
+        </header>
+        <main className={styles.mainContent}>
+          <div className={`${styles.screenContainer} ${styles.slideInRight}`}>
+            <div className={styles.loadingShimmer} style={{ height: 120, marginBottom: 24 }} />
+            <p className={styles.subheading} style={{ textAlign: "center" }}>
+              <Loader2 className={styles.spinner} size={18} style={{ display: "inline", verticalAlign: "middle", marginRight: 8 }} />
+              Resuming your Google sign-in…
+            </p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (continuationPhase === "error" || !category) {
+    return null;
+  }
 
   const tenantDomain = process.env.NEXT_PUBLIC_TENANT_DOMAIN ?? "educoreos.com";
 
@@ -272,6 +352,7 @@ export default function SignupContinueClient() {
                   setSubdomain(e.target.value);
                   if (errors.subdomain) setErrors((p) => { const n = { ...p }; delete n.subdomain; return n; });
                 }}
+                disabled={loading || isSubmitting}
                 aria-invalid={!!errors.subdomain}
               />
               {errors.subdomain && (
@@ -317,7 +398,7 @@ export default function SignupContinueClient() {
                     className={`${styles.select} ${errors.institution_type_id ? styles.inputError : ""}`}
                     value={institutionTypeId}
                     onChange={(e) => setInstitutionTypeId(e.target.value)}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || loading}
                   >
                     <option value="" disabled>Select your institution type…</option>
                     {institutionTypes.map((t) => (
@@ -334,7 +415,12 @@ export default function SignupContinueClient() {
             <button
               type="submit"
               className={styles.primaryButton}
-              disabled={isSubmitting || loading || subdomainStatus === "taken"}
+              disabled={
+                isSubmitting ||
+                loading ||
+                subdomainStatus === "taken" ||
+                continuationPhase !== "ready"
+              }
             >
               {isSubmitting ? (
                 <><Loader2 className={styles.spinner} size={20} /> Setting up…</>
