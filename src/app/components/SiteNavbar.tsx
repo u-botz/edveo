@@ -1,6 +1,5 @@
 import Link from "next/link";
 import EdveoLogo from "./EdveoLogo";
-import SegmentNav from "./SegmentNav";
 import styles from "./siteNavbar.module.css";
 
 export type NavPage = "home" | "solutions" | "pricing" | "resources" | "about" | "contact";
@@ -12,7 +11,6 @@ type Props = {
 export default function SiteNavbar({ activePage }: Props) {
   return (
     <div className={styles.stickyWrapper}>
-      <SegmentNav active="teachers" />
       <nav className={styles.navbar}>
         <Link href="/" className={styles.navBrand}>
           <EdveoLogo variant="nav" />

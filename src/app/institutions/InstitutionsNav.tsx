@@ -1,31 +1,55 @@
-"use client";
-
 import Link from "next/link";
 import EdveoLogo from "../components/EdveoLogo";
-import SegmentNav from "../components/SegmentNav";
-import styles from "./institutions.module.css";
+import styles from "../components/siteNavbar.module.css";
 
-export default function InstitutionsNav() {
-  function handlePrintPdf() {
-    window.print();
-  }
+export type NavPage = "solutions" | "pricing" | "about" | "contact";
 
+type Props = {
+  activePage?: NavPage;
+};
+
+export default function InstitutionsNav({ activePage }: Props) {
   return (
-    <div className={styles.instNavHeaderSticky}>
-      <SegmentNav active="institutions" />
-      <nav className={styles.instNav}>
-        <div className={styles.instNavInner}>
-          <Link href="/" className={styles.instLogoLink}>
-            <EdveoLogo variant="navCompact" />
+    <div className={styles.stickyWrapper}>
+      <nav className={styles.navbar}>
+        <Link href="/" className={styles.navBrand}>
+          <EdveoLogo variant="nav" />
+        </Link>
+
+        <div className={styles.navLinks}>
+          <Link
+            href="/institutions#features"
+            className={activePage === "solutions" ? styles.navLinkActive : undefined}
+          >
+            Features
           </Link>
-          <div className={styles.instNavActions}>
-            <Link href="/" className={`${styles.instNavHome} ${styles.noPrint}`}>
-              Home
-            </Link>
-            <button type="button" className={`${styles.instNavPdf} ${styles.noPrint}`} onClick={handlePrintPdf}>
-              Download as PDF
-            </button>
-          </div>
+          <Link
+            href="/institutions#pricing"
+            className={activePage === "pricing" ? styles.navLinkActive : undefined}
+          >
+            Pricing
+          </Link>
+          <Link
+            href="/about"
+            className={activePage === "about" ? styles.navLinkActive : undefined}
+          >
+            About
+          </Link>
+          <Link
+            href="/contact"
+            className={activePage === "contact" ? styles.navLinkActive : undefined}
+          >
+            Contact
+          </Link>
+        </div>
+
+        <div className={styles.navActions}>
+          <Link href="/login" className={styles.btnLogin}>
+            Login
+          </Link>
+          <Link href="/register" className={styles.btnTrial}>
+            Book a Demo
+          </Link>
         </div>
       </nav>
     </div>

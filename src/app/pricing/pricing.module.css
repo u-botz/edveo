@@ -298,10 +298,25 @@
   color: #fff;
 }
 
+.ctaPopular {
+  background: #fff;
+  color: #0d2d4e;
+  border: none;
+}
+
+.ctaPopular:hover {
+  background: #f0f4f8;
+}
+
 .ctaOutline {
   background: transparent;
-  border: 1.5px solid rgba(13, 45, 78, 0.3);
+  border: 1.5px solid rgba(13, 45, 78, 0.25);
   color: #0d2d4e;
+}
+
+.ctaOutline:hover {
+  border-color: rgba(13, 45, 78, 0.5);
+  background: rgba(13, 45, 78, 0.03);
 }
 
 .ctaSub {

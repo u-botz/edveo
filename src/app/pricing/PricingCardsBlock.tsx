@@ -143,7 +143,7 @@ export default function PricingCardsBlock({
             <div className={styles.priceBlock}>
               <PriceArea billing={billing} monthly="₹1,999" annual="₹1,666" />
             </div>
-            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaOutline}`}>
               Start Free Trial
             </Link>
             <p className={styles.ctaSub}>14-day free trial · No credit card</p>
@@ -176,7 +176,7 @@ export default function PricingCardsBlock({
             <div className={styles.priceBlock}>
               <PriceArea billing={billing} monthly="₹4,999" annual="₹4,166" />
             </div>
-            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGreen}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaPopular}`}>
               Get Started
             </Link>
             <p className={styles.ctaSub}>14-day free trial · No credit card</p>
@@ -244,7 +244,7 @@ export default function PricingCardsBlock({
                 <span className={styles.perMonth}>/month</span>
               </div>
             </div>
-            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGreen} ${styles.ctaFullNoSub}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaOutline} ${styles.ctaFullNoSub}`}>
               Get Started Free
             </Link>
             <div className={styles.divider} />
@@ -275,7 +275,7 @@ export default function PricingCardsBlock({
             <div className={styles.priceBlock}>
               <PriceArea billing={billing} monthly="₹999" annual="₹832" />
             </div>
-            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaPopular}`}>
               Start Free Trial
             </Link>
             <p className={styles.ctaSub}>14-day free trial · No credit card</p>
@@ -304,7 +304,7 @@ export default function PricingCardsBlock({
             <div className={styles.priceBlock}>
               <PriceArea billing={billing} monthly="₹2,499" annual="₹2,082" />
             </div>
-            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaGradient}`}>
+            <Link href="/register" className={`${styles.ctaFull} ${styles.ctaOutline}`}>
               Start Free Trial
             </Link>
             <p className={styles.ctaSub}>14-day free trial · No credit card</p>

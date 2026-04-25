@@ -246,6 +246,59 @@
   font-family: var(--font-data);
 }
 
+/* Trust strip */
+.trustStrip {
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 16px 24px;
+}
+
+.trustStripInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+.trustStripItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.trustStripItem svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.trustStripDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .trustStripDot {
+    display: none;
+  }
+
+  .trustStripInner {
+    justify-content: flex-start;
+    gap: 10px 16px;
+  }
+}
+
 /* Pillars Section — bottom padding separates card row from timeline (visual rhythm) */
 .pillarsSection.section,
 .pillarsSection {

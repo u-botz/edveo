@@ -10,8 +10,11 @@ type Props = {
   href?: string;
 };
 
+// TODO: replace with real WhatsApp business number before go-live
+const WA_HREF = "https://wa.me/919999999999";
+
 export default function WhatsAppFloat({
-  href = "https://wa.me/91XXXXXXXXXX",
+  href = WA_HREF,
 }: Props) {
   return (
     <>
@@ -24,8 +27,8 @@ export default function WhatsAppFloat({
           width: 56px;
           height: 56px;
           border-radius: 50%;
-          background-color: #25d366;
-          box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+          background-color: #2eaa6e;
+          box-shadow: 0 8px 24px rgba(46, 170, 110, 0.35);
           display: flex;
           align-items: center;
           justify-content: center;

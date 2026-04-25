@@ -4,7 +4,6 @@ import SiteFooter from "./components/SiteFooter";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import CtaBanner from "./components/CtaBanner";
 import HeroSection from "./components/HeroSection";
-import HomePricingSection from "./components/HomePricingSection";
 
 export default function Home() {
   return (
@@ -14,16 +13,47 @@ export default function Home() {
       {/* Hero */}
       <HeroSection />
 
+      {/* Trust bar — honest early-stage signals, no fake logos */}
+      <div className={styles.trustStrip}>
+        <div className={styles.trustStripInner}>
+          <div className={styles.trustStripItem}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Data stored in India</span>
+          </div>
+          <span className={styles.trustStripDot} aria-hidden />
+          <div className={styles.trustStripItem}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M7 10h4M7 14h10" strokeLinecap="round"/></svg>
+            <span>Payments via Razorpay</span>
+          </div>
+          <span className={styles.trustStripDot} aria-hidden />
+          <div className={styles.trustStripItem}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+            <span>14-day free trial, no card needed</span>
+          </div>
+          <span className={styles.trustStripDot} aria-hidden />
+          <div className={styles.trustStripItem}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <span>Go live in under 5 minutes</span>
+          </div>
+          <span className={styles.trustStripDot} aria-hidden />
+          <div className={styles.trustStripItem}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Built in India, for Indian educators</span>
+          </div>
+        </div>
+      </div>
+
+
       {/* Pillars — Edveo Intelligence (AI-first) */}
       <section className={`${styles.section} ${styles.pillarsSection}`}>
         <div className={styles.container}>
           <h2 className={`${styles.textCenter} ${styles.sectionTitleWithLine} ${styles.pillarsHeadlineAi}`}>
-            <span style={{ color: "#111827", display: "block" }}>Meet Edveo Intelligence.</span>
+            <span style={{ color: "#111827", display: "block" }}>Meet Edveo Intelligence™</span>
             <span style={{ color: "var(--accent)" }}>AI Built Into Everything You Do.</span>
           </h2>
           <p className={styles.pillarsSubhead}>
             Not a chatbot. Not a bolt-on feature.<br />
-            AI that runs your courses, your revenue, and your students —
+            <strong style={{ color: "#111827" }}>Runs your entire academy — not just your sales funnel.</strong>
           </p>
           <div className={styles.pillarsGrid}>
             <div className={styles.pillarCard}>
@@ -199,89 +229,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Comparison Section */}
-      <section className={styles.comparisonSection}>
-        <div className={styles.container}>
-          <div className={styles.compareHeader}>
-            <h2 className={styles.compareTitle}>The only platform that runs your entire institute — not just your content.</h2>
-            <p className={styles.compareSubtitle}>Classplus gives you courses. Classpro gives you operations. <strong>Edveo gives you both.</strong></p>
-          </div>
-
-          <div className={styles.tableWrapper}>
-            <table className={styles.competitorTable}>
-              <thead>
-                <tr>
-                  <th className={styles.colFeature}>Feature</th>
-                  <th className={styles.colEdveo}>Edveo</th>
-                  <th>Classplus</th>
-                  <th>Learnyst</th>
-                  <th>Classpro</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className={styles.featureName}>LMS + ERP + CRM in one platform</td>
-                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                </tr>
-                <tr>
-                  <td className={styles.featureName}>Attendance &amp; Timetable</td>
-                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.check}>✓</span></td>
-                </tr>
-                <tr>
-                  <td className={styles.featureName}>CRM / Lead Pipeline</td>
-                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.check}>✓</span></td>
-                </tr>
-                <tr>
-                  <td className={styles.featureName}>Online Course Delivery</td>
-                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                </tr>
-                <tr>
-                  <td className={styles.featureName}>Fee Collection</td>
-                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.partial}>Partial</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.check}>✓</span></td>
-                </tr>
-                <tr>
-                  <td className={styles.featureName}>Parent Portal</td>
-                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.check}>✓</span></td>
-                </tr>
-                <tr>
-                  <td className={styles.featureName}>WhatsApp Integration</td>
-                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.partial}>Partial</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                  <td><span className={styles.check}>✓</span></td>
-                </tr>
-                <tr>
-                  <td className={styles.featureName}>Custom Domain</td>
-                  <td className={styles.cellEdveo}><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.check}>✓</span></td>
-                  <td><span className={styles.checkLabel}>✓ (paid)</span></td>
-                  <td><span className={styles.cross}>✗</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-
       {/* Ecosystem Section */}
       <section className={styles.ecosystemSection}>
         <div className={styles.container}>
@@ -339,8 +286,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <HomePricingSection />
 
       <CtaBanner
         variant="dark"

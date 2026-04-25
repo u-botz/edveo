@@ -6,36 +6,22 @@ const NAV_COLS = [
     title: "Product",
     links: [
       { label: "Solutions", href: "/solutions" },
-      { label: "LMS Suite", href: "#" },
-      { label: "Fee Management", href: "#" },
-      { label: "Student CRM", href: "#" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "For Institutions", href: "/institutions" },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "Careers", href: "#" },
-      { label: "Blog", href: "#" },
       { label: "Contact", href: "/contact" },
-    ],
-  },
-  {
-    title: "Support",
-    links: [
-      { label: "Help Center", href: "#" },
-      { label: "Documentation", href: "#" },
-      { label: "API Status", href: "#" },
-      { label: "Tutorials", href: "#" },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Service", href: "#" },
-      { label: "Cookie Policy", href: "#" },
-      { label: "Compliance", href: "#" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
     ],
   },
 ] as const;
@@ -51,8 +37,8 @@ export default function SiteFooter() {
               <EdveoLogo variant="footer" />
             </a>
             <p className={styles.footerDesc}>
-              Transforming Education for Indian Coaching Institutes. Connecting
-              workflow, elevating results, and managing scale smoothly.
+              The AI-native platform built for every Indian educator — whether you
+              teach online, run an edtech, or manage a coaching institute.
             </p>
           </div>
 
@@ -71,7 +57,7 @@ export default function SiteFooter() {
 
         <div className={styles.footerBottom}>
           <div>
-            © 2024 Edveo Technologies Pvt Ltd. Proudly built for Indian
+            © 2026 Edveo Technologies Pvt Ltd. Proudly built for Indian
             educators.
           </div>
         </div>

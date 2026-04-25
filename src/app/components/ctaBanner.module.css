@@ -128,14 +128,14 @@
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
-  background: #25d366;
+  background: var(--accent);
   color: #fff;
   text-decoration: none;
 }
 
 .btnSecondary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.35);
+  box-shadow: 0 10px 28px rgba(46, 170, 110, 0.30);
 }
 
 /* Trust line below buttons */

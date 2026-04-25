@@ -24,14 +24,14 @@
 .heroContainer {
   position: relative;
   z-index: 1;
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 60px 40px 48px;   /* Fix 3: 60px top — badges start ≤80px below nav */
+  padding: 60px 48px 64px;
   width: 100%;
   display: grid;
-  grid-template-columns: 55fr 45fr;
-  gap: 48px;
-  align-items: stretch;      /* Fix 2: both cells same height so center works */
+  grid-template-columns: 46fr 54fr;
+  gap: 56px;
+  align-items: center;
 }
 
 /* ═══════════════════════════════════════
@@ -43,57 +43,6 @@
   flex-direction: column;
   align-items: flex-start;
   max-width: 600px;           /* Issue 3: wider to fit both badges side-by-side */
-}
-
-/* Fix 1 — badges always side by side on desktop */
-.badgeRow {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border-radius: 9999px;
-  padding: 6px 14px;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.badgeImageNavy {
-  background: #1E293B;
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 8px 16px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.iconYellow {
-  color: #FBBF24;
-}
-
-.heroPreHeadline {
-  font-family: var(--font-display);
-  font-size: clamp(20px, 2.5vw, 24px);
-  font-weight: 700;
-  color: #111827;
-  margin-top: 24px;
-  margin-bottom: 8px;
 }
 
 /* ── Headline ── */
@@ -142,87 +91,118 @@
   margin: 0 0 0 0;
 }
 
-/* Fix 4 — wider max-width so text fits on one line */
-.aiLine {
+/* ── Eyebrow ── */
+.heroEyebrow {
   font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 500;
-  color: #111827;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 12px 0;
-  margin: 16px 0 24px 0;
-  max-width: 560px;
-  width: 100%;
-  white-space: nowrap;        /* Fix 4: prevent wrapping on desktop */
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.aiIcon {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--accent);
-  font-size: 14px;
+  margin: 0 0 20px 0;
 }
 
-/* ── CTA Buttons ── */
-.ctaRow {
+/* ── Audience path cards ── */
+.audienceCards {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
+  margin: 28px 0 20px;
+  width: 100%;
+  max-width: 520px;
 }
 
-.btnPrimary {
-  display: inline-flex;
+.audienceCard {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  background: var(--primary);
-  color: #ffffff;
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 600;
-  padding: 14px 28px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(13, 45, 78, 0.10);
+  background: #ffffff;
   text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  cursor: pointer;
 }
 
-.btnPrimary:hover {
-  background: #1a4a6e;
+.audienceCard:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(46, 170, 110, 0.12);
+  transform: translateY(-2px);
 }
 
-.btnPrimary:hover .btnArrow {
+.audienceCardIcon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.audienceCardIcon[data-variant="teachers"] {
+  background: #EAF4FD;
+  color: var(--primary);
+}
+
+.audienceCardIcon[data-variant="edtech"] {
+  background: #FDF4EA;
+  color: #92400E;
+}
+
+.audienceCardIcon[data-variant="institutions"] {
+  background: #EDFBF4;
+  color: var(--secondary);
+}
+
+.audienceCard:hover .audienceCardIcon[data-variant="teachers"] {
+  background: #d6eaf8;
+}
+
+.audienceCard:hover .audienceCardIcon[data-variant="edtech"] {
+  background: #fde8c8;
+}
+
+.audienceCard:hover .audienceCardIcon[data-variant="institutions"] {
+  background: #d5f5e3;
+}
+
+.audienceCardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.audienceCardTitle {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.3;
+}
+
+.audienceCardDesc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.audienceCardArrow {
+  flex-shrink: 0;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.audienceCard:hover .audienceCardArrow {
+  color: var(--accent);
   transform: translateX(3px);
-}
-
-.btnArrow {
-  display: inline-block;
-  transition: transform 0.2s ease;
-}
-
-/* FIX 5 — 2px border, 18px icon, correct green */
-.btnSecondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: transparent;
-  color: #2EAA6E;
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 600;
-  padding: 14px 28px;
-  border-radius: 8px;
-  border: 2px solid #2EAA6E;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-  text-decoration: none;
-}
-
-.btnSecondary:hover {
-  background: #2EAA6E;
-  color: #ffffff;
 }
 
 /* ── Micro-copy ── */
@@ -268,6 +248,7 @@
 .mockWrap {
   position: relative;
   width: 100%;
+  min-width: 420px;
 }
 
 /* ── Dashboard frame — FIX 6: explicit shadow ── */
@@ -320,8 +301,8 @@
 /* ── App body ── */
 .appBody {
   display: grid;
-  grid-template-columns: 130px 1fr;
-  min-height: 280px;
+  grid-template-columns: 160px 1fr;
+  min-height: 380px;
 }
 
 /* ── Sidebar ── */
@@ -332,12 +313,12 @@
 
 .sideGroupLabel {
   font-family: var(--font-body);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.3);
-  padding: 8px 14px 4px;
+  padding: 10px 16px 5px;
 }
 
 .sideNavDivider {
@@ -348,27 +329,27 @@
 
 .sideItem {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 13px;
   color: rgba(255, 255, 255, 0.45);
-  padding: 7px 14px;
+  padding: 8px 16px;
 }
 
 .sideItemActive {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: #ffffff;
-  padding: 7px 12px;
+  padding: 8px 14px;
   border-left: 2px solid var(--accent);
   background: rgba(46, 170, 110, 0.08);
 }
 
 /* ── Main content area ── */
 .dashMain {
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 /* ── Stat cards — 2 cards only (Issue 7: prevent cramping) ── */
@@ -381,31 +362,31 @@
 .statCard {
   background: rgba(255, 255, 255, 0.06);
   border-radius: 8px;
-  padding: 12px;
+  padding: 16px;
 }
 
 .statLabel {
   font-family: var(--font-body);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .statValue {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 700;
   color: #ffffff;
   line-height: 1.1;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .statSub {
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--accent);
   line-height: 1.3;
 }
@@ -420,7 +401,7 @@
 .courseRow {
   background: rgba(255, 255, 255, 0.04);
   border-radius: 6px;
-  padding: 10px 12px;
+  padding: 12px 14px;
 }
 
 .courseTop {
@@ -432,7 +413,7 @@
 
 .courseName {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
 }
@@ -553,31 +534,17 @@
    RESPONSIVE
    ═══════════════════════════════════════ */
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .heroContainer {
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    padding: 40px 32px;
-  }
-
-  .headlineLine1,
-  .headlineLine2 {
-    white-space: normal;
+    gap: 36px;
+    padding: 48px 32px 56px;
   }
 }
 
-@media (max-width: 768px) {
-  .heroSection::before {
-    background: #ffffff;
-  }
-
-  .heroSection {
-    min-height: unset;
-  }
-
+@media (max-width: 900px) {
   .heroContainer {
     grid-template-columns: 1fr;
-    padding: 40px 20px 32px;
+    padding: 40px 24px 48px;
     gap: 40px;
   }
 
@@ -588,29 +555,39 @@
   .headlineLine1,
   .headlineLine2,
   .headlineLine3 {
-    font-size: clamp(32px, 8vw, 42px);
+    font-size: clamp(32px, 8vw, 48px);
     white-space: normal;
   }
 
-  /* badges wrap to column only on very narrow mobile */
+  .mockWrap {
+    min-width: 0;
+  }
 
   .floatAi {
     display: none;
   }
 
   .heroRight {
-    padding: 16px 0 28px;
+    padding: 0 0 32px;
   }
 }
 
 @media (max-width: 480px) {
-  .ctaRow {
-    flex-direction: column;
+  .heroContainer {
+    padding: 32px 16px 40px;
   }
 
-  .btnPrimary,
-  .btnSecondary {
-    width: 100%;
-    justify-content: center;
+  .audienceCards {
+    max-width: 100%;
+  }
+
+  .audienceCard {
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .appBody {
+    grid-template-columns: 120px 1fr;
+    min-height: 280px;
   }
 }
