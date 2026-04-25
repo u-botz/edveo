@@ -387,59 +387,24 @@ function EdtechContent() {
       {/* ── Section 6: Pricing ── */}
       <section id="pricing" className={`${styles.section} ${styles.sectionAlt}`}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Pricing Built for Scale.</h2>
-          <p className={styles.pricingSub}>No revenue cut. No per-student fees. One flat subscription that scales with you.</p>
-          <div className={styles.priceGrid}>
-            <div className={styles.priceCard}>
-              <div className={styles.priceTier}>Startup</div>
-              <div className={styles.priceAmount}>₹4,999/mo</div>
-              <ul>
-                <li>Up to 500 students</li>
-                <li>5 instructors</li>
-                <li>LMS + CRM</li>
-                <li>Razorpay payment collection</li>
-                <li>AI lead scoring</li>
-                <li>Revenue analytics</li>
-              </ul>
-              <Link href="/register" className={styles.priceBtn}>
+          <div className={styles.pricingTeaser}>
+            <p className={styles.pricingTeaserEyebrow}>PRICING</p>
+            <h2 className={styles.pricingTeaserTitle}>Flat subscription. Unlimited students. No per-seat fee.</h2>
+            <p className={styles.pricingTeaserSub}>
+              No revenue cut. No per-student fees. One price that scales with you — not against you.
+              <br />
+              All plans include <strong>Edveo Intelligence™</strong> AI across every module.
+            </p>
+            <div className={styles.pricingTeaserActions}>
+              <Link href="/pricing?segment=online" className={styles.pricingTeaserBtn}>
+                See Full Pricing →
+              </Link>
+              <Link href="/register" className={styles.pricingTeaserGhost}>
                 Start Free Trial
               </Link>
             </div>
-            <div className={`${styles.priceCard} ${styles.priceCardFeatured}`}>
-              <div className={styles.priceTier}>Growth</div>
-              <div className={styles.priceAmount}>₹9,999/mo</div>
-              <ul>
-                <li>Up to 5,000 students</li>
-                <li>Unlimited instructors</li>
-                <li>Everything in Startup</li>
-                <li>White-label branding</li>
-                <li>Custom domain</li>
-                <li>Advanced cohort analytics</li>
-                <li>Priority support SLA</li>
-              </ul>
-              <Link href="/register" className={styles.priceBtn}>
-                Start Free Trial
-              </Link>
-            </div>
-            <div className={styles.priceCard}>
-              <div className={styles.priceTier}>Scale</div>
-              <div className={styles.priceAmount}>Custom</div>
-              <ul>
-                <li>Unlimited students</li>
-                <li>Unlimited instructors</li>
-                <li>Everything in Growth</li>
-                <li>Dedicated infrastructure</li>
-                <li>Enterprise SLA + SLO</li>
-                <li>Dedicated account manager</li>
-              </ul>
-              <button type="button" className={`${styles.priceBtn} ${styles.priceBtnOutline}`}>
-                Contact Sales
-              </button>
-            </div>
+            <p className={styles.pricingTeaserNote}>14-day free trial · No credit card · Cancel anytime</p>
           </div>
-          <p className={styles.priceReassure}>
-            All plans include <strong>Edveo Intelligence™</strong> AI — no add-ons. Data stays in India.
-          </p>
         </div>
       </section>
 

@@ -321,47 +321,24 @@ export default function InstitutionsSalesContent() {
       {/* ── Section 6: Pricing ── */}
       <section id="pricing" className={`${styles.section} ${styles.sectionAlt}`}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Simple Pricing. No Hidden Fees.</h2>
-          <p className={styles.pricingSub}>No setup fee. No implementation charge. Cancel anytime.</p>
-          <div className={styles.priceGrid}>
-            <div className={styles.priceCard}>
-              <div className={styles.priceTier}>Starter</div>
-              <div className={styles.priceAmount}>₹3,499/mo</div>
-              <ul>
-                <li>Up to 200 students</li>
-                <li>LMS + ERP + CRM</li>
-                <li>Fee collection + attendance</li>
-                <li>Digital timetable</li>
-              </ul>
-              <Link href="/register" className={styles.priceBtn}>Start Free Trial</Link>
+          <div className={styles.pricingTeaser}>
+            <p className={styles.pricingTeaserEyebrow}>PRICING</p>
+            <h2 className={styles.pricingTeaserTitle}>Simple pricing. No setup fee. No implementation charge.</h2>
+            <p className={styles.pricingTeaserSub}>
+              One flat subscription covers LMS + ERP + CRM — no module pricing, no hidden fees.
+              <br />
+              All plans include <strong>Edveo Intelligence™</strong> AI across every module.
+            </p>
+            <div className={styles.pricingTeaserActions}>
+              <Link href="/pricing?segment=online" className={styles.pricingTeaserBtn}>
+                See Full Pricing →
+              </Link>
+              <Link href="/register" className={styles.pricingTeaserGhost}>
+                Start Free Trial
+              </Link>
             </div>
-            <div className={`${styles.priceCard} ${styles.priceCardFeatured}`}>
-              <div className={styles.priceTier}>Professional</div>
-              <div className={styles.priceAmount}>₹6,999/mo</div>
-              <ul>
-                <li>Up to 1,000 students</li>
-                <li>Everything in Starter</li>
-                <li>WhatsApp CRM + AI scoring</li>
-                <li>Multi-batch management</li>
-              </ul>
-              <Link href="/register" className={styles.priceBtn}>Start Free Trial</Link>
-            </div>
-            <div className={styles.priceCard}>
-              <div className={styles.priceTier}>Business</div>
-              <div className={styles.priceAmount}>₹12,999/mo</div>
-              <ul>
-                <li>Unlimited students</li>
-                <li>Everything in Pro</li>
-                <li>Multi-branch + dedicated AM</li>
-                <li>White-label app</li>
-                <li>Priority support SLA</li>
-              </ul>
-              <button type="button" className={`${styles.priceBtn} ${styles.priceBtnOutline}`}>Contact Sales</button>
-            </div>
+            <p className={styles.pricingTeaserNote}>14-day free trial · No credit card · Cancel anytime</p>
           </div>
-          <p className={styles.priceReassure}>
-            All plans include <strong>Edveo Intelligence™</strong> — AI across every module. No add-ons.
-          </p>
         </div>
       </section>
 

@@ -370,56 +370,24 @@ function TeacherContent() {
       {/* ── Section 6: Pricing ── */}
       <section id="pricing" className={`${styles.section} ${styles.sectionAlt}`}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Simple Pricing for Teachers.</h2>
-          <p className={styles.pricingSub}>No revenue cut. No hidden fees. Cancel anytime.</p>
-          <div className={styles.priceGrid}>
-            <div className={styles.priceCard}>
-              <div className={styles.priceTier}>Creator</div>
-              <div className={styles.priceAmount}>₹799/mo</div>
-              <ul>
-                <li>Up to 50 students</li>
-                <li>Unlimited courses</li>
-                <li>Razorpay payment collection</li>
-                <li>AI quiz generator</li>
-                <li>Digital certificates</li>
-              </ul>
-              <Link href="/register" className={styles.priceBtn}>
+          <div className={styles.pricingTeaser}>
+            <p className={styles.pricingTeaserEyebrow}>PRICING</p>
+            <h2 className={styles.pricingTeaserTitle}>Plans that start free and scale with your students.</h2>
+            <p className={styles.pricingTeaserSub}>
+              No revenue cut. No per-student fee. One flat subscription — cancel anytime.
+              <br />
+              All plans include <strong>Edveo Intelligence™</strong> AI across every module.
+            </p>
+            <div className={styles.pricingTeaserActions}>
+              <Link href="/pricing?segment=teachers" className={styles.pricingTeaserBtn}>
+                See Full Pricing →
+              </Link>
+              <Link href="/register" className={styles.pricingTeaserGhost}>
                 Start Free Trial
               </Link>
             </div>
-            <div className={`${styles.priceCard} ${styles.priceCardFeatured}`}>
-              <div className={styles.priceTier}>Educator</div>
-              <div className={styles.priceAmount}>₹1,999/mo</div>
-              <ul>
-                <li>Up to 500 students</li>
-                <li>Everything in Creator</li>
-                <li>AI course builder</li>
-                <li>Custom domain</li>
-                <li>Advanced analytics</li>
-                <li>Priority support</li>
-              </ul>
-              <Link href="/register" className={styles.priceBtn}>
-                Start Free Trial
-              </Link>
-            </div>
-            <div className={styles.priceCard}>
-              <div className={styles.priceTier}>Academy</div>
-              <div className={styles.priceAmount}>₹3,999/mo</div>
-              <ul>
-                <li>Unlimited students</li>
-                <li>Everything in Educator</li>
-                <li>Multiple instructors</li>
-                <li>White-label branding</li>
-                <li>Dedicated account manager</li>
-              </ul>
-              <Link href="/register" className={styles.priceBtn}>
-                Start Free Trial
-              </Link>
-            </div>
+            <p className={styles.pricingTeaserNote}>14-day free trial · No credit card · Cancel anytime</p>
           </div>
-          <p className={styles.priceReassure}>
-            All plans include <strong>Edveo Intelligence™</strong> AI features. No add-ons, no extra charges.
-          </p>
         </div>
       </section>
 

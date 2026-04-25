@@ -321,7 +321,7 @@ export default function SolutionsPageClient() {
         <div className={styles.container}>
           <div className={styles.heroBadge}>
             <span className={styles.heroBadgeStar}>✦</span>
-            BUILT FOR TEACHERS &amp; EDTECH FOUNDERS
+            For every educator — teachers, edtech founders &amp; coaching institutes
           </div>
           <h1 className={styles.heroHeadline}>
             Everything You Need to Teach,{" "}
@@ -332,6 +332,33 @@ export default function SolutionsPageClient() {
             Every tool a teacher or online academy needs — courses, payments, students, quizzes,
             branding, and AI — all live today. No add-ons. No commissions.
           </p>
+
+          {/* CTA */}
+          <div className={styles.heroCtas}>
+            <Link href="/register" className={styles.heroCtaPrimary}>
+              Start Free Trial →
+            </Link>
+            <Link href="/contact" className={styles.heroCtaSecondary}>
+              Talk to an Expert
+            </Link>
+          </div>
+          <p className={styles.heroMicro}>14-day free trial · No credit card required · Go live today</p>
+
+          {/* Feature icon strip */}
+          <div className={styles.heroFeatureStrip}>
+            {[
+              { icon: "🎓", label: "LMS", sub: "Courses & delivery" },
+              { icon: "🏢", label: "ERP", sub: "Fees & operations" },
+              { icon: "📋", label: "CRM", sub: "Leads & pipeline" },
+              { icon: "✦", label: "AI", sub: "Built into everything" },
+            ].map((f) => (
+              <div key={f.label} className={styles.heroFeatureItem}>
+                <span className={styles.heroFeatureIcon}>{f.icon}</span>
+                <span className={styles.heroFeatureLabel}>{f.label}</span>
+                <span className={styles.heroFeatureSub}>{f.sub}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -343,29 +370,73 @@ export default function SolutionsPageClient() {
           <h2 className={styles.problemHeadline}>Sound Familiar?</h2>
           <div className={styles.problemGrid}>
             {[
-              { emoji: "😤", text: "Sharing course videos on WhatsApp" },
-              { emoji: "💸", text: "Paying Teachable 30% commission" },
-              { emoji: "📱", text: "Managing students in Excel sheets" },
-              { emoji: "⏰", text: "Building quizzes manually for hours" },
-              { emoji: "🔗", text: "3 tools that don't talk to each other" },
-              { emoji: "📉", text: "No idea which students are about to quit" },
+              {
+                emoji: "😤",
+                text: "Sharing course videos on WhatsApp",
+                consequence: "Students forward your content for free. You lose control the moment you hit send.",
+              },
+              {
+                emoji: "💸",
+                text: "Paying Teachable 30% commission",
+                consequence: "You do all the teaching. They take ₹30,000 for every lakh you earn.",
+              },
+              {
+                emoji: "📱",
+                text: "Managing students in Excel sheets",
+                consequence: "Students fall behind silently. You find out when they stop responding.",
+              },
+              {
+                emoji: "⏰",
+                text: "Building quizzes manually for hours",
+                consequence: "Time you spend making question papers is time you can't spend teaching.",
+              },
+              {
+                emoji: "🔗",
+                text: "3 tools that don't talk to each other",
+                consequence: "Your fee data, attendance, and course progress live in three separate places. Nothing connects.",
+              },
+              {
+                emoji: "📉",
+                text: "No idea which students are about to quit",
+                consequence: "By the time you notice, they've already stopped paying. There's no early warning.",
+              },
             ].map((p) => (
               <div key={p.text} className={styles.problemTile}>
                 <span className={styles.problemEmoji}>{p.emoji}</span>
-                <p>{p.text}</p>
+                <p className={styles.problemText}>{p.text}</p>
+                <p className={styles.problemConsequence}>{p.consequence}</p>
               </div>
             ))}
           </div>
           <p className={styles.problemClose}>
-            <strong>Edveo fixes every one of these.</strong> Here&apos;s how.
+            <strong>Edveo fixes every one of these.</strong>{" "}
+            <a href="#solutions" className={styles.problemAnchor}>See how it works →</a>
           </p>
         </div>
       </section>
 
+      {/* ── Jump nav — section anchors for returning visitors ── */}
+      <nav className={styles.jumpNav} aria-label="Jump to section">
+        <div className={styles.jumpNavInner}>
+          <span className={styles.jumpNavLabel}>Jump to:</span>
+          {[
+            { href: "#sol-courses",     label: "Courses" },
+            { href: "#sol-payments",    label: "Payments" },
+            { href: "#sol-crm",         label: "CRM" },
+            { href: "#sol-quizzes",     label: "Quizzes" },
+            { href: "#sol-brand",       label: "Brand" },
+            { href: "#sol-attendance",  label: "Attendance" },
+            { href: "#sol-comms",       label: "Comms" },
+          ].map(({ href, label }) => (
+            <a key={href} href={href} className={styles.jumpNavLink}>{label}</a>
+          ))}
+        </div>
+      </nav>
+
       {/* ═══════════════════════════════════════════════
           SECTION 3 — Solution 1: Course Delivery
           ═══════════════════════════════════════════════ */}
-      <section className={styles.solutionSection}>
+      <section id="sol-courses" className={styles.solutionSection}>
         <div className={styles.container}>
           <div className={styles.solutionInner}>
             <div className={styles.solutionCopy}>
@@ -401,7 +472,7 @@ export default function SolutionsPageClient() {
       {/* ═══════════════════════════════════════════════
           SECTION 4 — Solution 2: Payments & Revenue
           ═══════════════════════════════════════════════ */}
-      <section className={styles.solutionSection}>
+      <section id="sol-payments" className={styles.solutionSection}>
         <div className={styles.container}>
           <div className={`${styles.solutionInner} ${styles.reverse}`}>
             <div className={styles.solutionCopy}>
@@ -434,10 +505,28 @@ export default function SolutionsPageClient() {
         </div>
       </section>
 
+      {/* ── Testimonial: Fee leakage → Anand Kumar ── */}
+      <div className={styles.inlineTestimonialSection}>
+        <div className={styles.inlineTestimonial}>
+          <blockquote>
+            <p className={styles.inlineTestimonialQuote}>
+              We were losing ₹40,000 every month — not because students didn&apos;t pay, but because we couldn&apos;t track who hadn&apos;t. Edveo&apos;s automated reminders recovered 94% of pending fees in the first billing cycle.
+            </p>
+            <div className={styles.inlineTestimonialAuthor}>
+              <div className={styles.inlineTestimonialAvatar} data-initials="AK" />
+              <div>
+                <div className={styles.inlineTestimonialName}>Anand Kumar</div>
+                <div className={styles.inlineTestimonialMeta}>Director, Apex IIT Coaching Centre · Patna (380 students)</div>
+              </div>
+            </div>
+          </blockquote>
+        </div>
+      </div>
+
       {/* ═══════════════════════════════════════════════
           SECTION 5 — Solution 3: Student CRM
           ═══════════════════════════════════════════════ */}
-      <section className={styles.solutionSection}>
+      <section id="sol-crm" className={styles.solutionSection}>
         <div className={styles.container}>
           <div className={styles.solutionInner}>
             <div className={styles.solutionCopy}>
@@ -470,10 +559,19 @@ export default function SolutionsPageClient() {
         </div>
       </section>
 
+      {/* ── Mid-page attention reset after 3 feature blocks ── */}
+      <div className={styles.midBreak}>
+        <p className={styles.midBreakEyebrow}>You&apos;ve seen 3 of 7 features</p>
+        <h2 className={styles.midBreakHeadline}>Seen enough to know this is for you?</h2>
+        <p className={styles.midBreakSub}>14-day free trial. Every feature unlocked. No credit card.</p>
+        <Link href="/register" className={styles.midBreakBtn}>Start Free Trial →</Link>
+        <p className={styles.midBreakSkip}>Or keep reading — 4 more features below.</p>
+      </div>
+
       {/* ═══════════════════════════════════════════════
           SECTION 6 — Solution 4: Quizzes & Assessments
           ═══════════════════════════════════════════════ */}
-      <section className={styles.solutionSection}>
+      <section id="sol-quizzes" className={styles.solutionSection}>
         <div className={styles.container}>
           <div className={`${styles.solutionInner} ${styles.reverse}`}>
             <div className={styles.solutionCopy}>
@@ -612,111 +710,23 @@ export default function SolutionsPageClient() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-          SECTION 10 — Edveo Intelligence Summary
-          ═══════════════════════════════════════════════ */}
-      <section className={styles.aiSection}>
-        <div className={styles.container}>
-          <h2 className={styles.aiHeadline}>AI That Works While You Teach.</h2>
-          <p className={styles.aiSub}>
-            Edveo Intelligence is built into every module. Not a chatbot. Not a separate
-            subscription. AI that predicts, automates, and surfaces what needs your attention —
-            so you focus on teaching, not managing.
-          </p>
-          <div className={styles.aiGrid}>
-            {[
-              { icon: "🎯", title: "AI Lead Scoring", desc: "Auto-ranks every inquiry by conversion likelihood. Know who to call first." },
-              { icon: "⚡", title: "AI Quiz Generation", desc: "50 questions from any PDF in 30 seconds. Infinite variations, zero memorization." },
-              { icon: "💰", title: "Fee Default Prediction", desc: "7-day early warning before a student misses payment. Act before the deadline." },
-              { icon: "📊", title: "Student Risk Detection", desc: "Tracks attendance, logins, and quiz trends. Flags dropouts before they happen." },
-              { icon: "📝", title: "AI Content Generation", desc: "Auto-create course outlines, lesson summaries, and study materials from your syllabus." },
-              { icon: "📈", title: "Institutional Analytics", desc: "Revenue trends, course performance, and student health — all in one live dashboard." },
-            ].map((cap) => (
-              <div key={cap.title} className={styles.aiCapabilityCard}>
-                <span className={styles.aiIcon}>{cap.icon}</span>
-                <div className={styles.aiCapTitle}>{cap.title}</div>
-                <p className={styles.aiCapDesc}>{cap.desc}</p>
+      {/* ── Testimonial: Full-platform switch → Priya Sharma ── */}
+      <div className={styles.inlineTestimonialSection}>
+        <div className={styles.inlineTestimonial}>
+          <blockquote>
+            <p className={styles.inlineTestimonialQuote}>
+              We switched from Classplus after two years. The difference isn&apos;t just the pricing — it&apos;s that Edveo actually feels built for how Indian coaching institutes work. WhatsApp alerts, UPI splits, vernacular content. Our admin time dropped by 60%.
+            </p>
+            <div className={styles.inlineTestimonialAuthor}>
+              <div className={styles.inlineTestimonialAvatar} data-initials="PS" />
+              <div>
+                <div className={styles.inlineTestimonialName}>Priya Sharma</div>
+                <div className={styles.inlineTestimonialMeta}>Founder, Sharma Study Circle · Indore (620 students)</div>
               </div>
-            ))}
-          </div>
-          <p className={styles.aiFooterNote}>
-            <strong>All included in every plan.</strong> No AI add-on. No extra cost.
-          </p>
+            </div>
+          </blockquote>
         </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          SECTION 11 — Mid-Page CTA
-          ═══════════════════════════════════════════════ */}
-      <section className={styles.midCtaSection}>
-        <div className={styles.container}>
-          <h2 className={styles.midCtaHeadline}>You&apos;ve Seen Enough. Start Building.</h2>
-          <p className={styles.midCtaSub}>
-            14-day free trial. Every feature unlocked. No credit card. Go live today.
-          </p>
-          <div className={styles.midCtaButtons}>
-            <Link href="/register" className={styles.ctaBtnPrimary} id="mid-cta-trial">
-              Start Free Trial →
-            </Link>
-            <button className={styles.ctaBtnWhatsApp} id="mid-cta-whatsapp">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden>
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-              </svg>
-              Questions first? Chat on WhatsApp →
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-          SECTION 12 — Comparison Table
-          ═══════════════════════════════════════════════ */}
-      <section className={styles.comparisonSection}>
-        <div className={styles.container}>
-          <div className={styles.sectionLabel}>COMPETITIVE LANDSCAPE</div>
-          <h2 className={styles.sectionHeadline}>How Edveo Compares</h2>
-          <div className={styles.compTableWrapper}>
-            <table className={styles.compTable}>
-              <thead>
-                <tr>
-                  <th>Feature</th>
-                  <th className={styles.edveoCol}>Edveo</th>
-                  <th>Learnyst</th>
-                  <th>Teachable</th>
-                  <th>Classplus</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { feature: "0% commission", edveo: true, learnyst: true, teachable: false, classplus: false },
-                  { feature: "AI across all modules", edveo: true, learnyst: false, teachable: false, classplus: "Sales only" },
-                  { feature: "Custom domain", edveo: true, learnyst: true, teachable: true, classplus: false },
-                  { feature: "Fee management & ERP", edveo: true, learnyst: false, teachable: false, classplus: "Partial" },
-                  { feature: "CRM & lead pipeline", edveo: true, learnyst: false, teachable: false, classplus: false },
-                  { feature: "Free trial", edveo: "14 days", learnyst: true, teachable: true, classplus: false },
-                  { feature: "Go live same day", edveo: true, learnyst: "Partial", teachable: true, classplus: false },
-                ].map((row) => (
-                  <tr key={row.feature}>
-                    <td>{row.feature}</td>
-                    <td className={styles.edveoColData}>
-                      {row.edveo === true ? <span className={styles.checkYes}>✓</span>
-                        : row.edveo === false ? <span className={styles.checkNo}>✗</span>
-                        : <span className={styles.checkYes}>{row.edveo}</span>}
-                    </td>
-                    {[row.learnyst, row.teachable, row.classplus].map((val, i) => (
-                      <td key={i}>
-                        {val === true ? <span className={styles.checkYes}>✓</span>
-                          : val === false ? <span className={styles.checkNo}>✗</span>
-                          : <span className={styles.checkPartial}>{val}</span>}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* ═══════════════════════════════════════════════
           SECTION 13 — Footer CTA

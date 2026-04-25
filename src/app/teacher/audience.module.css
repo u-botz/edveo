@@ -740,6 +740,91 @@
   margin: 0;
 }
 
+/* ── Pricing Teaser (replaces inline price cards) ── */
+.pricingTeaser {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  background: #ffffff;
+  border: 1px solid rgba(13, 45, 78, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 4px 32px rgba(13, 45, 78, 0.06);
+}
+
+.pricingTeaserEyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.pricingTeaserTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.pricingTeaserSub {
+  font-size: 0.93rem;
+  color: #4b5563;
+  line-height: 1.65;
+  margin-bottom: 32px;
+}
+
+.pricingTeaserActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.pricingTeaserBtn {
+  display: inline-block;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 13px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.pricingTeaserBtn:hover {
+  opacity: 0.88;
+}
+
+.pricingTeaserGhost {
+  display: inline-block;
+  background: transparent;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 13px 28px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(13, 45, 78, 0.2);
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.pricingTeaserGhost:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.pricingTeaserNote {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
 /* ── Final CTA ── */
 .finalCta {
   background: var(--primary-cta-gradient, linear-gradient(135deg, #001831 0%, #0D2D4E 100%));

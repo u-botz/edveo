@@ -280,7 +280,17 @@ export default function Home() {
                 <p style={{ maxWidth: "280px" }}>Integrated Zoom/Meet alternative with auto-recording, attendance logs, and interactive whiteboards.</p>
               </div>
               <div style={{ flex: 0.8, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <span style={{ color: "#D1D5DB", fontWeight: "600", fontSize: "0.9rem" }}>Live Class Feature</span>
+                <div style={{ width: "100%", maxWidth: "260px", background: "linear-gradient(135deg, #0D2D4E 0%, #1a4a7a 100%)", borderRadius: "12px", padding: "20px", color: "#fff" }}>
+                  <div style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: "10px" }}>● LIVE NOW</div>
+                  <div style={{ fontSize: "0.85rem", fontWeight: 600, marginBottom: "12px" }}>NEET Chemistry — Organic Reactions</div>
+                  <div style={{ display: "flex", gap: "16px" }}>
+                    <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)" }}>👥 84 students</div>
+                    <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)" }}>⏱ 42 min</div>
+                  </div>
+                  <div style={{ marginTop: "14px", height: "4px", background: "rgba(255,255,255,0.15)", borderRadius: "2px", overflow: "hidden" }}>
+                    <div style={{ width: "62%", height: "100%", background: "#2EAA6E", borderRadius: "2px" }} />
+                  </div>
+                </div>
               </div>
             </div>
 
