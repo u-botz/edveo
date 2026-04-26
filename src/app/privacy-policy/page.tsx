@@ -7,12 +7,12 @@ import styles from "../legal/legal.module.css";
 export const metadata: Metadata = {
   title: "Privacy Policy — Edveo",
   description:
-    "How Edveo collects, uses, and shares personal data, and how you can contact us or request deletion.",
+    "How Ubotz Technologies Private Limited collects, uses, and shares personal data for the Edveo platform, and how you can contact us or request deletion.",
 };
 
 const LAST_UPDATED = "26 April 2026";
 const PRIVACY_EMAIL = "privacy@edveo.com";
-const COMPANY_NAME = "Edveo Technologies Private Limited";
+const COMPANY_NAME = "Ubotz Technologies Private Limited";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -28,7 +28,7 @@ export default function PrivacyPolicyPage() {
 
           <div className={styles.body}>
             <p>
-              {COMPANY_NAME} (&quot;Edveo&quot;, &quot;we&quot;, &quot;us&quot;) operates the Edveo
+              {COMPANY_NAME} (&quot;Ubotz&quot;, &quot;we&quot;, &quot;us&quot;) operates the Edveo
               platform and related websites (the &quot;Services&quot;). This Privacy Policy describes
               how we handle personal information in connection with the Services.
             </p>
@@ -88,7 +88,7 @@ export default function PrivacyPolicyPage() {
             </ul>
             <p>
               We may also disclose information if required by law, or to protect the rights, safety,
-              and security of Edveo, our users, and others.
+              and security of Ubotz, our users, and others.
             </p>
 
             <h2>4. How you can request deletion</h2>
