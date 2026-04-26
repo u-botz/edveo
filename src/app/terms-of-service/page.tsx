@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
 import styles from "../legal/legal.module.css";
+import { CONTACT_EMAIL } from "@/lib/contactEmail";
 
 export const metadata: Metadata = {
   title: "Terms of Service — Edveo",
@@ -11,8 +12,7 @@ export const metadata: Metadata = {
 };
 
 const LAST_UPDATED = "26 April 2026";
-const LEGAL_EMAIL = "legal@edveo.com";
-const COMPANY_NAME = "Edveo Technologies Private Limited";
+const COMPANY_NAME = "Ubotz Technologies Private Limited";
 
 export default function TermsOfServicePage() {
   return (
@@ -176,7 +176,7 @@ export default function TermsOfServicePage() {
             <address className={styles.address}>
               <strong>{COMPANY_NAME}</strong>
               <br />
-              Email: <a href={`mailto:${LEGAL_EMAIL}`}>{LEGAL_EMAIL}</a>
+              Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </address>
             <p>
               For general support, visit our <Link href="/contact">Contact</Link> page.

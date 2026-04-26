@@ -6,6 +6,7 @@ import SiteFooter from "../components/SiteFooter";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import CtaBanner from "../components/CtaBanner";
 import styles from "./contact.module.css";
+import { CONTACT_EMAIL } from "@/lib/contactEmail";
 
 const REASONS = [
   "Product Demo",
@@ -165,7 +166,7 @@ export default function ContactPageClient() {
                       name="email"
                       type="email"
                       className={styles.input}
-                      placeholder="rahul@premieracademy.in"
+                      placeholder={CONTACT_EMAIL}
                       value={form.email}
                       onChange={handleChange}
                       required
@@ -266,7 +267,12 @@ export default function ContactPageClient() {
                 <div className={styles.infoIconWrap}>📧</div>
                 <div>
                   <div className={styles.infoLabel}>Email</div>
-                  <div className={styles.infoValue}>hello@edveo.in</div>
+                  <a
+                    className={styles.infoEmailLink}
+                    href={`mailto:${CONTACT_EMAIL}`}
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
                   <div className={styles.infoHint}>We reply within 2 hours</div>
                 </div>
               </div>

@@ -325,6 +325,12 @@
   line-height: 1.5;
 }
 
+.infoEmailLink {
+  composes: infoValue;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .infoHint {
   font-size: 0.78rem;
   color: rgba(255, 255, 255, 0.35);

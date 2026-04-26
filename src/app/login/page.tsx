@@ -7,6 +7,8 @@ import EdveoLogo from "../components/EdveoLogo";
 type Step = "identifier" | "password";
 type Role = "tenant" | "platform";
 
+import { CONTACT_EMAIL } from "@/lib/contactEmail";
+
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 export default function LoginPage() {
@@ -166,7 +168,7 @@ export default function LoginPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder={CONTACT_EMAIL}
                 required
                 autoFocus
                 style={{

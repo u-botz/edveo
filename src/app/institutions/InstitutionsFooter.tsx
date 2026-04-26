@@ -1,6 +1,7 @@
 import Link from "next/link";
 import EdveoLogo from "../components/EdveoLogo";
 import styles from "./institutions.module.css";
+import { CONTACT_EMAIL } from "@/lib/contactEmail";
 
 export default function InstitutionsFooter() {
   return (
@@ -11,7 +12,7 @@ export default function InstitutionsFooter() {
         </Link>
         <p className={styles.instFooterContact}>
           Questions?{" "}
-          <a href="mailto:hello@edveo.com">hello@edveo.com</a>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           {" · "}
           <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener noreferrer">
             WhatsApp

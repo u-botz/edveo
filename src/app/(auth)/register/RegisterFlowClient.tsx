@@ -29,6 +29,7 @@ import {
   type TrialPlan,
   type InstitutionType,
 } from "@/lib/api/signupApi";
+import { CONTACT_EMAIL } from "@/lib/contactEmail";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -690,7 +691,7 @@ export default function RegisterFlowClient() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="ravi@brillianceacademy.com"
+                  placeholder={CONTACT_EMAIL}
                   autoComplete="email"
                   className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
                   value={formData.email}

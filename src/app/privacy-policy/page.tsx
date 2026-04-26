@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
 import styles from "../legal/legal.module.css";
+import { CONTACT_EMAIL } from "@/lib/contactEmail";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — Edveo",
@@ -11,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 const LAST_UPDATED = "26 April 2026";
-const PRIVACY_EMAIL = "privacy@edveo.com";
 const COMPANY_NAME = "Ubotz Technologies Private Limited";
 
 export default function PrivacyPolicyPage() {
@@ -113,7 +113,7 @@ export default function PrivacyPolicyPage() {
               <strong>{COMPANY_NAME}</strong>
               <br />
               Email:{" "}
-              <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </address>
             <p>
               For general product support, see our{" "}
