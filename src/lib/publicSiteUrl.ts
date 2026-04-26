@@ -1,15 +1,18 @@
 /**
- * Public canonical site origin (no trailing slash).
- * Set NEXT_PUBLIC_SITE_URL in production, e.g. https://www.edveo.com
+ * Canonical origin for sitemap.xml and robots.txt (no trailing slash).
+ *
+ * Defaults to https://edveo.co so URLs always match your production property in
+ * Google Search Console. We intentionally do not use VERCEL_URL (*.vercel.app),
+ * because GSC rejects sitemaps when loc URLs use a different host than the property.
+ *
+ * Override when needed (e.g. staging): set NEXT_PUBLIC_SITE_URL.
  */
+const DEFAULT_SITE = "https://edveo.co";
+
 export function publicSiteUrl(): string {
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (fromEnv) {
     return fromEnv.replace(/\/+$/, "");
   }
-  if (process.env.VERCEL_URL) {
-    const host = process.env.VERCEL_URL.replace(/^https?:\/\//, "");
-    return `https://${host}`.replace(/\/+$/, "");
-  }
-  return "https://edveo.com";
+  return DEFAULT_SITE;
 }
