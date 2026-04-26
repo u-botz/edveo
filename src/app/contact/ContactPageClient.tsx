@@ -7,6 +7,12 @@ import WhatsAppFloat from "../components/WhatsAppFloat";
 import CtaBanner from "../components/CtaBanner";
 import styles from "./contact.module.css";
 import { CONTACT_EMAIL } from "@/lib/contactEmail";
+import {
+  COMPANY_ADDRESS_DISPLAY,
+  COMPANY_PHONE_DISPLAY,
+  COMPANY_PHONE_TEL,
+  COMPANY_WHATSAPP_URL,
+} from "@/lib/companyPublicInfo";
 
 const REASONS = [
   "Product Demo",
@@ -258,7 +264,12 @@ export default function ContactPageClient() {
                 <div className={styles.infoIconWrap}>📞</div>
                 <div>
                   <div className={styles.infoLabel}>Phone</div>
-                  <div className={styles.infoValue}>+91 XXXXX XXXXX</div>
+                  <a
+                    className={styles.infoEmailLink}
+                    href={COMPANY_PHONE_TEL}
+                  >
+                    {COMPANY_PHONE_DISPLAY}
+                  </a>
                   <div className={styles.infoHint}>Mon–Sat, 10am–7pm IST</div>
                 </div>
               </div>
@@ -283,7 +294,7 @@ export default function ContactPageClient() {
                   <div className={styles.infoLabel}>WhatsApp</div>
                   <div className={styles.infoValue}>Fastest response channel</div>
                   <a
-                    href="https://wa.me/91XXXXXXXXXX"
+                    href={COMPANY_WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.waBtn}
@@ -300,9 +311,9 @@ export default function ContactPageClient() {
                 <div className={styles.infoIconWrap}>📍</div>
                 <div>
                   <div className={styles.infoLabel}>Location</div>
-                  <div className={styles.infoValue}>Bangalore, Karnataka</div>
+                  <div className={styles.infoValue}>{COMPANY_ADDRESS_DISPLAY}</div>
                   <div className={styles.infoHint}>
-                    Online-first company — no walk-ins
+                    Visits by appointment welcome
                   </div>
                 </div>
               </div>
@@ -349,6 +360,7 @@ export default function ContactPageClient() {
         subheadline="Average response time: under 2 hours on WhatsApp."
         primaryLabel="Start Free Trial →"
         secondaryLabel="WhatsApp Us Now"
+        secondaryHref={COMPANY_WHATSAPP_URL}
       />
 
       <SiteFooter />

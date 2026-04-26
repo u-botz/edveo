@@ -5,6 +5,7 @@ import Link from "next/link";
 import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
 import WhatsAppFloat from "../components/WhatsAppFloat";
+import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
 
 export default function PricingPageClient() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
@@ -206,7 +207,7 @@ export default function PricingPageClient() {
           <Link href="/register" style={{ background: "#fff", color: "#0D2D4E", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
             Start Free Trial →
           </Link>
-          <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" style={{ background: "#2EAA6E", color: "#fff", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
+          <a href={COMPANY_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ background: "#2EAA6E", color: "#fff", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
             Chat on WhatsApp →
           </a>
         </div>

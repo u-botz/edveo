@@ -29,7 +29,7 @@ export default function TermsOfServicePage() {
           <div className={styles.body}>
             <p>
               These Terms of Service (&quot;Terms&quot;) are a binding agreement between you and{" "}
-              {COMPANY_NAME} (&quot;Edveo&quot;, &quot;we&quot;, &quot;us&quot;) for use of the Edveo
+              {COMPANY_NAME} (&quot;Ubotz&quot;, &quot;we&quot;, &quot;us&quot;) for use of the Edveo
               software, websites, and related services (the &quot;Services&quot;).
             </p>
             <p>

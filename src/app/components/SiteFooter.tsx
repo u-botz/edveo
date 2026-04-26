@@ -57,8 +57,7 @@ export default function SiteFooter() {
 
         <div className={styles.footerBottom}>
           <div>
-            © 2026 Edveo Technologies Pvt Ltd. Proudly built for Indian
-            educators.
+            © 2026 Ubotz Technologies Pvt Ltd. Proudly built for Indian educators.
           </div>
         </div>
       </div>

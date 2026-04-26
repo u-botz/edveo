@@ -4,6 +4,7 @@ import SiteFooter from "./components/SiteFooter";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import CtaBanner from "./components/CtaBanner";
 import HeroSection from "./components/HeroSection";
+import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
 
 export default function Home() {
   return (
@@ -522,6 +523,7 @@ export default function Home() {
         accentSub="There's a Better Way."
         primaryLabel="Start Your Free Trial →"
         secondaryLabel="Talk to an Expert"
+        secondaryHref={COMPANY_WHATSAPP_URL}
         trustItems={["14-day free trial", "No credit card required", "Data stored in India", "Cancel anytime"]}
       />
 

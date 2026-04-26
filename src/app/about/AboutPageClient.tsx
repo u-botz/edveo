@@ -1,8 +1,8 @@
 import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
 import WhatsAppFloat from "../components/WhatsAppFloat";
-import CtaBanner from "../components/CtaBanner";
 import styles from "./about.module.css";
+import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
 
 const STATS = [
   { number: "5,000+", label: "Educators Onboarded", accent: false },
@@ -45,10 +45,8 @@ const VALUES = [
 ];
 
 const TEAM = [
-  { initials: "AS", name: "Aryan Sharma", role: "Founder & CEO" },
-  { initials: "PK", name: "Priya Kumar", role: "Co-Founder & CTO" },
-  { initials: "RN", name: "Rohan Nair", role: "Head of Product" },
-  { initials: "SV", name: "Sneha Verma", role: "Head of Growth" },
+  { initials: "SA", name: "Sayoons", role: "Founder" },
+  { initials: "SP", name: "Sayanth P", role: "Co-founder" },
 ];
 
 const TIMELINE = [
@@ -60,7 +58,7 @@ const TIMELINE = [
   {
     year: "2023",
     title: "First Version, Three Institutes",
-    desc: "We built the first version of Edveo for 3 coaching institutes in Bangalore and Pune. Fee management, quizzes, attendance, and admissions — all in one place.",
+    desc: "We built the first version of Edveo for coaching institutes in Kerala. Fee management, quizzes, attendance, and admissions — all in one place.",
   },
   {
     year: "2024",
@@ -196,7 +194,7 @@ export default function AboutPageClient() {
             View Open Roles →
           </a>
           <a
-            href="https://wa.me/91XXXXXXXXXX"
+            href={COMPANY_WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.btnGreenOutline}
