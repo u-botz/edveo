@@ -45,7 +45,7 @@ const VALUES = [
 ];
 
 const TEAM = [
-  { initials: "SA", name: "Sayoons", role: "Founder" },
+  { initials: "SN", name: "Sayooj NS", role: "Founder" },
   { initials: "SP", name: "Sayanth P", role: "Co-founder" },
 ];
 
