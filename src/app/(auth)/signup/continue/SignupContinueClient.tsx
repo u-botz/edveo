@@ -431,9 +431,9 @@ export default function SignupContinueClient() {
 
             <p className={styles.footerText}>
               By continuing, you agree to Edveo&apos;s{" "}
-              <Link href="/terms" className={styles.linkDark}>Terms of Service</Link>{" "}
+              <Link href="/terms-of-service" className={styles.linkDark}>Terms of Service</Link>{" "}
               and{" "}
-              <Link href="/privacy" className={styles.linkDark}>Privacy Policy</Link>
+              <Link href="/privacy-policy" className={styles.linkDark}>Privacy Policy</Link>
             </p>
           </form>
         </div>

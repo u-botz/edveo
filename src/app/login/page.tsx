@@ -278,9 +278,9 @@ export default function LoginPage() {
       {/* Bottom note */}
       <p style={{ marginTop: 24, fontSize: "0.75rem", color: "#9ca3af", textAlign: "center" }}>
         By signing in you agree to our{" "}
-        <Link href="/terms" style={{ color: "#6b7280", textDecoration: "underline" }}>Terms</Link>
+        <Link href="/terms-of-service" style={{ color: "#6b7280", textDecoration: "underline" }}>Terms</Link>
         {" "}and{" "}
-        <Link href="/privacy" style={{ color: "#6b7280", textDecoration: "underline" }}>Privacy Policy</Link>.
+        <Link href="/privacy-policy" style={{ color: "#6b7280", textDecoration: "underline" }}>Privacy Policy</Link>.
       </p>
     </div>
   );
