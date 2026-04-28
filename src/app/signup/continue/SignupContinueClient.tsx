@@ -17,7 +17,7 @@ import {
   type TrialPlan,
   type InstitutionType,
 } from "@/lib/api/signupApi";
-import styles from "../../register/page.module.css";
+import styles from "../../(auth)/register/page.module.css";
 
 const VALID_CATEGORIES: TenantCategory[] = [
   "standalone_teacher",
@@ -31,6 +31,8 @@ export default function SignupContinueClient() {
 
   /** Opaque Redis continuation id (never put name/email in the URL — S-1). */
   const googleToken = searchParams.get("token") ?? "";
+  const categoryParam = searchParams.get("category")?.trim() ?? "";
+
   const [continuationPhase, setContinuationPhase] = useState<
     "loading" | "ready" | "error"
   >("loading");
@@ -40,18 +42,31 @@ export default function SignupContinueClient() {
 
   useEffect(() => {
     if (!googleToken.trim()) {
-      router.replace("/register?error=session_expired");
+      router.replace("/signup?error=session_expired");
     }
   }, [googleToken, router]);
 
   useEffect(() => {
+    if (categoryParam && !VALID_CATEGORIES.includes(categoryParam as TenantCategory)) {
+      router.replace("/signup?error=session_expired");
+    }
+  }, [categoryParam, router]);
+
+  useEffect(() => {
     if (!googleToken.trim()) return;
+    if (categoryParam && !VALID_CATEGORIES.includes(categoryParam as TenantCategory)) {
+      return;
+    }
     let cancelled = false;
     setContinuationPhase("loading");
     (async () => {
       try {
         const payload = await fetchGoogleSignupContinuation(googleToken);
         if (cancelled) return;
+        if (categoryParam && payload.category !== categoryParam) {
+          setContinuationPhase("error");
+          return;
+        }
         if (!VALID_CATEGORIES.includes(payload.category)) {
           setContinuationPhase("error");
           return;
@@ -67,11 +82,11 @@ export default function SignupContinueClient() {
     return () => {
       cancelled = true;
     };
-  }, [googleToken, router]);
+  }, [googleToken, categoryParam]);
 
   useEffect(() => {
     if (continuationPhase === "error") {
-      router.replace("/register?error=session_expired");
+      router.replace("/signup?error=session_expired");
     }
   }, [continuationPhase, router]);
 

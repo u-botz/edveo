@@ -16,6 +16,7 @@ const entries: Array<{
   { path: "/contact", changeFrequency: "monthly", priority: 0.8 },
   { path: "/login", changeFrequency: "monthly", priority: 0.5 },
   { path: "/register", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/signup", changeFrequency: "monthly", priority: 0.5 },
   { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3 },
   { path: "/terms-of-service", changeFrequency: "yearly", priority: 0.3 },
 ];

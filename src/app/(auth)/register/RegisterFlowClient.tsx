@@ -30,6 +30,7 @@ import {
   type InstitutionType,
 } from "@/lib/api/signupApi";
 import { CONTACT_EMAIL } from "@/lib/contactEmail";
+import { signupOAuthErrorMessage } from "@/lib/signupOAuthErrors";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -107,15 +108,7 @@ export default function RegisterFlowClient() {
 
   // OAuth error from backend redirect (F-10 / §5.7)
   const searchParams = useSearchParams();
-  const oauthError = searchParams.get("error");
-
-  const OAUTH_ERROR_MESSAGES: Record<string, string> = {
-    session_expired: "Your sign-in session expired. Please try again.",
-    google_error: "Google sign-in failed. Please try again or use email.",
-    unverified_email: "Your Google account email is not verified. Please verify it with Google first.",
-    account_exists: "An account already exists with this email. Please log in instead.",
-    provisioning_failed: "Account setup failed. Please try again or contact support.",
-  };
+  const oauthErrorText = signupOAuthErrorMessage(searchParams.get("error"));
 
   // ─────────────────────────────────────────────────────────────────────────
   // Bootstrap: fetch plans + institution types on mount
@@ -482,10 +475,10 @@ export default function RegisterFlowClient() {
               We&apos;ll set up your dashboard based on your answer.
             </p>
 
-            {oauthError && OAUTH_ERROR_MESSAGES[oauthError] && (
+            {oauthErrorText && (
               <div className={`${styles.globalError} ${styles.formContainer}`} role="alert">
                 <AlertCircle size={16} style={{ flexShrink: 0, marginTop: 1 }} />
-                {OAUTH_ERROR_MESSAGES[oauthError]}
+                {oauthErrorText}
               </div>
             )}
 

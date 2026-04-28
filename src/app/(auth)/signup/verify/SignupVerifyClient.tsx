@@ -65,7 +65,7 @@ export default function SignupVerifyClient() {
 
   useEffect(() => {
     if (!signupToken || signupToken.length !== 64 || !category) {
-      router.replace("/register?error=session_expired");
+      router.replace("/signup?error=session_expired");
     }
   }, [signupToken, category, router]);
 
@@ -209,7 +209,7 @@ export default function SignupVerifyClient() {
 
             <p className={styles.footerText}>
               Wrong email or need to start over?{" "}
-              <Link href="/register" className={styles.linkDark}>
+              <Link href="/signup" className={styles.linkDark}>
                 Back to registration
               </Link>
             </p>
