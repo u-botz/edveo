@@ -4,6 +4,8 @@ import SiteFooter from "./components/SiteFooter";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import CtaBanner from "./components/CtaBanner";
 import HeroSection from "./components/HeroSection";
+import FeatureExplorer from "./components/FeatureExplorer";
+import MobileAppBanner from "./components/MobileAppBanner";
 import { IntelligenceDemoSection } from "@/features/intelligence-demo";
 import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
 
@@ -50,73 +52,11 @@ export default function Home() {
 
 
 
-      {/* Ecosystem Section */}
-      <section className={styles.ecosystemSection}>
-        <div className={styles.container}>
-          <h2 style={{ fontSize: "2.5rem", marginBottom: "40px", textAlign: "center" }}>One Ecosystem. Every Feature.</h2>
+      {/* Feature Explorer — tabbed, equal real estate for all 5 features */}
+      <FeatureExplorer />
 
-          <div className={styles.bentoGrid}>
-            {/* 1. Smart Live Classes (Span 2x2) */}
-            <div className={`${styles.bentoCard} ${styles.bentoWhite} ${styles.bentoSpan2x2}`}>
-              <div style={{ flex: 1 }}>
-                <div className={styles.bentoIconBox}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 8-6 4 6 4V8Z" /><rect width="14" height="12" x="2" y="6" rx="2" ry="2" /></svg>
-                </div>
-                <h3>Smart Live Classes</h3>
-                <p style={{ maxWidth: "280px" }}>Integrated Zoom/Meet alternative with auto-recording, attendance logs, and interactive whiteboards.</p>
-              </div>
-              <div style={{ flex: 0.8, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ width: "100%", maxWidth: "260px", background: "linear-gradient(135deg, #0D2D4E 0%, #1a4a7a 100%)", borderRadius: "12px", padding: "20px", color: "#fff" }}>
-                  <div style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: "10px" }}>● LIVE NOW</div>
-                  <div style={{ fontSize: "0.85rem", fontWeight: 600, marginBottom: "12px" }}>NEET Chemistry — Organic Reactions</div>
-                  <div style={{ display: "flex", gap: "16px" }}>
-                    <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)" }}>👥 84 students</div>
-                    <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)" }}>⏱ 42 min</div>
-                  </div>
-                  <div style={{ marginTop: "14px", height: "4px", background: "rgba(255,255,255,0.15)", borderRadius: "2px", overflow: "hidden" }}>
-                    <div style={{ width: "62%", height: "100%", background: "#2EAA6E", borderRadius: "2px" }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 2. Fee Management (Blue) */}
-            <div className={`${styles.bentoCard} ${styles.bentoBlue}`}>
-              <h3>Fee Management</h3>
-              <p>Auto-GST invoices, reminders, and partial payment support.</p>
-            </div>
-
-            {/* 3. Deep Analytics (White) */}
-            <div className={`${styles.bentoCard} ${styles.bentoWhite}`}>
-              <h3>Deep Analytics</h3>
-              <p>Student rank analysis and subject-wise progress tracking.</p>
-            </div>
-
-            {/* 4. Mobile App (Span 2x1 Green) */}
-            <div className={`${styles.bentoCard} ${styles.bentoGreen} ${styles.bentoSpan2x1}`} style={{ gridColumn: "3 / 5" }}>
-              <div>
-                <h3 style={{ color: "#166534" }}>Mobile App</h3>
-                <p>Your logo on PlayStore & AppStore.</p>
-              </div>
-              <div style={{ color: "#2EAA6E" }}>
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></svg>
-              </div>
-            </div>
-
-            {/* 5. CRM Tools (White) */}
-            <div className={`${styles.bentoCard} ${styles.bentoWhite}`}>
-              <h3>CRM Tools</h3>
-              <p>Inquiry to admission funnel.</p>
-            </div>
-
-            {/* 6. Timetable (Dark) */}
-            <div className={`${styles.bentoCard} ${styles.bentoDark}`}>
-              <h3>Timetable</h3>
-              <p>Conflict-free scheduling for faculty.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Mobile App — standalone premium section */}
+      <MobileAppBanner />
 
       {/* ROI / Pain-to-Outcome Bridge */}
       <section className={styles.roiSection}>
