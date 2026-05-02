@@ -70,12 +70,15 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1 className={styles.heroHeadline}>
-          Launch Your Branded Academy.
+          Your institute runs itself.
+          <br />
+          You just teach.
         </h1>
 
         {/* Sub-headline */}
         <p className={styles.heroSub}>
-          The commerce platform that lets any educator in India <span className={styles.darkText}>sell courses, collect fees and run a full academy</span> — under their own brand, with zero commission, forever.
+          Edveo Intelligence™ handles your fees, your leads, your attendance, your student follow-ups — so you can focus entirely on teaching.{" "}
+          <span className={styles.darkText}>Zero commission. Built for India.</span>
         </p>
 
         {/* Actions */}
@@ -128,6 +131,10 @@ export default function HeroSection() {
             <span className={styles.audienceCardArrow}><ArrowIcon /></span>
           </Link>
         </div>
+
+        <p className={styles.intelligenceBridge}>
+          Powered by Edveo Intelligence™ — the AI that knows your institute the way you do.
+        </p>
 
       </div>
     </section>

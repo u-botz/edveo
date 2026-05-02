@@ -4,7 +4,7 @@ import SiteFooter from "./components/SiteFooter";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import CtaBanner from "./components/CtaBanner";
 import HeroSection from "./components/HeroSection";
-import DashboardPreview from "./components/DashboardPreview";
+import { IntelligenceDemoSection } from "@/features/intelligence-demo";
 import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
 
 export default function Home() {
@@ -15,16 +15,8 @@ export default function Home() {
       {/* Hero */}
       <HeroSection />
 
-      {/* Dashboard Preview */}
-      <section className={styles.dashboardPreviewSection}>
-        <div className={styles.dashboardPreviewHeader}>
-          <span className={styles.dashboardPreviewEyebrow}>YOUR ACTUAL DASHBOARD</span>
-          <h2 className={styles.dashboardPreviewTitle}>See what you get — day one</h2>
-          <p className={styles.dashboardPreviewSub}>A real-time view of your academy. Students, fees, attendance, CRM — all in one place.</p>
-        </div>
-        <DashboardPreview />
-      </section>
-
+      {/* Intelligence Demo Section */}
+      <IntelligenceDemoSection />
 
       {/* Trust bar — honest early-stage signals, no fake logos */}
       <div className={styles.trustStrip}>
@@ -62,12 +54,21 @@ export default function Home() {
         <div className={styles.container}>
           <h2 className={`${styles.textCenter} ${styles.sectionTitleWithLine} ${styles.pillarsHeadlineAi}`}>
             <span style={{ color: "#111827", display: "block" }}>Meet Edveo Intelligence™</span>
-            <span style={{ color: "var(--accent)" }}>AI Built Into Everything You Do.</span>
+            <span style={{ color: "var(--accent)" }}>The AI that runs your institute while you teach.</span>
           </h2>
-          <p className={styles.pillarsSubhead}>
-            Not a chatbot. Not a bolt-on feature.<br />
-            <strong style={{ color: "#111827" }}>Runs your entire academy — not just your sales funnel.</strong>
-          </p>
+          <div className={styles.pillarsIntro}>
+            <p>
+              Most software tells you what happened.{" "}
+              <strong>Edveo Intelligence™ tells you what to do — and then does it.</strong>
+            </p>
+            <p>
+              Ask it a question in plain language. It reads your live institute data and answers. Tell it to send reminders to students who missed class.
+              It drafts the message, shows you exactly who will receive it, and waits for you to say yes. No forms. No reports. No switching between tools.
+            </p>
+            <p>
+              <strong>This is not a chatbot.</strong> It is the operating intelligence of your entire institute.
+            </p>
+          </div>
           <div className={styles.pillarsGrid}>
             <div className={styles.pillarCard}>
               <div className={`${styles.pillarIcon} ${styles.iconGreen}`}>
@@ -76,35 +77,35 @@ export default function Home() {
                   <path d="M6 12v5c3 3 9 3 12 0v-5" />
                 </svg>
               </div>
-              <h3>AI Course Engine</h3>
+              <h3>Intelligence for Teaching</h3>
               <ul className={styles.pillarList}>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Generate a full quiz from any chapter in 30 seconds</span>
+                  <span>Generate a full question paper in 3 minutes from any topic</span>
                 </li>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Auto-create course outlines from your syllabus</span>
+                  <span>Identify which students are falling behind before you notice it</span>
                 </li>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Identify which lessons students skip or struggle with</span>
+                  <span>Auto-tag questions by difficulty and Bloom&apos;s level</span>
                 </li>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Content gap detection — know what to teach next</span>
+                  <span>Build a 4-week lesson plan from your syllabus in one prompt</span>
                 </li>
               </ul>
               <p className={styles.pillarCardFooter}>🤖 Powered by Edveo Intelligence</p>
@@ -119,35 +120,35 @@ export default function Home() {
                   <path d="M8 17v-3" />
                 </svg>
               </div>
-              <h3>AI Revenue Engine</h3>
+              <h3>Intelligence for Operations</h3>
               <ul className={styles.pillarList}>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Predict which students are likely to drop before they do</span>
+                  <span>Ask &quot;how are my fees this month?&quot; and get an instant answer</span>
                 </li>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Automated fee reminders via WhatsApp + SMS — zero manual follow-up</span>
+                  <span>AI sends fee reminders automatically — drafts, previews, you approve</span>
                 </li>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Smart pricing suggestions based on enrollment patterns</span>
+                  <span>Spot defaulters before they go 30 days overdue</span>
                 </li>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>0% commission — every rupee goes directly to you</span>
+                  <span>Revenue trends narrated in plain English every Monday morning</span>
                 </li>
               </ul>
               <p className={styles.pillarCardFooter}>🤖 Powered by Edveo Intelligence</p>
@@ -162,35 +163,37 @@ export default function Home() {
                   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
               </div>
-              <h3>AI Student Engine</h3>
+              <h3>Intelligence for Your Students</h3>
               <ul className={styles.pillarList}>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Auto-score every lead and prioritize who to follow up with first</span>
+                  <span>Flags at-risk students by combining attendance and quiz data</span>
                 </li>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Personalized learning paths based on each student&apos;s performance</span>
+                  <span>
+                    Ask &quot;do I need to intervene with anyone?&quot; — get names, reasons, and a draft message
+                  </span>
                 </li>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>At-risk student detection before they stop showing up</span>
+                  <span>Tracks each student&apos;s weak topics across all quizzes automatically</span>
                 </li>
                 <li>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <path d="M22 4L12 14.01l-3-3" />
                   </svg>
-                  <span>Parent communication automated — attendance, results, reminders</span>
+                  <span>Parent communication drafted and ready — you just approve and send</span>
                 </li>
               </ul>
               <p className={styles.pillarCardFooter}>🤖 Powered by Edveo Intelligence</p>

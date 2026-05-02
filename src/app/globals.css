@@ -30,6 +30,20 @@
   --font-display: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-data: 'JetBrains Mono', monospace;
+
+  /* Intelligence Demo Section */
+  --intel-navy:        #1B2A4A;   /* headlines, user message bubbles */
+  --intel-emerald:     #10B981;   /* primary brand colour, CTA buttons, AI dot */
+  --intel-emerald-dark:#059669;   /* hover state */
+  --intel-emerald-bg:  #F0FDF4;   /* light green backgrounds */
+  --intel-emerald-text:#14532D;   /* text on green backgrounds */
+  --intel-slate:       #64748B;   /* secondary text */
+  --intel-slate-light: #F8FAFF;   /* section background */
+  --intel-border:      #E2E8F0;   /* borders */
+  --intel-surface:     #FFFFFF;   /* shell background */
+  --intel-warn:        #F59E0B;   /* warning badges */
+  --intel-danger:      #DC2626;   /* danger badges */
+  --intel-muted-bg:    #F8FAFC;   /* muted backgrounds inside shell */
 }
 
 * {
