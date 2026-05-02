@@ -1,5 +1,8 @@
 import type { DemoResponse } from '../model/types';
 
+/** Preset chip + homepage auto-showcase — keep in sync with `PromptChipRail`. */
+export const SHOWCASE_AT_RISK_PROMPT = 'Which students need my attention today?';
+
 const PROMPT_MAP: Record<string, string> = {
   'which students need my attention today?': 'AT_RISK_LIST',
   'how are my fees this month?':              'FEE_STATS',
@@ -68,7 +71,7 @@ export function getSimulatedResponse(prompt: string): DemoResponse {
     FALLBACK: {
       type: 'FALLBACK',
       text: 'I can answer questions about your students, fees, attendance, batches, quiz performance, and curriculum. Try one of the suggested prompts to see me in action — or sign up for a free trial to ask me about your actual institute.',
-      ctaText: 'Start your free trial →',
+      ctaText: 'Start free trial',
       ctaHref: '/signup',
     },
   };

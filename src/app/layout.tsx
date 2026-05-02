@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Edveo - The Academic Architect",
+  title: "Edveo — Run your institution.",
   description: "One Platform. LMS + ERP + CRM. Ready Today.",
 };
 

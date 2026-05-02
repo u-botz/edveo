@@ -59,13 +59,9 @@ export default function HeroSection() {
       <div className={styles.heroBackground}></div>
       <div className={styles.heroContainer}>
         
-        {/* Eyebrow Badge */}
-        <div className={styles.eyebrowBadge}>
-          <span className={styles.eyebrowBadgeTag}>
-            <span className={styles.eyebrowBadgeDot}></span> NEW
-          </span>
-          <span className={styles.eyebrowBadgeText}>Introducing Edveo Intelligence™ — AI inside every workflow</span>
-          <span className={styles.eyebrowBadgeIcon}><ArrowRightIcon /></span>
+        {/* Eyebrow — product line (matches Intelligence positioning) */}
+        <div className={`${styles.eyebrowBadge} ${styles.eyebrowBadgeSolo}`}>
+          <span className={styles.eyebrowBadgeText}>Powered by Edveo Intelligence™</span>
         </div>
 
         {/* Headline */}
@@ -77,26 +73,23 @@ export default function HeroSection() {
 
         {/* Sub-headline */}
         <p className={styles.heroSub}>
-          Edveo Intelligence™ handles your fees, your leads, your attendance, your student follow-ups — so you can focus entirely on teaching.{" "}
-          <span className={styles.darkText}>Zero commission. Built for India.</span>
+          Edveo Intelligence™ handles your fees, your leads, your attendance, your student follow-ups — so you can focus entirely on teaching.
+        </p>
+
+        {/* Micro-copy — directly above primary CTA */}
+        <p className={styles.microCopy}>
+          Zero commission &middot; 14-day free trial &middot; Live in 1 min
         </p>
 
         {/* Actions */}
         <div className={styles.heroActions}>
           <Link href="/register" className={styles.primaryButton}>
-            Start for free <ArrowRightIcon />
+            Start free trial <ArrowRightIcon />
           </Link>
-          <button className={styles.secondaryButton}>
-            <PlayIcon /> See how it works
-          </button>
         </div>
 
-        {/* Micro-copy */}
-        <p className={styles.microCopy}>
-          14-day free trial &middot; No credit card &middot; Live in 1 min
-        </p>
-
-        {/* Audience cards */}
+        {/* Audience path */}
+        <h2 className={styles.audienceHeading}>Built for every institution type</h2>
         <div className={styles.audienceCards} role="group" aria-label="Choose your path">
           <Link href="/teacher" className={styles.audienceCard} data-variant="teachers">
             <div className={styles.audienceCardIcon} data-variant="teachers">

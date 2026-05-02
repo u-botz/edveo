@@ -59,8 +59,8 @@ export function IntelligenceDemoSection() {
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
       >
-        <motion.div variants={itemVariants} className={styles.eyebrow}>
-          Edveo Intelligence™
+        <motion.div variants={itemVariants}>
+          <span className={styles.eyebrowPill}>Edveo Intelligence™</span>
         </motion.div>
         
         <motion.h2 variants={itemVariants} className={styles.headline}>
@@ -68,7 +68,7 @@ export function IntelligenceDemoSection() {
         </motion.h2>
         
         <motion.p variants={itemVariants} className={styles.subheadline}>
-          Try it — click a question or type your own.
+          It reads your live institute data, answers in plain language, and prepares actions you approve — reports, drafts, and risk signals without switching tools or digging through dashboards.
         </motion.p>
         
         <motion.div variants={shellVariants} style={{ width: '100%' }}>

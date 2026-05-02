@@ -82,21 +82,23 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.9rem;
-  color: #fff;
-  background: var(--primary-cta-gradient);
-  border: none;
+  color: var(--primary);
+  background: transparent;
+  border: 1px solid var(--primary);
   cursor: pointer;
-  padding: 11px 24px;
+  padding: 10px 23px;
   border-radius: 8px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .btnTrial:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(13, 45, 78, 0.2);
+  background: rgba(13, 45, 78, 0.06);
+  border-color: #0a2440;
+  transform: translateY(-1px);
 }
 
 /* Mobile hamburger */
@@ -156,13 +158,20 @@
   display: block;
   text-align: center;
   margin-top: 8px;
-  padding: 12px;
-  background: var(--primary-cta-gradient);
-  color: #fff;
+  padding: 11px 12px;
+  background: transparent;
+  color: var(--primary);
   font-weight: 700;
   font-size: 15px;
   border-radius: 8px;
   text-decoration: none;
+  border: 1px solid var(--primary);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.mobileDrawerCta:hover {
+  background: rgba(13, 45, 78, 0.06);
+  border-color: #0a2440;
 }
 
 @media (max-width: 768px) {
