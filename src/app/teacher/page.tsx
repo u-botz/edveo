@@ -344,7 +344,7 @@ function TeacherContent() {
       {/* ── Section 5: Go live ── */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Your Academy is Live in 5 Minutes.</h2>
+          <h2 className={styles.sectionTitle}>Your Academy is Live in 1 Minute.</h2>
           <div className={styles.steps}>
             <div className={styles.stepCard}>
               <div className={styles.stepTime}>STEP 1 — 2 MINUTES</div>

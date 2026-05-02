@@ -701,6 +701,51 @@
   font-family: var(--font-data);
 }
 
+/* ── Dashboard Preview Section ── */
+.dashboardPreviewSection {
+  background: #ffffff;
+  padding: 0 0 80px;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboardPreviewHeader {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px 20px 40px;
+  text-align: center;
+}
+
+.dashboardPreviewEyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.dashboardPreviewTitle {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0 0 14px;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.dashboardPreviewSub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: rgba(26, 26, 46, 0.6);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
 /* Trust strip */
 .trustStrip {
   background: #f8fafc;
@@ -2101,5 +2146,204 @@
 
   .whatsappFloat {
     bottom: 80px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   COMPREHENSIVE MOBILE RESPONSIVE OVERRIDES
+   Covers: sections, grids, typography, spacing, CTA blocks
+   ══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* Shared section padding reduction */
+  .section,
+  .pillarsSection,
+  .faqSection,
+  .roiSection,
+  .ecosystemSection,
+  .comparisonSection,
+  .pricingSection,
+  .timelineSection {
+    padding: 56px 20px !important;
+  }
+
+  /* Grids → single column */
+  .pillarsGrid,
+  .pricingGrid,
+  .roiGrid,
+  .timelineGrid,
+  .footerGrid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  /* Bento grid → single column */
+  .bentoGrid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: auto;
+    gap: 12px;
+  }
+
+  .bentoSpan2x2,
+  .bentoSpan2x1 {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Comparison table scrollable */
+  .tableWrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .competitorTable th,
+  .competitorTable td {
+    padding: 14px 12px;
+    font-size: 0.875rem;
+  }
+
+  /* FAQ */
+  .faqInner {
+    grid-template-columns: 1fr !important;
+    gap: 24px;
+  }
+
+  .faqLeft {
+    position: static !important;
+  }
+
+  /* Timeline */
+  .timelineGrid {
+    grid-template-columns: 1fr !important;
+    gap: 32px;
+  }
+
+  .timelineGrid::before {
+    display: none;
+  }
+
+  /* Final CTA */
+  .finalCta {
+    padding: 64px 24px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+  }
+
+  .finalCta h2 {
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+  }
+
+  .ctaBtnGroup {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .ctaBtnWhite,
+  .ctaBtnGreen {
+    justify-content: center;
+    padding: 14px 24px;
+  }
+
+  /* Trust bar */
+  .trustBarContainer {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 24px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 56px 20px 32px;
+  }
+
+  .footerGrid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  /* Dashboard Preview */
+  .dashboardPreviewHeader {
+    padding: 40px 20px 28px;
+  }
+
+  .dashboardPreviewTitle {
+    font-size: clamp(22px, 6vw, 36px);
+  }
+
+  .dashboardPreviewSub {
+    font-size: 14px;
+  }
+
+  /* Pillar cards */
+  .pillarCard {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Sections tighter on very small screens */
+  .section,
+  .pillarsSection,
+  .faqSection,
+  .roiSection,
+  .ecosystemSection,
+  .comparisonSection,
+  .pricingSection,
+  .timelineSection {
+    padding: 40px 16px !important;
+  }
+
+  /* Footer single column */
+  .footerGrid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .footer {
+    padding: 40px 16px 24px;
+  }
+
+  /* CTA section */
+  .finalCta {
+    padding: 48px 16px;
+    border-radius: 16px;
+  }
+
+  .finalSubheadline {
+    font-size: 1.1rem;
+  }
+
+  /* Pricing cards */
+  .pricingCard {
+    padding: 28px 20px;
+  }
+
+  .pricingCard.featured {
+    transform: none !important;
+  }
+
+  /* Trust bar */
+  .trustBarItem {
+    font-size: 0.875rem;
+  }
+
+  /* Bento */
+  .bentoCard {
+    padding: 20px;
+  }
+
+  /* Comparison table font */
+  .competitorTable th,
+  .competitorTable td {
+    padding: 10px 8px;
+    font-size: 0.8rem;
   }
 }

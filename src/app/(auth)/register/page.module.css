@@ -206,6 +206,41 @@
   line-height: 1.5;
 }
 
+/* Locked / Coming Soon card */
+.cardLocked {
+  opacity: 0.65;
+  cursor: not-allowed;
+  position: relative;
+  user-select: none;
+}
+
+.cardLocked:hover {
+  border-color: #D6E4EF !important;
+  background-color: #F8F9FD !important;
+}
+
+.comingSoonBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FCD34D;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.lockIcon {
+  font-size: 11px;
+}
+
 /* Buttons */
 .primaryButton {
   background-color: #1B6B3A;

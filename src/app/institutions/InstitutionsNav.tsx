@@ -44,9 +44,7 @@ export default function InstitutionsNav({ activePage }: Props) {
         </div>
 
         <div className={styles.navActions}>
-          <Link href="/login" className={styles.btnLogin}>
-            Login
-          </Link>
+
           <Link href="/register" className={styles.btnTrial}>
             Book a Demo
           </Link>

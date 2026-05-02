@@ -44,18 +44,21 @@ const CARDS = [
     icon: User,
     title: "Solo Teacher / Tutor",
     desc: "I teach independently and manage my own students.",
+    locked: false,
   },
   {
     id: "offline_institution" as const,
     icon: Building2,
     title: "Coaching Institute or School",
     desc: "I run a physical or hybrid institute with staff and batches.",
+    locked: true,
   },
   {
     id: "edtech" as const,
     icon: Layers,
     title: "EdTech Company",
     desc: "I run an online education business with multiple instructors.",
+    locked: true,
   },
 ] as const;
 
@@ -485,26 +488,34 @@ export default function RegisterFlowClient() {
             <div className={styles.cardsGrid} role="radiogroup" aria-label="Select your user category">
               {CARDS.map((card) => {
                 const Icon = card.icon;
-                const isSelected = category === card.id;
+                const isLocked = (card as { locked?: boolean }).locked;
+                const isSelected = !isLocked && category === card.id;
                 return (
                   <div
                     key={card.id}
-                    role="radio"
+                    role={isLocked ? "presentation" : "radio"}
                     aria-checked={isSelected}
-                    tabIndex={0}
-                    className={`${styles.card} ${isSelected ? styles.cardSelected : ""}`}
-                    onClick={() => setCategory(card.id)}
+                    aria-disabled={isLocked}
+                    tabIndex={isLocked ? -1 : 0}
+                    className={`${styles.card} ${isSelected ? styles.cardSelected : ""} ${isLocked ? styles.cardLocked : ""}`}
+                    onClick={() => { if (!isLocked) setCategory(card.id); }}
                     onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
+                      if (!isLocked && (e.key === "Enter" || e.key === " ")) {
                         e.preventDefault();
                         setCategory(card.id);
                       }
                     }}
                   >
+                    {isLocked && (
+                      <span className={styles.comingSoonBadge}>
+                        🔒 Coming soon
+                      </span>
+                    )}
                     {isSelected && <Check className={styles.cardCheck} size={20} />}
                     <Icon className={styles.cardIcon} size={28} />
                     <h2 className={styles.cardTitle}>{card.title}</h2>
                     <p className={styles.cardDesc}>{card.desc}</p>
+
                   </div>
                 );
               })}
@@ -519,10 +530,7 @@ export default function RegisterFlowClient() {
               Continue
             </button>
 
-            <p className={styles.footerText}>
-              Already have an account?{" "}
-              <Link href="/login" className={styles.linkGreen}>Log in</Link>
-            </p>
+
           </div>
         )}
 

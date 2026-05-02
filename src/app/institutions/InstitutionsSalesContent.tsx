@@ -302,7 +302,7 @@ export default function InstitutionsSalesContent() {
               <p className={styles.stepBody}>Sign up with your institute details</p>
             </div>
             <div className={styles.stepCard}>
-              <div className={styles.stepTime}>STEP 2 — 5 MINUTES</div>
+              <div className={styles.stepTime}>STEP 2 — 1 MINUTE</div>
               <p className={styles.stepBody}>Add your courses, batches & fee structure</p>
             </div>
             <div className={styles.stepCard}>

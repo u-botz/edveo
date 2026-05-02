@@ -16,11 +16,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 48px;
+  padding: 16px 48px;
   border-bottom: 1px solid rgba(13, 45, 78, 0.08);
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .navBrand {
@@ -88,11 +89,80 @@
   padding: 11px 24px;
   border-radius: 8px;
   transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 
 .btnTrial:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(13, 45, 78, 0.2);
+}
+
+/* Mobile hamburger */
+.mobileMenuBtn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.mobileMenuBtn:hover {
+  background: rgba(13, 45, 78, 0.05);
+}
+
+.mobileMenuBar {
+  width: 22px;
+  height: 2px;
+  background: #0D2D4E;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.mobileDrawer {
+  display: none;
+  flex-direction: column;
+  background: #fff;
+  border-top: 1px solid rgba(13, 45, 78, 0.08);
+  padding: 16px 20px 20px;
+  gap: 4px;
+}
+
+.mobileDrawerLink {
+  display: block;
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #374151;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.mobileDrawerLink:hover {
+  background: #f3f4f6;
+}
+
+.mobileDrawerCta {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  padding: 12px;
+  background: var(--primary-cta-gradient);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 8px;
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {
@@ -102,5 +172,23 @@
 
   .navLinks {
     display: none;
+  }
+
+  .navActions {
+    display: none;
+  }
+
+  .mobileMenuBtn {
+    display: flex;
+  }
+
+  .mobileDrawer {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 12px 16px;
   }
 }

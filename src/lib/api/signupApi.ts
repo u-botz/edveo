@@ -378,3 +378,76 @@ export function buildGoogleSignupUrl(category: TenantCategory): string {
   });
   return `${apiUrl}/api/auth/google/redirect?${params.toString()}`;
 }
+
+/** POST /api/auth/teacher/verify-email — trial teacher link from email (id + HMAC token). */
+export interface TeacherEmailVerifySuccess {
+  message: string;
+  status: string;
+  data: {
+    already_verified: boolean;
+    provisioned: boolean;
+    subdomain: string;
+    login_url: string;
+  };
+}
+
+export async function verifyTeacherSignupEmailLink(
+  id: number,
+  token: string
+): Promise<TeacherEmailVerifySuccess> {
+  const res = await fetch(`${BASE_URL}/api/auth/teacher/verify-email`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ id, token }),
+  });
+  const json = (await res.json()) as Record<string, unknown>;
+  if (!res.ok) {
+    const msg = extractTeacherVerifyErrorMessage(json, res.status);
+    const err = new Error(msg) as Error & { status: number; code?: string };
+    err.status = res.status;
+    const errObj = json.error;
+    if (
+      errObj &&
+      typeof errObj === "object" &&
+      "code" in errObj &&
+      typeof (errObj as { code: unknown }).code === "string"
+    ) {
+      err.code = (errObj as { code: string }).code;
+    }
+    throw err;
+  }
+  const data = json.data;
+  if (
+    !data ||
+    typeof data !== "object" ||
+    typeof (data as { login_url?: unknown }).login_url !== "string" ||
+    typeof (data as { subdomain?: unknown }).subdomain !== "string"
+  ) {
+    throw new Error("Unexpected verification response");
+  }
+  return json as unknown as TeacherEmailVerifySuccess;
+}
+
+function extractTeacherVerifyErrorMessage(
+  json: Record<string, unknown>,
+  status: number
+): string {
+  if (typeof json.message === "string" && json.message !== "") {
+    return json.message;
+  }
+  const err = json.error;
+  if (err && typeof err === "object" && "message" in err) {
+    const m = (err as { message?: unknown }).message;
+    if (typeof m === "string" && m !== "") return m;
+  }
+  if (status === 410) {
+    return "This verification link has expired or is no longer valid.";
+  }
+  if (status === 404) {
+    return "This verification link is invalid.";
+  }
+  return "Verification failed. Please request a new link from the signup page.";
+}

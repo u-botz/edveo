@@ -4,6 +4,7 @@ import SiteFooter from "./components/SiteFooter";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import CtaBanner from "./components/CtaBanner";
 import HeroSection from "./components/HeroSection";
+import DashboardPreview from "./components/DashboardPreview";
 import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
 
 export default function Home() {
@@ -14,83 +15,16 @@ export default function Home() {
       {/* Hero */}
       <HeroSection />
 
-      {/* Social Proof — testimonials + platform stats */}
-      <section className={styles.socialProofSection}>
-        <div className={styles.container}>
-          <p className={styles.spEyebrow}>Trusted by Indian educators</p>
-          <h2 className={styles.spTitle}>Real educators. Real results.</h2>
-
-          <div className={styles.testimonialGrid}>
-            {/* Teacher */}
-            <div className={styles.testimonialCard}>
-              <div className={styles.testimonialQuote}>
-                &ldquo;I was losing ₹18,000 a month to Udemy commissions. Moved to Edveo, set up my own portal in an afternoon, and now every rupee my students pay comes directly to me.&rdquo;
-              </div>
-              <div className={styles.testimonialAuthor}>
-                <div className={styles.testimonialAvatar} data-initials="PS" />
-                <div>
-                  <div className={styles.testimonialName}>Priya Sharma</div>
-                  <div className={styles.testimonialMeta}>Physics Teacher · Pune</div>
-                </div>
-                <div className={styles.testimonialBadge}>Teacher</div>
-              </div>
-            </div>
-
-            {/* Edtech */}
-            <div className={styles.testimonialCard}>
-              <div className={styles.testimonialQuote}>
-                &ldquo;We had 6 tools — Zoom, Razorpay, Google Sheets, Notion, WhatsApp, Canva — none talking to each other. Edveo replaced all of them. Our ops team went from 4 people to 2.&rdquo;
-              </div>
-              <div className={styles.testimonialAuthor}>
-                <div className={styles.testimonialAvatar} data-initials="RN" />
-                <div>
-                  <div className={styles.testimonialName}>Rahul Nair</div>
-                  <div className={styles.testimonialMeta}>Founder, CodePath Academy · Bengaluru</div>
-                </div>
-                <div className={styles.testimonialBadge}>Edtech</div>
-              </div>
-            </div>
-
-            {/* Institution */}
-            <div className={styles.testimonialCard}>
-              <div className={styles.testimonialQuote}>
-                &ldquo;Fee collection used to take two staff members a whole week every month. Now it&apos;s automated — reminders go out, parents pay online, and I get a report every morning.&rdquo;
-              </div>
-              <div className={styles.testimonialAuthor}>
-                <div className={styles.testimonialAvatar} data-initials="AK" />
-                <div>
-                  <div className={styles.testimonialName}>Anand Kumar</div>
-                  <div className={styles.testimonialMeta}>Director, Apex Coaching Centre · Kochi</div>
-                </div>
-                <div className={styles.testimonialBadge}>Institute</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Platform stats */}
-          <div className={styles.spStats}>
-            <div className={styles.spStat}>
-              <div className={styles.spStatValue}>5,000+</div>
-              <div className={styles.spStatLabel}>Educators on platform</div>
-            </div>
-            <div className={styles.spStatDivider} />
-            <div className={styles.spStat}>
-              <div className={styles.spStatValue}>₹12 Cr+</div>
-              <div className={styles.spStatLabel}>Fees processed</div>
-            </div>
-            <div className={styles.spStatDivider} />
-            <div className={styles.spStat}>
-              <div className={styles.spStatValue}>0%</div>
-              <div className={styles.spStatLabel}>Commission taken</div>
-            </div>
-            <div className={styles.spStatDivider} />
-            <div className={styles.spStat}>
-              <div className={styles.spStatValue}>4.8 / 5</div>
-              <div className={styles.spStatLabel}>Average support rating</div>
-            </div>
-          </div>
+      {/* Dashboard Preview */}
+      <section className={styles.dashboardPreviewSection}>
+        <div className={styles.dashboardPreviewHeader}>
+          <span className={styles.dashboardPreviewEyebrow}>YOUR ACTUAL DASHBOARD</span>
+          <h2 className={styles.dashboardPreviewTitle}>See what you get — day one</h2>
+          <p className={styles.dashboardPreviewSub}>A real-time view of your academy. Students, fees, attendance, CRM — all in one place.</p>
         </div>
+        <DashboardPreview />
       </section>
+
 
       {/* Trust bar — honest early-stage signals, no fake logos */}
       <div className={styles.trustStrip}>
@@ -112,7 +46,7 @@ export default function Home() {
           <span className={styles.trustStripDot} aria-hidden />
           <div className={styles.trustStripItem}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            <span>Go live in under 5 minutes</span>
+            <span>Go live in under 1 minute</span>
           </div>
           <span className={styles.trustStripDot} aria-hidden />
           <div className={styles.trustStripItem}>
@@ -426,7 +360,7 @@ export default function Home() {
       {/* Go Live — objection-closer, lives near the decision point */}
       <section className={styles.timelineSection}>
         <div className={styles.container}>
-          <h2 style={{ fontSize: "2.5rem", marginBottom: "12px" }}>Go Live in 5 Min</h2>
+          <h2 style={{ fontSize: "2.5rem", marginBottom: "12px" }}>Go Live in 1 Min</h2>
           <p style={{ color: "#9CA3AF", marginBottom: "40px" }}>No complex coding. No lengthy migrations.</p>
 
           <div className={styles.timelineGrid}>
