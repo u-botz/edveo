@@ -113,6 +113,43 @@ export interface TeachingGradeLevel {
   slug: string;
 }
 
+// ─── Onboarding Wizard v2 types ───────────────────────────────────────────────
+
+export type TeachingMode =
+  | "independent_tutor"
+  | "school_teacher"
+  | "language_coach"
+  | "skill_trainer"
+  | "creative_arts"
+  | "fitness_coach"
+  | "corporate_trainer";
+
+export interface TeachingModeOption {
+  value: TeachingMode;
+  label: string;
+  icon?: string;
+}
+
+export interface SubjectOption {
+  slug: string;
+  name: string;
+}
+
+export interface BoardOption {
+  slug: string;
+  name: string;
+}
+
+export interface OnboardingFilterConfig {
+  teaching_modes: TeachingModeOption[];
+  student_profiles_by_teaching_mode: Record<TeachingMode, string[]>;
+  student_profile_labels?: Record<string, string>;
+  boards_by_student_profile: Record<string, BoardOption[]>;
+  subjects_by_board: Record<string, SubjectOption[]>;
+  subjects_by_teaching_path: Record<TeachingMode, SubjectOption[]>;
+  step4_skip_modes: TeachingMode[];
+}
+
 export interface SubdomainCheckResult {
   available: boolean;
   slug: string;
@@ -125,11 +162,11 @@ export interface TrialSignupPayload {
   phone: string;
   subdomain: string;
   institution_type_id?: number | null; // omitted for edtech
-  /** Required for standalone_teacher category */
+  /** Legacy single-slug (kept for paid-checkout backward compat) */
   exam_category_slug?: string;
-  /** Required for standalone_teacher category */
+  /** Legacy single-slug (kept for paid-checkout backward compat) */
   subject_slug?: string;
-  /** Required for standalone_teacher category */
+  /** Legacy single-slug */
   grade_level_slug?: string;
   plan_id: number;
   idempotency_key: string;
@@ -138,6 +175,13 @@ export interface TrialSignupPayload {
   google_continuation_token?: string | null; // TSO-3 OAuth path
   /** Required for edtech / offline `initiate` when `google_continuation_token` is absent (backend min 10). */
   password?: string;
+  // ─── Wizard v2 fields ──────────────────────────────────────────────────────
+  teaching_mode?: TeachingMode;
+  student_profile?: string;
+  /** Multi-select boards (Step 4). Empty array when boards_applicable = false. */
+  exam_category_slugs?: string[];
+  /** Alias for subject_slug sent from the wizard v2. */
+  primary_subject_slug?: string;
 }
 
 /** Teacher trial endpoint — enumeration-safe, no session token in body. */
@@ -313,6 +357,21 @@ export async function fetchInstitutionTypesForCategory(
   if (!res.ok) throw new Error("Failed to load institution types");
   const json = await res.json();
   return (json.data ?? []) as InstitutionType[];
+}
+
+/**
+ * Fetch the onboarding filter config (cascade map for wizard v2 steps 2–5).
+ * Cached for 1 h on the server; no-store on the client so changes propagate promptly.
+ */
+export async function fetchOnboardingFilterConfig(): Promise<OnboardingFilterConfig> {
+  const res = await fetch(
+    `${CATEGORY_PREFIX.standalone_teacher}/onboarding-config`,
+    { headers: { Accept: "application/json" }, cache: "no-store" }
+  );
+  if (!res.ok) throw new Error("Failed to load onboarding configuration");
+  const json = (await res.json()) as { data?: OnboardingFilterConfig };
+  if (!json.data) throw new Error("Empty onboarding configuration");
+  return json.data;
 }
 
 /**

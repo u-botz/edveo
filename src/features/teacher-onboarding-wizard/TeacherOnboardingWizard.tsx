@@ -7,31 +7,34 @@ import {
   Loader2,
   Search,
   X,
+  AlertCircle,
   BookOpen,
-  GraduationCap,
+  Users,
   Award,
   Layers,
-  AlertCircle,
+  GraduationCap,
 } from "lucide-react";
 import styles from "@/app/(auth)/register/page.module.css";
 import {
-  fetchTeacherExamCategories,
-  fetchTeacherSubjects,
-  fetchTeacherGradeLevels,
+  fetchOnboardingFilterConfig,
   fetchInstitutionTypesForCategory,
-  checkSubdomainForCategory,
   fetchPlansForCategory,
+  checkSubdomainForCategory,
   submitSignup,
   generateIdempotencyKey,
-  isInitiateSignupResponse,
-  selfSignupAuxStorageKey,
-  type TeachingExamCategory,
-  type TeachingSubject,
-  type TeachingGradeLevel,
+  type TeachingMode,
+  type OnboardingFilterConfig,
   type InstitutionType,
   type TrialPlan,
   type SignupSubmitResult,
 } from "@/lib/api/signupApi";
+import {
+  getStudentProfiles,
+  getStudentProfileLabel,
+  getBoards,
+  getSubjects,
+  shouldSkipBoardStep,
+} from "./filterHelpers";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -50,7 +53,7 @@ export interface TeacherOnboardingWizardProps {
   prefillEmail: string;
   googleContinuationToken?: string | null;
   onSuccess: (result: TeacherWizardResult) => void;
-  /** Extra fields required by the direct-email path (full name, email, phone) — omit for Google path */
+  /** Extra fields required by the direct-email path — omit for Google path */
   extraFields?: {
     fullName: string;
     email: string;
@@ -61,19 +64,19 @@ export interface TeacherOnboardingWizardProps {
 // ─── Step metadata ─────────────────────────────────────────────────────────────
 
 const STEP_LABELS: Record<WizardStep, string> = {
-  1: "Workspace",
-  2: "Category",
-  3: "Board",
-  4: "Subject",
-  5: "Grade",
+  1: "Your Page",
+  2: "Teaching Mode",
+  3: "Students",
+  4: "Board / Exam",
+  5: "Subject",
 };
 
 const STEP_HINTS: Record<WizardStep, string> = {
   1: "This becomes your unique URL — students will see this name everywhere.",
-  2: "We'll set up your dashboard based on how you teach.",
-  3: "We'll pre-configure your question bank tags to match this board.",
-  4: "Pick the primary subject you teach. You can add more later.",
-  5: "This helps us recommend the right templates and quiz difficulty levels.",
+  2: "Tell us how you teach so we can set up the right tools for you.",
+  3: "Who are your typical students? This helps us personalise your dashboard.",
+  4: "Pick one or more boards / exams you teach for. You can add more later.",
+  5: "Your primary subject — you can teach others too.",
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -88,29 +91,30 @@ export default function TeacherOnboardingWizard({
   const [step, setStep] = useState<WizardStep>(1);
   const [direction, setDirection] = useState<"right" | "left">("right");
 
-  // ── Master data ───────────────────────────────────────────────────────────
-  const [examCategories, setExamCategories] = useState<TeachingExamCategory[]>([]);
-  const [subjects, setSubjects] = useState<TeachingSubject[]>([]);
-  const [gradeLevels, setGradeLevels] = useState<TeachingGradeLevel[]>([]);
+  // ── Bootstrap data ────────────────────────────────────────────────────────
+  const [config, setConfig] = useState<OnboardingFilterConfig | null>(null);
   const [institutionTypes, setInstitutionTypes] = useState<InstitutionType[]>([]);
   const [plans, setPlans] = useState<TrialPlan[]>([]);
+  const [institutionTypeId, setInstitutionTypeId] = useState("");
   const [masterLoading, setMasterLoading] = useState(true);
   const [masterError, setMasterError] = useState<string | null>(null);
 
-  // ── Selections ────────────────────────────────────────────────────────────
-  const [subdomain, setSubdomain] = useState("");
+  // ── Wizard v2 state ───────────────────────────────────────────────────────
   const [slug, setSlug] = useState("");
+  const [rawName, setRawName] = useState("");
   const [subdomainStatus, setSubdomainStatus] = useState<
     "idle" | "checking" | "available" | "taken" | "error"
   >("idle");
   const [subdomainSuggestions, setSubdomainSuggestions] = useState<string[]>([]);
-  const [institutionTypeId, setInstitutionTypeId] = useState("");
-  const [examCategorySlug, setExamCategorySlug] = useState("");
-  const [subjectSlug, setSubjectSlug] = useState("");
-  const [gradeLevelSlug, setGradeLevelSlug] = useState("");
 
-  // ── Search filters ────────────────────────────────────────────────────────
-  const [examSearch, setExamSearch] = useState("");
+  const [teachingMode, setTeachingMode] = useState<TeachingMode | "">("");
+  const [studentProfile, setStudentProfile] = useState("");
+  const [selectedBoards, setSelectedBoards] = useState<string[]>([]);
+  const [boardsApplicable, setBoardsApplicable] = useState(true);
+  const [primarySubjectSlug, setPrimarySubjectSlug] = useState("");
+
+  // ── Search ────────────────────────────────────────────────────────────────
+  const [boardSearch, setBoardSearch] = useState("");
   const [subjectSearch, setSubjectSearch] = useState("");
 
   // ── Submission ────────────────────────────────────────────────────────────
@@ -122,45 +126,43 @@ export default function TeacherOnboardingWizard({
 
   const tenantDomain = process.env.NEXT_PUBLIC_TENANT_DOMAIN ?? "educoreos.com";
 
-  // ── Bootstrap master data ─────────────────────────────────────────────────
+  // ── Bootstrap ─────────────────────────────────────────────────────────────
   useEffect(() => {
     setMasterLoading(true);
     setMasterError(null);
     Promise.all([
-      fetchTeacherExamCategories(),
-      fetchTeacherSubjects(),
-      fetchTeacherGradeLevels(),
+      fetchOnboardingFilterConfig(),
       fetchInstitutionTypesForCategory("standalone_teacher"),
       fetchPlansForCategory("standalone_teacher"),
     ])
-      .then(([exams, subs, grades, instTypes, plansData]) => {
-        setExamCategories(exams);
-        setSubjects(subs);
-        setGradeLevels(grades);
+      .then(([cfg, instTypes, plansData]) => {
+        setConfig(cfg);
         setInstitutionTypes(instTypes);
         setPlans(plansData);
-        // Auto-select institution type for standalone_teacher
+        // Auto-select first institution type (hidden from user)
         const matched = instTypes.find((t) =>
           ["teacher", "tutor", "solo", "individual"].some(
-            (kw) => t.name.toLowerCase().includes(kw) || t.slug.toLowerCase().includes(kw)
+            (kw) =>
+              t.name.toLowerCase().includes(kw) ||
+              t.slug.toLowerCase().includes(kw)
           )
         );
-        if (matched) {
-          setInstitutionTypeId(String(matched.id));
-        } else if (instTypes.length > 0) {
-          setInstitutionTypeId(String(instTypes[0].id));
-        }
+        setInstitutionTypeId(
+          String(matched?.id ?? instTypes[0]?.id ?? "")
+        );
       })
-      .catch(() => setMasterError("Unable to load onboarding data. Please refresh."))
+      .catch(() =>
+        setMasterError("Unable to load onboarding data. Please refresh.")
+      )
       .finally(() => setMasterLoading(false));
   }, []);
 
-  // ── Slug generation ───────────────────────────────────────────────────────
+  // ── Slug generation from raw name ─────────────────────────────────────────
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
-      if (subdomain.trim()) {
-        const generated = subdomain
+      if (rawName.trim()) {
+        const generated = rawName
           .toLowerCase()
           .replace(/[^a-z0-9 -]/g, "")
           .replace(/\s+/g, "-")
@@ -173,10 +175,12 @@ export default function TeacherOnboardingWizard({
         setSubdomainStatus("idle");
       }
     }, 400);
-    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
-  }, [subdomain]);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [rawName]);
 
-  // ── Subdomain check ───────────────────────────────────────────────────────
+  // ── Subdomain availability check ──────────────────────────────────────────
   const checkSub = useCallback(async (s: string) => {
     if (!s || s.length < 2) return;
     setSubdomainStatus("checking");
@@ -193,32 +197,86 @@ export default function TeacherOnboardingWizard({
     if (!slug) return;
     if (checkRef.current) clearTimeout(checkRef.current);
     checkRef.current = setTimeout(() => checkSub(slug), 600);
-    return () => { if (checkRef.current) clearTimeout(checkRef.current); };
+    return () => {
+      if (checkRef.current) clearTimeout(checkRef.current);
+    };
   }, [slug, checkSub]);
 
+  // ── Cascade resets ────────────────────────────────────────────────────────
+  const handleStudentProfileChange = (profile: string) => {
+    setStudentProfile(profile);
+    setSelectedBoards([]);
+    setPrimarySubjectSlug("");
+    setBoardSearch("");
+    setSubjectSearch("");
+  };
+
+  const handleBoardToggle = (boardSlug: string) => {
+    setSelectedBoards((prev) => {
+      const next = prev.includes(boardSlug)
+        ? prev.filter((b) => b !== boardSlug)
+        : [...prev, boardSlug];
+      return next;
+    });
+    setPrimarySubjectSlug(""); // reset subject on board change
+    setSubjectSearch("");
+  };
+
   // ── Navigation ────────────────────────────────────────────────────────────
-  const goNext = () => {
+  const goNext = useCallback(() => {
     setDirection("right");
-    setStep((s) => (s < 5 ? (s + 1) as WizardStep : s));
+    setStep((s) => {
+      const next = s < 5 ? ((s + 1) as WizardStep) : s;
+      // Auto-skip Step 4 when not applicable
+      if (
+        next === 4 &&
+        config &&
+        teachingMode !== "" &&
+        shouldSkipBoardStep(config, teachingMode as TeachingMode)
+      ) {
+        setBoardsApplicable(false);
+        setSelectedBoards([]);
+        return 5;
+      }
+      if (next === 4) {
+        setBoardsApplicable(true);
+      }
+      return next;
+    });
     window.scrollTo(0, 0);
-  };
+  }, [config, teachingMode]);
 
-  const goBack = () => {
+  const goBack = useCallback(() => {
     setDirection("left");
-    setStep((s) => (s > 1 ? (s - 1) as WizardStep : s));
+    setStep((s) => {
+      const prev = s > 1 ? ((s - 1) as WizardStep) : s;
+      // When going back from Step 5, skip Step 4 again if it was auto-skipped
+      if (
+        prev === 4 &&
+        config &&
+        teachingMode !== "" &&
+        shouldSkipBoardStep(config, teachingMode as TeachingMode)
+      ) {
+        return 3;
+      }
+      return prev;
+    });
     window.scrollTo(0, 0);
-  };
+  }, [config, teachingMode]);
 
-  // ── Step 1 validity ───────────────────────────────────────────────────────
-  const step1Valid = slug.length >= 2 && subdomainStatus !== "taken" && subdomainStatus !== "checking";
-  // ── Step 2 validity ───────────────────────────────────────────────────────
-  const step2Valid = institutionTypeId !== "";
-  // ── Step 3 validity ───────────────────────────────────────────────────────
-  const step3Valid = examCategorySlug !== "";
-  // ── Step 4 validity ───────────────────────────────────────────────────────
-  const step4Valid = subjectSlug !== "";
-  // ── Step 5 validity ───────────────────────────────────────────────────────
-  const step5Valid = gradeLevelSlug !== "";
+  // ── Validity ──────────────────────────────────────────────────────────────
+  const step1Valid =
+    slug.length >= 2 &&
+    subdomainStatus !== "taken" &&
+    subdomainStatus !== "checking";
+  const step2Valid = teachingMode !== "";
+  const step3Valid = studentProfile !== "";
+  const step4Valid =
+    !boardsApplicable ||
+    (config !== null &&
+      shouldSkipBoardStep(config, teachingMode as TeachingMode)) ||
+    selectedBoards.length > 0;
+  const step5Valid = primarySubjectSlug !== "";
 
   const currentStepValid: Record<WizardStep, boolean> = {
     1: step1Valid,
@@ -227,6 +285,17 @@ export default function TeacherOnboardingWizard({
     4: step4Valid,
     5: step5Valid,
   };
+
+  // ── Subject list for Step 5 ───────────────────────────────────────────────
+  const subjectOptions =
+    config && teachingMode !== ""
+      ? getSubjects(
+          config,
+          selectedBoards,
+          teachingMode as TeachingMode,
+          boardsApplicable
+        )
+      : [];
 
   // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async () => {
@@ -248,15 +317,19 @@ export default function TeacherOnboardingWizard({
         email,
         phone,
         subdomain: slug,
-        institution_type_id: parseInt(institutionTypeId, 10),
-        exam_category_slug: examCategorySlug,
-        subject_slug: subjectSlug,
-        grade_level_slug: gradeLevelSlug,
+        institution_type_id: institutionTypeId ? parseInt(institutionTypeId, 10) : null,
         plan_id: trialPlan.id,
         idempotency_key: idempotencyKeyRef.current,
         captcha_token: null,
         website_url: "",
         google_continuation_token: googleContinuationToken ?? null,
+        // v2 wizard fields
+        teaching_mode: teachingMode !== "" ? (teachingMode as TeachingMode) : undefined,
+        student_profile: studentProfile !== "" ? studentProfile : undefined,
+        exam_category_slugs: selectedBoards,
+        primary_subject_slug: primarySubjectSlug !== "" ? primarySubjectSlug : undefined,
+        // legacy compat: set subject_slug so paid checkout path still works
+        subject_slug: primarySubjectSlug !== "" ? primarySubjectSlug : undefined,
       });
 
       onSuccess({
@@ -267,7 +340,10 @@ export default function TeacherOnboardingWizard({
         category: "standalone_teacher",
       });
     } catch (err: unknown) {
-      const error = err as Error & { status?: number; serverErrors?: Record<string, string[]> };
+      const error = err as Error & {
+        status?: number;
+        serverErrors?: Record<string, string[]>;
+      };
       if (error.status === 422 && error.serverErrors) {
         const first = Object.values(error.serverErrors)[0]?.[0];
         setSubmitError(first ?? error.message);
@@ -278,19 +354,13 @@ export default function TeacherOnboardingWizard({
     }
   };
 
-  // ── Filtered chip data ────────────────────────────────────────────────────
-  const filteredExams = examCategories.filter((e) =>
-    e.name.toLowerCase().includes(examSearch.toLowerCase())
-  );
-  const filteredSubjects = subjects.filter((s) =>
-    s.name.toLowerCase().includes(subjectSearch.toLowerCase())
-  );
+  const animClass =
+    direction === "right" ? styles.slideInRight : styles.slideInLeft;
 
-  const animClass = direction === "right" ? styles.slideInRight : styles.slideInLeft;
-
+  // ── Render: loading / error ────────────────────────────────────────────────
   if (masterLoading) {
     return (
-      <div style={{ width: "100%", maxWidth: 400, margin: "0 auto" }}>
+      <div style={{ width: "100%", maxWidth: 440, margin: "0 auto" }}>
         <div className={styles.loadingShimmer} style={{ height: 40, marginBottom: 16 }} />
         <div className={styles.loadingShimmer} style={{ height: 40, marginBottom: 16 }} />
         <div className={styles.loadingShimmer} style={{ height: 40 }} />
@@ -298,19 +368,68 @@ export default function TeacherOnboardingWizard({
     );
   }
 
-  if (masterError) {
+  if (masterError || !config) {
     return (
-      <div className={styles.globalError} role="alert" style={{ maxWidth: 400 }}>
+      <div
+        className={styles.globalError}
+        role="alert"
+        style={{ maxWidth: 440 }}
+      >
         <AlertCircle size={16} />
-        {masterError}
+        {masterError ?? "Failed to load wizard configuration."}
       </div>
     );
   }
 
+  // ── Computed display helpers ───────────────────────────────────────────────
+  const selectedMode = config.teaching_modes.find(
+    (m) => m.value === teachingMode
+  );
+  const boardOptions =
+    studentProfile !== "" ? getBoards(config, studentProfile) : [];
+  const filteredBoards = boardOptions.filter((b) =>
+    b.name.toLowerCase().includes(boardSearch.toLowerCase())
+  );
+  const filteredSubjects = subjectOptions.filter((s) =>
+    s.name.toLowerCase().includes(subjectSearch.toLowerCase())
+  );
+  const isStep4Skipped =
+    teachingMode !== "" &&
+    shouldSkipBoardStep(config, teachingMode as TeachingMode);
+
   return (
-    <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      {/* Signed-in-as header (Google path only) */}
+      {googleContinuationToken && prefillEmail && (
+        <div
+          style={{
+            width: "100%",
+            maxWidth: 440,
+            marginBottom: 12,
+            padding: "8px 14px",
+            background: "rgba(99,102,241,0.07)",
+            border: "1px solid rgba(99,102,241,0.18)",
+            borderRadius: 8,
+            fontSize: 13,
+            color: "var(--color-text-secondary, #6b7280)",
+          }}
+        >
+          Signed in as <strong>{prefillEmail}</strong> via Google
+        </div>
+      )}
+
       {/* Progress bar */}
-      <WizardProgressBar currentStep={step} />
+      <WizardProgressBar
+        currentStep={step}
+        isStep4Skipped={isStep4Skipped}
+      />
 
       {/* Per-step hint */}
       <div className={styles.wizardHint}>
@@ -318,67 +437,90 @@ export default function TeacherOnboardingWizard({
         <span>{STEP_HINTS[step]}</span>
       </div>
 
-      {/* Selections summary (steps 3-5 show what was chosen) */}
-      {step >= 3 && (
-        <div className={styles.wizardSelectionSummary}>
-          {slug && (
-            <span className={styles.wizardSelectionBadge}>
-              <Check size={10} />
-              {slug}.{tenantDomain}
-            </span>
-          )}
-          {institutionTypeId && institutionTypes.find((t) => String(t.id) === institutionTypeId) && (
-            <span className={styles.wizardSelectionBadge}>
-              <Check size={10} />
-              {institutionTypes.find((t) => String(t.id) === institutionTypeId)!.name}
-            </span>
-          )}
-          {step >= 4 && examCategorySlug && (
-            <span className={styles.wizardSelectionBadge}>
-              <Check size={10} />
-              {examCategories.find((e) => e.slug === examCategorySlug)?.name ?? examCategorySlug}
-            </span>
-          )}
-          {step >= 5 && subjectSlug && (
-            <span className={styles.wizardSelectionBadge}>
-              <Check size={10} />
-              {subjects.find((s) => s.slug === subjectSlug)?.name ?? subjectSlug}
-            </span>
-          )}
-        </div>
+      {/* Context chips row (from step 2 onward) */}
+      {step >= 2 && (
+        <OnboardingContextChips
+          slug={slug}
+          tenantDomain={tenantDomain}
+          teachingMode={selectedMode?.label}
+          studentProfile={
+            studentProfile !== ""
+              ? getStudentProfileLabel(config, studentProfile)
+              : undefined
+          }
+          boards={
+            selectedBoards.length > 0
+              ? selectedBoards.map(
+                  (b) => boardOptions.find((bo) => bo.slug === b)?.name ?? b
+                )
+              : undefined
+          }
+          currentStep={step}
+        />
       )}
 
       {/* Error banner */}
       {submitError && (
-        <div className={styles.globalError} role="alert" style={{ maxWidth: 400, width: "100%", marginBottom: 16 }}>
+        <div
+          className={styles.globalError}
+          role="alert"
+          style={{ maxWidth: 440, width: "100%", marginBottom: 16 }}
+        >
           <AlertCircle size={16} />
           {submitError}
         </div>
       )}
 
-      {/* ── Step 1: Workspace name ─────────────────────────────────────────── */}
+      {/* ── Step 1: Your Page ─────────────────────────────────────────────── */}
       {step === 1 && (
-        <div key="step1" className={`${styles.screenContainer} ${animClass}`} style={{ maxWidth: 400 }}>
-          <h2 className={styles.heading} style={{ textAlign: "left", fontSize: 22 }}>
-            Name your workspace
+        <div
+          key="step1"
+          className={`${styles.screenContainer} ${animClass}`}
+          style={{ maxWidth: 440 }}
+        >
+          <h2
+            className={styles.heading}
+            style={{ textAlign: "left", fontSize: 22 }}
+          >
+            Name your page
           </h2>
+          <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 20 }}>
+            Students will find you at{" "}
+            <strong>{slug || "yourname"}.{tenantDomain}</strong>
+          </p>
           <div className={styles.wizardFormContainer}>
             <div className={styles.formGroup}>
-              <label htmlFor="wiz_subdomain" className={styles.label}>
-                Workspace name
+              <label htmlFor="wiz_slug" className={styles.label}>
+                Page name
               </label>
               <input
-                id="wiz_subdomain"
+                id="wiz_slug"
                 type="text"
                 placeholder="e.g. Ravi Physics Classes"
                 className={`${styles.input} ${subdomainStatus === "taken" ? styles.inputError : ""}`}
-                value={subdomain}
+                value={rawName}
                 onChange={(e) => {
-                  setSubdomain(e.target.value);
+                  setRawName(e.target.value);
                   setSubmitError(null);
                 }}
                 autoFocus
               />
+              {/* Live URL preview */}
+              {slug && (
+                <div style={{ marginTop: 8, fontSize: 13 }}>
+                  <span
+                    style={{
+                      background: "#f0fdf4",
+                      color: "#16a34a",
+                      padding: "2px 8px",
+                      borderRadius: 4,
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    {slug}.{tenantDomain}
+                  </span>
+                </div>
+              )}
               {slug && subdomainStatus === "checking" && (
                 <div className={styles.subdomainChecking}>
                   <Loader2 size={11} className={styles.spinner} />
@@ -390,26 +532,22 @@ export default function TeacherOnboardingWizard({
                   <span className={styles.subdomainAvailableBadge}>
                     <Check size={11} /> Available
                   </span>
-                  <span className={styles.subdomainSlug}>{slug}.{tenantDomain}</span>
                 </div>
               )}
               {slug && subdomainStatus === "taken" && (
                 <div className={styles.subdomainTaken}>
                   <X size={11} />
-                  Already taken.{subdomainSuggestions.length > 0 && ` Try: ${subdomainSuggestions.join(", ")}`}
-                </div>
-              )}
-              {slug && subdomainStatus === "idle" && slug.length >= 2 && (
-                <div className={styles.subdomainPreview}>
-                  <span className={styles.subdomainSlug}>{slug}.{tenantDomain}</span>
+                  Already taken.
+                  {subdomainSuggestions.length > 0 &&
+                    ` Try: ${subdomainSuggestions.join(", ")}`}
                 </div>
               )}
             </div>
           </div>
           <div style={{ height: 24 }} />
           <button
-            className={`${styles.primaryButton}`}
-            style={{ maxWidth: 400 }}
+            className={styles.primaryButton}
+            style={{ maxWidth: 440 }}
             disabled={!step1Valid}
             onClick={goNext}
           >
@@ -418,32 +556,49 @@ export default function TeacherOnboardingWizard({
         </div>
       )}
 
-      {/* ── Step 2: Institution category ──────────────────────────────────── */}
+      {/* ── Step 2: Teaching Mode ────────────────────────────────────────── */}
       {step === 2 && (
-        <div key="step2" className={`${styles.screenContainer} ${animClass}`} style={{ maxWidth: 400 }}>
-          <h2 className={styles.heading} style={{ textAlign: "left", fontSize: 22 }}>
+        <div
+          key="step2"
+          className={`${styles.screenContainer} ${animClass}`}
+          style={{ maxWidth: 440 }}
+        >
+          <h2
+            className={styles.heading}
+            style={{ textAlign: "left", fontSize: 22 }}
+          >
             How do you teach?
           </h2>
           <div className={styles.chipGrid} style={{ maxHeight: "none" }}>
-            {institutionTypes.map((t) => {
-              const selected = String(t.id) === institutionTypeId;
+            {config.teaching_modes.map((m) => {
+              const selected = m.value === teachingMode;
               return (
                 <button
-                  key={t.id}
+                  key={m.value}
                   type="button"
                   className={`${styles.chip} ${selected ? styles.chipSelected : ""}`}
-                  onClick={() => setInstitutionTypeId(String(t.id))}
+                  onClick={() => {
+                    setTeachingMode(m.value);
+                    handleStudentProfileChange(""); // reset downstream
+                  }}
                   aria-pressed={selected}
                 >
+                  {m.icon && (
+                    <span style={{ marginRight: 6 }}>{m.icon}</span>
+                  )}
                   {selected && <Check className={styles.chipCheckIcon} size={13} />}
-                  {t.name}
+                  {m.label}
                 </button>
               );
             })}
           </div>
           <div style={{ height: 24 }} />
           <div className={styles.wizardNavRow}>
-            <button type="button" className={styles.wizardNavBack} onClick={goBack}>
+            <button
+              type="button"
+              className={styles.wizardNavBack}
+              onClick={goBack}
+            >
               <ChevronLeft size={16} /> Back
             </button>
             <button
@@ -458,47 +613,49 @@ export default function TeacherOnboardingWizard({
         </div>
       )}
 
-      {/* ── Step 3: Exam board ─────────────────────────────────────────────── */}
+      {/* ── Step 3: Students ─────────────────────────────────────────────── */}
       {step === 3 && (
-        <div key="step3" className={`${styles.screenContainer} ${animClass}`} style={{ maxWidth: 400 }}>
-          <h2 className={styles.heading} style={{ textAlign: "left", fontSize: 22 }}>
-            Which board or exam?
+        <div
+          key="step3"
+          className={`${styles.screenContainer} ${animClass}`}
+          style={{ maxWidth: 440 }}
+        >
+          <h2
+            className={styles.heading}
+            style={{ textAlign: "left", fontSize: 22 }}
+          >
+            Who are your students?
           </h2>
-          <div className={styles.chipSearchWrap}>
-            <Search size={15} className={styles.chipSearchIcon} />
-            <input
-              type="search"
-              className={styles.chipSearch}
-              placeholder="Search board or exam…"
-              value={examSearch}
-              onChange={(e) => setExamSearch(e.target.value)}
-              autoFocus
-            />
-          </div>
-          <div className={styles.chipGrid}>
-            {filteredExams.length === 0 ? (
-              <div className={styles.chipEmpty}>No results for &ldquo;{examSearch}&rdquo;</div>
-            ) : (
-              filteredExams.map((e) => {
-                const selected = e.slug === examCategorySlug;
-                return (
-                  <button
-                    key={e.slug}
-                    type="button"
-                    className={`${styles.chip} ${selected ? styles.chipSelected : ""}`}
-                    onClick={() => { setExamCategorySlug(e.slug); setExamSearch(""); }}
-                    aria-pressed={selected}
-                  >
-                    {selected && <Check className={styles.chipCheckIcon} size={13} />}
-                    {e.name}
-                  </button>
-                );
-              })
-            )}
+          <div className={styles.chipGrid} style={{ maxHeight: "none" }}>
+            {getStudentProfiles(
+              config,
+              teachingMode as TeachingMode
+            ).map((profile) => {
+              const selected = profile === studentProfile;
+              const label = getStudentProfileLabel(config, profile);
+              return (
+                <button
+                  key={profile}
+                  type="button"
+                  className={`${styles.chip} ${selected ? styles.chipSelected : ""}`}
+                  onClick={() => handleStudentProfileChange(profile)}
+                  aria-pressed={selected}
+                >
+                  {selected && (
+                    <Check className={styles.chipCheckIcon} size={13} />
+                  )}
+                  {label}
+                </button>
+              );
+            })}
           </div>
           <div style={{ height: 24 }} />
           <div className={styles.wizardNavRow}>
-            <button type="button" className={styles.wizardNavBack} onClick={goBack}>
+            <button
+              type="button"
+              className={styles.wizardNavBack}
+              onClick={goBack}
+            >
               <ChevronLeft size={16} /> Back
             </button>
             <button
@@ -513,10 +670,113 @@ export default function TeacherOnboardingWizard({
         </div>
       )}
 
-      {/* ── Step 4: Subject ────────────────────────────────────────────────── */}
+      {/* ── Step 4: Board / Exam (multi-select) ──────────────────────────── */}
       {step === 4 && (
-        <div key="step4" className={`${styles.screenContainer} ${animClass}`} style={{ maxWidth: 400 }}>
-          <h2 className={styles.heading} style={{ textAlign: "left", fontSize: 22 }}>
+        <div
+          key="step4"
+          className={`${styles.screenContainer} ${animClass}`}
+          style={{ maxWidth: 440 }}
+        >
+          <h2
+            className={styles.heading}
+            style={{ textAlign: "left", fontSize: 22 }}
+          >
+            Board or exam
+          </h2>
+          <p style={{ fontSize: 13, color: "#6b7280", marginBottom: 12 }}>
+            Select all that apply — you can pick more than one.
+          </p>
+          <div className={styles.chipSearchWrap}>
+            <Search size={15} className={styles.chipSearchIcon} />
+            <input
+              type="search"
+              className={styles.chipSearch}
+              placeholder="Search board or exam…"
+              value={boardSearch}
+              onChange={(e) => setBoardSearch(e.target.value)}
+              autoFocus
+            />
+          </div>
+          <div className={styles.chipGrid}>
+            {filteredBoards.length === 0 ? (
+              <div className={styles.chipEmpty}>
+                No results for &ldquo;{boardSearch}&rdquo;
+              </div>
+            ) : (
+              filteredBoards.map((b) => {
+                const selected = selectedBoards.includes(b.slug);
+                return (
+                  <button
+                    key={b.slug}
+                    type="button"
+                    className={`${styles.chip} ${selected ? styles.chipMultiSelected : ""}`}
+                    onClick={() => handleBoardToggle(b.slug)}
+                    aria-pressed={selected}
+                  >
+                    {selected && (
+                      <Check className={styles.chipCheckIcon} size={13} />
+                    )}
+                    {b.name}
+                    {selected && selectedBoards.length > 1 && (
+                      <span
+                        style={{
+                          marginLeft: 4,
+                          fontSize: 11,
+                          opacity: 0.7,
+                        }}
+                      >
+                        ✓
+                      </span>
+                    )}
+                  </button>
+                );
+              })
+            )}
+          </div>
+          {selectedBoards.length > 0 && (
+            <p
+              style={{
+                fontSize: 12,
+                color: "#6366f1",
+                marginTop: 8,
+                textAlign: "center",
+              }}
+            >
+              {selectedBoards.length} selected
+            </p>
+          )}
+          <div style={{ height: 24 }} />
+          <div className={styles.wizardNavRow}>
+            <button
+              type="button"
+              className={styles.wizardNavBack}
+              onClick={goBack}
+            >
+              <ChevronLeft size={16} /> Back
+            </button>
+            <button
+              className={styles.primaryButton}
+              disabled={selectedBoards.length === 0}
+              onClick={goNext}
+              style={{ flex: 1 }}
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Step 5: Subject ──────────────────────────────────────────────── */}
+      {step === 5 && (
+        <div
+          key="step5"
+          className={`${styles.screenContainer} ${animClass}`}
+          style={{ maxWidth: 440 }}
+        >
+          <h2
+            className={styles.heading}
+            style={{ textAlign: "left", fontSize: 22 }}
+          >
             Your primary subject
           </h2>
           <div className={styles.chipSearchWrap}>
@@ -532,68 +792,41 @@ export default function TeacherOnboardingWizard({
           </div>
           <div className={styles.chipGrid}>
             {filteredSubjects.length === 0 ? (
-              <div className={styles.chipEmpty}>No results for &ldquo;{subjectSearch}&rdquo;</div>
+              <div className={styles.chipEmpty}>
+                {subjectSearch
+                  ? `No results for "${subjectSearch}"`
+                  : "No subjects available for your selection."}
+              </div>
             ) : (
               filteredSubjects.map((s) => {
-                const selected = s.slug === subjectSlug;
+                const selected = s.slug === primarySubjectSlug;
                 return (
                   <button
                     key={s.slug}
                     type="button"
                     className={`${styles.chip} ${selected ? styles.chipSelected : ""}`}
-                    onClick={() => { setSubjectSlug(s.slug); setSubjectSearch(""); }}
+                    onClick={() => {
+                      setPrimarySubjectSlug(s.slug);
+                      setSubjectSearch("");
+                    }}
                     aria-pressed={selected}
                   >
-                    {selected && <Check className={styles.chipCheckIcon} size={13} />}
+                    {selected && (
+                      <Check className={styles.chipCheckIcon} size={13} />
+                    )}
                     {s.name}
                   </button>
                 );
               })
             )}
           </div>
-          <div style={{ height: 24 }} />
-          <div className={styles.wizardNavRow}>
-            <button type="button" className={styles.wizardNavBack} onClick={goBack}>
-              <ChevronLeft size={16} /> Back
-            </button>
-            <button
-              className={styles.primaryButton}
-              disabled={!step4Valid}
-              onClick={goNext}
-              style={{ flex: 1 }}
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ── Step 5: Grade level ────────────────────────────────────────────── */}
-      {step === 5 && (
-        <div key="step5" className={`${styles.screenContainer} ${animClass}`} style={{ maxWidth: 400 }}>
-          <h2 className={styles.heading} style={{ textAlign: "left", fontSize: 22 }}>
-            Who are your students?
-          </h2>
-          <div className={styles.chipGrid} style={{ maxHeight: "none" }}>
-            {gradeLevels.map((g) => {
-              const selected = g.slug === gradeLevelSlug;
-              return (
-                <button
-                  key={g.slug}
-                  type="button"
-                  className={`${styles.chip} ${selected ? styles.chipSelected : ""}`}
-                  onClick={() => setGradeLevelSlug(g.slug)}
-                  aria-pressed={selected}
-                >
-                  {selected && <Check className={styles.chipCheckIcon} size={13} />}
-                  {g.name}
-                </button>
-              );
-            })}
-          </div>
           <div style={{ height: 28 }} />
           <div className={styles.wizardNavRow}>
-            <button type="button" className={styles.wizardNavBack} onClick={goBack}>
+            <button
+              type="button"
+              className={styles.wizardNavBack}
+              onClick={goBack}
+            >
               <ChevronLeft size={16} /> Back
             </button>
             <button
@@ -603,17 +836,26 @@ export default function TeacherOnboardingWizard({
               style={{ flex: 1 }}
             >
               {isSubmitting ? (
-                <><Loader2 className={styles.spinner} size={18} /> Setting up…</>
+                <>
+                  <Loader2 className={styles.spinner} size={18} /> Setting up…
+                </>
               ) : (
                 "Start my free trial →"
               )}
             </button>
           </div>
-          <p className={styles.footerText} style={{ maxWidth: 400 }}>
+          <p
+            className={styles.footerText}
+            style={{ maxWidth: 440, marginTop: 16 }}
+          >
             By continuing, you agree to Edveo&apos;s{" "}
-            <a href="/terms-of-service" className={styles.linkDark}>Terms of Service</a>{" "}
+            <a href="/terms-of-service" className={styles.linkDark}>
+              Terms of Service
+            </a>{" "}
             and{" "}
-            <a href="/privacy-policy" className={styles.linkDark}>Privacy Policy</a>
+            <a href="/privacy-policy" className={styles.linkDark}>
+              Privacy Policy
+            </a>
           </p>
         </div>
       )}
@@ -623,17 +865,28 @@ export default function TeacherOnboardingWizard({
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-function WizardProgressBar({ currentStep }: { currentStep: WizardStep }) {
+function WizardProgressBar({
+  currentStep,
+  isStep4Skipped,
+}: {
+  currentStep: WizardStep;
+  isStep4Skipped: boolean;
+}) {
   return (
     <div className={styles.wizardProgress}>
       {([1, 2, 3, 4, 5] as WizardStep[]).map((s, i) => {
-        const isDone = currentStep > s;
+        const isDone = currentStep > s || (s === 4 && isStep4Skipped && currentStep >= 4);
         const isActive = currentStep === s;
+        const isAutoCompleted = s === 4 && isStep4Skipped;
         return (
-          <div key={s} style={{ display: "flex", alignItems: "center", flex: 1 }}>
+          <div
+            key={s}
+            style={{ display: "flex", alignItems: "center", flex: 1 }}
+          >
             <div className={styles.wizardStep}>
               <div
                 className={`${styles.wizardStepCircle} ${isActive ? styles.wizardStepCircleActive : ""} ${isDone ? styles.wizardStepCircleDone : ""}`}
+                title={isAutoCompleted ? "Auto-skipped" : undefined}
               >
                 {isDone ? <Check size={13} /> : s}
               </div>
@@ -644,7 +897,9 @@ function WizardProgressBar({ currentStep }: { currentStep: WizardStep }) {
               </span>
             </div>
             {i < 4 && (
-              <div className={`${styles.wizardConnector} ${isDone ? styles.wizardConnectorDone : ""}`} />
+              <div
+                className={`${styles.wizardConnector} ${isDone ? styles.wizardConnectorDone : ""}`}
+              />
             )}
           </div>
         );
@@ -657,7 +912,43 @@ function HintIcon({ step }: { step: WizardStep }) {
   const size = 14;
   if (step === 1) return <Layers size={size} style={{ flexShrink: 0 }} />;
   if (step === 2) return <BookOpen size={size} style={{ flexShrink: 0 }} />;
-  if (step === 3) return <Award size={size} style={{ flexShrink: 0 }} />;
-  if (step === 4) return <BookOpen size={size} style={{ flexShrink: 0 }} />;
+  if (step === 3) return <Users size={size} style={{ flexShrink: 0 }} />;
+  if (step === 4) return <Award size={size} style={{ flexShrink: 0 }} />;
   return <GraduationCap size={size} style={{ flexShrink: 0 }} />;
+}
+
+function OnboardingContextChips({
+  slug,
+  tenantDomain,
+  teachingMode,
+  studentProfile,
+  boards,
+  currentStep,
+}: {
+  slug: string;
+  tenantDomain: string;
+  teachingMode?: string;
+  studentProfile?: string;
+  boards?: string[];
+  currentStep: WizardStep;
+}) {
+  const chips: string[] = [];
+  if (slug) chips.push(`${slug}.${tenantDomain}`);
+  if (teachingMode && currentStep >= 3) chips.push(teachingMode);
+  if (studentProfile && currentStep >= 4) chips.push(studentProfile);
+  if (boards && boards.length > 0 && currentStep >= 5)
+    chips.push(boards.join(", "));
+
+  if (chips.length === 0) return null;
+
+  return (
+    <div className={styles.contextChipsRow}>
+      {chips.map((chip, idx) => (
+        <span key={idx} className={styles.contextChip}>
+          <Check size={10} style={{ marginRight: 3, flexShrink: 0 }} />
+          {chip}
+        </span>
+      ))}
+    </div>
+  );
 }
