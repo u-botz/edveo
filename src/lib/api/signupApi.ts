@@ -140,14 +140,41 @@ export interface BoardOption {
   name: string;
 }
 
+/** Wizard v2 cascade — returned by GET …/onboarding-config (standalone_teacher_v2). */
 export interface OnboardingFilterConfig {
   teaching_modes: TeachingModeOption[];
   student_profiles_by_teaching_mode: Record<TeachingMode, string[]>;
   student_profile_labels?: Record<string, string>;
-  boards_by_student_profile: Record<string, BoardOption[]>;
-  subjects_by_board: Record<string, SubjectOption[]>;
-  subjects_by_teaching_path: Record<TeachingMode, SubjectOption[]>;
-  step4_skip_modes: TeachingMode[];
+  step4_config_by_student_profile: Record<
+    string,
+    { headline: string; banner: string; options: BoardOption[] }
+  >;
+  step5_subjects_by_step4_selection: Record<string, SubjectOption[]>;
+  module_entitlements_by_teaching_mode?: Record<
+    string,
+    Array<{ module_code: string; type: string }>
+  >;
+}
+
+/** Runtime guard — fails loudly if the API still serves legacy v1 config. */
+export function parseStandaloneTeacherOnboardingConfig(
+  data: unknown
+): OnboardingFilterConfig {
+  if (!data || typeof data !== "object") {
+    throw new Error("Invalid onboarding configuration");
+  }
+  const o = data as Record<string, unknown>;
+  if (
+    typeof o.step4_config_by_student_profile !== "object" ||
+    o.step4_config_by_student_profile === null ||
+    typeof o.step5_subjects_by_step4_selection !== "object" ||
+    o.step5_subjects_by_step4_selection === null
+  ) {
+    throw new Error(
+      "Onboarding configuration is outdated or invalid (expected wizard v2 shape)."
+    );
+  }
+  return data as OnboardingFilterConfig;
 }
 
 export interface SubdomainCheckResult {
@@ -369,9 +396,9 @@ export async function fetchOnboardingFilterConfig(): Promise<OnboardingFilterCon
     { headers: { Accept: "application/json" }, cache: "no-store" }
   );
   if (!res.ok) throw new Error("Failed to load onboarding configuration");
-  const json = (await res.json()) as { data?: OnboardingFilterConfig };
+  const json = (await res.json()) as { data?: unknown };
   if (!json.data) throw new Error("Empty onboarding configuration");
-  return json.data;
+  return parseStandaloneTeacherOnboardingConfig(json.data);
 }
 
 /**

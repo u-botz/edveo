@@ -1,5 +1,5 @@
 /**
- * Pure filter helpers for the teacher onboarding wizard (v2).
+ * Pure filter helpers for the teacher onboarding wizard (v2 cascade).
  * No React imports — these are pure functions that components consume.
  */
 
@@ -26,47 +26,55 @@ export function getStudentProfileLabel(
   return config.student_profile_labels?.[profileSlug] ?? profileSlug;
 }
 
-/** Returns the boards available for a given student profile. */
-export function getBoards(
+/** Step 4 headline, banner, and options for the selected student profile. */
+export function getStep4Config(
   config: OnboardingFilterConfig,
-  studentProfile: string
-): BoardOption[] {
-  return config.boards_by_student_profile[studentProfile] ?? [];
+  profileSlug: string
+): { headline: string; banner: string; options: BoardOption[] } {
+  const raw = config.step4_config_by_student_profile?.[profileSlug];
+  if (!raw || typeof raw !== "object") {
+    return { headline: "", banner: "", options: [] };
+  }
+  const headline =
+    typeof raw.headline === "string" ? raw.headline : "";
+  const banner = typeof raw.banner === "string" ? raw.banner : "";
+  const opts = raw.options;
+  const options: BoardOption[] = Array.isArray(opts)
+    ? opts.filter(
+        (o): o is BoardOption =>
+          !!o &&
+          typeof o === "object" &&
+          typeof (o as BoardOption).slug === "string" &&
+          typeof (o as BoardOption).name === "string"
+      )
+    : [];
+
+  return { headline, banner, options };
 }
 
 /**
- * Returns the subjects available for a given set of selected boards, or
- * for a teaching path (when boards are not applicable).
- *
- * When `boardsApplicable` is false (Step 4 skipped), subjects come entirely
- * from `subjects_by_teaching_path[mode]`.
- *
- * When `boardsApplicable` is true, subjects come from the union of
- * `subjects_by_board[board]` for each selected board — de-duplicated by slug.
+ * Deduped union of Step 5 subjects across all selected Step 4 slugs (by subject slug).
  */
-export function getSubjects(
+export function getStep5Subjects(
   config: OnboardingFilterConfig,
-  selectedBoards: string[],
-  mode: TeachingMode,
-  boardsApplicable: boolean
+  step4Selections: string[]
 ): SubjectOption[] {
-  if (!boardsApplicable || selectedBoards.length === 0) {
-    // Use the teaching-path subject list
-    const pathSubjects = config.subjects_by_teaching_path[mode] ?? [];
-    if (pathSubjects.length > 0) return pathSubjects;
-    // Fallback: union of all subjects from all boards for this mode
-  }
-
-  // Deduplicated union across all selected boards
+  const map = config.step5_subjects_by_step4_selection ?? {};
   const seen = new Set<string>();
   const result: SubjectOption[] = [];
 
-  for (const board of selectedBoards) {
-    const subjects = config.subjects_by_board[board] ?? [];
-    for (const s of subjects) {
-      if (!seen.has(s.slug)) {
-        seen.add(s.slug);
-        result.push(s);
+  for (const sel of step4Selections) {
+    const rows = map[sel];
+    if (!Array.isArray(rows)) continue;
+    for (const row of rows) {
+      if (
+        row &&
+        typeof row.slug === "string" &&
+        typeof row.name === "string" &&
+        !seen.has(row.slug)
+      ) {
+        seen.add(row.slug);
+        result.push({ slug: row.slug, name: row.name });
       }
     }
   }
@@ -74,10 +82,26 @@ export function getSubjects(
   return result;
 }
 
-/** Returns true when the wizard should skip Step 4 (Board / Exam) for this mode. */
-export function shouldSkipBoardStep(
-  config: OnboardingFilterConfig,
-  mode: TeachingMode
-): boolean {
-  return config.step4_skip_modes.includes(mode);
+/**
+ * Client-side format check aligned with backend tenant slug rules (3–100 chars, lowercase, hyphen-separated).
+ * Returns an error message or null if valid/empty.
+ */
+export function getSubdomainFormatError(raw: string): string | null {
+  const t = raw.trim().toLowerCase();
+  if (t === "") {
+    return null;
+  }
+  if (t.length < 3) {
+    return "Use at least 3 characters.";
+  }
+  if (t.length > 100) {
+    return "Use at most 100 characters.";
+  }
+  if (t.startsWith("-") || t.endsWith("-")) {
+    return "Cannot start or end with a hyphen.";
+  }
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(t)) {
+    return "Use only lowercase letters, numbers, and single hyphens between words.";
+  }
+  return null;
 }

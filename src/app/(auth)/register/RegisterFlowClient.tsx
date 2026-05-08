@@ -485,6 +485,14 @@ export default function RegisterFlowClient() {
           </div>
         )}
 
+        {/* OAuth callback errors (?error=) — show on every step until user navigates away */}
+        {oauthErrorText && step < 3 && (
+          <div className={`${styles.globalError} ${styles.formContainer}`} role="alert">
+            <AlertCircle size={16} style={{ flexShrink: 0, marginTop: 1 }} />
+            {oauthErrorText}
+          </div>
+        )}
+
         {/* ── Screen 1 — Category Selection ── */}
         {step === 1 && (
           <div className={`${styles.screenContainer} ${animationClass}`}>
@@ -492,13 +500,6 @@ export default function RegisterFlowClient() {
             <p className={styles.subheading}>
               We&apos;ll set up your dashboard based on your answer.
             </p>
-
-            {oauthErrorText && (
-              <div className={`${styles.globalError} ${styles.formContainer}`} role="alert">
-                <AlertCircle size={16} style={{ flexShrink: 0, marginTop: 1 }} />
-                {oauthErrorText}
-              </div>
-            )}
 
             <div className={styles.cardsGrid} role="radiogroup" aria-label="Select your user category">
               {CARDS.map((card) => {

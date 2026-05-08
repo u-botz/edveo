@@ -8,11 +8,6 @@ import {
   Search,
   X,
   AlertCircle,
-  BookOpen,
-  Users,
-  Award,
-  Layers,
-  GraduationCap,
 } from "lucide-react";
 import styles from "@/app/(auth)/register/page.module.css";
 import {
@@ -23,6 +18,7 @@ import {
   submitSignup,
   generateIdempotencyKey,
   type TeachingMode,
+  type BoardOption,
   type OnboardingFilterConfig,
   type InstitutionType,
   type TrialPlan,
@@ -31,9 +27,9 @@ import {
 import {
   getStudentProfiles,
   getStudentProfileLabel,
-  getBoards,
-  getSubjects,
-  shouldSkipBoardStep,
+  getStep4Config,
+  getStep5Subjects,
+  getSubdomainFormatError,
 } from "./filterHelpers";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -71,14 +67,6 @@ const STEP_LABELS: Record<WizardStep, string> = {
   5: "Subject",
 };
 
-const STEP_HINTS: Record<WizardStep, string> = {
-  1: "This becomes your unique URL — students will see this name everywhere.",
-  2: "Tell us how you teach so we can set up the right tools for you.",
-  3: "Who are your typical students? This helps us personalise your dashboard.",
-  4: "Pick one or more boards / exams you teach for. You can add more later.",
-  5: "Your primary subject — you can teach others too.",
-};
-
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function TeacherOnboardingWizard({
@@ -101,7 +89,6 @@ export default function TeacherOnboardingWizard({
 
   // ── Wizard v2 state ───────────────────────────────────────────────────────
   const [slug, setSlug] = useState("");
-  const [rawName, setRawName] = useState("");
   const [subdomainStatus, setSubdomainStatus] = useState<
     "idle" | "checking" | "available" | "taken" | "error"
   >("idle");
@@ -109,8 +96,8 @@ export default function TeacherOnboardingWizard({
 
   const [teachingMode, setTeachingMode] = useState<TeachingMode | "">("");
   const [studentProfile, setStudentProfile] = useState("");
-  const [selectedBoards, setSelectedBoards] = useState<string[]>([]);
-  const [boardsApplicable, setBoardsApplicable] = useState(true);
+  /** Step 4 multi-select — stores `exam_category_slugs` for the API */
+  const [step4Selections, setStep4Selections] = useState<string[]>([]);
   const [primarySubjectSlug, setPrimarySubjectSlug] = useState("");
 
   // ── Search ────────────────────────────────────────────────────────────────
@@ -121,7 +108,6 @@ export default function TeacherOnboardingWizard({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const idempotencyKeyRef = useRef<string>(generateIdempotencyKey());
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const checkRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const tenantDomain = process.env.NEXT_PUBLIC_TENANT_DOMAIN ?? "educoreos.com";
@@ -157,28 +143,8 @@ export default function TeacherOnboardingWizard({
       .finally(() => setMasterLoading(false));
   }, []);
 
-  // ── Slug generation from raw name ─────────────────────────────────────────
-  useEffect(() => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      if (rawName.trim()) {
-        const generated = rawName
-          .toLowerCase()
-          .replace(/[^a-z0-9 -]/g, "")
-          .replace(/\s+/g, "-")
-          .replace(/-+/g, "-")
-          .substring(0, 30)
-          .replace(/-+$/, "");
-        setSlug(generated);
-      } else {
-        setSlug("");
-        setSubdomainStatus("idle");
-      }
-    }, 400);
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
-  }, [rawName]);
+  const slugFormatError = slug.trim() ? getSubdomainFormatError(slug) : null;
+  const normalizedSlug = slug.trim().toLowerCase();
 
   // ── Subdomain availability check ──────────────────────────────────────────
   const checkSub = useCallback(async (s: string) => {
@@ -194,31 +160,43 @@ export default function TeacherOnboardingWizard({
   }, []);
 
   useEffect(() => {
-    if (!slug) return;
+    if (!normalizedSlug || slugFormatError) {
+      setSubdomainStatus("idle");
+      return;
+    }
     if (checkRef.current) clearTimeout(checkRef.current);
-    checkRef.current = setTimeout(() => checkSub(slug), 600);
+    checkRef.current = setTimeout(() => checkSub(normalizedSlug), 600);
     return () => {
       if (checkRef.current) clearTimeout(checkRef.current);
     };
-  }, [slug, checkSub]);
+  }, [normalizedSlug, slugFormatError, checkSub]);
 
   // ── Cascade resets ────────────────────────────────────────────────────────
-  const handleStudentProfileChange = (profile: string) => {
-    setStudentProfile(profile);
-    setSelectedBoards([]);
+  const handleTeachingModeChange = (mode: TeachingMode) => {
+    setTeachingMode(mode);
+    setStudentProfile("");
+    setStep4Selections([]);
     setPrimarySubjectSlug("");
     setBoardSearch("");
     setSubjectSearch("");
   };
 
-  const handleBoardToggle = (boardSlug: string) => {
-    setSelectedBoards((prev) => {
-      const next = prev.includes(boardSlug)
-        ? prev.filter((b) => b !== boardSlug)
-        : [...prev, boardSlug];
+  const handleStudentProfileChange = (profile: string) => {
+    setStudentProfile(profile);
+    setStep4Selections([]);
+    setPrimarySubjectSlug("");
+    setBoardSearch("");
+    setSubjectSearch("");
+  };
+
+  const handleStep4Toggle = (examSlug: string) => {
+    setStep4Selections((prev) => {
+      const next = prev.includes(examSlug)
+        ? prev.filter((b) => b !== examSlug)
+        : [...prev, examSlug];
       return next;
     });
-    setPrimarySubjectSlug(""); // reset subject on board change
+    setPrimarySubjectSlug("");
     setSubjectSearch("");
   };
 
@@ -227,55 +205,28 @@ export default function TeacherOnboardingWizard({
     setDirection("right");
     setStep((s) => {
       const next = s < 5 ? ((s + 1) as WizardStep) : s;
-      // Auto-skip Step 4 when not applicable
-      if (
-        next === 4 &&
-        config &&
-        teachingMode !== "" &&
-        shouldSkipBoardStep(config, teachingMode as TeachingMode)
-      ) {
-        setBoardsApplicable(false);
-        setSelectedBoards([]);
-        return 5;
-      }
-      if (next === 4) {
-        setBoardsApplicable(true);
-      }
       return next;
     });
     window.scrollTo(0, 0);
-  }, [config, teachingMode]);
+  }, []);
 
   const goBack = useCallback(() => {
     setDirection("left");
     setStep((s) => {
       const prev = s > 1 ? ((s - 1) as WizardStep) : s;
-      // When going back from Step 5, skip Step 4 again if it was auto-skipped
-      if (
-        prev === 4 &&
-        config &&
-        teachingMode !== "" &&
-        shouldSkipBoardStep(config, teachingMode as TeachingMode)
-      ) {
-        return 3;
-      }
       return prev;
     });
     window.scrollTo(0, 0);
-  }, [config, teachingMode]);
+  }, []);
 
   // ── Validity ──────────────────────────────────────────────────────────────
   const step1Valid =
-    slug.length >= 2 &&
-    subdomainStatus !== "taken" &&
-    subdomainStatus !== "checking";
+    normalizedSlug.length >= 3 &&
+    !slugFormatError &&
+    subdomainStatus === "available";
   const step2Valid = teachingMode !== "";
   const step3Valid = studentProfile !== "";
-  const step4Valid =
-    !boardsApplicable ||
-    (config !== null &&
-      shouldSkipBoardStep(config, teachingMode as TeachingMode)) ||
-    selectedBoards.length > 0;
+  const step4Valid = step4Selections.length >= 1;
   const step5Valid = primarySubjectSlug !== "";
 
   const currentStepValid: Record<WizardStep, boolean> = {
@@ -288,13 +239,8 @@ export default function TeacherOnboardingWizard({
 
   // ── Subject list for Step 5 ───────────────────────────────────────────────
   const subjectOptions =
-    config && teachingMode !== ""
-      ? getSubjects(
-          config,
-          selectedBoards,
-          teachingMode as TeachingMode,
-          boardsApplicable
-        )
+    config && step4Selections.length > 0
+      ? getStep5Subjects(config, step4Selections)
       : [];
 
   // ── Submit ────────────────────────────────────────────────────────────────
@@ -316,7 +262,7 @@ export default function TeacherOnboardingWizard({
         name,
         email,
         phone,
-        subdomain: slug,
+        subdomain: normalizedSlug,
         institution_type_id: institutionTypeId ? parseInt(institutionTypeId, 10) : null,
         plan_id: trialPlan.id,
         idempotency_key: idempotencyKeyRef.current,
@@ -326,7 +272,7 @@ export default function TeacherOnboardingWizard({
         // v2 wizard fields
         teaching_mode: teachingMode !== "" ? (teachingMode as TeachingMode) : undefined,
         student_profile: studentProfile !== "" ? studentProfile : undefined,
-        exam_category_slugs: selectedBoards,
+        exam_category_slugs: step4Selections,
         primary_subject_slug: primarySubjectSlug !== "" ? primarySubjectSlug : undefined,
         // legacy compat: set subject_slug so paid checkout path still works
         subject_slug: primarySubjectSlug !== "" ? primarySubjectSlug : undefined,
@@ -385,17 +331,16 @@ export default function TeacherOnboardingWizard({
   const selectedMode = config.teaching_modes.find(
     (m) => m.value === teachingMode
   );
-  const boardOptions =
-    studentProfile !== "" ? getBoards(config, studentProfile) : [];
-  const filteredBoards = boardOptions.filter((b) =>
+  const step4Config =
+    studentProfile !== ""
+      ? getStep4Config(config, studentProfile)
+      : { headline: "", banner: "", options: [] as BoardOption[] };
+  const filteredBoards = step4Config.options.filter((b) =>
     b.name.toLowerCase().includes(boardSearch.toLowerCase())
   );
   const filteredSubjects = subjectOptions.filter((s) =>
     s.name.toLowerCase().includes(subjectSearch.toLowerCase())
   );
-  const isStep4Skipped =
-    teachingMode !== "" &&
-    shouldSkipBoardStep(config, teachingMode as TeachingMode);
 
   return (
     <div
@@ -426,33 +371,28 @@ export default function TeacherOnboardingWizard({
       )}
 
       {/* Progress bar */}
-      <WizardProgressBar
-        currentStep={step}
-        isStep4Skipped={isStep4Skipped}
-      />
+      <WizardProgressBar currentStep={step} />
 
-      {/* Per-step hint */}
-      <div className={styles.wizardHint}>
-        <HintIcon step={step} />
-        <span>{STEP_HINTS[step]}</span>
-      </div>
-
-      {/* Context chips row (from step 2 onward) */}
+      {/* Context chips row (from step 2 onward) — Section 9 */}
       {step >= 2 && (
         <OnboardingContextChips
-          slug={slug}
-          tenantDomain={tenantDomain}
-          teachingMode={selectedMode?.label}
-          studentProfile={
-            studentProfile !== ""
+          slugPreview={
+            normalizedSlug ? `${normalizedSlug}.${tenantDomain}` : undefined
+          }
+          teachingModeLabel={step >= 3 ? selectedMode?.label : undefined}
+          studentProfileLabel={
+            step >= 4 && studentProfile !== ""
               ? getStudentProfileLabel(config, studentProfile)
               : undefined
           }
-          boards={
-            selectedBoards.length > 0
-              ? selectedBoards.map(
-                  (b) => boardOptions.find((bo) => bo.slug === b)?.name ?? b
-                )
+          step4Summary={
+            step >= 5 && step4Selections.length > 0
+              ? {
+                  firstLabel:
+                    step4Config.options.find((o) => o.slug === step4Selections[0])
+                      ?.name ?? step4Selections[0],
+                  extraCount: Math.max(0, step4Selections.length - 1),
+                }
               : undefined
           }
           currentStep={step}
@@ -482,66 +422,87 @@ export default function TeacherOnboardingWizard({
             className={styles.heading}
             style={{ textAlign: "left", fontSize: 22 }}
           >
-            Name your page
+            Claim your Edveo page
           </h2>
-          <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 20 }}>
-            Students will find you at{" "}
-            <strong>{slug || "yourname"}.{tenantDomain}</strong>
-          </p>
+          <div
+            style={{
+              fontSize: 13,
+              color: "#6b7280",
+              marginBottom: 16,
+              padding: "10px 12px",
+              background: "rgba(99,102,241,0.06)",
+              borderRadius: 8,
+              border: "1px solid rgba(99,102,241,0.12)",
+            }}
+          >
+            This is your permanent link — share it with students and parents.
+          </div>
           <div className={styles.wizardFormContainer}>
             <div className={styles.formGroup}>
               <label htmlFor="wiz_slug" className={styles.label}>
-                Page name
+                Your page address
               </label>
               <input
                 id="wiz_slug"
                 type="text"
-                placeholder="e.g. Ravi Physics Classes"
-                className={`${styles.input} ${subdomainStatus === "taken" ? styles.inputError : ""}`}
-                value={rawName}
+                placeholder="e.g. ravi-physics, mathwithmeera"
+                className={`${styles.input} ${subdomainStatus === "taken" || slugFormatError ? styles.inputError : ""}`}
+                value={slug}
                 onChange={(e) => {
-                  setRawName(e.target.value);
+                  setSlug(e.target.value);
                   setSubmitError(null);
                 }}
                 autoFocus
+                autoComplete="off"
+                spellCheck={false}
               />
-              {/* Live URL preview */}
-              {slug && (
+              {normalizedSlug && (
                 <div style={{ marginTop: 8, fontSize: 13 }}>
                   <span
                     style={{
-                      background: "#f0fdf4",
-                      color: "#16a34a",
-                      padding: "2px 8px",
+                      background: "#f9fafb",
+                      color: "#374151",
+                      padding: "4px 10px",
                       borderRadius: 4,
-                      fontFamily: "monospace",
+                      fontFamily: "ui-monospace, monospace",
                     }}
                   >
-                    {slug}.{tenantDomain}
+                    {normalizedSlug}.{tenantDomain}
                   </span>
                 </div>
               )}
-              {slug && subdomainStatus === "checking" && (
-                <div className={styles.subdomainChecking}>
-                  <Loader2 size={11} className={styles.spinner} />
-                  Checking availability…
+              {slugFormatError && (
+                <div className={styles.subdomainTaken} style={{ marginTop: 8 }}>
+                  <X size={11} /> {slugFormatError}
                 </div>
               )}
-              {slug && subdomainStatus === "available" && (
-                <div className={styles.subdomainPreview}>
-                  <span className={styles.subdomainAvailableBadge}>
-                    <Check size={11} /> Available
-                  </span>
-                </div>
-              )}
-              {slug && subdomainStatus === "taken" && (
-                <div className={styles.subdomainTaken}>
-                  <X size={11} />
-                  Already taken.
-                  {subdomainSuggestions.length > 0 &&
-                    ` Try: ${subdomainSuggestions.join(", ")}`}
-                </div>
-              )}
+              {normalizedSlug &&
+                !slugFormatError &&
+                subdomainStatus === "checking" && (
+                  <div className={styles.subdomainChecking}>
+                    <Loader2 size={11} className={styles.spinner} />
+                    Checking availability…
+                  </div>
+                )}
+              {normalizedSlug &&
+                !slugFormatError &&
+                subdomainStatus === "available" && (
+                  <div className={styles.subdomainPreview}>
+                    <span className={styles.subdomainAvailableBadge}>
+                      <Check size={11} /> Available
+                    </span>
+                  </div>
+                )}
+              {normalizedSlug &&
+                !slugFormatError &&
+                subdomainStatus === "taken" && (
+                  <div className={styles.subdomainTaken}>
+                    <X size={11} />
+                    This address is already taken.
+                    {subdomainSuggestions.length > 0 &&
+                      ` Try: ${subdomainSuggestions.join(", ")}`}
+                  </div>
+                )}
             </div>
           </div>
           <div style={{ height: 24 }} />
@@ -569,6 +530,9 @@ export default function TeacherOnboardingWizard({
           >
             How do you teach?
           </h2>
+          <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 16 }}>
+            This helps us set up the right tools for you.
+          </p>
           <div className={styles.chipGrid} style={{ maxHeight: "none" }}>
             {config.teaching_modes.map((m) => {
               const selected = m.value === teachingMode;
@@ -578,8 +542,7 @@ export default function TeacherOnboardingWizard({
                   type="button"
                   className={`${styles.chip} ${selected ? styles.chipSelected : ""}`}
                   onClick={() => {
-                    setTeachingMode(m.value);
-                    handleStudentProfileChange(""); // reset downstream
+                    handleTeachingModeChange(m.value);
                   }}
                   aria-pressed={selected}
                 >
@@ -626,6 +589,9 @@ export default function TeacherOnboardingWizard({
           >
             Who are your students?
           </h2>
+          <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 16 }}>
+            Pick what applies most — you can always teach multiple groups.
+          </p>
           <div className={styles.chipGrid} style={{ maxHeight: "none" }}>
             {getStudentProfiles(
               config,
@@ -681,11 +647,13 @@ export default function TeacherOnboardingWizard({
             className={styles.heading}
             style={{ textAlign: "left", fontSize: 22 }}
           >
-            Board or exam
+            {step4Config.headline || "Board / Exam"}
           </h2>
-          <p style={{ fontSize: 13, color: "#6b7280", marginBottom: 12 }}>
-            Select all that apply — you can pick more than one.
-          </p>
+          {step4Config.banner ? (
+            <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 12 }}>
+              {step4Config.banner}
+            </p>
+          ) : null}
           <div className={styles.chipSearchWrap}>
             <Search size={15} className={styles.chipSearchIcon} />
             <input
@@ -704,36 +672,25 @@ export default function TeacherOnboardingWizard({
               </div>
             ) : (
               filteredBoards.map((b) => {
-                const selected = selectedBoards.includes(b.slug);
+                const selected = step4Selections.includes(b.slug);
                 return (
                   <button
                     key={b.slug}
                     type="button"
                     className={`${styles.chip} ${selected ? styles.chipMultiSelected : ""}`}
-                    onClick={() => handleBoardToggle(b.slug)}
+                    onClick={() => handleStep4Toggle(b.slug)}
                     aria-pressed={selected}
                   >
                     {selected && (
                       <Check className={styles.chipCheckIcon} size={13} />
                     )}
                     {b.name}
-                    {selected && selectedBoards.length > 1 && (
-                      <span
-                        style={{
-                          marginLeft: 4,
-                          fontSize: 11,
-                          opacity: 0.7,
-                        }}
-                      >
-                        ✓
-                      </span>
-                    )}
                   </button>
                 );
               })
             )}
           </div>
-          {selectedBoards.length > 0 && (
+          {step4Selections.length > 0 && (
             <p
               style={{
                 fontSize: 12,
@@ -742,7 +699,7 @@ export default function TeacherOnboardingWizard({
                 textAlign: "center",
               }}
             >
-              {selectedBoards.length} selected
+              {step4Selections.length} selected
             </p>
           )}
           <div style={{ height: 24 }} />
@@ -756,7 +713,7 @@ export default function TeacherOnboardingWizard({
             </button>
             <button
               className={styles.primaryButton}
-              disabled={selectedBoards.length === 0}
+              disabled={step4Selections.length === 0}
               onClick={goNext}
               style={{ flex: 1 }}
             >
@@ -777,8 +734,11 @@ export default function TeacherOnboardingWizard({
             className={styles.heading}
             style={{ textAlign: "left", fontSize: 22 }}
           >
-            Your primary subject
+            What do you primarily teach?
           </h2>
+          <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 12 }}>
+            Pick your main subject — you can add more from your dashboard.
+          </p>
           <div className={styles.chipSearchWrap}>
             <Search size={15} className={styles.chipSearchIcon} />
             <input
@@ -865,19 +825,12 @@ export default function TeacherOnboardingWizard({
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-function WizardProgressBar({
-  currentStep,
-  isStep4Skipped,
-}: {
-  currentStep: WizardStep;
-  isStep4Skipped: boolean;
-}) {
+function WizardProgressBar({ currentStep }: { currentStep: WizardStep }) {
   return (
     <div className={styles.wizardProgress}>
       {([1, 2, 3, 4, 5] as WizardStep[]).map((s, i) => {
-        const isDone = currentStep > s || (s === 4 && isStep4Skipped && currentStep >= 4);
+        const isDone = currentStep > s;
         const isActive = currentStep === s;
-        const isAutoCompleted = s === 4 && isStep4Skipped;
         return (
           <div
             key={s}
@@ -886,7 +839,6 @@ function WizardProgressBar({
             <div className={styles.wizardStep}>
               <div
                 className={`${styles.wizardStepCircle} ${isActive ? styles.wizardStepCircleActive : ""} ${isDone ? styles.wizardStepCircleDone : ""}`}
-                title={isAutoCompleted ? "Auto-skipped" : undefined}
               >
                 {isDone ? <Check size={13} /> : s}
               </div>
@@ -908,36 +860,30 @@ function WizardProgressBar({
   );
 }
 
-function HintIcon({ step }: { step: WizardStep }) {
-  const size = 14;
-  if (step === 1) return <Layers size={size} style={{ flexShrink: 0 }} />;
-  if (step === 2) return <BookOpen size={size} style={{ flexShrink: 0 }} />;
-  if (step === 3) return <Users size={size} style={{ flexShrink: 0 }} />;
-  if (step === 4) return <Award size={size} style={{ flexShrink: 0 }} />;
-  return <GraduationCap size={size} style={{ flexShrink: 0 }} />;
-}
-
 function OnboardingContextChips({
-  slug,
-  tenantDomain,
-  teachingMode,
-  studentProfile,
-  boards,
+  slugPreview,
+  teachingModeLabel,
+  studentProfileLabel,
+  step4Summary,
   currentStep,
 }: {
-  slug: string;
-  tenantDomain: string;
-  teachingMode?: string;
-  studentProfile?: string;
-  boards?: string[];
+  slugPreview?: string;
+  teachingModeLabel?: string;
+  studentProfileLabel?: string;
+  step4Summary?: { firstLabel: string; extraCount: number };
   currentStep: WizardStep;
 }) {
   const chips: string[] = [];
-  if (slug) chips.push(`${slug}.${tenantDomain}`);
-  if (teachingMode && currentStep >= 3) chips.push(teachingMode);
-  if (studentProfile && currentStep >= 4) chips.push(studentProfile);
-  if (boards && boards.length > 0 && currentStep >= 5)
-    chips.push(boards.join(", "));
+  if (slugPreview) chips.push(slugPreview);
+  if (teachingModeLabel && currentStep >= 3) chips.push(teachingModeLabel);
+  if (studentProfileLabel && currentStep >= 4) chips.push(studentProfileLabel);
+  if (step4Summary && currentStep >= 5) {
+    const extra =
+      step4Summary.extraCount > 0
+        ? ` +${step4Summary.extraCount} more`
+        : "";
+    chips.push(`${step4Summary.firstLabel}${extra}`);
+  }
 
   if (chips.length === 0) return null;
 

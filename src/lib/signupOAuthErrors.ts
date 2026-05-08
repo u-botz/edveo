@@ -4,7 +4,9 @@
  */
 export const SIGNUP_OAUTH_ERROR_MESSAGES: Record<string, string> = {
   account_exists:
-    "An account with this email already exists. Please log in.",
+    "An account already exists for this email. Please sign in from your workspace login page.",
+  student_account_exists:
+    "This Google account is registered as a student. Edveo is for instructors only — please log in from your instructor's website.",
   session_expired: "Your sign-in session expired. Please try again.",
   google_error: "Google sign-in failed. Please try again.",
   unverified_email: "Your Google account email is not verified.",
