@@ -95,6 +95,24 @@ export interface InstitutionType {
   slug: string;
 }
 
+export interface TeachingExamCategory {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface TeachingSubject {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface TeachingGradeLevel {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 export interface SubdomainCheckResult {
   available: boolean;
   slug: string;
@@ -107,6 +125,12 @@ export interface TrialSignupPayload {
   phone: string;
   subdomain: string;
   institution_type_id?: number | null; // omitted for edtech
+  /** Required for standalone_teacher category */
+  exam_category_slug?: string;
+  /** Required for standalone_teacher category */
+  subject_slug?: string;
+  /** Required for standalone_teacher category */
+  grade_level_slug?: string;
   plan_id: number;
   idempotency_key: string;
   captcha_token: string | null;
@@ -289,6 +313,45 @@ export async function fetchInstitutionTypesForCategory(
   if (!res.ok) throw new Error("Failed to load institution types");
   const json = await res.json();
   return (json.data ?? []) as InstitutionType[];
+}
+
+/**
+ * Fetch active exam categories (boards / competitive exams) for the teacher onboarding wizard.
+ */
+export async function fetchTeacherExamCategories(): Promise<TeachingExamCategory[]> {
+  const res = await fetch(
+    `${CATEGORY_PREFIX.standalone_teacher}/exam-categories`,
+    { headers: { Accept: "application/json" }, cache: "no-store" }
+  );
+  if (!res.ok) throw new Error("Failed to load exam categories");
+  const json = await res.json();
+  return (json.data ?? []) as TeachingExamCategory[];
+}
+
+/**
+ * Fetch active subjects for the teacher onboarding wizard.
+ */
+export async function fetchTeacherSubjects(): Promise<TeachingSubject[]> {
+  const res = await fetch(
+    `${CATEGORY_PREFIX.standalone_teacher}/subjects`,
+    { headers: { Accept: "application/json" }, cache: "no-store" }
+  );
+  if (!res.ok) throw new Error("Failed to load subjects");
+  const json = await res.json();
+  return (json.data ?? []) as TeachingSubject[];
+}
+
+/**
+ * Fetch active grade levels for the teacher onboarding wizard.
+ */
+export async function fetchTeacherGradeLevels(): Promise<TeachingGradeLevel[]> {
+  const res = await fetch(
+    `${CATEGORY_PREFIX.standalone_teacher}/grade-levels`,
+    { headers: { Accept: "application/json" }, cache: "no-store" }
+  );
+  if (!res.ok) throw new Error("Failed to load grade levels");
+  const json = await res.json();
+  return (json.data ?? []) as TeachingGradeLevel[];
 }
 
 /**

@@ -31,6 +31,9 @@ import {
 } from "@/lib/api/signupApi";
 import { CONTACT_EMAIL } from "@/lib/contactEmail";
 import { signupOAuthErrorMessage } from "@/lib/signupOAuthErrors";
+import TeacherOnboardingWizard, {
+  type TeacherWizardResult,
+} from "@/features/teacher-onboarding-wizard/TeacherOnboardingWizard";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -105,6 +108,11 @@ export default function RegisterFlowClient() {
 
   // ── Screen 3 ──────────────────────────────────────────────────────────────
   const [submittedEmail, setSubmittedEmail] = useState("");
+
+  // ── Teacher-specific sub-step (standalone_teacher only) ───────────────────
+  // "details" = collect name / email / phone / password
+  // "wizard"  = 5-step wizard for workspace + institution type + exam + subject + grade
+  const [teacherSubStep, setTeacherSubStep] = useState<"details" | "wizard">("details");
 
   // ── Idempotency key (generated once per page load) ─────────────────────────
   const idempotencyKeyRef = useRef<string>(generateIdempotencyKey());
@@ -253,7 +261,14 @@ export default function RegisterFlowClient() {
 
   const handlePrevStep = () => {
     setDirection("left");
+    if (category === "standalone_teacher" && teacherSubStep === "wizard") {
+      // Go back to the details sub-step, not all the way to step 1
+      setTeacherSubStep("details");
+      window.scrollTo(0, 0);
+      return;
+    }
     setStep(1);
+    setTeacherSubStep("details");
     setPlans([]);
     setInstitutionTypes([]);
     setBootstrapError(null);
@@ -537,6 +552,46 @@ export default function RegisterFlowClient() {
         {/* ── Screen 2 — Account Form ── */}
         {step === 2 && (
           <div className={`${styles.screenContainer} ${animationClass}`}>
+
+            {/* ── Standalone teacher: 5-step wizard sub-flow ── */}
+            {category === "standalone_teacher" && teacherSubStep === "wizard" && (
+              <TeacherOnboardingWizard
+                prefillName={formData.full_name}
+                prefillEmail={formData.email}
+                onSuccess={(result: TeacherWizardResult) => {
+                  if (isInitiateSignupResponse(result.submitResult) && result.trialPlanId) {
+                    const aux = {
+                      googleContinuationToken: null as string | null,
+                      planId: result.trialPlanId,
+                      billingCycle: "monthly" as const,
+                    };
+                    try {
+                      sessionStorage.setItem(
+                        selfSignupAuxStorageKey(result.submitResult.token),
+                        JSON.stringify(aux)
+                      );
+                    } catch { /* ignore */ }
+                    router.push(
+                      `/signup/verify?token=${encodeURIComponent(result.submitResult.token)}&category=standalone_teacher`
+                    );
+                    return;
+                  }
+                  setSubmittedEmail(formData.email.trim().toLowerCase());
+                  setDirection("right");
+                  setStep(3);
+                  window.scrollTo(0, 0);
+                }}
+                extraFields={{
+                  fullName: formData.full_name.trim(),
+                  email: formData.email.trim().toLowerCase(),
+                  phone: formData.phone.trim(),
+                }}
+              />
+            )}
+
+            {/* ── All other categories + standalone_teacher details sub-step ── */}
+            {(category !== "standalone_teacher" || teacherSubStep === "details") && (
+              <>
             <h1 className={styles.heading}>{getDynamicHeading()}</h1>
             <p className={styles.subheading}>
               You&apos;re 30 seconds away from your free 14-day trial.
@@ -603,8 +658,8 @@ export default function RegisterFlowClient() {
                 )}
               </div>
 
-              {/* Institute Name + Subdomain Preview */}
-              <div className={styles.formGroup}>
+              {/* Institute Name + Subdomain Preview — hidden for standalone_teacher (wizard handles this) */}
+              {category !== "standalone_teacher" && <div className={styles.formGroup}>
                 <label htmlFor="institute_name" className={styles.label}>
                   {getDynamicInstituteLabel()}
                 </label>
@@ -650,10 +705,10 @@ export default function RegisterFlowClient() {
                     </span>
                   </div>
                 )}
-              </div>
+              </div>}
 
-              {/* Institution Type — hidden for edtech (F-04) */}
-              {category !== "edtech" && (
+              {/* Institution Type — hidden for edtech and standalone_teacher (wizard handles this) */}
+              {category !== "edtech" && category !== "standalone_teacher" && (
                 <div className={styles.formGroup}>
                   <label htmlFor="institution_type_id" className={styles.label}>
                     Institution category
@@ -796,22 +851,48 @@ export default function RegisterFlowClient() {
                 </div>
               )}
 
-              {/* Submit */}
-              <button
-                type="submit"
-                className={styles.primaryButton}
-                disabled={isSubmitting || bootstrapLoading || subdomainStatus === "taken"}
-                aria-disabled={isSubmitting || bootstrapLoading || subdomainStatus === "taken"}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className={styles.spinner} size={20} />
-                    Setting up your account…
-                  </>
-                ) : (
-                  "Start my free trial →"
-                )}
-              </button>
+              {/* For standalone_teacher: "Continue to workspace setup" advances to wizard sub-step */}
+              {category === "standalone_teacher" ? (
+                <button
+                  type="button"
+                  className={styles.primaryButton}
+                  disabled={bootstrapLoading}
+                  onClick={() => {
+                    const newErrors: Record<string, string> = {};
+                    if (formData.full_name.trim().length < 2) {
+                      newErrors.full_name = "Required — min 2 characters";
+                    }
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+                      newErrors.email = "Invalid email format";
+                    }
+                    if (!/^[0-9]{10}$/.test(formData.phone)) {
+                      newErrors.phone = "Must be a 10-digit number";
+                    }
+                    setErrors(newErrors);
+                    if (Object.keys(newErrors).length > 0) return;
+                    setTeacherSubStep("wizard");
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  Continue to workspace setup →
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className={styles.primaryButton}
+                  disabled={isSubmitting || bootstrapLoading || subdomainStatus === "taken"}
+                  aria-disabled={isSubmitting || bootstrapLoading || subdomainStatus === "taken"}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className={styles.spinner} size={20} />
+                      Setting up your account…
+                    </>
+                  ) : (
+                    "Start my free trial →"
+                  )}
+                </button>
+              )}
 
               <p className={styles.footerText}>
                 By continuing, you agree to Edveo&apos;s{" "}
@@ -820,6 +901,8 @@ export default function RegisterFlowClient() {
                 <Link href="/privacy-policy" className={styles.linkDark}>Privacy Policy</Link>
               </p>
             </form>
+            </>
+            )}
           </div>
         )}
 
