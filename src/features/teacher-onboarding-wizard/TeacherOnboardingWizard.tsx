@@ -246,9 +246,11 @@ export default function TeacherOnboardingWizard({
   // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async () => {
     setSubmitError(null);
-    const trialPlan = plans.find((p) => p.is_trial) ?? plans[0];
-    if (!trialPlan) {
-      setSubmitError("No trial plan available. Please contact support.");
+    const freePlan = plans.find((p) => p.self_serve_free_active);
+    const trialPlan = plans.find((p) => p.is_trial);
+    const selectedPlan = freePlan ?? trialPlan ?? plans[0];
+    if (!selectedPlan) {
+      setSubmitError("No signup plan available. Please contact support.");
       return;
     }
 
@@ -264,7 +266,7 @@ export default function TeacherOnboardingWizard({
         phone,
         subdomain: normalizedSlug,
         institution_type_id: institutionTypeId ? parseInt(institutionTypeId, 10) : null,
-        plan_id: trialPlan.id,
+        plan_id: selectedPlan.id,
         idempotency_key: idempotencyKeyRef.current,
         captcha_token: null,
         website_url: "",
@@ -282,7 +284,7 @@ export default function TeacherOnboardingWizard({
         submitResult: result,
         email,
         googleContinuationToken,
-        trialPlanId: trialPlan.id,
+        trialPlanId: selectedPlan.id,
         category: "standalone_teacher",
       });
     } catch (err: unknown) {

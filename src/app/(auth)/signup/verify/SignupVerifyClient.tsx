@@ -92,11 +92,14 @@ export default function SignupVerifyClient() {
       return payload;
     }
     const plans = await fetchPlansForCategory(category);
-    const trial = plans.find((p) => p.is_trial) ?? plans[0];
-    if (!trial) throw new Error("No plan available");
+    const selected =
+      plans.find((p) => p.self_serve_free_active) ??
+      plans.find((p) => p.is_trial) ??
+      plans[0];
+    if (!selected) throw new Error("No plan available");
     return {
       googleContinuationToken: null as string | null,
-      planId: trial.id,
+      planId: selected.id,
       billingCycle: "monthly" as const,
     };
   }, [category, signupToken]);

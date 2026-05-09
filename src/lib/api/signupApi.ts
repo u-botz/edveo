@@ -84,6 +84,8 @@ export interface TrialPlan {
   price_monthly_cents: number;
   price_annual_cents: number;
   is_trial: boolean;
+  /** Catalog flag: standalone-teacher self-serve free forever (ACTIVE subscription, no trial). */
+  self_serve_free_active?: boolean;
   trial_duration_days: number | null;
   features: Record<string, unknown>;
   modules: string[];

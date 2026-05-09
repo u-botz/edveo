@@ -346,9 +346,12 @@ export default function RegisterFlowClient() {
 
     if (!validateForm()) return;
 
-    const trialPlan = plans.find((p) => p.is_trial) ?? plans[0];
-    if (!trialPlan) {
-      setGlobalError("No trial plan available. Please contact support.");
+    const selectedPlan =
+      plans.find((p) => p.self_serve_free_active) ??
+      plans.find((p) => p.is_trial) ??
+      plans[0];
+    if (!selectedPlan) {
+      setGlobalError("No signup plan available. Please contact support.");
       return;
     }
 
@@ -362,7 +365,7 @@ export default function RegisterFlowClient() {
         ...(category !== "edtech" && formData.institution_type_id
           ? { institution_type_id: parseInt(formData.institution_type_id, 10) }
           : {}),
-        plan_id: trialPlan.id,
+        plan_id: selectedPlan.id,
         idempotency_key: idempotencyKeyRef.current,
         captcha_token: null, // CAPTCHA deferred for production
         website_url: "", // honeypot — always empty
@@ -377,7 +380,7 @@ export default function RegisterFlowClient() {
       ) {
         const aux = {
           googleContinuationToken: null as string | null,
-          planId: trialPlan.id,
+          planId: selectedPlan.id,
           billingCycle: "monthly" as const,
         };
         try {
