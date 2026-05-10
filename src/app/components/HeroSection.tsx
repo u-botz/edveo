@@ -78,13 +78,13 @@ export default function HeroSection() {
 
         {/* Micro-copy — directly above primary CTA */}
         <p className={styles.microCopy}>
-          Zero commission &middot; 14-day free trial &middot; Live in 1 min
+          Free forever &middot; Zero commission &middot; Live in 1 min
         </p>
 
         {/* Actions */}
         <div className={styles.heroActions}>
           <Link href="/register" className={styles.primaryButton}>
-            Start free trial <ArrowRightIcon />
+            Get started free <ArrowRightIcon />
           </Link>
         </div>
 

@@ -16,7 +16,7 @@ type Props = {
   /** Internal path (e.g. "/contact") or external URL */
   secondaryHref?: string;
   secondaryId?: string;
-  /** Optional trust line items (e.g. "14-day free" · "No credit card") */
+  /** Optional trust line items (e.g. "Free forever" · "No credit card") */
   trustItems?: string[];
 };
 
@@ -25,7 +25,7 @@ export default function CtaBanner({
   headline,
   accentSub,
   subheadline,
-  primaryLabel = "Start Free Trial →",
+  primaryLabel = "Get started free →",
   primaryId,
   secondaryLabel = "Talk to an Expert →",
   secondaryHref = "/contact",

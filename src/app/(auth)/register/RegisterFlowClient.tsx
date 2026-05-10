@@ -896,7 +896,7 @@ export default function RegisterFlowClient() {
                       Setting up your account…
                     </>
                   ) : (
-                    "Start my free trial →"
+                    "Get started free →"
                   )}
                 </button>
               )}

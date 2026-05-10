@@ -394,10 +394,10 @@ function TeacherContent() {
                 See Full Pricing →
               </Link>
               <Link href="/register" className={styles.pricingTeaserGhost}>
-                Start Free Trial
+                Get started free
               </Link>
             </div>
-            <p className={styles.pricingTeaserNote}>14-day free trial · No credit card · Cancel anytime</p>
+            <p className={styles.pricingTeaserNote}>Free forever · No credit card · Cancel anytime</p>
           </div>
         </div>
       </section>
@@ -407,12 +407,12 @@ function TeacherContent() {
         <div className={styles.container}>
           <h2 className={styles.finalTitle}>Stop Building Someone Else&apos;s Platform. Build Yours.</h2>
           <p className={styles.finalSub}>
-            14-day free trial. Full access. No credit card required.
+            Free forever. No credit card required.
             <br />
             Your branded academy is live before you finish your coffee.
           </p>
           <Link href="/register" className={styles.finalBtn}>
-            Start Your Free Trial →
+            Get started free →
           </Link>
           <p className={styles.finalTrust}>Zero commission · Data stored in India · Cancel anytime</p>
         </div>

@@ -262,7 +262,7 @@ export default function TeacherOnboardingWizard({
       return "Create my workspace →";
     }
     if (standaloneSignupPlan.is_trial === true) {
-      return "Start my free trial →";
+      return "Create my workspace →";
     }
     return "Continue →";
   }, [standaloneSignupPlan]);

@@ -155,9 +155,9 @@ export default function PricingCardsBlock({
               <PriceArea billing={billing} monthly="₹1,999" annual="₹1,666" />
             </div>
             <Link href="/register" className={`${styles.ctaFull} ${styles.ctaOutline}`}>
-              Start Free Trial
+              Get started free
             </Link>
-            <p className={styles.ctaSub}>14-day free trial · No credit card</p>
+            <p className={styles.ctaSub}>Free forever · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>What&apos;s included</div>
             <ul className={styles.featureList}>
@@ -190,7 +190,7 @@ export default function PricingCardsBlock({
             <Link href="/register" className={`${styles.ctaFull} ${styles.ctaPopular}`}>
               Get Started
             </Link>
-            <p className={styles.ctaSub}>14-day free trial · No credit card</p>
+            <p className={styles.ctaSub}>Free forever · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>Everything in Creator, plus</div>
             <ul className={styles.featureList}>
@@ -256,7 +256,7 @@ export default function PricingCardsBlock({
               </div>
             </div>
             <Link href="/register" className={`${styles.ctaFull} ${styles.ctaOutline} ${styles.ctaFullNoSub}`}>
-              Get Started Free
+              Get started free
             </Link>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>What&apos;s included</div>
@@ -287,9 +287,9 @@ export default function PricingCardsBlock({
               <PriceArea billing={billing} monthly="₹999" annual="₹832" />
             </div>
             <Link href="/register" className={`${styles.ctaFull} ${styles.ctaPopular}`}>
-              Start Free Trial
+              Get started free
             </Link>
-            <p className={styles.ctaSub}>14-day free trial · No credit card</p>
+            <p className={styles.ctaSub}>Free forever · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>Everything in Free, plus</div>
             <ul className={styles.featureList}>
@@ -316,9 +316,9 @@ export default function PricingCardsBlock({
               <PriceArea billing={billing} monthly="₹2,499" annual="₹2,082" />
             </div>
             <Link href="/register" className={`${styles.ctaFull} ${styles.ctaOutline}`}>
-              Start Free Trial
+              Get started free
             </Link>
-            <p className={styles.ctaSub}>14-day free trial · No credit card</p>
+            <p className={styles.ctaSub}>Free forever · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>Everything in Educator, plus</div>
             <ul className={styles.featureList}>
@@ -351,9 +351,9 @@ export default function PricingCardsBlock({
               <PriceArea billing={billing} monthly="₹3,499" annual="₹2,916" />
             </div>
             <Link href="/register" className={`${styles.ctaFull} ${styles.ctaOutline}`}>
-              Start Free Trial
+              Get started free
             </Link>
-            <p className={styles.ctaSub}>14-day free trial · No credit card</p>
+            <p className={styles.ctaSub}>Free forever · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>What&apos;s included</div>
             <ul className={styles.featureList}>
@@ -381,7 +381,7 @@ export default function PricingCardsBlock({
             <Link href="/register" className={`${styles.ctaFull} ${styles.ctaPopular}`}>
               Get Started
             </Link>
-            <p className={styles.ctaSub}>14-day free trial · No credit card</p>
+            <p className={styles.ctaSub}>Free forever · No credit card</p>
             <div className={styles.divider} />
             <div className={styles.featuresHeading}>Everything in Starter, plus</div>
             <ul className={styles.featureList}>

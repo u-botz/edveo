@@ -336,13 +336,13 @@ export default function SolutionsPageClient() {
           {/* CTA */}
           <div className={styles.heroCtas}>
             <Link href="/register" className={styles.heroCtaPrimary}>
-              Start Free Trial →
+              Get started free →
             </Link>
             <Link href="/contact" className={styles.heroCtaSecondary}>
               Talk to an Expert
             </Link>
           </div>
-          <p className={styles.heroMicro}>14-day free trial · No credit card required · Go live today</p>
+          <p className={styles.heroMicro}>Free forever · No credit card required · Go live today</p>
 
           {/* Feature icon strip */}
           <div className={styles.heroFeatureStrip}>
@@ -462,7 +462,7 @@ export default function SolutionsPageClient() {
                   <li key={f}><CheckIcon />{f}</li>
                 ))}
               </ul>
-              <Link href="/register" className={styles.solutionCta}>Start Free Trial → your first course live in minutes</Link>
+              <Link href="/register" className={styles.solutionCta}>Get started free → your first course live in minutes</Link>
             </div>
             <CourseMockup />
           </div>
@@ -563,8 +563,8 @@ export default function SolutionsPageClient() {
       <div className={styles.midBreak}>
         <p className={styles.midBreakEyebrow}>You&apos;ve seen 3 of 7 features</p>
         <h2 className={styles.midBreakHeadline}>Seen enough to know this is for you?</h2>
-        <p className={styles.midBreakSub}>14-day free trial. Every feature unlocked. No credit card.</p>
-        <Link href="/register" className={styles.midBreakBtn}>Start Free Trial →</Link>
+        <p className={styles.midBreakSub}>Free forever. No credit card.</p>
+        <Link href="/register" className={styles.midBreakBtn}>Get started free →</Link>
         <p className={styles.midBreakSkip}>Or keep reading — 4 more features below.</p>
       </div>
 
@@ -742,7 +742,7 @@ export default function SolutionsPageClient() {
           </p>
           <div className={styles.footerCtaButtons}>
             <Link href="/register" className={styles.footerBtnNavy} id="footer-cta-trial">
-              Start Free Trial →
+              Get started free →
             </Link>
             <button className={styles.footerBtnGreen} id="footer-cta-whatsapp">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden>

@@ -38,7 +38,7 @@ const FAQS = [
   },
   {
     q: "I'm a first-time user. Where do I start?",
-    a: "Start your 14-day free trial — no credit card needed. You'll get full access to every feature, and our onboarding guide walks you through setup in under an hour.",
+    a: "Get started free — no credit card needed. Our onboarding guide walks you through setup in under an hour.",
   },
 ];
 
@@ -358,7 +358,7 @@ export default function ContactPageClient() {
         variant="green"
         headline="Prefer to Talk? We're One Message Away."
         subheadline="Average response time: under 2 hours on WhatsApp."
-        primaryLabel="Start Free Trial →"
+        primaryLabel="Get started free →"
         secondaryLabel="WhatsApp Us Now"
         secondaryHref={COMPANY_WHATSAPP_URL}
       />

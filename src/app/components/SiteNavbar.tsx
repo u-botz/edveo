@@ -29,7 +29,7 @@ export default function SiteNavbar({ activePage }: Props) {
         </div>
 
         <div className={styles.navActions}>
-          <Link href="/register" className={styles.btnTrial}>Start Free Trial</Link>
+          <Link href="/register" className={styles.btnTrial}>Get started free</Link>
         </div>
 
         {/* Hamburger */}
@@ -52,7 +52,7 @@ export default function SiteNavbar({ activePage }: Props) {
           <Link href="/pricing" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Pricing</Link>
           <Link href="/about" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>About</Link>
           <Link href="/contact" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Contact</Link>
-          <Link href="/register" className={styles.mobileDrawerCta} onClick={() => setOpen(false)}>Start Free Trial →</Link>
+          <Link href="/register" className={styles.mobileDrawerCta} onClick={() => setOpen(false)}>Get started free →</Link>
         </div>
       )}
     </div>

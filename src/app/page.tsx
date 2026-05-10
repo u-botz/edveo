@@ -35,7 +35,7 @@ export default function Home() {
           <span className={styles.trustStripDot} aria-hidden />
           <div className={styles.trustStripItem}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-            <span>14-day free trial, no card needed</span>
+            <span>Free forever, no card needed</span>
           </div>
           <span className={styles.trustStripDot} aria-hidden />
           <div className={styles.trustStripItem}>
@@ -205,8 +205,8 @@ export default function Home() {
           <div className={styles.faqRight}>
             {[
               {
-                q: "What happens to my student data after the 14-day trial ends?",
-                a: "Nothing is deleted. If you don't upgrade, your account is paused — your courses, student records, and progress data are preserved for 30 days. You can export everything at any time, no questions asked.",
+                q: "What happens to my student data if I stay on the free plan?",
+                a: "Nothing is deleted. Your courses, student records, and progress data stay preserved. You can upgrade when you need more capacity, and you can export your data at any time.",
               },
               {
                 q: "Can I import my existing students and fee records?",
@@ -246,10 +246,10 @@ export default function Home() {
         variant="dark"
         headline="You've Been Running Your Institute on 4 Tools."
         accentSub="There's a Better Way."
-        primaryLabel="Start Your Free Trial →"
+        primaryLabel="Get started free →"
         secondaryLabel="Talk to an Expert"
         secondaryHref={COMPANY_WHATSAPP_URL}
-        trustItems={["14-day free trial", "No credit card required", "Data stored in India", "Cancel anytime"]}
+        trustItems={["Free forever", "No credit card required", "Data stored in India", "Cancel anytime"]}
       />
 
       <SiteFooter />

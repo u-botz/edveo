@@ -334,10 +334,10 @@ export default function InstitutionsSalesContent() {
                 See Full Pricing →
               </Link>
               <Link href="/register" className={styles.pricingTeaserGhost}>
-                Start Free Trial
+                Get started free
               </Link>
             </div>
-            <p className={styles.pricingTeaserNote}>14-day free trial · No credit card · Cancel anytime</p>
+            <p className={styles.pricingTeaserNote}>Free forever · No credit card · Cancel anytime</p>
           </div>
         </div>
       </section>
@@ -345,13 +345,13 @@ export default function InstitutionsSalesContent() {
       {/* ── Section 7: Final CTA ── */}
       <section className={styles.finalCta}>
         <div className={styles.container}>
-          <h2 className={styles.finalTitle}>Start Your Free Trial Right Now.</h2>
+          <h2 className={styles.finalTitle}>Get Started Free Right Now.</h2>
           <p className={styles.finalSub}>
-            14 days. Full access. No credit card.
+            Free forever. No credit card.
             <br />
             We&apos;ll set up your institute profile together — it takes 7 minutes.
           </p>
-          <Link href="/register" className={styles.finalBtn}>Start Free Trial →</Link>
+          <Link href="/register" className={styles.finalBtn}>Get started free →</Link>
           <p className={styles.finalTrust}>99.9% uptime SLA · Data stored in India · Cancel anytime</p>
         </div>
       </section>

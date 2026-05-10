@@ -122,7 +122,7 @@ function EdtechContent() {
                 </tr>
                 <tr>
                   <td>Managing instructors in WhatsApp groups</td>
-                  <td>No visibility into who's teaching what, dropped batches, disputes</td>
+                  <td>No visibility into who&apos;s teaching what, dropped batches, disputes</td>
                 </tr>
                 <tr>
                   <td>Leads captured in Google Sheets</td>
@@ -170,7 +170,7 @@ function EdtechContent() {
                   <div className={styles.featureItem}>
                     <h4>White-Label Experience</h4>
                     <p>
-                      Your brand everywhere — custom domain, branded portal, your logo on certificates. Students never see "Powered by Edveo" unless you want them to.
+                      Your brand everywhere — custom domain, branded portal, your logo on certificates. Students never see &quot;Powered by Edveo&quot; unless you want them to.
                     </p>
                   </div>
                   <div className={styles.featureItem}>
@@ -400,10 +400,10 @@ function EdtechContent() {
                 See Full Pricing →
               </Link>
               <Link href="/register" className={styles.pricingTeaserGhost}>
-                Start Free Trial
+                Get started free
               </Link>
             </div>
-            <p className={styles.pricingTeaserNote}>14-day free trial · No credit card · Cancel anytime</p>
+            <p className={styles.pricingTeaserNote}>Free forever · No credit card · Cancel anytime</p>
           </div>
         </div>
       </section>
@@ -413,7 +413,7 @@ function EdtechContent() {
         <div className={styles.container}>
           <h2 className={styles.finalTitle}>Your Edtech Deserves Infrastructure That Scales With You.</h2>
           <p className={styles.finalSub}>
-            14-day free trial. Full access. No credit card required.
+            Free forever. No credit card required.
             <br />
             Book a live demo and we&apos;ll build your setup together.
           </p>

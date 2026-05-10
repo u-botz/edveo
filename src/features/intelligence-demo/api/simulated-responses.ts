@@ -70,8 +70,8 @@ export function getSimulatedResponse(prompt: string): DemoResponse {
     },
     FALLBACK: {
       type: 'FALLBACK',
-      text: 'I can answer questions about your students, fees, attendance, batches, quiz performance, and curriculum. Try one of the suggested prompts to see me in action — or sign up for a free trial to ask me about your actual institute.',
-      ctaText: 'Start free trial',
+      text: 'I can answer questions about your students, fees, attendance, batches, quiz performance, and curriculum. Try one of the suggested prompts to see me in action — or get started free to ask me about your actual institute.',
+      ctaText: 'Get started free',
       ctaHref: '/signup',
     },
   };

@@ -8,7 +8,7 @@ const STATS = [
   { number: "5,000+", label: "Educators Onboarded", accent: false },
   { number: "₹12 Cr+", label: "Student Fees Processed", accent: true },
   { number: "0%", label: "Commission Charged", accent: true },
-  { number: "14 Days", label: "Free Trial — No Card", accent: false },
+  { number: "₹0", label: "Free Forever — No Card", accent: false },
 ];
 
 const VALUES = [
@@ -63,7 +63,7 @@ const TIMELINE = [
   {
     year: "2024",
     title: "Edveo Goes Public",
-    desc: "We launched publicly with 3 tiers, no commissions, and a 14-day free trial. 5,000+ educators joined in the first year.",
+    desc: "We launched publicly with 3 tiers, no commissions, and a free forever plan. 5,000+ educators joined in the first year.",
   },
 ];
 

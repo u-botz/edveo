@@ -44,7 +44,7 @@ export default function HeroSlider() {
 
             <div className={styles.heroCtas}>
               <button type="button" className={styles.heroBtnPrimary}>
-                Start Free Trial
+                Get started free
                 <ArrowRightIcon />
               </button>
               <button type="button" className={styles.heroBtnWa}>
@@ -53,7 +53,7 @@ export default function HeroSlider() {
               </button>
             </div>
 
-            <p className={styles.heroReassurance}>14-day free trial · No credit card required · Go live today</p>
+            <p className={styles.heroReassurance}>Free forever · No credit card required · Go live today</p>
           </div>
 
           <div className={styles.heroVisualCluster}>

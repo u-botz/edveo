@@ -92,7 +92,7 @@ export default function PricingPageClient() {
               who="For educators launching their first online course"
               price={price(1999, 1666)}
               billing={billing}
-              cta="Start Free Trial"
+              cta="Get started free"
               features={["Up to 100 students","Course creation & delivery","Razorpay payments","Student progress tracking","Landing page builder","Subdomain included"]}
             />
             <PlanCard
@@ -130,7 +130,7 @@ export default function PricingPageClient() {
               who="For teachers building a personal brand"
               price={price(999, 832)}
               billing={billing}
-              cta="Start Free Trial"
+              cta="Get started free"
               popular
               features={["Up to 200 students","Unlimited courses","Custom domain","Progress tracking","WhatsApp automation","Remove Edveo branding"]}
             />
@@ -139,7 +139,7 @@ export default function PricingPageClient() {
               who="For full-time educators scaling their income"
               price={price(2499, 2082)}
               billing={billing}
-              cta="Start Free Trial"
+              cta="Get started free"
               features={["Up to 1,000 students","Live classes","Branded mobile app","Advanced analytics","Priority support"]}
             />
           </>}
@@ -151,7 +151,7 @@ export default function PricingPageClient() {
               who="For small coaching centres getting started"
               price={price(3499, 2916)}
               billing={billing}
-              cta="Start Free Trial"
+              cta="Get started free"
               features={["Up to 200 students","LMS + ERP + CRM","Fee collection & attendance","Digital timetable","Razorpay integration","WhatsApp notifications"]}
             />
             <PlanCard
@@ -178,7 +178,7 @@ export default function PricingPageClient() {
 
         {/* Trust row */}
         <div style={{ display: "flex", justifyContent: "center", gap: 24, flexWrap: "wrap", color: "#6b7280", fontSize: 13, marginBottom: 64 }}>
-          {["Powered by Razorpay", "SSL Secured", "Cancel anytime", "No setup fee", "14-day free trial"].map((t) => (
+          {["Powered by Razorpay", "SSL Secured", "Cancel anytime", "No setup fee", "Free forever"].map((t) => (
             <span key={t}>✓ {t}</span>
           ))}
         </div>
@@ -201,11 +201,11 @@ export default function PricingPageClient() {
           Not Sure Which Plan Is Right?
         </h2>
         <p style={{ color: "rgba(255,255,255,0.65)", marginBottom: 32 }}>
-          Chat with us on WhatsApp — we'll tell you exactly which plan fits your institute in under 10 minutes.
+          Chat with us on WhatsApp — we&apos;ll tell you exactly which plan fits your institute in under 10 minutes.
         </p>
         <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
           <Link href="/register" style={{ background: "#fff", color: "#0D2D4E", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
-            Start Free Trial →
+            Get started free →
           </Link>
           <a href={COMPANY_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ background: "#2EAA6E", color: "#fff", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
             Chat on WhatsApp →
@@ -293,7 +293,7 @@ function PlanCard({
         </Link>
       )}
 
-      <div style={{ fontSize: "0.75rem", opacity: 0.5, marginBottom: 16 }}>14-day free trial · No credit card</div>
+      <div style={{ fontSize: "0.75rem", opacity: 0.5, marginBottom: 16 }}>Free forever · No credit card</div>
 
       <hr style={{ border: "none", borderTop: `1px solid ${popular ? "rgba(255,255,255,0.12)" : "rgba(13,45,78,0.08)"}`, marginBottom: 20 }} />
 
@@ -335,7 +335,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 }
 
 const FAQS = [
-  { q: "Is there really no credit card required for the free trial?", a: "Correct. You get 14 days of full access with no payment information required. At the end of your trial, you choose a plan or your account pauses — no automatic charges." },
+  { q: "Is there really no credit card required to start?", a: "Correct. You can get started on the free plan with no payment information required. Upgrade only when you need more capacity or advanced features — no automatic charges." },
   { q: "Can I switch between plans after I sign up?", a: "Yes. Upgrade anytime, effective immediately. Downgrade at the end of your billing cycle. No penalty either way." },
   { q: "Do you support Razorpay for fee collection?", a: "Yes. Razorpay is the default payment processor for all Indian billing — both your subscription to Edveo and the fees you collect from your students." },
   { q: "What happens if I exceed my student limit?", a: "You will be notified when you reach 90% of your student limit. You can upgrade immediately or archive inactive students. We never cut off access suddenly." },

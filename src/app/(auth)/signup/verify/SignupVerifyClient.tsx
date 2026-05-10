@@ -140,7 +140,7 @@ export default function SignupVerifyClient() {
       }
 
       setGlobalError(
-        "This trial was set up, but paid checkout from this screen is not available yet. Please contact support or pick the free trial plan."
+        "This workspace was set up, but paid checkout from this screen is not available yet. Please contact support or pick the free plan."
       );
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Something went wrong.";
