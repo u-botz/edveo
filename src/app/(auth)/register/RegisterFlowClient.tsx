@@ -19,6 +19,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import {
   fetchPlansForCategory,
   fetchInstitutionTypesForCategory,
+  pickStandaloneTeacherSelfServeSignupPlan,
   checkSubdomainForCategory,
   submitSignup,
   buildGoogleSignupUrl,
@@ -347,9 +348,11 @@ export default function RegisterFlowClient() {
     if (!validateForm()) return;
 
     const selectedPlan =
-      plans.find((p) => p.self_serve_free_active) ??
-      plans.find((p) => p.is_trial) ??
-      plans[0];
+      category === "standalone_teacher"
+        ? pickStandaloneTeacherSelfServeSignupPlan(plans)
+        : plans.find((p) => p.self_serve_free_active) ??
+          plans.find((p) => p.is_trial) ??
+          plans[0];
     if (!selectedPlan) {
       setGlobalError("No signup plan available. Please contact support.");
       return;

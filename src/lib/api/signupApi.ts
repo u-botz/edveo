@@ -91,6 +91,22 @@ export interface TrialPlan {
   modules: string[];
 }
 
+/**
+ * Plan allowed for POST /api/public/teacher-signup/trial (email-verify path).
+ * Do not fall back to `plans[0]`: the catalog lists paid SKUs first by sort_order,
+ * which the backend rejects ("Invalid plan selected").
+ */
+export function pickStandaloneTeacherSelfServeSignupPlan(
+  plans: TrialPlan[]
+): TrialPlan | null {
+  const free = plans.find((p) => p.self_serve_free_active === true);
+  if (free) {
+    return free;
+  }
+  const trial = plans.find((p) => p.is_trial === true);
+  return trial ?? null;
+}
+
 export interface InstitutionType {
   id: number;
   name: string;

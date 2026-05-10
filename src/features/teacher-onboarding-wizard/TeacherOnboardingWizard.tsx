@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import {
   Check,
   ChevronLeft,
@@ -14,6 +14,7 @@ import {
   fetchOnboardingFilterConfig,
   fetchInstitutionTypesForCategory,
   fetchPlansForCategory,
+  pickStandaloneTeacherSelfServeSignupPlan,
   checkSubdomainForCategory,
   submitSignup,
   generateIdempotencyKey,
@@ -125,6 +126,11 @@ export default function TeacherOnboardingWizard({
         setConfig(cfg);
         setInstitutionTypes(instTypes);
         setPlans(plansData);
+        if (!pickStandaloneTeacherSelfServeSignupPlan(plansData)) {
+          setMasterError(
+            "Teacher signup is not available: your catalog has no self-serve free teacher plan and no active trial plan for this region. Ask your platform admin to enable the free teacher SKU (self-serve free flag on an active standalone-teacher plan)."
+          );
+        }
         // Auto-select first institution type (hidden from user)
         const matched = instTypes.find((t) =>
           ["teacher", "tutor", "solo", "individual"].some(
@@ -243,14 +249,32 @@ export default function TeacherOnboardingWizard({
       ? getStep5Subjects(config, step4Selections)
       : [];
 
+  const standaloneSignupPlan = useMemo(
+    () => pickStandaloneTeacherSelfServeSignupPlan(plans),
+    [plans]
+  );
+
+  const submitPrimaryCtaLabel = useMemo(() => {
+    if (!standaloneSignupPlan) {
+      return "Continue →";
+    }
+    if (standaloneSignupPlan.self_serve_free_active === true) {
+      return "Create my workspace →";
+    }
+    if (standaloneSignupPlan.is_trial === true) {
+      return "Start my free trial →";
+    }
+    return "Continue →";
+  }, [standaloneSignupPlan]);
+
   // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async () => {
     setSubmitError(null);
-    const freePlan = plans.find((p) => p.self_serve_free_active);
-    const trialPlan = plans.find((p) => p.is_trial);
-    const selectedPlan = freePlan ?? trialPlan ?? plans[0];
+    const selectedPlan = pickStandaloneTeacherSelfServeSignupPlan(plans);
     if (!selectedPlan) {
-      setSubmitError("No signup plan available. Please contact support.");
+      setSubmitError(
+        "No eligible signup plan is configured (need a self-serve free teacher plan or an active trial). Contact support."
+      );
       return;
     }
 
@@ -295,6 +319,8 @@ export default function TeacherOnboardingWizard({
       if (error.status === 422 && error.serverErrors) {
         const first = Object.values(error.serverErrors)[0]?.[0];
         setSubmitError(first ?? error.message);
+      } else if (error.status === 422 && typeof error.message === "string") {
+        setSubmitError(error.message);
       } else {
         setSubmitError(error.message ?? "Something went wrong. Please try again.");
       }
@@ -802,7 +828,7 @@ export default function TeacherOnboardingWizard({
                   <Loader2 className={styles.spinner} size={18} /> Setting up…
                 </>
               ) : (
-                "Start my free trial →"
+                submitPrimaryCtaLabel
               )}
             </button>
           </div>
