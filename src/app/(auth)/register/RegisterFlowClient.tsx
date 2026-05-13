@@ -19,6 +19,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import {
   fetchPlansForCategory,
   fetchInstitutionTypesForCategory,
+  fetchOfflineTeachingDomains,
   pickStandaloneTeacherSelfServeSignupPlan,
   checkSubdomainForCategory,
   submitSignup,
@@ -29,6 +30,7 @@ import {
   type TenantCategory,
   type TrialPlan,
   type InstitutionType,
+  type OfflineTeachingDomain,
 } from "@/lib/api/signupApi";
 import { CONTACT_EMAIL } from "@/lib/contactEmail";
 import { signupOAuthErrorMessage } from "@/lib/signupOAuthErrors";
@@ -115,6 +117,15 @@ export default function RegisterFlowClient() {
   // "wizard"  = 5-step wizard for workspace + institution type + exam + subject + grade
   const [teacherSubStep, setTeacherSubStep] = useState<"details" | "wizard">("details");
 
+  /** Offline institute FRD v2.1 wizard (exam: types then domains; non-exam: types only). */
+  const [offlineSection, setOfflineSection] = useState<"exam_focused" | "non_exam" | null>(null);
+  const [offlineTypeIds, setOfflineTypeIds] = useState<number[]>([]);
+  const [offlinePrimaryId, setOfflinePrimaryId] = useState<number | null>(null);
+  const [offlineSubStep, setOfflineSubStep] = useState<1 | 2>(1);
+  const [offlineDomains, setOfflineDomains] = useState<OfflineTeachingDomain[]>([]);
+  const [offlineDomainsLoading, setOfflineDomainsLoading] = useState(false);
+  const [offlineSelectedDomainCodes, setOfflineSelectedDomainCodes] = useState<string[]>([]);
+
   // ── Idempotency key (generated once per page load) ─────────────────────────
   const idempotencyKeyRef = useRef<string>(generateIdempotencyKey());
 
@@ -133,7 +144,7 @@ export default function RegisterFlowClient() {
   // ─────────────────────────────────────────────────────────────────────────
 
   useEffect(() => {
-    if (!category || category === "edtech" || institutionTypes.length === 0) return;
+    if (!category || category === "edtech" || category === "offline_institution" || institutionTypes.length === 0) return;
 
     // Map category keywords to institution type names (case-insensitive contains)
     const keywords: Record<string, string[]> = {
@@ -250,6 +261,14 @@ export default function RegisterFlowClient() {
       setPlans(results[0] as TrialPlan[]);
       if (category !== "edtech") {
         setInstitutionTypes(results[1] as InstitutionType[]);
+        if (category === "offline_institution") {
+          setOfflineSection(null);
+          setOfflineTypeIds([]);
+          setOfflinePrimaryId(null);
+          setOfflineSubStep(1);
+          setOfflineDomains([]);
+          setOfflineSelectedDomainCodes([]);
+        }
       } else {
         setInstitutionTypes([]);
       }
@@ -262,6 +281,11 @@ export default function RegisterFlowClient() {
 
   const handlePrevStep = () => {
     setDirection("left");
+    if (category === "offline_institution" && offlineSection === "exam_focused" && offlineSubStep === 2) {
+      setOfflineSubStep(1);
+      window.scrollTo(0, 0);
+      return;
+    }
     if (category === "standalone_teacher" && teacherSubStep === "wizard") {
       // Go back to the details sub-step, not all the way to step 1
       setTeacherSubStep("details");
@@ -270,6 +294,12 @@ export default function RegisterFlowClient() {
     }
     setStep(1);
     setTeacherSubStep("details");
+    setOfflineSection(null);
+    setOfflineTypeIds([]);
+    setOfflinePrimaryId(null);
+    setOfflineSubStep(1);
+    setOfflineDomains([]);
+    setOfflineSelectedDomainCodes([]);
     setPlans([]);
     setInstitutionTypes([]);
     setBootstrapError(null);
@@ -320,7 +350,24 @@ export default function RegisterFlowClient() {
     if (!/^[0-9]{10}$/.test(formData.phone)) {
       newErrors.phone = "Must be a 10-digit Indian number";
     }
-    if (category !== "edtech" && !formData.institution_type_id) {
+    if (category === "offline_institution") {
+      if (!offlineSection) {
+        newErrors.offline_section = "Choose exam-focused or non-exam";
+      }
+      if (offlineTypeIds.length < 1) {
+        newErrors.offline_types = "Select at least one institution type";
+      }
+      if (offlineTypeIds.length > 1 && offlinePrimaryId == null) {
+        newErrors.offline_primary = "Mark one selected type as primary";
+      }
+      if (
+        offlineSection === "exam_focused" &&
+        offlineSubStep === 2 &&
+        offlineSelectedDomainCodes.length < 1
+      ) {
+        newErrors.offline_domains = "Select at least one teaching domain";
+      }
+    } else if (category !== "edtech" && !formData.institution_type_id) {
       newErrors.institution_type_id = "Please select your institution type";
     }
 
@@ -345,6 +392,33 @@ export default function RegisterFlowClient() {
     e.preventDefault();
     setGlobalError(null);
 
+    if (
+      category === "offline_institution" &&
+      offlineSection === "exam_focused" &&
+      offlineSubStep === 1
+    ) {
+      if (!validateForm()) return;
+      setIsSubmitting(true);
+      try {
+        const codes = offlineTypeIds
+          .map((id) => institutionTypes.find((t) => t.id === id)?.slug)
+          .filter((s): s is string => typeof s === "string" && s !== "");
+        if (codes.length === 0) {
+          setGlobalError("Invalid institution type selection.");
+          return;
+        }
+        const d = await fetchOfflineTeachingDomains(codes);
+        setOfflineDomains(d);
+        setOfflineSelectedDomainCodes([]);
+        setOfflineSubStep(2);
+      } catch {
+        setGlobalError("Unable to load teaching domains. Try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+      return;
+    }
+
     if (!validateForm()) return;
 
     const selectedPlan =
@@ -360,13 +434,33 @@ export default function RegisterFlowClient() {
 
     setIsSubmitting(true);
     try {
+      const primaryOfflineId =
+        category === "offline_institution"
+          ? offlinePrimaryId ?? (offlineTypeIds[0] ?? null)
+          : null;
+      const secondaryOfflineIds =
+        category === "offline_institution" && primaryOfflineId != null
+          ? offlineTypeIds.filter((id) => id !== primaryOfflineId)
+          : [];
+
       const result = await submitSignup(category!, {
         name: formData.full_name.trim(),
         email: formData.email.trim().toLowerCase(),
         phone: formData.phone.trim(),
         subdomain: slug,
-        ...(category !== "edtech" && formData.institution_type_id
+        ...(category !== "edtech" &&
+        category !== "offline_institution" &&
+        formData.institution_type_id
           ? { institution_type_id: parseInt(formData.institution_type_id, 10) }
+          : {}),
+        ...(category === "offline_institution" && primaryOfflineId != null
+          ? {
+              primary_institution_type_id: primaryOfflineId,
+              secondary_institution_type_ids: secondaryOfflineIds,
+              ...(offlineSection === "exam_focused"
+                ? { teaching_domain_codes: offlineSelectedDomainCodes }
+                : {}),
+            }
           : {}),
         plan_id: selectedPlan.id,
         idempotency_key: idempotencyKeyRef.current,
@@ -714,35 +808,156 @@ export default function RegisterFlowClient() {
                 )}
               </div>}
 
-              {/* Institution Type — hidden for edtech and standalone_teacher (wizard handles this) */}
-              {category !== "edtech" && category !== "standalone_teacher" && (
+              {/* Offline institute — FRD v2.1 classification + (exam) teaching domains */}
+              {category === "offline_institution" && (
                 <div className={styles.formGroup}>
-                  <label htmlFor="institution_type_id" className={styles.label}>
-                    Institution category
-                  </label>
-                  {bootstrapLoading ? (
-                    <div className={styles.loadingShimmer} />
+                  {offlineSubStep === 2 && offlineSection === "exam_focused" ? (
+                    <>
+                      <p className={styles.helperText} style={{ marginBottom: 12 }}>
+                        Step 2 of 2 — Select the teaching domains you cover (merged list for your selected types).
+                      </p>
+                      {offlineDomainsLoading ? (
+                        <div className={styles.loadingShimmer} />
+                      ) : (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                          {offlineDomains.map((d) => {
+                            const checked = offlineSelectedDomainCodes.includes(d.code);
+                            return (
+                              <label
+                                key={d.code}
+                                style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={checked}
+                                  onChange={() => {
+                                    setOfflineSelectedDomainCodes((prev) =>
+                                      checked ? prev.filter((c) => c !== d.code) : [...prev, d.code]
+                                    );
+                                  }}
+                                />
+                                <span>{d.label}</span>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      )}
+                      {errors.offline_domains && (
+                        <span className={styles.errorText}>{errors.offline_domains}</span>
+                      )}
+                    </>
                   ) : (
-                    <select
-                      id="institution_type_id"
-                      name="institution_type_id"
-                      className={`${styles.select} ${errors.institution_type_id ? styles.inputError : ""}`}
-                      value={formData.institution_type_id}
-                      onChange={handleChange}
-                      disabled={isSubmitting}
-                      aria-invalid={!!errors.institution_type_id}
-                      aria-describedby={errors.institution_type_id ? "inst_type_error" : undefined}
-                    >
-                      <option value="" disabled>Select your institution type…</option>
-                      {institutionTypes.map((t) => (
-                        <option key={t.id} value={t.id}>{t.name}</option>
-                      ))}
-                    </select>
-                  )}
-                  {errors.institution_type_id && (
-                    <span id="inst_type_error" className={styles.errorText}>
-                      {errors.institution_type_id}
-                    </span>
+                    <>
+                      <label className={styles.label}>Institute focus</label>
+                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+                        <button
+                          type="button"
+                          className={styles.input}
+                          style={{
+                            flex: 1,
+                            minWidth: 140,
+                            border: offlineSection === "exam_focused" ? "2px solid #2563eb" : undefined,
+                          }}
+                          onClick={() => {
+                            setOfflineSection("exam_focused");
+                            setOfflineTypeIds([]);
+                            setOfflinePrimaryId(null);
+                          }}
+                        >
+                          Exam-focused
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.input}
+                          style={{
+                            flex: 1,
+                            minWidth: 140,
+                            border: offlineSection === "non_exam" ? "2px solid #2563eb" : undefined,
+                          }}
+                          onClick={() => {
+                            setOfflineSection("non_exam");
+                            setOfflineTypeIds([]);
+                            setOfflinePrimaryId(null);
+                          }}
+                        >
+                          Non-exam
+                        </button>
+                      </div>
+                      {errors.offline_section && (
+                        <span className={styles.errorText}>{errors.offline_section}</span>
+                      )}
+
+                      {offlineSection && (
+                        <>
+                          <label className={styles.label}>Institution types (select all that apply)</label>
+                          {bootstrapLoading ? (
+                            <div className={styles.loadingShimmer} />
+                          ) : (
+                            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                              {institutionTypes
+                                .filter((t) => t.section === offlineSection)
+                                .map((t) => {
+                                  const checked = offlineTypeIds.includes(t.id);
+                                  return (
+                                    <label
+                                      key={t.id}
+                                      style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={checked}
+                                        onChange={() => {
+                                          setOfflineTypeIds((prev) => {
+                                            const has = prev.includes(t.id);
+                                            const next = has ? prev.filter((x) => x !== t.id) : [...prev, t.id];
+                                            if (offlinePrimaryId != null && !next.includes(offlinePrimaryId)) {
+                                              setOfflinePrimaryId(null);
+                                            }
+                                            return next;
+                                          });
+                                        }}
+                                      />
+                                      <span>{t.name}</span>
+                                    </label>
+                                  );
+                                })}
+                            </div>
+                          )}
+                          {errors.offline_types && (
+                            <span className={styles.errorText}>{errors.offline_types}</span>
+                          )}
+
+                          {offlineTypeIds.length > 1 && (
+                            <div style={{ marginTop: 12 }}>
+                              <label className={styles.label}>Primary type (required when multiple selected)</label>
+                              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                                {offlineTypeIds.map((id) => {
+                                  const t = institutionTypes.find((x) => x.id === id);
+                                  if (!t) return null;
+                                  return (
+                                    <label
+                                      key={id}
+                                      style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
+                                    >
+                                      <input
+                                        type="radio"
+                                        name="offline_primary"
+                                        checked={offlinePrimaryId === id}
+                                        onChange={() => setOfflinePrimaryId(id)}
+                                      />
+                                      <span>{t.name}</span>
+                                    </label>
+                                  );
+                                })}
+                              </div>
+                              {errors.offline_primary && (
+                                <span className={styles.errorText}>{errors.offline_primary}</span>
+                              )}
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </>
                   )}
                 </div>
               )}
@@ -896,7 +1111,11 @@ export default function RegisterFlowClient() {
                       Setting up your account…
                     </>
                   ) : (
-                    "Get started free →"
+                    category === "offline_institution" &&
+                    offlineSection === "exam_focused" &&
+                    offlineSubStep === 1
+                      ? "Continue to teaching domains →"
+                      : "Get started free →"
                   )}
                 </button>
               )}

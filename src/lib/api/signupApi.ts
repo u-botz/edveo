@@ -111,6 +111,13 @@ export interface InstitutionType {
   id: number;
   name: string;
   slug: string;
+  code?: string;
+  section?: "exam_focused" | "non_exam" | null;
+}
+
+export interface OfflineTeachingDomain {
+  code: string;
+  label: string;
 }
 
 export interface TeachingExamCategory {
@@ -249,6 +256,10 @@ export interface TrialSignupPayload {
   primary_subject_slugs?: string[];
   /** Alias for subject_slug / first subject (legacy). */
   primary_subject_slug?: string;
+  /** Offline institute v2.1 — primary type id (required for offline initiate). */
+  primary_institution_type_id?: number;
+  secondary_institution_type_ids?: number[];
+  teaching_domain_codes?: string[];
 }
 
 /** Teacher trial endpoint — enumeration-safe, no session token in body. */
@@ -424,6 +435,27 @@ export async function fetchInstitutionTypesForCategory(
   if (!res.ok) throw new Error("Failed to load institution types");
   const json = await res.json();
   return (json.data ?? []) as InstitutionType[];
+}
+
+/**
+ * Merged teaching domains for selected offline institute type codes (exam-focused only).
+ */
+export async function fetchOfflineTeachingDomains(
+  typeSlugs: string[]
+): Promise<OfflineTeachingDomain[]> {
+  if (typeSlugs.length === 0) return [];
+  const prefix = CATEGORY_PREFIX.offline_institution;
+  const qs = new URLSearchParams();
+  for (const s of typeSlugs) {
+    qs.append("type_slugs[]", s);
+  }
+  const res = await fetch(`${prefix}/teaching-domains?${qs.toString()}`, {
+    headers: { Accept: "application/json" },
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Failed to load teaching domains");
+  const json = await res.json();
+  return (json.data ?? []) as OfflineTeachingDomain[];
 }
 
 /**
