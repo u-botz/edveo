@@ -55,7 +55,7 @@ const CARDS = [
     icon: Building2,
     title: "Coaching Institute or School",
     desc: "I run a physical or hybrid institute with staff and batches.",
-    locked: true,
+    locked: false,
   },
   {
     id: "edtech" as const,
