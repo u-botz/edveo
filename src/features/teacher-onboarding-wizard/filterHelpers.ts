@@ -82,6 +82,100 @@ export function getStep5Subjects(
   return result;
 }
 
+export function getStep4TeachingDomainsConfig(
+  config: OnboardingFilterConfig,
+  profileSlug: string
+): { headline: string; banner: string; domains: BoardOption[] } {
+  const raw = config.step4_teaching_domains_by_student_profile?.[profileSlug];
+  if (!raw || typeof raw !== "object") {
+    return { headline: "", banner: "", domains: [] };
+  }
+  const headline = typeof raw.headline === "string" ? raw.headline : "";
+  const banner = typeof raw.banner === "string" ? raw.banner : "";
+  const dom = raw.domains;
+  const domains: BoardOption[] = Array.isArray(dom)
+    ? dom.filter(
+        (o): o is BoardOption =>
+          !!o &&
+          typeof o === "object" &&
+          typeof (o as BoardOption).slug === "string" &&
+          typeof (o as BoardOption).name === "string"
+      )
+    : [];
+
+  return { headline, banner, domains };
+}
+
+export function getAggregatedSpecificExamOptions(
+  config: OnboardingFilterConfig,
+  selectedDomainSlugs: string[]
+): BoardOption[] {
+  const m = config.step4_specific_exams_by_domain ?? {};
+  const seen = new Set<string>();
+  const out: BoardOption[] = [];
+  for (const d of selectedDomainSlugs) {
+    const rows = m[d];
+    if (!Array.isArray(rows)) {
+      continue;
+    }
+    for (const row of rows) {
+      if (
+        row &&
+        typeof row.slug === "string" &&
+        typeof row.name === "string" &&
+        !seen.has(row.slug)
+      ) {
+        seen.add(row.slug);
+        out.push({ slug: row.slug, name: row.name });
+      }
+    }
+  }
+
+  return out;
+}
+
+export function getStep5SubjectsForTeachingSelection(
+  config: OnboardingFilterConfig,
+  domainSlugs: string[],
+  specificExamSlugs: string[]
+): SubjectOption[] {
+  const childMap = config.domain_to_child_exam_slugs ?? {};
+  const step5Domain = config.step5_subjects_by_teaching_domain ?? {};
+  const step5Exam = config.step5_subjects_by_step4_selection ?? {};
+  const specSet = new Set(specificExamSlugs);
+  const seen = new Set<string>();
+  const out: SubjectOption[] = [];
+  const pushRows = (rows: SubjectOption[] | undefined) => {
+    if (!Array.isArray(rows)) {
+      return;
+    }
+    for (const row of rows) {
+      if (
+        row &&
+        typeof row.slug === "string" &&
+        typeof row.name === "string" &&
+        !seen.has(row.slug)
+      ) {
+        seen.add(row.slug);
+        out.push({ slug: row.slug, name: row.name });
+      }
+    }
+  };
+  for (const d of domainSlugs) {
+    const children = (childMap[d] as string[] | undefined) ?? [d];
+    const picked = children.filter((c) => specSet.has(c));
+    if (picked.length > 0) {
+      for (const c of picked) {
+        pushRows(step5Exam[c]);
+      }
+    } else {
+      pushRows(step5Domain[d]);
+    }
+  }
+
+  return out;
+}
+
 /**
  * Client-side format check aligned with backend tenant slug rules (3–100 chars, lowercase, hyphen-separated).
  * Returns an error message or null if valid/empty.

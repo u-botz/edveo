@@ -28,8 +28,9 @@ import {
 import {
   getStudentProfiles,
   getStudentProfileLabel,
-  getStep4Config,
-  getStep5Subjects,
+  getStep4TeachingDomainsConfig,
+  getAggregatedSpecificExamOptions,
+  getStep5SubjectsForTeachingSelection,
   getSubdomainFormatError,
 } from "./filterHelpers";
 
@@ -64,7 +65,7 @@ const STEP_LABELS: Record<WizardStep, string> = {
   1: "Your Page",
   2: "Teaching Mode",
   3: "Students",
-  4: "Board / Exam",
+  4: "Teaching domain",
   5: "Subject",
 };
 
@@ -97,12 +98,16 @@ export default function TeacherOnboardingWizard({
 
   const [teachingMode, setTeachingMode] = useState<TeachingMode | "">("");
   const [studentProfile, setStudentProfile] = useState("");
-  /** Step 4 multi-select — stores `exam_category_slugs` for the API */
-  const [step4Selections, setStep4Selections] = useState<string[]>([]);
-  const [primarySubjectSlug, setPrimarySubjectSlug] = useState("");
+  /** Step 4 — teaching domain slugs for the API */
+  const [teachingDomainSelections, setTeachingDomainSelections] = useState<string[]>([]);
+  /** Step 4b — optional specific exam slugs */
+  const [specificExamSelections, setSpecificExamSelections] = useState<string[]>([]);
+  /** Step 5 multi-select — `primary_subject_slugs` for the API */
+  const [primarySubjectSlugs, setPrimarySubjectSlugs] = useState<string[]>([]);
 
   // ── Search ────────────────────────────────────────────────────────────────
   const [boardSearch, setBoardSearch] = useState("");
+  const [specificSearch, setSpecificSearch] = useState("");
   const [subjectSearch, setSubjectSearch] = useState("");
 
   // ── Submission ────────────────────────────────────────────────────────────
@@ -181,28 +186,45 @@ export default function TeacherOnboardingWizard({
   const handleTeachingModeChange = (mode: TeachingMode) => {
     setTeachingMode(mode);
     setStudentProfile("");
-    setStep4Selections([]);
-    setPrimarySubjectSlug("");
+    setTeachingDomainSelections([]);
+    setSpecificExamSelections([]);
+    setPrimarySubjectSlugs([]);
     setBoardSearch("");
+    setSpecificSearch("");
     setSubjectSearch("");
   };
 
   const handleStudentProfileChange = (profile: string) => {
     setStudentProfile(profile);
-    setStep4Selections([]);
-    setPrimarySubjectSlug("");
+    setTeachingDomainSelections([]);
+    setSpecificExamSelections([]);
+    setPrimarySubjectSlugs([]);
     setBoardSearch("");
+    setSpecificSearch("");
     setSubjectSearch("");
   };
 
-  const handleStep4Toggle = (examSlug: string) => {
-    setStep4Selections((prev) => {
+  const handleTeachingDomainToggle = (domainSlug: string) => {
+    setTeachingDomainSelections((prev) => {
+      const next = prev.includes(domainSlug)
+        ? prev.filter((b) => b !== domainSlug)
+        : [...prev, domainSlug];
+      return next;
+    });
+    setSpecificExamSelections([]);
+    setSpecificSearch("");
+    setPrimarySubjectSlugs([]);
+    setSubjectSearch("");
+  };
+
+  const handleSpecificExamToggle = (examSlug: string) => {
+    setSpecificExamSelections((prev) => {
       const next = prev.includes(examSlug)
         ? prev.filter((b) => b !== examSlug)
         : [...prev, examSlug];
       return next;
     });
-    setPrimarySubjectSlug("");
+    setPrimarySubjectSlugs([]);
     setSubjectSearch("");
   };
 
@@ -232,8 +254,8 @@ export default function TeacherOnboardingWizard({
     subdomainStatus === "available";
   const step2Valid = teachingMode !== "";
   const step3Valid = studentProfile !== "";
-  const step4Valid = step4Selections.length >= 1;
-  const step5Valid = primarySubjectSlug !== "";
+  const step4Valid = teachingDomainSelections.length >= 1;
+  const step5Valid = primarySubjectSlugs.length > 0;
 
   const currentStepValid: Record<WizardStep, boolean> = {
     1: step1Valid,
@@ -245,8 +267,12 @@ export default function TeacherOnboardingWizard({
 
   // ── Subject list for Step 5 ───────────────────────────────────────────────
   const subjectOptions =
-    config && step4Selections.length > 0
-      ? getStep5Subjects(config, step4Selections)
+    config && teachingDomainSelections.length > 0
+      ? getStep5SubjectsForTeachingSelection(
+          config,
+          teachingDomainSelections,
+          specificExamSelections
+        )
       : [];
 
   const standaloneSignupPlan = useMemo(
@@ -298,10 +324,14 @@ export default function TeacherOnboardingWizard({
         // v2 wizard fields
         teaching_mode: teachingMode !== "" ? (teachingMode as TeachingMode) : undefined,
         student_profile: studentProfile !== "" ? studentProfile : undefined,
-        exam_category_slugs: step4Selections,
-        primary_subject_slug: primarySubjectSlug !== "" ? primarySubjectSlug : undefined,
+        teaching_domains: teachingDomainSelections,
+        specific_exams: specificExamSelections,
+        primary_subject_slugs:
+          primarySubjectSlugs.length > 0 ? primarySubjectSlugs : undefined,
+        primary_subject_slug:
+          primarySubjectSlugs.length > 0 ? primarySubjectSlugs[0] : undefined,
         // legacy compat: set subject_slug so paid checkout path still works
-        subject_slug: primarySubjectSlug !== "" ? primarySubjectSlug : undefined,
+        subject_slug: primarySubjectSlugs.length > 0 ? primarySubjectSlugs[0] : undefined,
       });
 
       onSuccess({
@@ -359,12 +389,19 @@ export default function TeacherOnboardingWizard({
   const selectedMode = config.teaching_modes.find(
     (m) => m.value === teachingMode
   );
-  const step4Config =
+  const step4DomainConfig =
     studentProfile !== ""
-      ? getStep4Config(config, studentProfile)
-      : { headline: "", banner: "", options: [] as BoardOption[] };
-  const filteredBoards = step4Config.options.filter((b) =>
+      ? getStep4TeachingDomainsConfig(config, studentProfile)
+      : { headline: "", banner: "", domains: [] as { slug: string; name: string }[] };
+  const specificExamOptions =
+    config && studentProfile !== "" && teachingDomainSelections.length > 0
+      ? getAggregatedSpecificExamOptions(config, teachingDomainSelections)
+      : [];
+  const filteredDomains = step4DomainConfig.domains.filter((b) =>
     b.name.toLowerCase().includes(boardSearch.toLowerCase())
+  );
+  const filteredSpecifics = specificExamOptions.filter((b) =>
+    b.name.toLowerCase().includes(specificSearch.toLowerCase())
   );
   const filteredSubjects = subjectOptions.filter((s) =>
     s.name.toLowerCase().includes(subjectSearch.toLowerCase())
@@ -414,12 +451,12 @@ export default function TeacherOnboardingWizard({
               : undefined
           }
           step4Summary={
-            step >= 5 && step4Selections.length > 0
+            step >= 5 && teachingDomainSelections.length > 0
               ? {
                   firstLabel:
-                    step4Config.options.find((o) => o.slug === step4Selections[0])
-                      ?.name ?? step4Selections[0],
-                  extraCount: Math.max(0, step4Selections.length - 1),
+                    step4DomainConfig.domains.find((o) => o.slug === teachingDomainSelections[0])
+                      ?.name ?? teachingDomainSelections[0],
+                  extraCount: Math.max(0, teachingDomainSelections.length - 1),
                 }
               : undefined
           }
@@ -664,7 +701,7 @@ export default function TeacherOnboardingWizard({
         </div>
       )}
 
-      {/* ── Step 4: Board / Exam (multi-select) ──────────────────────────── */}
+      {/* ── Step 4: Teaching domains (+ optional specific exams) ───────────── */}
       {step === 4 && (
         <div
           key="step4"
@@ -675,38 +712,41 @@ export default function TeacherOnboardingWizard({
             className={styles.heading}
             style={{ textAlign: "left", fontSize: 22 }}
           >
-            {step4Config.headline || "Board / Exam"}
+            {step4DomainConfig.headline || "Teaching domain"}
           </h2>
-          {step4Config.banner ? (
+          {step4DomainConfig.banner ? (
             <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 12 }}>
-              {step4Config.banner}
+              {step4DomainConfig.banner}
             </p>
           ) : null}
+          <p style={{ fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 8 }}>
+            Teaching areas
+          </p>
           <div className={styles.chipSearchWrap}>
             <Search size={15} className={styles.chipSearchIcon} />
             <input
               type="search"
               className={styles.chipSearch}
-              placeholder="Search board or exam…"
+              placeholder="Search teaching areas…"
               value={boardSearch}
               onChange={(e) => setBoardSearch(e.target.value)}
               autoFocus
             />
           </div>
           <div className={styles.chipGrid}>
-            {filteredBoards.length === 0 ? (
+            {filteredDomains.length === 0 ? (
               <div className={styles.chipEmpty}>
                 No results for &ldquo;{boardSearch}&rdquo;
               </div>
             ) : (
-              filteredBoards.map((b) => {
-                const selected = step4Selections.includes(b.slug);
+              filteredDomains.map((b) => {
+                const selected = teachingDomainSelections.includes(b.slug);
                 return (
                   <button
                     key={b.slug}
                     type="button"
                     className={`${styles.chip} ${selected ? styles.chipMultiSelected : ""}`}
-                    onClick={() => handleStep4Toggle(b.slug)}
+                    onClick={() => handleTeachingDomainToggle(b.slug)}
                     aria-pressed={selected}
                   >
                     {selected && (
@@ -718,7 +758,7 @@ export default function TeacherOnboardingWizard({
               })
             )}
           </div>
-          {step4Selections.length > 0 && (
+          {teachingDomainSelections.length > 0 && (
             <p
               style={{
                 fontSize: 12,
@@ -727,9 +767,68 @@ export default function TeacherOnboardingWizard({
                 textAlign: "center",
               }}
             >
-              {step4Selections.length} selected
+              {teachingDomainSelections.length} teaching area
+              {teachingDomainSelections.length === 1 ? "" : "s"} selected
             </p>
           )}
+
+          {specificExamOptions.length > 0 && (
+            <>
+              <div style={{ height: 20 }} />
+              <p style={{ fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 8 }}>
+                Specific exams <span style={{ fontWeight: 400, color: "#6b7280" }}>(optional)</span>
+              </p>
+              <div className={styles.chipSearchWrap}>
+                <Search size={15} className={styles.chipSearchIcon} />
+                <input
+                  type="search"
+                  className={styles.chipSearch}
+                  placeholder="Search specific exams…"
+                  value={specificSearch}
+                  onChange={(e) => setSpecificSearch(e.target.value)}
+                />
+              </div>
+              <div className={styles.chipGrid}>
+                {filteredSpecifics.length === 0 ? (
+                  <div className={styles.chipEmpty}>
+                    No results for &ldquo;{specificSearch}&rdquo;
+                  </div>
+                ) : (
+                  filteredSpecifics.map((b) => {
+                    const selected = specificExamSelections.includes(b.slug);
+                    return (
+                      <button
+                        key={b.slug}
+                        type="button"
+                        className={`${styles.chip} ${selected ? styles.chipMultiSelected : ""}`}
+                        onClick={() => handleSpecificExamToggle(b.slug)}
+                        aria-pressed={selected}
+                      >
+                        {selected && (
+                          <Check className={styles.chipCheckIcon} size={13} />
+                        )}
+                        {b.name}
+                      </button>
+                    );
+                  })
+                )}
+              </div>
+              {specificExamSelections.length > 0 && (
+                <p
+                  style={{
+                    fontSize: 12,
+                    color: "#6366f1",
+                    marginTop: 8,
+                    textAlign: "center",
+                  }}
+                >
+                  {specificExamSelections.length} specific exam
+                  {specificExamSelections.length === 1 ? "" : "s"} selected
+                </p>
+              )}
+            </>
+          )}
+
           <div style={{ height: 24 }} />
           <div className={styles.wizardNavRow}>
             <button
@@ -741,7 +840,7 @@ export default function TeacherOnboardingWizard({
             </button>
             <button
               className={styles.primaryButton}
-              disabled={step4Selections.length === 0}
+              disabled={teachingDomainSelections.length === 0}
               onClick={goNext}
               style={{ flex: 1 }}
             >
@@ -762,10 +861,10 @@ export default function TeacherOnboardingWizard({
             className={styles.heading}
             style={{ textAlign: "left", fontSize: 22 }}
           >
-            What do you primarily teach?
+            What subjects do you teach?
           </h2>
           <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 12 }}>
-            Pick your main subject — you can add more from your dashboard.
+            Select all that apply (you can refine your profile later in the dashboard).
           </p>
           <div className={styles.chipSearchWrap}>
             <Search size={15} className={styles.chipSearchIcon} />
@@ -787,14 +886,22 @@ export default function TeacherOnboardingWizard({
               </div>
             ) : (
               filteredSubjects.map((s) => {
-                const selected = s.slug === primarySubjectSlug;
+                const selected = primarySubjectSlugs.includes(s.slug);
                 return (
                   <button
                     key={s.slug}
                     type="button"
                     className={`${styles.chip} ${selected ? styles.chipSelected : ""}`}
                     onClick={() => {
-                      setPrimarySubjectSlug(s.slug);
+                      setPrimarySubjectSlugs((prev) => {
+                        if (prev.includes(s.slug)) {
+                          return prev.filter((x) => x !== s.slug);
+                        }
+                        if (prev.length >= 20) {
+                          return prev;
+                        }
+                        return [...prev, s.slug];
+                      });
                       setSubjectSearch("");
                     }}
                     aria-pressed={selected}
@@ -808,6 +915,18 @@ export default function TeacherOnboardingWizard({
               })
             )}
           </div>
+          {primarySubjectSlugs.length > 0 && (
+            <p
+              style={{
+                fontSize: 12,
+                color: "#6366f1",
+                marginTop: 8,
+                textAlign: "center",
+              }}
+            >
+              {primarySubjectSlugs.length} selected
+            </p>
+          )}
           <div style={{ height: 28 }} />
           <div className={styles.wizardNavRow}>
             <button

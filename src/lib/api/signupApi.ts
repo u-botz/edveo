@@ -167,7 +167,14 @@ export interface OnboardingFilterConfig {
     string,
     { headline: string; banner: string; options: BoardOption[] }
   >;
+  step4_teaching_domains_by_student_profile?: Record<
+    string,
+    { headline: string; banner: string; domains: BoardOption[] }
+  >;
+  step4_specific_exams_by_domain?: Record<string, BoardOption[]>;
   step5_subjects_by_step4_selection: Record<string, SubjectOption[]>;
+  step5_subjects_by_teaching_domain?: Record<string, SubjectOption[]>;
+  domain_to_child_exam_slugs?: Record<string, string[]>;
   module_entitlements_by_teaching_mode?: Record<
     string,
     Array<{ module_code: string; type: string }>
@@ -183,13 +190,22 @@ export function parseStandaloneTeacherOnboardingConfig(
   }
   const o = data as Record<string, unknown>;
   if (
-    typeof o.step4_config_by_student_profile !== "object" ||
-    o.step4_config_by_student_profile === null ||
     typeof o.step5_subjects_by_step4_selection !== "object" ||
     o.step5_subjects_by_step4_selection === null
   ) {
     throw new Error(
       "Onboarding configuration is outdated or invalid (expected wizard v2 shape)."
+    );
+  }
+  const hasLegacyStep4 =
+    typeof o.step4_config_by_student_profile === "object" &&
+    o.step4_config_by_student_profile !== null;
+  const hasDomainStep4 =
+    typeof o.step4_teaching_domains_by_student_profile === "object" &&
+    o.step4_teaching_domains_by_student_profile !== null;
+  if (!hasLegacyStep4 && !hasDomainStep4) {
+    throw new Error(
+      "Onboarding configuration is outdated or invalid (expected step4 teaching domains or legacy step4 config)."
     );
   }
   return data as OnboardingFilterConfig;
@@ -223,9 +239,15 @@ export interface TrialSignupPayload {
   // ─── Wizard v2 fields ──────────────────────────────────────────────────────
   teaching_mode?: TeachingMode;
   student_profile?: string;
-  /** Multi-select boards (Step 4). Empty array when boards_applicable = false. */
+  /** Wizard v3 — teaching domain slugs (required for new wizard). */
+  teaching_domains?: string[];
+  /** Optional atomic exams under selected domains. */
+  specific_exams?: string[];
+  /** Legacy flat boards / exams (optional when teaching_domains is sent). */
   exam_category_slugs?: string[];
-  /** Alias for subject_slug sent from the wizard v2. */
+  /** Wizard v2 Step 5 — multi-select subject slugs. */
+  primary_subject_slugs?: string[];
+  /** Alias for subject_slug / first subject (legacy). */
   primary_subject_slug?: string;
 }
 
