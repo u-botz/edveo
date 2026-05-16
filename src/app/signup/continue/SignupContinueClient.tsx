@@ -13,6 +13,9 @@ import {
 import TeacherOnboardingWizard, {
   type TeacherWizardResult,
 } from "@/features/teacher-onboarding-wizard/TeacherOnboardingWizard";
+import OfflineInstitutionOnboardingWizard, {
+  type OfflineWizardResult,
+} from "@/features/offline-institution-onboarding-wizard/OfflineInstitutionOnboardingWizard";
 import styles from "../../(auth)/register/page.module.css";
 
 const VALID_CATEGORIES: TenantCategory[] = [
@@ -82,6 +85,31 @@ export default function SignupContinueClient() {
       router.replace("/signup?error=session_expired");
     }
   }, [continuationPhase, router]);
+
+  const handleOfflineWizardSuccess = (result: OfflineWizardResult) => {
+    if (isInitiateSignupResponse(result.submitResult)) {
+      const aux = {
+        googleContinuationToken: googleToken || null,
+        planId: result.planId,
+        billingCycle: "monthly" as const,
+      };
+      try {
+        sessionStorage.setItem(
+          selfSignupAuxStorageKey(result.submitResult.token),
+          JSON.stringify(aux)
+        );
+      } catch {
+        /* ignore */
+      }
+      router.replace(
+        `/signup/verify?token=${encodeURIComponent(result.submitResult.token)}&category=offline_institution`
+      );
+      return;
+    }
+    setSuccessEmail(result.email);
+    setStep("success");
+    window.scrollTo(0, 0);
+  };
 
   const handleWizardSuccess = (result: TeacherWizardResult) => {
     // For the standalone_teacher path, the backend returns pending_verification directly.
@@ -176,16 +204,18 @@ export default function SignupContinueClient() {
     );
   }
 
-  // ── Wizard (standalone_teacher only — non-teacher categories are not yet enabled) ──
+  // ── Wizard ────────────────────────────────────────────────────────────────
   return (
     <div className={styles.pageWrapper}>
       <header className={`${styles.header} ${styles.headerCenter}`}>
         <div className={styles.logo}>edveo</div>
       </header>
       <main className={styles.mainContent} style={{ paddingTop: 32 }}>
-        <p className={styles.subheading} style={{ marginBottom: 32 }}>
-          Signed in as <strong>{prefillEmail}</strong> via Google.
-        </p>
+        {category === "standalone_teacher" && (
+          <p className={styles.subheading} style={{ marginBottom: 32 }}>
+            Signed in as <strong>{prefillEmail}</strong> via Google.
+          </p>
+        )}
 
         {category === "standalone_teacher" ? (
           <TeacherOnboardingWizard
@@ -194,8 +224,14 @@ export default function SignupContinueClient() {
             googleContinuationToken={googleToken}
             onSuccess={handleWizardSuccess}
           />
+        ) : category === "offline_institution" ? (
+          <OfflineInstitutionOnboardingWizard
+            prefillName={prefillName}
+            prefillEmail={prefillEmail}
+            googleContinuationToken={googleToken}
+            onSuccess={handleOfflineWizardSuccess}
+          />
         ) : (
-          /* Fallback for other (currently locked) categories */
           <div className={`${styles.globalError}`} role="alert" style={{ maxWidth: 400 }}>
             <AlertCircle size={16} />
             This account type is not yet available. Please contact support.

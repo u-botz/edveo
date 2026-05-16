@@ -144,10 +144,7 @@ export type TeachingMode =
   | "independent_tutor"
   | "school_teacher"
   | "language_coach"
-  | "skill_trainer"
-  | "creative_arts"
-  | "fitness_coach"
-  | "corporate_trainer";
+  | "skill_trainer";
 
 export interface TeachingModeOption {
   value: TeachingMode;
