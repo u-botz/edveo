@@ -135,26 +135,20 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
-/* ── Right — Phone Mockup ── */
+/* ── Right — App screenshot ── */
 .visual {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
   position: relative;
 }
 
-.phoneWrap {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.phoneFrame {
-  width: 200px;
+.phoneImage {
+  width: min(320px, 100%);
   height: auto;
-  filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.45));
   animation: phoneFloat 4s ease-in-out infinite;
 }
 
@@ -166,6 +160,8 @@
 .storeBadges {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .storeBadge {
@@ -224,8 +220,8 @@
     order: -1;
   }
 
-  .phoneFrame {
-    width: 160px;
+  .phoneImage {
+    width: min(260px, 85vw);
   }
 }
 
@@ -234,8 +230,8 @@
     padding: 72px 20px;
   }
 
-  .visual {
-    display: none; /* hide phone on very small screens */
+  .phoneImage {
+    width: min(220px, 80vw);
   }
 
   .headline {
