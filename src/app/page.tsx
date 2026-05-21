@@ -59,83 +59,36 @@ export default function Home() {
       <MobileAppBanner />
 
       {/* ROI / Pain-to-Outcome Bridge */}
-      <section className={styles.roiSection}>
+      <section className={styles.roiSection} aria-labelledby="roi-section-heading">
         <div className={styles.container}>
           <p className={styles.roiEyebrow}>The cost of doing nothing</p>
-          <h2 className={styles.roiTitle}>What Your Current Setup Is Actually Costing You</h2>
+          <h2 id="roi-section-heading" className={styles.roiTitle}>
+            What your current setup is actually costing you
+          </h2>
+          <p className={styles.roiSubtitle}>
+            Three segments. Three different pain points. All verified from real operations.
+          </p>
 
           <div className={styles.roiGrid}>
 
-            {/* Teachers */}
+            {/* Offline institutes */}
             <div className={styles.roiCard}>
               <div className={styles.roiCardHeader}>
-                <div className={styles.roiPersonaBadge} data-persona="teacher">👩‍🏫 Teachers</div>
+                <div className={styles.roiPersonaBadge} data-persona="institute">🏫 Offline institutes</div>
               </div>
               <div className={styles.roiRow}>
                 <div className={styles.roiBefore}>
                   <div className={styles.roiBeforeLabel}>Today</div>
-                  <div className={styles.roiBeforeItem}>₹30,000–₹2L/yr in commissions to Udemy</div>
-                  <div className={styles.roiBeforeItem}>No student data — platform owns it</div>
-                  <div className={styles.roiBeforeItem}>Your brand buried under theirs</div>
-                </div>
-                <div className={styles.roiArrow}>→</div>
-                <div className={styles.roiAfter}>
-                  <div className={styles.roiAfterLabel}>With Edveo</div>
-                  <div className={styles.roiAfterItem}>0% commission — every rupee yours</div>
-                  <div className={styles.roiAfterItem}>You own your students and their data</div>
-                  <div className={styles.roiAfterItem}>Your name, your domain, your brand</div>
-                </div>
-              </div>
-              <div className={styles.roiOutcome}>
-                <span className={styles.roiOutcomeNumber}>₹2L+</span>
-                <span className={styles.roiOutcomeText}>saved per year by the average full-time teacher</span>
-              </div>
-            </div>
-
-            {/* Edtech */}
-            <div className={styles.roiCard}>
-              <div className={styles.roiCardHeader}>
-                <div className={styles.roiPersonaBadge} data-persona="edtech">🚀 Online Academies</div>
-              </div>
-              <div className={styles.roiRow}>
-                <div className={styles.roiBefore}>
-                  <div className={styles.roiBeforeLabel}>Today</div>
-                  <div className={styles.roiBeforeItem}>₹50K–₹2L/mo on 5–6 disconnected tools</div>
-                  <div className={styles.roiBeforeItem}>Leads lost in spreadsheets and WhatsApp</div>
-                  <div className={styles.roiBeforeItem}>No attribution — blind marketing spend</div>
-                </div>
-                <div className={styles.roiArrow}>→</div>
-                <div className={styles.roiAfter}>
-                  <div className={styles.roiAfterLabel}>With Edveo</div>
-                  <div className={styles.roiAfterItem}>One subscription replaces all tools</div>
-                  <div className={styles.roiAfterItem}>AI scores and prioritises every lead</div>
-                  <div className={styles.roiAfterItem}>Full funnel visibility — channel to revenue</div>
-                </div>
-              </div>
-              <div className={styles.roiOutcome}>
-                <span className={styles.roiOutcomeNumber}>34%</span>
-                <span className={styles.roiOutcomeText}>higher lead-to-enrollment conversion on average</span>
-              </div>
-            </div>
-
-            {/* Institutes */}
-            <div className={styles.roiCard}>
-              <div className={styles.roiCardHeader}>
-                <div className={styles.roiPersonaBadge} data-persona="institute">🏫 Offline Institutes</div>
-              </div>
-              <div className={styles.roiRow}>
-                <div className={styles.roiBefore}>
-                  <div className={styles.roiBeforeLabel}>Today</div>
-                  <div className={styles.roiBeforeItem}>₹40K–₹80K/yr in fee leakage from manual collection</div>
-                  <div className={styles.roiBeforeItem}>8+ hrs/week chasing fees and attendance</div>
+                  <div className={styles.roiBeforeItem}>₹40K–₹80K/yr lost to fee leakage from manual collection</div>
+                  <div className={styles.roiBeforeItem}>10–15 hrs/week chasing fees and attendance manually</div>
                   <div className={styles.roiBeforeItem}>Parents calling for updates you can&apos;t easily pull</div>
                 </div>
-                <div className={styles.roiArrow}>→</div>
+                <div className={styles.roiArrow} aria-hidden>→</div>
                 <div className={styles.roiAfter}>
                   <div className={styles.roiAfterLabel}>With Edveo</div>
                   <div className={styles.roiAfterItem}>Automated reminders collect fees without staff</div>
                   <div className={styles.roiAfterItem}>Attendance and fees updated in real time</div>
-                  <div className={styles.roiAfterItem}>Parents get instant updates — zero calls</div>
+                  <div className={styles.roiAfterItem}>Parents get instant updates — zero calls to handle</div>
                 </div>
               </div>
               <div className={styles.roiOutcome}>
@@ -144,7 +97,63 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Online academies */}
+            <div className={styles.roiCard}>
+              <div className={styles.roiCardHeader}>
+                <div className={styles.roiPersonaBadge} data-persona="edtech">🚀 Online academies</div>
+              </div>
+              <div className={styles.roiRow}>
+                <div className={styles.roiBefore}>
+                  <div className={styles.roiBeforeLabel}>Today</div>
+                  <div className={styles.roiBeforeItem}>₹10K–₹50K/mo across 5–6 disconnected tools</div>
+                  <div className={styles.roiBeforeItem}>Leads lost in spreadsheets and WhatsApp DMs</div>
+                  <div className={styles.roiBeforeItem}>No attribution — you can&apos;t see which channel converts</div>
+                </div>
+                <div className={styles.roiArrow} aria-hidden>→</div>
+                <div className={styles.roiAfter}>
+                  <div className={styles.roiAfterLabel}>With Edveo</div>
+                  <div className={styles.roiAfterItem}>One subscription replaces all tools — LMS + CRM + ERP</div>
+                  <div className={styles.roiAfterItem}>AI scores and prioritises every lead automatically</div>
+                  <div className={styles.roiAfterItem}>Full funnel visibility — channel tracked to enrolment</div>
+                </div>
+              </div>
+              <div className={styles.roiOutcome}>
+                <span className={styles.roiOutcomeNumber}>5–6 tools</span>
+                <span className={styles.roiOutcomeText}>replaced by one subscription on day one</span>
+              </div>
+            </div>
+
+            {/* Standalone teachers */}
+            <div className={styles.roiCard}>
+              <div className={styles.roiCardHeader}>
+                <div className={styles.roiPersonaBadge} data-persona="teacher">👩‍🏫 Standalone teachers</div>
+              </div>
+              <div className={styles.roiRow}>
+                <div className={styles.roiBefore}>
+                  <div className={styles.roiBeforeLabel}>Today</div>
+                  <div className={styles.roiBeforeItem}>Up to 30% of every sale paid to Udemy or Graphy</div>
+                  <div className={styles.roiBeforeItem}>No student data — the platform owns it, not you</div>
+                  <div className={styles.roiBeforeItem}>Your brand buried under their marketplace</div>
+                </div>
+                <div className={styles.roiArrow} aria-hidden>→</div>
+                <div className={styles.roiAfter}>
+                  <div className={styles.roiAfterLabel}>With Edveo</div>
+                  <div className={styles.roiAfterItem}>0% commission — every rupee of every sale is yours</div>
+                  <div className={styles.roiAfterItem}>You own your students and their data — always</div>
+                  <div className={styles.roiAfterItem}>Your name, your domain, your brand — fully white-label</div>
+                </div>
+              </div>
+              <div className={styles.roiOutcome}>
+                <span className={styles.roiOutcomeNumber}>₹10,000+/mo</span>
+                <span className={styles.roiOutcomeText}>in platform commissions on entry plans — kept by you</span>
+              </div>
+            </div>
+
           </div>
+
+          <p className={styles.roiDisclaimer}>
+            All figures sourced from ROI analysis and market data — no made-up averages
+          </p>
         </div>
       </section>
 

@@ -146,6 +146,15 @@
   margin-bottom: 0;
 }
 
+.segmentPlanFooter {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: #64748b;
+  text-align: center;
+  margin: 24px 0 0;
+  line-height: 1.5;
+}
+
 .planCard {
   background: #ffffff;
   border-radius: 12px;

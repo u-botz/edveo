@@ -76,7 +76,7 @@ export default function PricingPageClient() {
                   whiteSpace: "nowrap",
                 }}
               >
-                {t === "online" ? "Online Academies" : t === "teachers" ? "Standalone Teachers" : "Coaching Institutes"}
+                {t === "online" ? "Online Academies" : t === "teachers" ? "Educators" : "Coaching Institutes"}
               </button>
             ))}
           </div>
@@ -85,24 +85,60 @@ export default function PricingPageClient() {
         {/* Cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20, marginBottom: 48 }}>
 
-          {/* ── ONLINE ACADEMIES ── */}
+          {/* ── Online academies ── */}
           {tab === "online" && <>
             <PlanCard
-              name="Creator"
-              who="For educators launching their first online course"
+              name="Starter"
+              who="For EdTech founders launching their first online academy"
               price={price(1999, 1666)}
               billing={billing}
               cta="Get started free"
-              features={["Up to 100 students","Course creation & delivery","Razorpay payments","Student progress tracking","Landing page builder","Subdomain included"]}
+              features={[
+                "Up to 150 students",
+                "Up to 3 instructors",
+                "Up to 5 courses",
+                "3 concurrent devices",
+                "5 GB storage",
+                "Video via YouTube / Vimeo links only",
+                "Basic storefront (1 template)",
+                "Live classes (bring your own tool)",
+                "Quizzes & assignments",
+                "CRM & lead management",
+                "Student fee collection",
+                "Blog & FAQ",
+                "AI Agent — 20 credits/month",
+                "Course bundles",
+                "Custom domain",
+                "Affiliate program",
+                "Analytics",
+              ]}
             />
             <PlanCard
-              name="Academy"
-              who="For growing online academies"
+              name="Growth"
+              who="For online academies scaling content and revenue"
               price={price(4999, 4166)}
               billing={billing}
-              cta="Get Started"
+              cta="Get started free"
               popular
-              features={["Up to 500 students","Full custom domain","Branded mobile app","Live & recorded classes","CRM & email automation","Subscription billing"]}
+              features={[
+                "Up to 1,000 students",
+                "Up to 15 instructors",
+                "Unlimited courses",
+                "10 concurrent devices",
+                "25 GB storage",
+                "Cloudflare Stream — 1,000 min included",
+                "Course bundles & drip scheduling",
+                "Custom domain + remove Edveo branding",
+                "Student subscription billing (recurring)",
+                "Affiliate & referral program",
+                "Fee installments, discount codes & coupons",
+                "CRM pipeline analytics & source tracking",
+                "Basic analytics",
+                "Communication hub (full inbox)",
+                "WhatsApp integration",
+                "AI Agent — 150 credits/month",
+                "Edveo Studio (3 of 5 pillars)",
+              ]}
             />
             <PlanCard
               name="Scale"
@@ -111,70 +147,220 @@ export default function PricingPageClient() {
               billing={billing}
               cta="Contact Sales"
               ghost
-              features={["Unlimited students","Multi-instructor","Advanced analytics","API access","White-label everything","Dedicated account manager"]}
+              customSub="Based on size & requirements"
+              features={[
+                "Unlimited students",
+                "Unlimited instructors",
+                "Unlimited courses",
+                "25 concurrent devices",
+                "100 GB storage",
+                "Cloudflare Stream — 5,000 min included",
+                "White label (full brand replacement)",
+                "Advanced affiliate + commission management",
+                "Full analytics + cohort & drop-off analysis",
+                "Student performance insights",
+                "AI financial reports",
+                "Custom roles (full RBAC)",
+                "Gamification & community forum",
+                "AI Knowledge Base (custom academy context)",
+                "AI Agent — 400 credits/month",
+                "Edveo Studio (all 5 pillars)",
+                "Dedicated account manager",
+                "Priority support",
+              ]}
             />
           </>}
 
-          {/* ── STANDALONE TEACHERS ── */}
+          {/* ── Educators ── */}
           {tab === "teachers" && <>
             <PlanCard
-              name="Free"
+              name="Starter"
               who="For teachers just getting started"
-              price="₹0"
+              price="Free"
               billing={billing}
-              cta="Get Started Free"
-              features={["Up to 25 students","1 course","Basic storefront","Razorpay payment links","Edveo subdomain"]}
+              cta="Get started free"
+              showPriceSuffix={false}
+              features={[
+                "Up to 100 students",
+                "3 courses",
+                "3 batches",
+                "1 concurrent device",
+                "1 GB storage",
+                "Video via YouTube / Vimeo links only",
+                "Live classes (bring your own tool)",
+                "Quizzes & assignments",
+                "Basic storefront (1 template)",
+                "Blog & FAQ",
+                "AI Agent — 20 credits/month",
+                "Custom domain",
+                "CRM / lead management",
+                "Analytics",
+              ]}
             />
             <PlanCard
-              name="Educator"
+              name="Growth"
               who="For teachers building a personal brand"
-              price={price(999, 832)}
+              price={price(699, 583)}
               billing={billing}
               cta="Get started free"
               popular
-              features={["Up to 200 students","Unlimited courses","Custom domain","Progress tracking","WhatsApp automation","Remove Edveo branding"]}
+              features={[
+                "Up to 500 students",
+                "20 courses",
+                "Unlimited batches",
+                "3 concurrent devices",
+                "10 GB storage",
+                "Cloudflare Stream — 500 min included",
+                "Custom domain",
+                "Remove Edveo branding",
+                "CRM & lead management",
+                "1-on-1 paid consultations",
+                "Basic analytics",
+                "Discount codes & promotions",
+                "AI Agent — 100 credits/month",
+                "Edveo Studio (3 of 5 pillars)",
+              ]}
             />
             <PlanCard
               name="Pro"
               who="For full-time educators scaling their income"
-              price={price(2499, 2082)}
+              price={price(1499, 1249)}
               billing={billing}
               cta="Get started free"
-              features={["Up to 1,000 students","Live classes","Branded mobile app","Advanced analytics","Priority support"]}
+              features={[
+                "Unlimited students",
+                "Unlimited courses",
+                "Unlimited batches",
+                "10 concurrent devices",
+                "50 GB storage",
+                "Cloudflare Stream — 2,000 min included",
+                "White label (full brand replacement)",
+                "Full analytics + student performance insights",
+                "Student subscriptions (recurring billing)",
+                "Gamification & community forum",
+                "AI Agent — 250 credits/month",
+                "Edveo Studio (all 5 pillars)",
+                "Priority support",
+              ]}
             />
           </>}
 
-          {/* ── COACHING INSTITUTES ── */}
+          {/* ── Coaching institutes (offline institution) ── */}
           {tab === "institutes" && <>
             <PlanCard
               name="Starter"
-              who="For small coaching centres getting started"
-              price={price(3499, 2916)}
+              who="For small institutes just getting started"
+              price="Free"
               billing={billing}
               cta="Get started free"
-              features={["Up to 200 students","LMS + ERP + CRM","Fee collection & attendance","Digital timetable","Razorpay integration","WhatsApp notifications"]}
+              showPriceSuffix={false}
+              features={[
+                "Up to 200 students",
+                "Up to 5 staff / teachers",
+                "1 branch (main only)",
+                "3 concurrent devices",
+                "5 GB storage",
+                "Video via YouTube / Vimeo links only",
+                "Up to 20 courses · Up to 10 batches",
+                "Attendance & timetable (ERP)",
+                "CRM & lead management (included from free)",
+                "Student fee collection",
+                "Live classes (bring your own tool)",
+                "Quizzes & assignments",
+                "AI Agent — 20 credits/month",
+                "Payroll & leave management",
+                "WhatsApp integration",
+                "Custom domain",
+                "Analytics",
+              ]}
             />
             <PlanCard
-              name="Professional"
-              who="For growing institutes with multiple batches"
-              price={price(6999, 5832)}
+              name="Growth"
+              who="For growing institutes managing real operations"
+              price={price(1999, 1666)}
               billing={billing}
-              cta="Get Started"
+              cta="Get started free"
               popular
-              features={["Up to 1,000 students","WhatsApp CRM + AI scoring","Multi-batch management","AI quiz generation","Performance reports","Priority support"]}
+              features={[
+                "Up to 2,000 students",
+                "Up to 30 staff / teachers",
+                "Up to 3 branches",
+                "10 concurrent devices",
+                "25 GB storage",
+                "Cloudflare Stream — 1,000 min included",
+                "Unlimited courses & batches",
+                "Payroll & leave management (ERP)",
+                "Recurring timetable templates + conflict detection",
+                "WhatsApp integration",
+                "CRM pipeline analytics & source tracking",
+                "Fee installments, concessions & discount codes",
+                "Custom domain + remove Edveo branding",
+                "Basic analytics",
+                "Communication hub (full inbox)",
+                "Blog & AI blog writer",
+                "AI Agent — 200 credits/month",
+                "Edveo Studio (3 of 5 pillars)",
+              ]}
             />
             <PlanCard
-              name="Business"
-              who="For large institutes and multi-branch operations"
-              price="Custom"
+              name="Pro"
+              who="For multi-branch institutions scaling seriously"
+              price={price(3999, 3333)}
               billing={billing}
-              cta="Contact Sales"
-              ghost
-              features={["Unlimited students","Multi-branch management","White-label branded app","Dedicated account manager","Enterprise SLA","API access"]}
+              cta="Get started free"
+              features={[
+                "Unlimited students",
+                "Unlimited staff / teachers",
+                "Unlimited branches",
+                "25 concurrent devices",
+                "100 GB storage",
+                "Cloudflare Stream — 5,000 min included",
+                "Transport management (routes & vehicles)",
+                "Asset management (labs & equipment)",
+                "Lead deduplication + full CRM reports",
+                "Revenue foregone tracking + credit notes",
+                "Custom roles (full RBAC)",
+                "White label (full brand replacement)",
+                "Full analytics + student performance insights",
+                "AI financial reports",
+                "Gamification & community forum",
+                "AI Knowledge Base (custom institutional context)",
+                "AI Agent — 500 credits/month",
+                "Edveo Studio (all 5 pillars)",
+                "Priority support",
+              ]}
             />
           </>}
 
         </div>
+
+        {tab === "online" && (
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: 13,
+              color: "#64748b",
+              margin: "0 0 48px",
+              lineHeight: 1.5,
+            }}
+          >
+            New academies get 50 free AI credits on signup · Buy additional credit packs anytime
+          </p>
+        )}
+
+        {tab === "teachers" && (
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: 13,
+              color: "#64748b",
+              margin: "0 0 48px",
+              lineHeight: 1.5,
+            }}
+          >
+            New teachers get 50 free AI credits on signup · Buy additional credit packs anytime
+          </p>
+        )}
 
         {/* Trust row */}
         <div style={{ display: "flex", justifyContent: "center", gap: 24, flexWrap: "wrap", color: "#6b7280", fontSize: 13, marginBottom: 64 }}>
@@ -221,7 +407,7 @@ export default function PricingPageClient() {
 
 /* ── Plan Card ── */
 function PlanCard({
-  name, who, price, billing, cta, features, popular, ghost,
+  name, who, price, billing, cta, features, popular, ghost, showPriceSuffix = true, customSub,
 }: {
   name: string;
   who: string;
@@ -231,6 +417,8 @@ function PlanCard({
   features: string[];
   popular?: boolean;
   ghost?: boolean;
+  showPriceSuffix?: boolean;
+  customSub?: string;
 }) {
   return (
     <div style={{
@@ -260,13 +448,17 @@ function PlanCard({
       {price === "Custom" ? (
         <div style={{ marginBottom: 24 }}>
           <div style={{ fontWeight: 800, fontSize: "1.6rem" }}>Custom Pricing</div>
-          <div style={{ fontSize: "0.78rem", opacity: 0.55, marginTop: 4 }}>Based on size & requirements</div>
+          <div style={{ fontSize: "0.78rem", opacity: 0.55, marginTop: 4 }}>
+            {customSub ?? "Based on size & requirements"}
+          </div>
         </div>
       ) : (
         <div style={{ marginBottom: 24 }}>
           <span style={{ fontWeight: 800, fontSize: "2rem" }}>{price}</span>
-          <span style={{ fontSize: "0.85rem", opacity: 0.6, marginLeft: 4 }}>/month</span>
-          {billing === "annual" && (
+          {showPriceSuffix && (
+            <span style={{ fontSize: "0.85rem", opacity: 0.6, marginLeft: 4 }}>/month</span>
+          )}
+          {billing === "annual" && price !== "Free" && (
             <div style={{ fontSize: "0.75rem", marginTop: 4, color: popular ? "#a7f3d0" : "#2EAA6E" }}>
               billed annually
             </div>
