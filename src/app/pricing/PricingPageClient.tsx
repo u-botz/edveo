@@ -6,6 +6,7 @@ import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
+import styles from "./pricing.module.css";
 
 export default function PricingPageClient() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
@@ -62,14 +63,14 @@ export default function PricingPageClient() {
         </div>
 
         {/* Segment tabs */}
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: 40 }}>
-          <div style={{ display: "inline-flex", background: "#fff", borderRadius: 999, padding: 4, boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
+        <div className={styles.segmentScrollOuter}>
+          <div style={{ display: "inline-flex", background: "#fff", borderRadius: 999, padding: 4, boxShadow: "0 1px 4px rgba(0,0,0,0.08)", flexShrink: 0 }}>
             {(["online", "teachers", "institutes"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => setTab(t)}
                 style={{
-                  padding: "10px 24px", borderRadius: 999, border: "none", cursor: "pointer",
+                  padding: "10px 20px", borderRadius: 999, border: "none", cursor: "pointer",
                   fontWeight: 600, fontSize: 14,
                   background: tab === t ? "#0D2D4E" : "transparent",
                   color: tab === t ? "#fff" : "#4b5563",
@@ -83,7 +84,7 @@ export default function PricingPageClient() {
         </div>
 
         {/* Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20, marginBottom: 48 }}>
+        <div className={styles.cardsGrid} style={{ marginBottom: 48 }}>
 
           {/* ── Online academies ── */}
           {tab === "online" && <>

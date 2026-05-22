@@ -669,6 +669,21 @@
   text-decoration: none;
 }
 
+/* Scrollable segment tabs wrapper — used by PricingPageClient inline-style version */
+.segmentScrollOuter {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 4px;
+}
+
+.segmentScrollOuter::-webkit-scrollbar {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .cardsGrid {
     grid-template-columns: 1fr;
@@ -681,6 +696,45 @@
   .compareTable thead th,
   .compareTable tbody td {
     padding: 10px 8px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 640px) {
+  .segmentScrollOuter {
+    justify-content: flex-start;
+    padding: 0 0 4px;
+  }
+
+  .segmentPills {
+    flex-wrap: nowrap;
+  }
+
+  .segmentBtn {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+
+  .pricingHeadline {
+    font-size: 30px;
+  }
+
+  .planCard {
+    padding: 24px;
+  }
+
+  .bottomCtaTitle {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pricingHeadline {
+    font-size: 26px;
+  }
+
+  .billingBtn {
+    padding: 9px 16px;
     font-size: 13px;
   }
 }
