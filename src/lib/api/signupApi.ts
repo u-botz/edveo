@@ -111,6 +111,8 @@ export interface InstitutionType {
   id: number;
   name: string;
   slug: string;
+  /** EdTech API may return `system_code` instead of `slug`. */
+  system_code?: string;
   code?: string;
   section?: "exam_focused" | "non_exam" | null;
 }
@@ -143,7 +145,6 @@ export interface TeachingGradeLevel {
 export type TeachingMode =
   | "independent_tutor"
   | "school_teacher"
-  | "language_coach"
   | "skill_trainer";
 
 export interface TeachingModeOption {
@@ -414,9 +415,7 @@ export async function fetchPlansForCategory(
 }
 
 /**
- * Fetch institution types for a category.
- * ONLY call for standalone_teacher and offline_institution.
- * edtech has no institution types — do not call this for edtech.
+ * Fetch institution types for standalone_teacher or offline_institution.
  */
 export async function fetchInstitutionTypesForCategory(
   category: Exclude<TenantCategory, "edtech">
@@ -432,6 +431,48 @@ export async function fetchInstitutionTypesForCategory(
   if (!res.ok) throw new Error("Failed to load institution types");
   const json = await res.json();
   return (json.data ?? []) as InstitutionType[];
+}
+
+/** EdTech institution types with exam_focused / non_exam section. */
+export async function fetchEdtechInstitutionTypes(): Promise<InstitutionType[]> {
+  const res = await fetch(`${CATEGORY_PREFIX.edtech}/institution-types`, {
+    headers: { Accept: "application/json" },
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Failed to load EdTech institution types");
+  const json = await res.json();
+  const rows = (json.data ?? []) as Array<Record<string, unknown>>;
+  return rows.map((row) => {
+    const code =
+      (typeof row.system_code === "string" && row.system_code) ||
+      (typeof row.code === "string" && row.code) ||
+      (typeof row.slug === "string" && row.slug) ||
+      "";
+    return {
+      id: Number(row.id),
+      name: String(row.name ?? ""),
+      slug: code,
+      system_code: code,
+      code,
+      section:
+        row.section === "exam_focused" || row.section === "non_exam"
+          ? row.section
+          : null,
+    };
+  });
+}
+
+/** Teaching domains for an exam-focused EdTech institution type. */
+export async function fetchEdtechTeachingDomains(
+  typeId: number
+): Promise<OfflineTeachingDomain[]> {
+  const res = await fetch(
+    `${CATEGORY_PREFIX.edtech}/teaching-domains?type_id=${encodeURIComponent(String(typeId))}`,
+    { headers: { Accept: "application/json" }, cache: "no-store" }
+  );
+  if (!res.ok) throw new Error("Failed to load teaching domains");
+  const json = await res.json();
+  return (json.data ?? []) as OfflineTeachingDomain[];
 }
 
 /**

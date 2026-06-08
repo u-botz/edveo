@@ -8,6 +8,14 @@ import WhatsAppFloat from "../components/WhatsAppFloat";
 import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
 import styles from "./pricing.module.css";
 
+const INSTITUTE_FAQS = [
+  { q: "Can I upgrade later if my institute grows?", a: "Yes. You can upgrade anytime from your dashboard. All your data — students, fees, attendance records — moves with you automatically." },
+  { q: "Is there a contract or lock-in?", a: "No. All plans are month-to-month. You can cancel anytime. We don't believe in locking you in." },
+  { q: "What happens when I reach the student limit?", a: "You'll get a notification before you hit the limit. You can upgrade with one click — your platform stays running without interruption." },
+  { q: "Do I need technical knowledge to set this up?", a: "No. Most institute owners complete setup in under an hour. The AI agent guides you through each step. No IT team needed." },
+  { q: "What payment methods are accepted?", a: "UPI, credit card, debit card, and net banking — all via Razorpay. GST invoice provided automatically." },
+];
+
 export default function PricingPageClient() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
   const [tab, setTab] = useState<"online" | "teachers" | "institutes">("online");
@@ -250,85 +258,88 @@ export default function PricingPageClient() {
           {tab === "institutes" && <>
             <PlanCard
               name="Starter"
-              who="For small institutes just getting started"
-              price="Free"
+              who="For new and small institutes just getting started."
+              price={price(999, 833)}
               billing={billing}
-              cta="Get started free"
-              showPriceSuffix={false}
+              cta="Start with Starter"
+              ctaSub="No credit card required to try"
+              perfectFor="Up to 100 students · 1 branch · 5 staff"
               features={[
-                "Up to 200 students",
-                "Up to 5 staff / teachers",
-                "1 branch (main only)",
-                "3 concurrent devices",
-                "5 GB storage",
-                "Video via YouTube / Vimeo links only",
-                "Up to 20 courses · Up to 10 batches",
-                "Attendance & timetable (ERP)",
-                "CRM & lead management (included from free)",
-                "Student fee collection",
-                "Live classes (bring your own tool)",
-                "Quizzes & assignments",
-                "AI Agent — 20 credits/month",
-                "Payroll & leave management",
-                "WhatsApp integration",
-                "Custom domain",
-                "Analytics",
+                "§Teaching & Content",
+                "Share study material — videos, PDFs, and notes",
+                "Schedule and manage classes (online or in-person)",
+                "Create tests and assignments for students",
+                "Track which students completed what",
+                "§Institute Operations",
+                "Mark attendance for students and staff",
+                "Manage your class timetable",
+                "Collect fees and generate invoices",
+                "Manage staff salaries and leave",
+                "§AI Assistant",
+                "AI Agent included — 50 tasks/month",
+                "§Storage",
+                "5 GB file storage",
+                "Videos via YouTube or Vimeo links",
+                "§Support",
+                "Community support",
               ]}
             />
             <PlanCard
               name="Growth"
-              who="For growing institutes managing real operations"
+              who="For growing institutes ready to run operations professionally."
               price={price(1999, 1666)}
               billing={billing}
-              cta="Get started free"
+              cta="Start Growing"
+              ctaSub="Most institutes choose this plan"
+              perfectFor="Up to 500 students · 2 branches · 15 staff"
               popular
               features={[
-                "Up to 2,000 students",
-                "Up to 30 staff / teachers",
-                "Up to 3 branches",
-                "10 concurrent devices",
-                "25 GB storage",
-                "Cloudflare Stream — 1,000 min included",
-                "Unlimited courses & batches",
-                "Payroll & leave management (ERP)",
-                "Recurring timetable templates + conflict detection",
-                "WhatsApp integration",
-                "CRM pipeline analytics & source tracking",
-                "Fee installments, concessions & discount codes",
-                "Custom domain + remove Edveo branding",
-                "Basic analytics",
-                "Communication hub (full inbox)",
-                "Blog & AI blog writer",
-                "AI Agent — 200 credits/month",
-                "Edveo Studio (3 of 5 pillars)",
+                "§Everything in Starter, plus:",
+                "Manage student enquiries and admissions (CRM)",
+                "Track where your leads come from — walk-in, WhatsApp, referral, social media",
+                "Send fee reminders and updates via WhatsApp",
+                "Your own website with your domain name (no 'edveo.co' in the URL)",
+                "Edveo branding removed from your platform",
+                "Collect fees in instalments, apply concessions and discounts",
+                "Auto-generate class timetables without teacher conflicts",
+                "Enroll multiple students at once",
+                "Basic reports — fee collection, course completion, attendance",
+                "§AI Assistant",
+                "AI Agent included — 200 tasks/month",
+                "§Storage",
+                "25 GB file storage",
+                "15 GB video hosting (upload your own videos — no YouTube needed)",
+                "§Support",
+                "Email support",
               ]}
             />
             <PlanCard
               name="Pro"
-              who="For multi-branch institutions scaling seriously"
+              who="For established institutes that need full control and advanced insights."
               price={price(3999, 3333)}
               billing={billing}
-              cta="Get started free"
+              cta="Go Pro"
+              ctaSub="Built for serious institute management"
+              perfectFor="Unlimited students · Unlimited branches · Unlimited staff"
               features={[
-                "Unlimited students",
-                "Unlimited staff / teachers",
-                "Unlimited branches",
-                "25 concurrent devices",
-                "100 GB storage",
-                "Cloudflare Stream — 5,000 min included",
-                "Transport management (routes & vehicles)",
-                "Asset management (labs & equipment)",
-                "Lead deduplication + full CRM reports",
-                "Revenue foregone tracking + credit notes",
-                "Custom roles (full RBAC)",
-                "White label (full brand replacement)",
-                "Full analytics + student performance insights",
-                "AI financial reports",
-                "Gamification & community forum",
-                "AI Knowledge Base (custom institutional context)",
-                "AI Agent — 500 credits/month",
-                "Edveo Studio (all 5 pillars)",
-                "Priority support",
+                "§Everything in Growth, plus:",
+                "Full reports — student performance, revenue, fee analytics",
+                "AI-generated financial reports (fee collected, pending, concessions)",
+                "Your own brand — completely remove all Edveo identity (white label)",
+                "Custom staff roles and access permissions",
+                "Student rewards and engagement (points, badges, leaderboards)",
+                "Manage transport routes and vehicles",
+                "Manage lab equipment and institute assets",
+                "Prevent duplicate student enquiries (lead deduplication)",
+                "Community forum for students",
+                "§AI Assistant",
+                "AI Agent included — 500 tasks/month",
+                "AI Knowledge Base — teach the AI your institute's rules, fee structure, and policies",
+                "§Storage",
+                "100 GB file storage",
+                "40 GB video hosting",
+                "§Support",
+                "Priority support (fastest response)",
               ]}
             />
           </>}
@@ -375,7 +386,7 @@ export default function PricingPageClient() {
           <h2 style={{ textAlign: "center", fontSize: "1.8rem", fontWeight: 800, color: "#0D2D4E", marginBottom: 32 }}>
             Frequently Asked Questions
           </h2>
-          {FAQS.map((f) => (
+          {(tab === "institutes" ? INSTITUTE_FAQS : FAQS).map((f) => (
             <FaqItem key={f.q} q={f.q} a={f.a} />
           ))}
         </div>
@@ -408,18 +419,20 @@ export default function PricingPageClient() {
 
 /* ── Plan Card ── */
 function PlanCard({
-  name, who, price, billing, cta, features, popular, ghost, showPriceSuffix = true, customSub,
+  name, who, price, billing, cta, ctaSub, features, popular, ghost, showPriceSuffix = true, customSub, perfectFor,
 }: {
   name: string;
   who: string;
   price: string;
   billing: "monthly" | "annual";
   cta: string;
+  ctaSub?: string;
   features: string[];
   popular?: boolean;
   ghost?: boolean;
   showPriceSuffix?: boolean;
   customSub?: string;
+  perfectFor?: string;
 }) {
   return (
     <div style={{
@@ -440,7 +453,7 @@ function PlanCard({
           fontSize: 10, fontWeight: 700, letterSpacing: "0.06em",
           textTransform: "uppercase", padding: "5px 10px", borderRadius: 999,
         }}>
-          Most Popular
+          ⭐ Most Popular
         </span>
       )}
       <div style={{ fontWeight: 800, fontSize: "1.25rem", marginBottom: 6 }}>{name}</div>
@@ -454,7 +467,7 @@ function PlanCard({
           </div>
         </div>
       ) : (
-        <div style={{ marginBottom: 24 }}>
+        <div style={{ marginBottom: perfectFor ? 12 : 24 }}>
           <span style={{ fontWeight: 800, fontSize: "2rem" }}>{price}</span>
           {showPriceSuffix && (
             <span style={{ fontSize: "0.85rem", opacity: 0.6, marginLeft: 4 }}>/month</span>
@@ -467,9 +480,21 @@ function PlanCard({
         </div>
       )}
 
+      {perfectFor && (
+        <div style={{
+          fontSize: "0.82rem", fontWeight: 600, marginBottom: 20,
+          padding: "8px 12px", borderRadius: 8,
+          background: popular ? "rgba(255,255,255,0.1)" : "rgba(46,170,110,0.08)",
+          color: popular ? "rgba(255,255,255,0.85)" : "#1a7a4a",
+          border: popular ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(46,170,110,0.2)",
+        }}>
+          {perfectFor}
+        </div>
+      )}
+
       {ghost ? (
         <button style={{
-          width: "100%", padding: "12px 0", borderRadius: 8, marginBottom: 24,
+          width: "100%", padding: "12px 0", borderRadius: 8, marginBottom: ctaSub ? 6 : 24,
           border: `1.5px solid ${popular ? "rgba(255,255,255,0.3)" : "rgba(13,45,78,0.2)"}`,
           background: "transparent", cursor: "pointer", fontWeight: 700, fontSize: "0.9rem",
           color: popular ? "#fff" : "#0D2D4E",
@@ -478,7 +503,7 @@ function PlanCard({
         </button>
       ) : (
         <Link href="/register" style={{
-          display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, marginBottom: 24,
+          display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, marginBottom: ctaSub ? 6 : 24,
           background: popular ? "#2EAA6E" : "#0D2D4E",
           color: "#fff", fontWeight: 700, fontSize: "0.9rem", textDecoration: "none",
         }}>
@@ -486,17 +511,36 @@ function PlanCard({
         </Link>
       )}
 
-      <div style={{ fontSize: "0.75rem", opacity: 0.5, marginBottom: 16 }}>Free forever · No credit card</div>
+      {ctaSub && (
+        <div style={{ fontSize: "0.75rem", opacity: 0.6, textAlign: "center", marginBottom: 18 }}>{ctaSub}</div>
+      )}
+
+      {price === "Free" && !ctaSub && (
+        <div style={{ fontSize: "0.75rem", opacity: 0.5, marginBottom: 16 }}>Free forever · No credit card</div>
+      )}
 
       <hr style={{ border: "none", borderTop: `1px solid ${popular ? "rgba(255,255,255,0.12)" : "rgba(13,45,78,0.08)"}`, marginBottom: 20 }} />
 
       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
-        {features.map((f) => (
-          <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: "0.85rem", opacity: 0.85 }}>
-            <span style={{ color: "#2EAA6E", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>✓</span>
-            {f}
-          </li>
-        ))}
+        {features.map((f, i) => {
+          if (f.startsWith("§")) {
+            return (
+              <li key={i} style={{
+                fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
+                opacity: 0.5, marginTop: i === 0 ? 0 : 8, paddingBottom: 2,
+                borderBottom: `1px solid ${popular ? "rgba(255,255,255,0.1)" : "rgba(13,45,78,0.08)"}`,
+              }}>
+                {f.slice(1)}
+              </li>
+            );
+          }
+          return (
+            <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: "0.85rem", opacity: 0.85 }}>
+              <span style={{ color: "#2EAA6E", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>✓</span>
+              {f}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

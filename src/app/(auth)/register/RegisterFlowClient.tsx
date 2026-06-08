@@ -19,6 +19,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import {
   fetchPlansForCategory,
   fetchInstitutionTypesForCategory,
+  fetchEdtechInstitutionTypes,
+  fetchEdtechTeachingDomains,
   fetchOfflineTeachingDomains,
   pickStandaloneTeacherSelfServeSignupPlan,
   checkSubdomainForCategory,
@@ -57,14 +59,14 @@ const CARDS = [
     icon: Building2,
     title: "Coaching Institute or School",
     desc: "I run a physical or hybrid institute with staff and batches.",
-    locked: true,
+    locked: false,
   },
   {
     id: "edtech" as const,
     icon: Layers,
     title: "EdTech Company",
     desc: "I run an online education business with multiple instructors.",
-    locked: true,
+    locked: false,
   },
 ] as const;
 
@@ -125,6 +127,14 @@ export default function RegisterFlowClient() {
   const [offlineDomains, setOfflineDomains] = useState<OfflineTeachingDomain[]>([]);
   const [offlineDomainsLoading, setOfflineDomainsLoading] = useState(false);
   const [offlineSelectedDomainCodes, setOfflineSelectedDomainCodes] = useState<string[]>([]);
+
+  /** EdTech onboarding — single primary type + optional teaching domains. */
+  const [edtechSection, setEdtechSection] = useState<"exam_focused" | "non_exam" | null>(null);
+  const [edtechTypeId, setEdtechTypeId] = useState<number | null>(null);
+  const [edtechSubStep, setEdtechSubStep] = useState<1 | 2>(1);
+  const [edtechDomains, setEdtechDomains] = useState<OfflineTeachingDomain[]>([]);
+  const [edtechDomainsLoading, setEdtechDomainsLoading] = useState(false);
+  const [edtechSelectedDomainCodes, setEdtechSelectedDomainCodes] = useState<string[]>([]);
 
   // ── Idempotency key (generated once per page load) ─────────────────────────
   const idempotencyKeyRef = useRef<string>(generateIdempotencyKey());
@@ -250,7 +260,9 @@ export default function RegisterFlowClient() {
     setBootstrapError(null);
     try {
       const fetchTasks: Promise<unknown>[] = [fetchPlansForCategory(category)];
-      if (category !== "edtech") {
+      if (category === "edtech") {
+        fetchTasks.push(fetchEdtechInstitutionTypes());
+      } else {
         fetchTasks.push(
           fetchInstitutionTypesForCategory(
             category as Exclude<TenantCategory, "edtech">
@@ -259,18 +271,21 @@ export default function RegisterFlowClient() {
       }
       const results = await Promise.all(fetchTasks);
       setPlans(results[0] as TrialPlan[]);
-      if (category !== "edtech") {
-        setInstitutionTypes(results[1] as InstitutionType[]);
-        if (category === "offline_institution") {
-          setOfflineSection(null);
-          setOfflineTypeIds([]);
-          setOfflinePrimaryId(null);
-          setOfflineSubStep(1);
-          setOfflineDomains([]);
-          setOfflineSelectedDomainCodes([]);
-        }
-      } else {
-        setInstitutionTypes([]);
+      setInstitutionTypes(results[1] as InstitutionType[]);
+      if (category === "offline_institution") {
+        setOfflineSection(null);
+        setOfflineTypeIds([]);
+        setOfflinePrimaryId(null);
+        setOfflineSubStep(1);
+        setOfflineDomains([]);
+        setOfflineSelectedDomainCodes([]);
+      }
+      if (category === "edtech") {
+        setEdtechSection(null);
+        setEdtechTypeId(null);
+        setEdtechSubStep(1);
+        setEdtechDomains([]);
+        setEdtechSelectedDomainCodes([]);
       }
     } catch {
       setBootstrapError("Unable to load registration data. Please refresh and try again.");
@@ -283,6 +298,11 @@ export default function RegisterFlowClient() {
     setDirection("left");
     if (category === "offline_institution" && offlineSection === "exam_focused" && offlineSubStep === 2) {
       setOfflineSubStep(1);
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (category === "edtech" && edtechSection === "exam_focused" && edtechSubStep === 2) {
+      setEdtechSubStep(1);
       window.scrollTo(0, 0);
       return;
     }
@@ -300,6 +320,11 @@ export default function RegisterFlowClient() {
     setOfflineSubStep(1);
     setOfflineDomains([]);
     setOfflineSelectedDomainCodes([]);
+    setEdtechSection(null);
+    setEdtechTypeId(null);
+    setEdtechSubStep(1);
+    setEdtechDomains([]);
+    setEdtechSelectedDomainCodes([]);
     setPlans([]);
     setInstitutionTypes([]);
     setBootstrapError(null);
@@ -367,7 +392,21 @@ export default function RegisterFlowClient() {
       ) {
         newErrors.offline_domains = "Select at least one teaching domain";
       }
-    } else if (category !== "edtech" && !formData.institution_type_id) {
+    } else if (category === "edtech") {
+      if (!edtechSection) {
+        newErrors.edtech_section = "Choose exam-focused or non-exam";
+      }
+      if (edtechTypeId == null) {
+        newErrors.edtech_type = "Select an institution type";
+      }
+      if (
+        edtechSection === "exam_focused" &&
+        edtechSubStep === 2 &&
+        edtechSelectedDomainCodes.length < 1
+      ) {
+        newErrors.edtech_domains = "Select at least one teaching domain";
+      }
+    } else if (!formData.institution_type_id) {
       newErrors.institution_type_id = "Please select your institution type";
     }
 
@@ -419,6 +458,29 @@ export default function RegisterFlowClient() {
       return;
     }
 
+    if (
+      category === "edtech" &&
+      edtechSection === "exam_focused" &&
+      edtechSubStep === 1
+    ) {
+      if (!validateForm()) return;
+      if (edtechTypeId == null) return;
+      setIsSubmitting(true);
+      try {
+        setEdtechDomainsLoading(true);
+        const d = await fetchEdtechTeachingDomains(edtechTypeId);
+        setEdtechDomains(d);
+        setEdtechSelectedDomainCodes([]);
+        setEdtechSubStep(2);
+      } catch {
+        setGlobalError("Unable to load teaching domains. Try again.");
+      } finally {
+        setEdtechDomainsLoading(false);
+        setIsSubmitting(false);
+      }
+      return;
+    }
+
     if (!validateForm()) return;
 
     const selectedPlan =
@@ -459,6 +521,14 @@ export default function RegisterFlowClient() {
               secondary_institution_type_ids: secondaryOfflineIds,
               ...(offlineSection === "exam_focused"
                 ? { teaching_domain_codes: offlineSelectedDomainCodes }
+                : {}),
+            }
+          : {}),
+        ...(category === "edtech" && edtechTypeId != null
+          ? {
+              primary_institution_type_id: edtechTypeId,
+              ...(edtechSection === "exam_focused"
+                ? { teaching_domain_codes: edtechSelectedDomainCodes }
                 : {}),
             }
           : {}),
@@ -954,6 +1024,124 @@ export default function RegisterFlowClient() {
                                 <span className={styles.errorText}>{errors.offline_primary}</span>
                               )}
                             </div>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* EdTech — type + (exam) teaching domains */}
+              {category === "edtech" && (
+                <div className={styles.formGroup}>
+                  {edtechSubStep === 2 && edtechSection === "exam_focused" ? (
+                    <>
+                      <p className={styles.helperText} style={{ marginBottom: 12 }}>
+                        Step 2 of 2 — Select the teaching domains you cover.
+                      </p>
+                      {edtechDomainsLoading ? (
+                        <div className={styles.loadingShimmer} />
+                      ) : (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                          {edtechDomains.map((d) => {
+                            const checked = edtechSelectedDomainCodes.includes(d.code);
+                            return (
+                              <label
+                                key={d.code}
+                                style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={checked}
+                                  onChange={() => {
+                                    setEdtechSelectedDomainCodes((prev) =>
+                                      checked ? prev.filter((c) => c !== d.code) : [...prev, d.code]
+                                    );
+                                  }}
+                                />
+                                <span>{d.label}</span>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      )}
+                      {errors.edtech_domains && (
+                        <span className={styles.errorText}>{errors.edtech_domains}</span>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <label className={styles.label}>Company focus</label>
+                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+                        <button
+                          type="button"
+                          className={styles.input}
+                          style={{
+                            flex: 1,
+                            minWidth: 140,
+                            border: edtechSection === "exam_focused" ? "2px solid #2563eb" : undefined,
+                          }}
+                          onClick={() => {
+                            setEdtechSection("exam_focused");
+                            setEdtechTypeId(null);
+                            setEdtechSubStep(1);
+                            setEdtechDomains([]);
+                            setEdtechSelectedDomainCodes([]);
+                          }}
+                        >
+                          Exam-focused
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.input}
+                          style={{
+                            flex: 1,
+                            minWidth: 140,
+                            border: edtechSection === "non_exam" ? "2px solid #2563eb" : undefined,
+                          }}
+                          onClick={() => {
+                            setEdtechSection("non_exam");
+                            setEdtechTypeId(null);
+                            setEdtechSubStep(1);
+                            setEdtechDomains([]);
+                            setEdtechSelectedDomainCodes([]);
+                          }}
+                        >
+                          Non-exam
+                        </button>
+                      </div>
+                      {errors.edtech_section && (
+                        <span className={styles.errorText}>{errors.edtech_section}</span>
+                      )}
+
+                      {edtechSection && (
+                        <>
+                          <label className={styles.label}>Institution type</label>
+                          {bootstrapLoading ? (
+                            <div className={styles.loadingShimmer} />
+                          ) : (
+                            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                              {institutionTypes
+                                .filter((t) => t.section === edtechSection)
+                                .map((t) => (
+                                  <label
+                                    key={t.id}
+                                    style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="edtech_type"
+                                      checked={edtechTypeId === t.id}
+                                      onChange={() => setEdtechTypeId(t.id)}
+                                    />
+                                    <span>{t.name}</span>
+                                  </label>
+                                ))}
+                            </div>
+                          )}
+                          {errors.edtech_type && (
+                            <span className={styles.errorText}>{errors.edtech_type}</span>
                           )}
                         </>
                       )}
