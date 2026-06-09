@@ -103,12 +103,9 @@ export default function PricingPageClient() {
               billing={billing}
               cta="Get started free"
               features={[
-                "Up to 150 students",
+                "Up to 500 students",
                 "Up to 3 instructors",
-                "Up to 5 courses",
-                "3 concurrent devices",
-                "5 GB storage",
-                "Video via YouTube / Vimeo links only",
+                "50 GB storage",
                 "Basic storefront (1 template)",
                 "Live classes (bring your own tool)",
                 "Quizzes & assignments",
@@ -130,11 +127,10 @@ export default function PricingPageClient() {
               cta="Get started free"
               popular
               features={[
-                "Up to 1,000 students",
-                "Up to 15 instructors",
+                "Up to 1,500 students",
+                "Up to 50 instructors",
                 "Unlimited courses",
-                "10 concurrent devices",
-                "25 GB storage",
+                "50 GB storage",
                 "Cloudflare Stream — 1,000 min included",
                 "Course bundles & drip scheduling",
                 "Custom domain + remove Edveo branding",
@@ -161,8 +157,6 @@ export default function PricingPageClient() {
                 "Unlimited students",
                 "Unlimited instructors",
                 "Unlimited courses",
-                "25 concurrent devices",
-                "100 GB storage",
                 "Cloudflare Stream — 5,000 min included",
                 "White label (full brand replacement)",
                 "Advanced affiliate + commission management",
@@ -190,7 +184,6 @@ export default function PricingPageClient() {
               cta="Get started free"
               showPriceSuffix={false}
               features={[
-                "Up to 100 students",
                 "3 courses",
                 "3 batches",
                 "1 concurrent device",
@@ -214,7 +207,6 @@ export default function PricingPageClient() {
               cta="Get started free"
               popular
               features={[
-                "Up to 500 students",
                 "20 courses",
                 "Unlimited batches",
                 "3 concurrent devices",
