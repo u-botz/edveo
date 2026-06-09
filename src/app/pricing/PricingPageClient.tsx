@@ -99,7 +99,7 @@ export default function PricingPageClient() {
             <PlanCard
               name="Starter"
               who="For EdTech founders launching their first online academy"
-              price={price(1999, 1666)}
+              price={price(2999, 2666)}
               billing={billing}
               cta="Get started free"
               features={[
@@ -125,7 +125,7 @@ export default function PricingPageClient() {
             <PlanCard
               name="Growth"
               who="For online academies scaling content and revenue"
-              price={price(4999, 4166)}
+              price={price(5999, 5166)}
               billing={billing}
               cta="Get started free"
               popular
