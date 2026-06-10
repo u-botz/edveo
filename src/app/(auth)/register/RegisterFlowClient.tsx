@@ -20,8 +20,6 @@ import {
   fetchPlansForCategory,
   fetchInstitutionTypesForCategory,
   fetchEdtechInstitutionTypes,
-  fetchEdtechTeachingDomains,
-  fetchOfflineTeachingDomains,
   pickStandaloneTeacherSelfServeSignupPlan,
   checkSubdomainForCategory,
   submitSignup,
@@ -32,7 +30,6 @@ import {
   type TenantCategory,
   type TrialPlan,
   type InstitutionType,
-  type OfflineTeachingDomain,
 } from "@/lib/api/signupApi";
 import { CONTACT_EMAIL } from "@/lib/contactEmail";
 import { signupOAuthErrorMessage } from "@/lib/signupOAuthErrors";
@@ -123,18 +120,10 @@ export default function RegisterFlowClient() {
   const [offlineSection, setOfflineSection] = useState<"exam_focused" | "non_exam" | null>(null);
   const [offlineTypeIds, setOfflineTypeIds] = useState<number[]>([]);
   const [offlinePrimaryId, setOfflinePrimaryId] = useState<number | null>(null);
-  const [offlineSubStep, setOfflineSubStep] = useState<1 | 2>(1);
-  const [offlineDomains, setOfflineDomains] = useState<OfflineTeachingDomain[]>([]);
-  const [offlineDomainsLoading, setOfflineDomainsLoading] = useState(false);
-  const [offlineSelectedDomainCodes, setOfflineSelectedDomainCodes] = useState<string[]>([]);
 
-  /** EdTech onboarding — single primary type + optional teaching domains. */
+  /** EdTech onboarding — single primary type. */
   const [edtechSection, setEdtechSection] = useState<"exam_focused" | "non_exam" | null>(null);
   const [edtechTypeId, setEdtechTypeId] = useState<number | null>(null);
-  const [edtechSubStep, setEdtechSubStep] = useState<1 | 2>(1);
-  const [edtechDomains, setEdtechDomains] = useState<OfflineTeachingDomain[]>([]);
-  const [edtechDomainsLoading, setEdtechDomainsLoading] = useState(false);
-  const [edtechSelectedDomainCodes, setEdtechSelectedDomainCodes] = useState<string[]>([]);
 
   // ── Idempotency key (generated once per page load) ─────────────────────────
   const idempotencyKeyRef = useRef<string>(generateIdempotencyKey());
@@ -276,16 +265,10 @@ export default function RegisterFlowClient() {
         setOfflineSection(null);
         setOfflineTypeIds([]);
         setOfflinePrimaryId(null);
-        setOfflineSubStep(1);
-        setOfflineDomains([]);
-        setOfflineSelectedDomainCodes([]);
       }
       if (category === "edtech") {
         setEdtechSection(null);
         setEdtechTypeId(null);
-        setEdtechSubStep(1);
-        setEdtechDomains([]);
-        setEdtechSelectedDomainCodes([]);
       }
     } catch {
       setBootstrapError("Unable to load registration data. Please refresh and try again.");
@@ -296,16 +279,6 @@ export default function RegisterFlowClient() {
 
   const handlePrevStep = () => {
     setDirection("left");
-    if (category === "offline_institution" && offlineSection === "exam_focused" && offlineSubStep === 2) {
-      setOfflineSubStep(1);
-      window.scrollTo(0, 0);
-      return;
-    }
-    if (category === "edtech" && edtechSection === "exam_focused" && edtechSubStep === 2) {
-      setEdtechSubStep(1);
-      window.scrollTo(0, 0);
-      return;
-    }
     if (category === "standalone_teacher" && teacherSubStep === "wizard") {
       // Go back to the details sub-step, not all the way to step 1
       setTeacherSubStep("details");
@@ -317,14 +290,8 @@ export default function RegisterFlowClient() {
     setOfflineSection(null);
     setOfflineTypeIds([]);
     setOfflinePrimaryId(null);
-    setOfflineSubStep(1);
-    setOfflineDomains([]);
-    setOfflineSelectedDomainCodes([]);
     setEdtechSection(null);
     setEdtechTypeId(null);
-    setEdtechSubStep(1);
-    setEdtechDomains([]);
-    setEdtechSelectedDomainCodes([]);
     setPlans([]);
     setInstitutionTypes([]);
     setBootstrapError(null);
@@ -385,26 +352,12 @@ export default function RegisterFlowClient() {
       if (offlineTypeIds.length > 1 && offlinePrimaryId == null) {
         newErrors.offline_primary = "Mark one selected type as primary";
       }
-      if (
-        offlineSection === "exam_focused" &&
-        offlineSubStep === 2 &&
-        offlineSelectedDomainCodes.length < 1
-      ) {
-        newErrors.offline_domains = "Select at least one teaching domain";
-      }
     } else if (category === "edtech") {
       if (!edtechSection) {
         newErrors.edtech_section = "Choose exam-focused or non-exam";
       }
       if (edtechTypeId == null) {
         newErrors.edtech_type = "Select an institution type";
-      }
-      if (
-        edtechSection === "exam_focused" &&
-        edtechSubStep === 2 &&
-        edtechSelectedDomainCodes.length < 1
-      ) {
-        newErrors.edtech_domains = "Select at least one teaching domain";
       }
     } else if (!formData.institution_type_id) {
       newErrors.institution_type_id = "Please select your institution type";
@@ -430,56 +383,6 @@ export default function RegisterFlowClient() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setGlobalError(null);
-
-    if (
-      category === "offline_institution" &&
-      offlineSection === "exam_focused" &&
-      offlineSubStep === 1
-    ) {
-      if (!validateForm()) return;
-      setIsSubmitting(true);
-      try {
-        const codes = offlineTypeIds
-          .map((id) => institutionTypes.find((t) => t.id === id)?.slug)
-          .filter((s): s is string => typeof s === "string" && s !== "");
-        if (codes.length === 0) {
-          setGlobalError("Invalid institution type selection.");
-          return;
-        }
-        const d = await fetchOfflineTeachingDomains(codes);
-        setOfflineDomains(d);
-        setOfflineSelectedDomainCodes([]);
-        setOfflineSubStep(2);
-      } catch {
-        setGlobalError("Unable to load teaching domains. Try again.");
-      } finally {
-        setIsSubmitting(false);
-      }
-      return;
-    }
-
-    if (
-      category === "edtech" &&
-      edtechSection === "exam_focused" &&
-      edtechSubStep === 1
-    ) {
-      if (!validateForm()) return;
-      if (edtechTypeId == null) return;
-      setIsSubmitting(true);
-      try {
-        setEdtechDomainsLoading(true);
-        const d = await fetchEdtechTeachingDomains(edtechTypeId);
-        setEdtechDomains(d);
-        setEdtechSelectedDomainCodes([]);
-        setEdtechSubStep(2);
-      } catch {
-        setGlobalError("Unable to load teaching domains. Try again.");
-      } finally {
-        setEdtechDomainsLoading(false);
-        setIsSubmitting(false);
-      }
-      return;
-    }
 
     if (!validateForm()) return;
 
@@ -519,17 +422,11 @@ export default function RegisterFlowClient() {
           ? {
               primary_institution_type_id: primaryOfflineId,
               secondary_institution_type_ids: secondaryOfflineIds,
-              ...(offlineSection === "exam_focused"
-                ? { teaching_domain_codes: offlineSelectedDomainCodes }
-                : {}),
             }
           : {}),
         ...(category === "edtech" && edtechTypeId != null
           ? {
               primary_institution_type_id: edtechTypeId,
-              ...(edtechSection === "exam_focused"
-                ? { teaching_domain_codes: edtechSelectedDomainCodes }
-                : {}),
             }
           : {}),
         plan_id: selectedPlan.id,
@@ -878,46 +775,10 @@ export default function RegisterFlowClient() {
                 )}
               </div>}
 
-              {/* Offline institute — FRD v2.1 classification + (exam) teaching domains */}
+              {/* Offline institute — section + institution type classification */}
               {category === "offline_institution" && (
                 <div className={styles.formGroup}>
-                  {offlineSubStep === 2 && offlineSection === "exam_focused" ? (
-                    <>
-                      <p className={styles.helperText} style={{ marginBottom: 12 }}>
-                        Step 2 of 2 — Select the teaching domains you cover (merged list for your selected types).
-                      </p>
-                      {offlineDomainsLoading ? (
-                        <div className={styles.loadingShimmer} />
-                      ) : (
-                        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                          {offlineDomains.map((d) => {
-                            const checked = offlineSelectedDomainCodes.includes(d.code);
-                            return (
-                              <label
-                                key={d.code}
-                                style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={checked}
-                                  onChange={() => {
-                                    setOfflineSelectedDomainCodes((prev) =>
-                                      checked ? prev.filter((c) => c !== d.code) : [...prev, d.code]
-                                    );
-                                  }}
-                                />
-                                <span>{d.label}</span>
-                              </label>
-                            );
-                          })}
-                        </div>
-                      )}
-                      {errors.offline_domains && (
-                        <span className={styles.errorText}>{errors.offline_domains}</span>
-                      )}
-                    </>
-                  ) : (
-                    <>
+                  <>
                       <label className={styles.label}>Institute focus</label>
                       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
                         <button
@@ -1027,51 +888,14 @@ export default function RegisterFlowClient() {
                           )}
                         </>
                       )}
-                    </>
-                  )}
+                  </>
                 </div>
               )}
 
-              {/* EdTech — type + (exam) teaching domains */}
+              {/* EdTech — section + institution type */}
               {category === "edtech" && (
                 <div className={styles.formGroup}>
-                  {edtechSubStep === 2 && edtechSection === "exam_focused" ? (
-                    <>
-                      <p className={styles.helperText} style={{ marginBottom: 12 }}>
-                        Step 2 of 2 — Select the teaching domains you cover.
-                      </p>
-                      {edtechDomainsLoading ? (
-                        <div className={styles.loadingShimmer} />
-                      ) : (
-                        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                          {edtechDomains.map((d) => {
-                            const checked = edtechSelectedDomainCodes.includes(d.code);
-                            return (
-                              <label
-                                key={d.code}
-                                style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={checked}
-                                  onChange={() => {
-                                    setEdtechSelectedDomainCodes((prev) =>
-                                      checked ? prev.filter((c) => c !== d.code) : [...prev, d.code]
-                                    );
-                                  }}
-                                />
-                                <span>{d.label}</span>
-                              </label>
-                            );
-                          })}
-                        </div>
-                      )}
-                      {errors.edtech_domains && (
-                        <span className={styles.errorText}>{errors.edtech_domains}</span>
-                      )}
-                    </>
-                  ) : (
-                    <>
+                  <>
                       <label className={styles.label}>Company focus</label>
                       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
                         <button
@@ -1085,9 +909,6 @@ export default function RegisterFlowClient() {
                           onClick={() => {
                             setEdtechSection("exam_focused");
                             setEdtechTypeId(null);
-                            setEdtechSubStep(1);
-                            setEdtechDomains([]);
-                            setEdtechSelectedDomainCodes([]);
                           }}
                         >
                           Exam-focused
@@ -1103,9 +924,6 @@ export default function RegisterFlowClient() {
                           onClick={() => {
                             setEdtechSection("non_exam");
                             setEdtechTypeId(null);
-                            setEdtechSubStep(1);
-                            setEdtechDomains([]);
-                            setEdtechSelectedDomainCodes([]);
                           }}
                         >
                           Non-exam
@@ -1145,8 +963,7 @@ export default function RegisterFlowClient() {
                           )}
                         </>
                       )}
-                    </>
-                  )}
+                  </>
                 </div>
               )}
 
@@ -1299,11 +1116,7 @@ export default function RegisterFlowClient() {
                       Setting up your account…
                     </>
                   ) : (
-                    category === "offline_institution" &&
-                    offlineSection === "exam_focused" &&
-                    offlineSubStep === 1
-                      ? "Continue to teaching domains →"
-                      : "Get started free →"
+                    "Get started free →"
                   )}
                 </button>
               )}
