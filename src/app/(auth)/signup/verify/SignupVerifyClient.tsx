@@ -94,7 +94,8 @@ export default function SignupVerifyClient() {
     const plans = await fetchPlansForCategory(category);
     const selected =
       plans.find((p) => p.self_serve_free_active) ??
-      plans.find((p) => p.is_trial);
+      plans.find((p) => p.is_trial) ??
+      plans.find((p) => p.price_monthly_cents === 0 && p.price_annual_cents === 0);
     if (!selected) throw new Error("No free trial plan available. Please contact support.");
     return {
       googleContinuationToken: null as string | null,
