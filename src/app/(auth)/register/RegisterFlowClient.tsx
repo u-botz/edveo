@@ -390,10 +390,9 @@ export default function RegisterFlowClient() {
       category === "standalone_teacher"
         ? pickStandaloneTeacherSelfServeSignupPlan(plans)
         : plans.find((p) => p.self_serve_free_active) ??
-          plans.find((p) => p.is_trial) ??
-          plans[0];
+          plans.find((p) => p.is_trial);
     if (!selectedPlan) {
-      setGlobalError("No signup plan available. Please contact support.");
+      setGlobalError("No free trial plan available. Please contact support.");
       return;
     }
 

@@ -246,11 +246,10 @@ export default function OfflineInstitutionOnboardingWizard({
 
     const selectedPlan =
       plans.find((p) => p.self_serve_free_active) ??
-      plans.find((p) => p.is_trial) ??
-      plans[0];
+      plans.find((p) => p.is_trial);
 
     if (!selectedPlan) {
-      setSubmitError("No signup plan available. Please contact support.");
+      setSubmitError("No free trial plan available. Please contact support.");
       setIsSubmitting(false);
       return;
     }

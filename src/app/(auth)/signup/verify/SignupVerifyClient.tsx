@@ -94,9 +94,8 @@ export default function SignupVerifyClient() {
     const plans = await fetchPlansForCategory(category);
     const selected =
       plans.find((p) => p.self_serve_free_active) ??
-      plans.find((p) => p.is_trial) ??
-      plans[0];
-    if (!selected) throw new Error("No plan available");
+      plans.find((p) => p.is_trial);
+    if (!selected) throw new Error("No free trial plan available. Please contact support.");
     return {
       googleContinuationToken: null as string | null,
       planId: selected.id,
@@ -140,7 +139,7 @@ export default function SignupVerifyClient() {
       }
 
       setGlobalError(
-        "This workspace was set up, but paid checkout from this screen is not available yet. Please contact support or pick the free plan."
+        "Something went wrong while setting up your workspace. Please contact support."
       );
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Something went wrong.";
