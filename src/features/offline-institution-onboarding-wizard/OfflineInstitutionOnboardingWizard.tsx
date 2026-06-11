@@ -5,7 +5,6 @@ import { Check, ChevronLeft, Loader2, X, AlertCircle } from "lucide-react";
 import styles from "@/app/(auth)/register/page.module.css";
 import {
   fetchInstitutionTypesForCategory,
-  fetchOfflineTeachingDomains,
   fetchPlansForCategory,
   checkSubdomainForCategory,
   submitSignup,
@@ -13,7 +12,6 @@ import {
   selfSignupAuxStorageKey,
   isInitiateSignupResponse,
   type InstitutionType,
-  type OfflineTeachingDomain,
   type TrialPlan,
   type SignupSubmitResult,
 } from "@/lib/api/signupApi";
@@ -21,7 +19,7 @@ import { getSubdomainFormatError } from "@/features/teacher-onboarding-wizard/fi
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type WizardStep = 1 | 2 | 3;
+type WizardStep = 1 | 2;
 type OfflineSection = "exam_focused" | "non_exam";
 type SubdomainStatus = "idle" | "checking" | "available" | "taken" | "error";
 
@@ -41,7 +39,6 @@ export interface OfflineInstitutionOnboardingWizardProps {
 const STEP_LABELS: Record<WizardStep, string> = {
   1: "Workspace",
   2: "Institute type",
-  3: "Teaching areas",
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -74,11 +71,6 @@ export default function OfflineInstitutionOnboardingWizard({
   const [offlineSection, setOfflineSection] = useState<OfflineSection | null>(null);
   const [selectedTypeIds, setSelectedTypeIds] = useState<number[]>([]);
   const [primaryTypeId, setPrimaryTypeId] = useState<number | null>(null);
-
-  // ── Step 3 state ──────────────────────────────────────────────────────────
-  const [domains, setDomains] = useState<OfflineTeachingDomain[]>([]);
-  const [domainsLoading, setDomainsLoading] = useState(false);
-  const [selectedDomainCodes, setSelectedDomainCodes] = useState<string[]>([]);
 
   // ── Submission ────────────────────────────────────────────────────────────
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -154,15 +146,15 @@ export default function OfflineInstitutionOnboardingWizard({
   }, [normalizedSlug, slugFormatError, checkSub]);
 
   // ── Navigation ────────────────────────────────────────────────────────────
-  const goNext = useCallback((target?: WizardStep) => {
+  const goNext = useCallback(() => {
     setDirection("right");
-    setStep((s) => target ?? (s < 3 ? ((s + 1) as WizardStep) : s));
+    setStep(2);
     window.scrollTo(0, 0);
   }, []);
 
   const goBack = useCallback(() => {
     setDirection("left");
-    setStep((s) => (s > 1 ? ((s - 1) as WizardStep) : s));
+    setStep(1);
     window.scrollTo(0, 0);
   }, []);
 
@@ -183,7 +175,7 @@ export default function OfflineInstitutionOnboardingWizard({
       errors.instituteName = `Subdomain taken. Try: ${subdomainSuggestions.join(", ")}`;
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) return;
-    goNext(2);
+    goNext();
   };
 
   // ── Step 2: section change resets types ───────────────────────────────────
@@ -209,35 +201,12 @@ export default function OfflineInstitutionOnboardingWizard({
     selectedTypeIds.length >= 1 &&
     (selectedTypeIds.length <= 1 || primaryTypeId !== null);
 
-  // ── Step 2 Next: for exam-focused, load domains then go to step 3 ─────────
+  // ── Step 2 Next: submit directly (teaching areas collected post-onboarding) ──
   const handleStep2Next = async () => {
     if (!step2Valid) return;
     setSubmitError(null);
-
-    if (offlineSection === "exam_focused") {
-      setDomainsLoading(true);
-      try {
-        const codes = selectedTypeIds
-          .map((id) => institutionTypes.find((t) => t.id === id)?.slug)
-          .filter((s): s is string => typeof s === "string");
-        const d = await fetchOfflineTeachingDomains(codes);
-        setDomains(d);
-        setSelectedDomainCodes([]);
-        goNext(3);
-      } catch {
-        setSubmitError("Unable to load teaching domains. Please try again.");
-      } finally {
-        setDomainsLoading(false);
-      }
-      return;
-    }
-
-    // non-exam: submit directly
     await handleSubmit();
   };
-
-  // ── Step 3 validation ─────────────────────────────────────────────────────
-  const step3Valid = selectedDomainCodes.length >= 1;
 
   // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async () => {
@@ -277,9 +246,6 @@ export default function OfflineInstitutionOnboardingWizard({
               primary_institution_type_id: resolvedPrimaryId,
               secondary_institution_type_ids: secondaryIds,
             }
-          : {}),
-        ...(offlineSection === "exam_focused" && selectedDomainCodes.length > 0
-          ? { teaching_domain_codes: selectedDomainCodes }
           : {}),
       });
 
@@ -323,7 +289,7 @@ export default function OfflineInstitutionOnboardingWizard({
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
       {/* Progress bar */}
-      <OfflineWizardProgressBar currentStep={step} isExamFocused={offlineSection === "exam_focused"} />
+      <OfflineWizardProgressBar currentStep={step} />
 
       {/* Error banner */}
       {submitError && (
@@ -474,17 +440,25 @@ export default function OfflineInstitutionOnboardingWizard({
           className={`${styles.screenContainer} ${animClass}`}
           style={{ maxWidth: 440 }}
         >
-          <h2 className={styles.heading} style={{ textAlign: "left", fontSize: 22 }}>
+          <h2 className={styles.heading} style={{ textAlign: "left", fontSize: 22, marginBottom: 4 }}>
             What kind of institute?
           </h2>
-          <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 16 }}>
+          <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 20 }}>
             This sets up the right tools and content tags for you.
           </p>
 
-          {/* Focus toggle */}
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Institute focus</label>
-            <div style={{ display: "flex", gap: 8 }}>
+          {/* Focus toggle — segmented control */}
+          <div className={styles.formGroup} style={{ marginBottom: 20 }}>
+            <label className={styles.label} style={{ marginBottom: 8 }}>Institute focus</label>
+            <div
+              style={{
+                display: "flex",
+                background: "#f3f4f6",
+                borderRadius: 10,
+                padding: 4,
+                gap: 4,
+              }}
+            >
               {(["exam_focused", "non_exam"] as const).map((section) => {
                 const active = offlineSection === section;
                 return (
@@ -494,21 +468,18 @@ export default function OfflineInstitutionOnboardingWizard({
                     onClick={() => handleSectionChange(section)}
                     style={{
                       flex: 1,
-                      padding: "10px 0",
-                      borderRadius: 8,
-                      border: active ? "2px solid #2563eb" : "1px solid #e5e7eb",
-                      background: active ? "#eff6ff" : "#fff",
-                      color: active ? "#1d4ed8" : "#374151",
+                      padding: "8px 12px",
+                      borderRadius: 7,
+                      border: "none",
+                      background: active ? "#fff" : "transparent",
+                      color: active ? "#111827" : "#6b7280",
                       fontWeight: active ? 600 : 400,
                       fontSize: 14,
                       cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 6,
+                      boxShadow: active ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+                      transition: "all 0.15s",
                     }}
                   >
-                    {active && <Check size={14} />}
                     {section === "exam_focused" ? "Exam-focused" : "Non-exam"}
                   </button>
                 );
@@ -519,11 +490,11 @@ export default function OfflineInstitutionOnboardingWizard({
           {/* Institution types */}
           {offlineSection && (
             <div className={styles.formGroup}>
-              <label className={styles.label}>
+              <label className={styles.label} style={{ marginBottom: 8 }}>
                 Institution types{" "}
-                <span style={{ fontWeight: 400, color: "#6b7280" }}>(select all that apply)</span>
+                <span style={{ fontWeight: 400, color: "#9ca3af", fontSize: 12 }}>select all that apply</span>
               </label>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                 {filteredTypes.map((t) => {
                   const checked = selectedTypeIds.includes(t.id);
                   return (
@@ -532,21 +503,24 @@ export default function OfflineInstitutionOnboardingWizard({
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: 10,
+                        gap: 12,
                         cursor: "pointer",
-                        padding: "8px 12px",
+                        padding: "10px 14px",
                         borderRadius: 8,
                         border: checked ? "1.5px solid #2563eb" : "1px solid #e5e7eb",
                         background: checked ? "#eff6ff" : "#fff",
+                        transition: "border-color 0.1s, background 0.1s",
                       }}
                     >
                       <input
                         type="checkbox"
                         checked={checked}
                         onChange={() => handleTypeToggle(t.id)}
-                        style={{ accentColor: "#2563eb" }}
+                        style={{ accentColor: "#2563eb", width: 16, height: 16, flexShrink: 0 }}
                       />
-                      <span style={{ fontSize: 14 }}>{t.name}</span>
+                      <span style={{ fontSize: 14, color: checked ? "#1d4ed8" : "#374151", fontWeight: checked ? 500 : 400 }}>
+                        {t.name}
+                      </span>
                     </label>
                   );
                 })}
@@ -554,28 +528,46 @@ export default function OfflineInstitutionOnboardingWizard({
 
               {/* Primary type picker (multi-select only) */}
               {selectedTypeIds.length > 1 && (
-                <div style={{ marginTop: 12 }}>
-                  <label className={styles.label}>
+                <div
+                  style={{
+                    marginTop: 14,
+                    padding: "12px 14px",
+                    background: "#fafafa",
+                    borderRadius: 8,
+                    border: "1px solid #e5e7eb",
+                  }}
+                >
+                  <label className={styles.label} style={{ marginBottom: 8 }}>
                     Primary type{" "}
-                    <span style={{ fontWeight: 400, color: "#6b7280" }}>(pick one)</span>
+                    <span style={{ fontWeight: 400, color: "#9ca3af", fontSize: 12 }}>pick one</span>
                   </label>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     {selectedTypeIds.map((id) => {
                       const t = institutionTypes.find((x) => x.id === id);
                       if (!t) return null;
+                      const isPrimary = primaryTypeId === id;
                       return (
                         <label
                           key={id}
-                          style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 10,
+                            cursor: "pointer",
+                            padding: "7px 10px",
+                            borderRadius: 6,
+                            background: isPrimary ? "#eff6ff" : "transparent",
+                            border: isPrimary ? "1px solid #bfdbfe" : "1px solid transparent",
+                          }}
                         >
                           <input
                             type="radio"
                             name="off_primary"
-                            checked={primaryTypeId === id}
+                            checked={isPrimary}
                             onChange={() => setPrimaryTypeId(id)}
-                            style={{ accentColor: "#2563eb" }}
+                            style={{ accentColor: "#2563eb", width: 15, height: 15, flexShrink: 0 }}
                           />
-                          <span style={{ fontSize: 14 }}>{t.name}</span>
+                          <span style={{ fontSize: 14, color: isPrimary ? "#1d4ed8" : "#374151" }}>{t.name}</span>
                         </label>
                       );
                     })}
@@ -585,135 +577,38 @@ export default function OfflineInstitutionOnboardingWizard({
             </div>
           )}
 
-          <div style={{ height: 24 }} />
+          <div style={{ height: 20 }} />
           <div className={styles.wizardNavRow}>
             <button type="button" className={styles.wizardNavBack} onClick={goBack}>
               <ChevronLeft size={16} /> Back
             </button>
             <button
               className={styles.primaryButton}
-              disabled={!step2Valid || domainsLoading || isSubmitting}
+              disabled={!step2Valid || isSubmitting}
               onClick={handleStep2Next}
-              style={{ flex: 1 }}
-            >
-              {domainsLoading || isSubmitting ? (
-                <>
-                  <Loader2 className={styles.spinner} size={18} />
-                  {domainsLoading ? "Loading…" : "Setting up…"}
-                </>
-              ) : offlineSection === "exam_focused" ? (
-                "Continue to teaching areas →"
-              ) : (
-                "Create my workspace →"
-              )}
-            </button>
-          </div>
-
-          <p className={styles.footerText} style={{ maxWidth: 440, marginTop: 16 }}>
-            By continuing, you agree to Edveo&apos;s{" "}
-            <a href="/terms-of-service" className={styles.linkDark}>Terms of Service</a>{" "}
-            and{" "}
-            <a href="/privacy-policy" className={styles.linkDark}>Privacy Policy</a>
-          </p>
-        </div>
-      )}
-
-      {/* ── Step 3: Teaching domains (exam-focused only) ──────────────────────── */}
-      {step === 3 && (
-        <div
-          key="step3"
-          className={`${styles.screenContainer} ${animClass}`}
-          style={{ maxWidth: 440 }}
-        >
-          <h2 className={styles.heading} style={{ textAlign: "left", fontSize: 22 }}>
-            Which teaching areas do you cover?
-          </h2>
-          <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 16 }}>
-            Select all that apply — we&apos;ll pre-configure your content tags.
-          </p>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {domains.map((d) => {
-              const checked = selectedDomainCodes.includes(d.code);
-              return (
-                <label
-                  key={d.code}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    cursor: "pointer",
-                    padding: "8px 12px",
-                    borderRadius: 8,
-                    border: checked ? "1.5px solid #2563eb" : "1px solid #e5e7eb",
-                    background: checked ? "#eff6ff" : "#fff",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => {
-                      setSelectedDomainCodes((prev) =>
-                        checked ? prev.filter((c) => c !== d.code) : [...prev, d.code]
-                      );
-                    }}
-                    style={{ accentColor: "#2563eb" }}
-                  />
-                  <span style={{ fontSize: 14 }}>{d.label}</span>
-                </label>
-              );
-            })}
-          </div>
-
-          {selectedDomainCodes.length > 0 && (
-            <p style={{ fontSize: 12, color: "#6366f1", marginTop: 8, textAlign: "center" }}>
-              {selectedDomainCodes.length} area{selectedDomainCodes.length === 1 ? "" : "s"} selected
-            </p>
-          )}
-
-          <div style={{ height: 24 }} />
-          <div className={styles.wizardNavRow}>
-            <button type="button" className={styles.wizardNavBack} onClick={goBack}>
-              <ChevronLeft size={16} /> Back
-            </button>
-            <button
-              className={styles.primaryButton}
-              disabled={!step3Valid || isSubmitting}
-              onClick={handleSubmit}
               style={{ flex: 1 }}
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className={styles.spinner} size={18} /> Setting up…
+                  <Loader2 className={styles.spinner} size={18} />
+                  Setting up…
                 </>
               ) : (
                 "Create my workspace →"
               )}
             </button>
           </div>
-
-          <p className={styles.footerText} style={{ maxWidth: 440, marginTop: 16 }}>
-            By continuing, you agree to Edveo&apos;s{" "}
-            <a href="/terms-of-service" className={styles.linkDark}>Terms of Service</a>{" "}
-            and{" "}
-            <a href="/privacy-policy" className={styles.linkDark}>Privacy Policy</a>
-          </p>
         </div>
       )}
+
     </div>
   );
 }
 
 // ─── Progress bar sub-component ───────────────────────────────────────────────
 
-function OfflineWizardProgressBar({
-  currentStep,
-  isExamFocused,
-}: {
-  currentStep: WizardStep;
-  isExamFocused: boolean;
-}) {
-  const steps: WizardStep[] = isExamFocused ? [1, 2, 3] : [1, 2];
+function OfflineWizardProgressBar({ currentStep }: { currentStep: WizardStep }) {
+  const steps: WizardStep[] = [1, 2];
 
   return (
     <div className={styles.wizardProgress}>
