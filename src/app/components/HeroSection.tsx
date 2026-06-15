@@ -88,58 +88,171 @@ export default function HeroSection() {
           </Link>
         </div>
 
-        {/* --- SP-1 INSERTION --- */}
         <style>
           {`
-            .sp-wrapper { margin-bottom: 0; padding-bottom: 32px; width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; }
-            .sp-stats-bar { display: flex; justify-content: center; gap: 24px; margin: 24px 0 24px; flex-wrap: wrap; }
-            .sp-stat { font-size: 14px; font-weight: 600; color: #111827; background: #F9FAFB; padding: 8px 16px; border-radius: 4px; border: 1px solid #E5E7EB; }
-            .sp-testimonials-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; margin-bottom: 0; width: 100%; }
-            .sp-testimonial-card { background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 8px; padding: 24px; text-align: left; box-sizing: border-box; }
-            .sp-quote { font-size: 14px; color: #374151; margin-bottom: 16px; font-style: normal; line-height: 1.5; }
-            .sp-name { font-size: 14px; font-weight: bold; color: #111827; margin: 0 0 4px 0; }
-            .sp-institute { font-size: 12px; color: #6B7280; margin: 0; }
+            .sp-wrapper { 
+              margin-bottom: 0; 
+              padding-bottom: 48px; 
+              width: 100%; 
+              max-width: 1200px; 
+              display: flex; 
+              flex-direction: column; 
+              align-items: center; 
+              position: relative; 
+              z-index: 10; 
+            }
+            .sp-stats-bar { 
+              display: flex; 
+              justify-content: center; 
+              gap: 16px; 
+              margin: 16px 0 40px; 
+              flex-wrap: wrap; 
+            }
+            .sp-stat { 
+              display: flex; 
+              align-items: center; 
+              gap: 8px;
+              font-size: 14px; 
+              font-weight: 600; 
+              color: #374151; 
+              background: rgba(255, 255, 255, 0.7); 
+              backdrop-filter: blur(8px);
+              padding: 8px 20px; 
+              border-radius: 100px; 
+              border: 1px solid rgba(255, 255, 255, 0.8); 
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(255,255,255,0.5);
+              transition: transform 0.2s ease, box-shadow 0.2s ease;
+              cursor: default;
+            }
+            .sp-stat:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(255,255,255,0.8);
+            }
+            .sp-stat-dot { width: 8px; height: 8px; border-radius: 50%; background: #15803D; box-shadow: 0 0 8px rgba(21, 128, 61, 0.4); }
             
-            .sp-full-quote-card { background: #F9FAFB; border-left: 4px solid #15803D; border-radius: 8px; padding: 24px 32px; margin: 48px auto; width: 100%; max-width: 1200px; box-sizing: border-box; text-align: left; }
-            .sp-full-quote-text { font-size: 15px; color: #374151; font-style: italic; margin-bottom: 16px; line-height: 1.6; }
+            .sp-testimonials-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-bottom: 0; width: 100%; }
             
-            .sp-personas-section { margin: 64px auto; text-align: center; max-width: 1200px; padding: 0 24px; }
-            .sp-section-heading { font-size: 24px; font-weight: bold; color: #111827; margin-bottom: 8px; }
-            .sp-section-sub { font-size: 16px; color: #6B7280; margin-bottom: 48px; }
-            .sp-badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; margin-bottom: 16px; }
-            .sp-badge-offline { background: #DCFCE7; color: #15803D; }
-            .sp-badge-online { background: #DBEAFE; color: #1D4ED8; }
-            .sp-badge-teacher { background: #FEF9C3; color: #854D0E; }
+            .sp-testimonial-card { 
+              position: relative;
+              background: linear-gradient(160deg, #ffffff 0%, #fcfdfd 100%);
+              border: 1px solid rgba(229, 231, 235, 0.6); 
+              border-radius: 20px; 
+              padding: 32px; 
+              text-align: left; 
+              box-sizing: border-box; 
+              box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.02);
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              overflow: hidden;
+            }
             
-            .sp-trust-bar { text-align: center; padding: 48px 24px; background: #FFFFFF; border-top: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB; margin: 64px 0; }
-            .sp-trust-title { font-size: 22px; font-weight: 600; color: #111827; margin-bottom: 16px; }
-            .sp-stars { color: #F59E0B; font-size: 20px; margin-bottom: 8px; }
-            .sp-trust-sub { font-size: 13px; color: #6B7280; margin-bottom: 24px; }
-            .sp-pills-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-            .sp-pill { background: #F3F4F6; color: #374151; border-radius: 999px; padding: 6px 16px; font-size: 12px; font-weight: 500; }
+            .sp-testimonial-card:hover {
+              transform: translateY(-4px);
+              box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1), 0 8px 12px -6px rgba(0, 0, 0, 0.04);
+              border-color: rgba(229, 231, 235, 0.9);
+            }
+
+            .sp-testimonial-card::before {
+              content: '""';
+              position: absolute;
+              top: 0; left: 0; right: 0;
+              height: 4px;
+              background: linear-gradient(90deg, #15803D 0%, #34D399 100%);
+              opacity: 0;
+              transition: opacity 0.3s ease;
+            }
+            
+            .sp-testimonial-card:hover::before {
+              opacity: 1;
+            }
+
+            .sp-quote-mark {
+              position: absolute;
+              top: 16px;
+              left: 24px;
+              font-size: 64px;
+              font-family: Georgia, serif;
+              color: rgba(21, 128, 61, 0.06);
+              line-height: 1;
+              pointer-events: none;
+            }
+
+            .sp-quote { 
+              position: relative;
+              font-size: 15px; 
+              color: #1F2937; 
+              margin-bottom: 24px; 
+              font-style: italic; 
+              line-height: 1.6; 
+              z-index: 1;
+            }
+            
+            .sp-author-row {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+            }
+
+            .sp-avatar {
+              width: 40px; height: 40px;
+              border-radius: 50%;
+              background: #DCFCE7;
+              color: #15803D;
+              display: flex; align-items: center; justify-content: center;
+              font-weight: 700; font-size: 16px;
+              flex-shrink: 0;
+            }
+
+            .sp-author-info {
+              display: flex; flex-direction: column; gap: 2px;
+            }
+
+            .sp-name { font-size: 15px; font-weight: 700; color: #111827; margin: 0; }
+            .sp-institute { font-size: 13px; color: #6B7280; margin: 0; }
 
             @media (max-width: 768px) {
               .sp-testimonials-row { grid-template-columns: 1fr; }
-              .sp-full-quote-card { padding: 24px; }
+              .sp-testimonial-card { padding: 24px; }
+              .sp-quote-mark { left: 16px; top: 12px; }
             }
           `}
         </style>
         <div className="sp-wrapper">
           <div className="sp-stats-bar">
-            <div className="sp-stat">5+ Institutes</div>
-            <div className="sp-stat">Early Access</div>
-            <div className="sp-stat">Built in Kerala</div>
+            <div className="sp-stat">
+              <div className="sp-stat-dot"></div>
+              5+ Institutes
+            </div>
+            <div className="sp-stat">
+              <div className="sp-stat-dot"></div>
+              Early Access
+            </div>
+            <div className="sp-stat">
+              <div className="sp-stat-dot"></div>
+              Built in Kerala
+            </div>
           </div>
           <div className="sp-testimonials-row">
             <div className="sp-testimonial-card">
-              <p className="sp-quote">&quot;Fee collection used to take my staff 3 days every month. Now it&apos;s done in the morning automatically.&quot;</p>
-              <p className="sp-name">Director</p>
-              <p className="sp-institute">Mentora LearnX, Manjeri, Kerala</p>
+              <span className="sp-quote-mark">&quot;</span>
+              <p className="sp-quote">Fee collection used to take my staff 3 days every month. Now it&apos;s done in the morning automatically.</p>
+              <div className="sp-author-row">
+                <div className="sp-avatar">M</div>
+                <div className="sp-author-info">
+                  <p className="sp-name">Director</p>
+                  <p className="sp-institute">Mentora LearnX, Manjeri</p>
+                </div>
+              </div>
             </div>
             <div className="sp-testimonial-card">
-              <p className="sp-quote">&quot;The AI told me which students were about to drop out before I even noticed. That alone is worth it.&quot;</p>
-              <p className="sp-name">Director</p>
-              <p className="sp-institute">Mentora Junior, Manjeri, Kerala</p>
+              <span className="sp-quote-mark">&quot;</span>
+              <p className="sp-quote">The AI told me which students were about to drop out before I even noticed. That alone is worth it.</p>
+              <div className="sp-author-row">
+                <div className="sp-avatar">M</div>
+                <div className="sp-author-info">
+                  <p className="sp-name">Director</p>
+                  <p className="sp-institute">Mentora Junior, Manjeri</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -20,19 +20,6 @@ export default function Home() {
       {/* Hero */}
       <HeroSection />
 
-      {/* Intelligence Demo Section */}
-      <IntelligenceDemoSection />
-
-      {/* --- SP-2 INSERTION --- */}
-      <div style={{ padding: "0 24px" }}>
-        <div className="sp-full-quote-card">
-          <p className="sp-full-quote-text">&quot;I asked Edveo how many students were at risk this month. It flagged 7 names with reasons in under 10 seconds. That would have taken me a full day to figure out manually.&quot;</p>
-          <p className="sp-name">Director</p>
-          <p className="sp-institute">Mentora LearnX, Manjeri, Kerala</p>
-        </div>
-      </div>
-      {/* --- END SP-2 --- */}
-
       {/* Trust bar — honest early-stage signals, no fake logos */}
       <div className={styles.trustStrip}>
         <div className={styles.trustStripInner}>
@@ -62,6 +49,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Intelligence Demo Section */}
+      <IntelligenceDemoSection />
 
       <div style={{ borderTop: "1px solid #E5E7EB", paddingTop: "56px", paddingBottom: "56px", background: "#FFFFFF" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
