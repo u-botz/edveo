@@ -57,24 +57,13 @@ export default function Home() {
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
           <h2 className={heroStyles.audienceHeading}>BUILT FOR EVERY INSTITUTION TYPE</h2>
           <div className={heroStyles.audienceCards} role="group" aria-label="Choose your path">
-            <Link href="/teacher" className={heroStyles.audienceCard}>
-              <div className={heroStyles.audienceCardIcon}>
-                <TeacherIcon />
-              </div>
-              <div className={heroStyles.audienceCardBody}>
-                <span className={heroStyles.audienceCardTitle}>I&apos;m a Teacher</span>
-                <span className={heroStyles.audienceCardDesc}>Sell courses under your brand and keep 100% of what you earn — zero commission.</span>
-              </div>
-              <span className={heroStyles.audienceCardArrow}>→</span>
-            </Link>
-
             <Link href="/edtech" className={heroStyles.audienceCard}>
               <div className={heroStyles.audienceCardIcon}>
                 <EdtechIcon />
               </div>
               <div className={heroStyles.audienceCardBody}>
-                <span className={heroStyles.audienceCardTitle}>I Run an Edtech</span>
-                <span className={heroStyles.audienceCardDesc}>Scale your online academy with AI-powered sales, CRM, and multi-instructor ops.</span>
+                <span className={heroStyles.audienceCardTitle}>I run an online academy</span>
+                <span className={heroStyles.audienceCardDesc}>Host live classes, sell courses, manage students and payments — without juggling 5 different tools.</span>
               </div>
               <span className={heroStyles.audienceCardArrow}>→</span>
             </Link>
@@ -84,8 +73,8 @@ export default function Home() {
                 <InstitutionIcon />
               </div>
               <div className={heroStyles.audienceCardBody}>
-                <span className={heroStyles.audienceCardTitle}>I Run an Offline Institute</span>
-                <span className={heroStyles.audienceCardDesc}>Manage batches, fees, attendance, and staff — all from one dashboard.</span>
+                <span className={heroStyles.audienceCardTitle}>I run a coaching institute</span>
+                <span className={heroStyles.audienceCardDesc}>Manage students, fees, attendance, batches and staff — all from one dashboard. No more registers or WhatsApp chaos.</span>
               </div>
               <span className={heroStyles.audienceCardArrow}>→</span>
             </Link>
@@ -327,8 +316,8 @@ export default function Home() {
 
       <CtaBanner
         variant="dark"
-        headline="You've Been Running Your Institute on 4 Tools."
-        accentSub="There's a Better Way."
+        headline="Still managing fees on Excel and attendance in a register?"
+        accentSub="Join 5 Kerala coaching institutes already running on Edveo. Free to start. No setup fees. Live in 5 minutes."
         primaryLabel="Get started free →"
         secondaryLabel="Talk to an Expert"
         secondaryHref={COMPANY_WHATSAPP_URL}

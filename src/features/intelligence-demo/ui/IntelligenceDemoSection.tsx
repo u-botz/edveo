@@ -64,11 +64,11 @@ export function IntelligenceDemoSection() {
         </motion.div>
         
         <motion.h2 variants={itemVariants} className={styles.headline}>
-          Ask your institute anything.{'\n'}It answers. It acts.
+          Your institute's data, always at your fingertips.
         </motion.h2>
         
         <motion.p variants={itemVariants} className={styles.subheadline}>
-          It reads your live institute data, answers in plain language, and prepares actions you approve — reports, drafts, and risk signals without switching tools or digging through dashboards.
+          Ask Edveo anything about your institute — fees, attendance, students, batches. It reads your live data and answers in plain language, no dashboard digging needed.
         </motion.p>
         
         <motion.div variants={shellVariants} style={{ width: '100%' }}>

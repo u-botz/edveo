@@ -66,19 +66,17 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1 className={styles.heroHeadline}>
-          Your institute runs itself.
-          <br />
-          You just teach.
+          Stop running your institute on WhatsApp and Excel.
         </h1>
 
         {/* Sub-headline */}
         <p className={styles.heroSub}>
-          Edveo Intelligence™ handles your fees, your leads, your attendance, your student follow-ups — so you can focus entirely on teaching.
+          Edveo replaces your fee registers, attendance sheets, and WhatsApp reminders with one simple dashboard — so you spend less time on admin and more time on teaching.
         </p>
 
         {/* Micro-copy — directly above primary CTA */}
         <p className={styles.microCopy}>
-          Free forever &middot; Zero commission &middot; Live in 1 min
+          Free to start &middot; No Excel needed &middot; Live in under 5 minutes
         </p>
 
         {/* Actions */}
@@ -220,15 +218,15 @@ export default function HeroSection() {
           <div className="sp-stats-bar">
             <div className="sp-stat">
               <div className="sp-stat-dot"></div>
-              5+ Institutes
+              5 Institutes Live
             </div>
             <div className="sp-stat">
               <div className="sp-stat-dot"></div>
-              Early Access
+              Replacing WhatsApp + Excel
             </div>
             <div className="sp-stat">
               <div className="sp-stat-dot"></div>
-              Built in Kerala
+              Made in Kerala, for Kerala
             </div>
           </div>
           <div className="sp-testimonials-row">

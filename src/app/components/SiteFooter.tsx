@@ -37,8 +37,7 @@ export default function SiteFooter() {
               <EdveoLogo variant="footer" />
             </a>
             <p className={styles.footerDesc}>
-              The AI-native platform built for every Indian educator — whether you
-              teach online, run an edtech, or manage a coaching institute.
+              Built in Kerala, for Kerala. The simplest way to manage your coaching institute — fees, attendance, classes, and students, all in one place.
             </p>
           </div>
 

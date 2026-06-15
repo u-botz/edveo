@@ -7,10 +7,10 @@ interface PromptChipRailProps {
 }
 
 const PRESET_PROMPTS = [
-  'Which students need my attention today?',
-  'How are my fees this month?',
-  'Send reminders to students who missed class today',
-  "Generate questions on Newton's Laws for Class 11",
+  "Who hasn't paid fees this month?",
+  "Which batch has the lowest attendance?",
+  "Send a reminder to all Class 11 parents",
+  "How many new students joined this month?",
 ];
 
 export function PromptChipRail({ onChipClick, activeChip, disabled }: PromptChipRailProps) {
