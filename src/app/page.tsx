@@ -20,38 +20,235 @@ export default function Home() {
       {/* Hero */}
       <HeroSection />
 
-      {/* Trust bar — honest early-stage signals, no fake logos */}
-      <div className={styles.trustStrip}>
-        <div className={styles.trustStripInner}>
-          <div className={styles.trustStripItem}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Data stays in your region</span>
-          </div>
-          <span className={styles.trustStripDot} aria-hidden />
-          <div className={styles.trustStripItem}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M7 10h4M7 14h10" strokeLinecap="round"/></svg>
-            <span>Payments via Razorpay</span>
-          </div>
-          <span className={styles.trustStripDot} aria-hidden />
-          <div className={styles.trustStripItem}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-            <span>Free forever, no card needed</span>
-          </div>
-          <span className={styles.trustStripDot} aria-hidden />
-          <div className={styles.trustStripItem}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            <span>Go live in under 1 minute</span>
-          </div>
-          <span className={styles.trustStripDot} aria-hidden />
-          <div className={styles.trustStripItem}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><rect x="2" y="7" width="11" height="10" rx="1.5"/><rect x="11" y="5" width="11" height="10" rx="1.5"/></svg>
-            <span>Multiple payment gateways</span>
-          </div>
+      <div dangerouslySetInnerHTML={{ __html: `<!-- EDVEO DASHBOARD SECTION START -->
+<section style="padding:56px 0 0;background:#F3F4F6;">
+
+<div style="text-align:center;padding:0 24px;margin-bottom:28px;">
+  <p style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#15803D;margin:0 0 8px;">YOUR INSTITUTE DASHBOARD</p>
+  <h2 style="font-size:32px;font-weight:700;color:#0F172A;line-height:1.2;margin:0 0 10px;">Everything about your institute,<br>in one glance.</h2>
+  <p style="font-size:14px;color:#6B7280;line-height:1.6;max-width:480px;margin:0 auto;">Fees collected, students at risk, batch health and revenue — without opening a single Excel sheet or WhatsApp group.</p>
+</div>
+
+<div style="display:flex;justify-content:center;gap:8px;margin-bottom:24px;flex-wrap:wrap;padding:0 24px;">
+  <button onclick="eTab('today',this)" style="font-size:12px;font-weight:500;padding:7px 18px;border-radius:999px;border:1.5px solid #0F172A;background:#0F172A;color:#fff;cursor:pointer;">Today's Overview</button>
+  <button onclick="eTab('student',this)" style="font-size:12px;font-weight:500;padding:7px 18px;border-radius:999px;border:1.5px solid #E5E7EB;background:#fff;color:#6B7280;cursor:pointer;">Student Health</button>
+  <button onclick="eTab('fee',this)" style="font-size:12px;font-weight:500;padding:7px 18px;border-radius:999px;border:1.5px solid #E5E7EB;background:#fff;color:#6B7280;cursor:pointer;">Fee Collection</button>
+</div>
+
+<div style="max-width:960px;margin:0 auto;border-radius:12px 12px 0 0;overflow:hidden;border:1px solid #E5E7EB;border-bottom:none;">
+
+  <div style="background:#1C1C1E;padding:9px 14px;display:flex;align-items:center;gap:6px;">
+    <div style="width:9px;height:9px;border-radius:50%;background:#FF5F57;"></div>
+    <div style="width:9px;height:9px;border-radius:50%;background:#FEBC2E;"></div>
+    <div style="width:9px;height:9px;border-radius:50%;background:#28C840;"></div>
+    <div style="background:#2C2C2E;border-radius:4px;padding:3px 0;font-size:10px;color:#6B7280;flex:1;max-width:240px;margin:0 auto;text-align:center;">app.edveo.co/dashboard</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:180px 1fr;">
+
+    <div style="background:#fff;border-right:1px solid #E5E7EB;min-height:500px;">
+      <div style="background:#1A1A2E;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+        <div style="width:28px;height:28px;background:#15803D;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">YI</div>
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#fff;">Your Institute</div>
+          <div style="font-size:8px;color:rgba(255,255,255,0.4);letter-spacing:0.06em;margin-top:1px;">OWNER PORTAL</div>
+        </div>
+      </div>
+      <div style="padding:8px 0;">
+        <div style="padding:7px 14px;font-size:11px;color:#6B7280;">Get Started</div>
+        <div style="padding:7px 14px;font-size:11px;color:#15803D;font-weight:600;background:#F0FDF4;border-right:2px solid #15803D;">Dashboard</div>
+        <div style="padding:10px 14px 3px;font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;">CREATE</div>
+        <div style="padding:7px 14px;font-size:11px;color:#6B7280;">LMS</div>
+        <div style="padding:10px 14px 3px;font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;">GROW</div>
+        <div style="padding:7px 14px;font-size:11px;color:#6B7280;">CRM</div>
+        <div style="padding:10px 14px 3px;font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;">OPERATE</div>
+        <div style="padding:7px 14px;font-size:11px;color:#6B7280;">ERP</div>
+        <div style="padding:10px 14px 3px;font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;">ANALYSE</div>
+        <div style="padding:7px 14px;font-size:11px;color:#6B7280;">Analytics</div>
+        <div style="padding:10px 14px 3px;font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;">PLATFORM SETUP</div>
+        <div style="padding:7px 14px;font-size:11px;color:#6B7280;">Website templates</div>
+        <div style="padding:7px 14px;font-size:11px;color:#6B7280;">File Manager</div>
+        <div style="padding:7px 14px;font-size:11px;color:#6B7280;">Settings</div>
+      </div>
+    </div>
+
+    <div style="background:#F9FAFB;">
+
+      <div style="background:#fff;border-bottom:1px solid #E5E7EB;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="font-size:15px;font-weight:600;color:#0F172A;">Dashboard</div>
+          <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:6px;padding:5px 10px;font-size:10px;color:#9CA3AF;width:180px;">Search students, courses...</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <div style="font-size:10px;padding:5px 10px;border-radius:6px;background:#15803D;color:#fff;border:1px solid #15803D;">+ Add Student</div>
+          <div style="font-size:10px;padding:5px 10px;border-radius:6px;background:#fff;color:#374151;border:1px solid #E5E7EB;">Record Payment</div>
+          <div style="font-size:10px;padding:5px 10px;border-radius:6px;background:#fff;color:#374151;border:1px solid #E5E7EB;">Add Lead</div>
+          <div style="font-size:10px;padding:5px 10px;border-radius:6px;background:#fff;color:#374151;border:1px solid #E5E7EB;">Timetable</div>
         </div>
       </div>
 
-      {/* Intelligence Demo Section */}
-      <IntelligenceDemoSection />
+      <div style="padding:14px 16px;">
+
+        <div style="margin-bottom:12px;">
+          <div style="font-size:18px;font-weight:600;color:#0F172A;">Good afternoon, sb</div>
+          <div style="font-size:10px;color:#9CA3AF;margin-bottom:5px;">Monday, 15 Jun 2026</div>
+          <div style="display:inline-flex;align-items:center;gap:4px;background:#F0FDF4;border-radius:999px;padding:3px 10px;font-size:9px;font-weight:600;color:#15803D;margin-bottom:12px;">
+            <div style="width:5px;height:5px;border-radius:50%;background:#15803D;"></div>
+            INSTITUTE SYNCED
+          </div>
+        </div>
+
+        <div style="background:#166534;border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.06em;color:rgba(255,255,255,0.55);margin-bottom:4px;display:flex;align-items:center;gap:5px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#4ADE80;"></div>
+            EDVEO AI · DAILY BRIEF
+          </div>
+          <div style="font-size:11px;font-weight:600;color:#fff;margin-bottom:3px;">Today's institute operations at a glance</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.7);line-height:1.5;display:flex;align-items:flex-start;gap:5px;">
+            <span style="color:#4ADE80;margin-top:1px;">●</span>
+            14 students have pending fees · 7 students below 60% attendance · Fee collection up 18% vs last month
+          </div>
+        </div>
+
+        <div id="edveo-panel-today" style="display:block;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;margin-bottom:8px;">TODAY AT YOUR INSTITUTE</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px;">
+              <div style="font-size:9px;color:#9CA3AF;margin-bottom:3px;">COLLECTED (MONTH)</div>
+              <div style="font-size:20px;font-weight:700;color:#0F172A;line-height:1;margin-bottom:2px;">₹2.4L</div>
+              <div style="font-size:9px;color:#15803D;">+18% vs last month</div>
+              <div style="height:2px;background:#F3F4F6;border-radius:1px;margin-top:6px;"><div style="width:86%;height:100%;background:#15803D;border-radius:1px;"></div></div>
+            </div>
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px;">
+              <div style="font-size:9px;color:#9CA3AF;margin-bottom:3px;">STUDENTS</div>
+              <div style="font-size:20px;font-weight:700;color:#0F172A;line-height:1;margin-bottom:2px;">200</div>
+              <div style="font-size:9px;color:#15803D;">+12 joined this month</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px;">
+              <div style="font-size:9px;color:#9CA3AF;margin-bottom:3px;">ATTENDANCE TODAY</div>
+              <div style="font-size:20px;font-weight:700;color:#0F172A;line-height:1;margin-bottom:2px;">83%</div>
+              <div style="font-size:9px;color:#DC2626;">7 students absent</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:10px;">
+              <div style="font-size:9px;color:#9CA3AF;margin-bottom:3px;">OPEN LEADS</div>
+              <div style="font-size:20px;font-weight:700;color:#0F172A;line-height:1;margin-bottom:2px;">18</div>
+              <div style="font-size:9px;color:#9CA3AF;">in admissions pipeline</div>
+            </div>
+          </div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;margin-bottom:8px;">ADMISSIONS FUNNEL</div>
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <div style="font-size:11px;font-weight:600;color:#0F172A;">Admissions pipeline</div>
+              <div style="font-size:9px;color:#15803D;">View pipeline →</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px;">
+              <div style="background:#F0FDF4;border:1px solid #DCFCE7;border-radius:6px;padding:8px 10px;">
+                <div style="font-size:8px;font-weight:600;color:#15803D;margin-bottom:3px;">OPEN LEADS</div>
+                <div style="font-size:18px;font-weight:700;color:#0F172A;">18</div>
+              </div>
+              <div style="font-size:12px;color:#D1D5DB;text-align:center;">→</div>
+              <div style="background:#F0FDF4;border:1px solid #DCFCE7;border-radius:6px;padding:8px 10px;">
+                <div style="font-size:8px;font-weight:600;color:#15803D;margin-bottom:3px;">STUDENTS</div>
+                <div style="font-size:18px;font-weight:700;color:#0F172A;">200</div>
+                <div style="font-size:8px;color:#9CA3AF;">72% enrolled</div>
+              </div>
+              <div style="font-size:12px;color:#D1D5DB;text-align:center;">→</div>
+              <div style="background:#F0FDF4;border:1px solid #DCFCE7;border-radius:6px;padding:8px 10px;">
+                <div style="font-size:8px;font-weight:600;color:#15803D;margin-bottom:3px;">THIS WEEK</div>
+                <div style="font-size:18px;font-weight:700;color:#0F172A;">4</div>
+                <div style="font-size:8px;color:#9CA3AF;">new admissions</div>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;margin-bottom:8px;">INSTITUTE PERFORMANCE</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;"><div style="font-size:11px;font-weight:600;color:#0F172A;">Programs &amp; batches</div><div style="font-size:9px;color:#15803D;">View all →</div></div>
+              <div style="font-size:9px;color:#9CA3AF;margin-bottom:8px;">Enrollment and course health</div>
+              <div style="display:flex;align-items:center;padding:5px 0;border-bottom:1px solid #F9FAFB;"><div style="font-size:10px;color:#374151;flex:1;">NEET Batch A</div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#DCFCE7;color:#15803D;font-weight:500;">88 students</div></div>
+              <div style="display:flex;align-items:center;padding:5px 0;border-bottom:1px solid #F9FAFB;"><div style="font-size:10px;color:#374151;flex:1;">Class 11–12 Science</div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#DCFCE7;color:#15803D;font-weight:500;">62 students</div></div>
+              <div style="display:flex;align-items:center;padding:5px 0;"><div style="font-size:10px;color:#374151;flex:1;">Degree / Other</div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#FEF9C3;color:#854D0E;font-weight:500;">50 · low enrol</div></div>
+            </div>
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;"><div style="font-size:11px;font-weight:600;color:#0F172A;">Needs attention</div><div style="font-size:9px;color:#15803D;">Manage →</div></div>
+              <div style="font-size:9px;color:#9CA3AF;margin-bottom:8px;">Items that need action today</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #F9FAFB;"><div style="width:22px;height:22px;border-radius:50%;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;">!</div><div style="font-size:10px;color:#374151;flex:1;">14 students — fees pending</div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#FEE2E2;color:#DC2626;font-weight:500;">Urgent</div></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #F9FAFB;"><div style="width:22px;height:22px;border-radius:50%;background:#FEF9C3;color:#854D0E;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;">↓</div><div style="font-size:10px;color:#374151;flex:1;">7 students — low attendance</div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#FEF9C3;color:#854D0E;font-weight:500;">Review</div></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;"><div style="width:22px;height:22px;border-radius:50%;background:#DCFCE7;color:#15803D;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;">↑</div><div style="font-size:10px;color:#374151;flex:1;">Revenue up 18% this month</div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#DCFCE7;color:#15803D;font-weight:500;">Great</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="edveo-panel-student" style="display:none;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;margin-bottom:8px;">STUDENT HEALTH</div>
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;margin-bottom:12px;">
+            <div style="font-size:11px;font-weight:600;color:#0F172A;margin-bottom:2px;">Enrollment snapshot</div>
+            <div style="font-size:9px;color:#9CA3AF;margin-bottom:10px;">Across all batches</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+              <div style="background:#F0FDF4;border-radius:6px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#15803D;margin-bottom:2px;">200</div><div style="font-size:9px;color:#15803D;">Total students</div></div>
+              <div style="background:#F0FDF4;border-radius:6px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#15803D;margin-bottom:2px;">12</div><div style="font-size:9px;color:#15803D;">New this month</div></div>
+              <div style="background:#FFFBEB;border-radius:6px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#854D0E;margin-bottom:2px;">4</div><div style="font-size:9px;color:#854D0E;">New this week</div></div>
+              <div style="background:#FEF2F2;border-radius:6px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#DC2626;margin-bottom:2px;">7</div><div style="font-size:9px;color:#DC2626;">At risk</div></div>
+            </div>
+          </div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;margin-bottom:8px;">AT-RISK STUDENTS — BELOW 60% ATTENDANCE</div>
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div style="font-size:11px;font-weight:600;color:#0F172A;">Students needing attention</div><div style="font-size:9px;color:#15803D;">Notify all parents →</div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #F9FAFB;"><div style="width:22px;height:22px;border-radius:50%;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;flex-shrink:0;">MF</div><div style="flex:1;"><div style="font-size:10px;color:#374151;">Mohammed Faiz</div><div style="font-size:9px;color:#9CA3AF;">NEET Batch A</div></div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#FEE2E2;color:#DC2626;font-weight:500;">54% · 3 fees pending</div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #F9FAFB;"><div style="width:22px;height:22px;border-radius:50%;background:#FEF9C3;color:#854D0E;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;flex-shrink:0;">PA</div><div style="flex:1;"><div style="font-size:10px;color:#374151;">Priya Anand</div><div style="font-size:9px;color:#9CA3AF;">Class 12 Science</div></div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#FEF9C3;color:#854D0E;font-weight:500;">61% attendance</div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;"><div style="width:22px;height:22px;border-radius:50%;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;flex-shrink:0;">RA</div><div style="flex:1;"><div style="font-size:10px;color:#374151;">Roshan Ali</div><div style="font-size:9px;color:#9CA3AF;">Degree Batch</div></div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#FEE2E2;color:#DC2626;font-weight:500;">48% · may dropout</div></div>
+          </div>
+        </div>
+
+        <div id="edveo-panel-fee" style="display:none;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;margin-bottom:8px;">FEE COLLECTION BY BATCH</div>
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><div style="font-size:11px;font-weight:600;color:#0F172A;">Batch fee progress</div><div style="font-size:9px;color:#9CA3AF;">Expected vs collected per batch</div></div><div style="font-size:9px;color:#15803D;">Fee reports →</div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #F9FAFB;"><div style="font-size:10px;color:#374151;flex:1;">NEET Batch A</div><div style="width:80px;height:5px;background:#F3F4F6;border-radius:3px;overflow:hidden;"><div style="width:92%;height:100%;background:#15803D;border-radius:3px;"></div></div><div style="font-size:9px;font-weight:600;color:#15803D;min-width:30px;text-align:right;">92%</div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #F9FAFB;"><div style="font-size:10px;color:#374151;flex:1;">Class 11–12 Science</div><div style="width:80px;height:5px;background:#F3F4F6;border-radius:3px;overflow:hidden;"><div style="width:84%;height:100%;background:#15803D;border-radius:3px;"></div></div><div style="font-size:9px;font-weight:600;color:#15803D;min-width:30px;text-align:right;">84%</div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;"><div style="font-size:10px;color:#374151;flex:1;">Degree / Other</div><div style="width:80px;height:5px;background:#F3F4F6;border-radius:3px;overflow:hidden;"><div style="width:61%;height:100%;background:#F59E0B;border-radius:3px;"></div></div><div style="font-size:9px;font-weight:600;color:#854D0E;min-width:30px;text-align:right;">61%</div></div>
+          </div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.07em;color:#9CA3AF;margin-bottom:8px;">OVERDUE — ACTION NEEDED</div>
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div style="font-size:11px;font-weight:600;color:#0F172A;">14 students with pending fees</div><div style="font-size:9px;color:#15803D;">Send all reminders →</div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #F9FAFB;"><div style="width:22px;height:22px;border-radius:50%;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;flex-shrink:0;">AK</div><div style="flex:1;"><div style="font-size:10px;color:#374151;">Amal Krishnan</div><div style="font-size:9px;color:#9CA3AF;">Class 11 Science</div></div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#FEE2E2;color:#DC2626;font-weight:500;">₹4,500 · 32 days</div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #F9FAFB;"><div style="width:22px;height:22px;border-radius:50%;background:#FEF9C3;color:#854D0E;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;flex-shrink:0;">SF</div><div style="flex:1;"><div style="font-size:10px;color:#374151;">Sana Fathima</div><div style="font-size:9px;color:#9CA3AF;">NEET Batch A</div></div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#FEF9C3;color:#854D0E;font-weight:500;">₹2,200 · 18 days</div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #F9FAFB;"><div style="width:22px;height:22px;border-radius:50%;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;flex-shrink:0;">RM</div><div style="flex:1;"><div style="font-size:10px;color:#374151;">Rahul Menon</div><div style="font-size:9px;color:#9CA3AF;">Class 12 Commerce</div></div><div style="font-size:8px;padding:2px 5px;border-radius:3px;background:#FEE2E2;color:#DC2626;font-weight:500;">₹3,800 · 41 days</div></div>
+            <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F3F4F6;display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:10px;color:#9CA3AF;">Total pending: ₹38,500 across 14 students</div>
+              <div style="font-size:10px;color:#15803D;font-weight:500;cursor:pointer;">Send WhatsApp reminders to all →</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;padding:14px 16px;background:#fff;border-top:1px solid #E5E7EB;">
+        <div style="font-size:11px;color:#6B7280;">Sample data shown — your real institute numbers appear when you sign up.</div>
+        <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:8px;">
+          <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:999px;padding:4px 12px;font-size:10px;color:#374151;">No Excel needed</div>
+          <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:999px;padding:4px 12px;font-size:10px;color:#374151;">Auto fee reminders</div>
+          <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:999px;padding:4px 12px;font-size:10px;color:#374151;">Live in 5 minutes</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</section>
+
+<script>
+function eTab(t,btn){
+  document.querySelectorAll('[id^="edveo-panel-"]').forEach(function(p){p.style.display='none';});
+  document.querySelectorAll('[onclick^="eTab"]').forEach(function(b){
+    b.style.background='#fff';b.style.color='#6B7280';b.style.borderColor='#E5E7EB';
+  });
+  document.getElementById('edveo-panel-'+t).style.display='block';
+  btn.style.background='#0F172A';btn.style.color='#fff';btn.style.borderColor='#0F172A';
+}
+</script>
+<!-- EDVEO DASHBOARD SECTION END -->` }} />
 
       <div style={{ borderTop: "1px solid #E5E7EB", paddingTop: "56px", paddingBottom: "56px", background: "#FFFFFF" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
@@ -84,6 +281,9 @@ export default function Home() {
 
       {/* Feature Explorer — tabbed, equal real estate for all 5 features */}
       <FeatureExplorer />
+
+      {/* Intelligence Demo Section */}
+      <IntelligenceDemoSection />
 
       {/* Mobile App — standalone premium section */}
       <MobileAppBanner />
