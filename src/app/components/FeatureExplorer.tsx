@@ -70,7 +70,7 @@ function LiveClassMockup() {
       <div className={styles.mockupProgressWrap}>
         <div className={styles.mockupProgressLabel}>Session progress</div>
         <div className={styles.mockupProgressTrack}>
-          <div className={styles.mockupProgressBar} style={{ width: '62%' }} />
+          <div className={styles.mockupProgressBar} style={{ maxWidth: '62%' }} />
         </div>
         <div className={styles.mockupProgressPct}>62%</div>
       </div>
@@ -172,7 +172,7 @@ function AnalyticsMockup() {
         {bars.map((b) => (
           <div key={b.subject} className={styles.mockupBarGroup}>
             <div className={styles.mockupBarTrack}>
-              <div className={styles.mockupBarFill} style={{ width: `${b.score}%`, background: b.color }} />
+              <div className={styles.mockupBarFill} style={{ '--target-width': `${b.score}%`, background: b.color } as React.CSSProperties} />
             </div>
             <div className={styles.mockupBarMeta}>
               <span className={styles.mockupBarSubject}>{b.subject}</span>
@@ -202,7 +202,7 @@ function CrmMockup() {
       <div className={styles.mockupFunnel}>
         {stages.map((s, i) => (
           <div key={s.label} className={styles.mockupFunnelStage}>
-            <div className={styles.mockupFunnelBar} style={{ width: `${100 - i * 18}%`, background: s.color }}>
+            <div className={styles.mockupFunnelBar} style={{ '--target-width': `${100 - i * 18}%`, background: s.color } as React.CSSProperties}>
               <span className={styles.mockupFunnelCount}>{s.count}</span>
             </div>
             <span className={styles.mockupFunnelLabel}>{s.label}</span>
@@ -238,36 +238,27 @@ function CrmMockup() {
 }
 
 function TimetableMockup() {
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   const slots = [
-    { day: 'Mon', time: '9–11 AM', subject: 'Physics', batch: 'NEET A', active: true },
-    { day: 'Tue', time: '10–12 PM', subject: 'Chemistry', batch: 'JEE B', active: false },
-    { day: 'Wed', time: '9–11 AM', subject: 'Biology', batch: 'NEET A', active: true },
-    { day: 'Thu', time: '2–4 PM', subject: 'Maths', batch: 'JEE B', active: false },
-    { day: 'Fri', time: '9–11 AM', subject: 'Physics', batch: 'NEET B', active: true },
+    { day: 'Mon', time: '9–11 AM', subject: 'Physics', batch: 'NEET A' },
+    { day: 'Tue', time: '10–12 PM', subject: 'Chemistry', batch: 'JEE B' },
+    { day: 'Wed', time: '9–11 AM', subject: 'Biology', batch: 'NEET A' },
+    { day: 'Thu', time: '2–4 PM', subject: 'Maths', batch: 'JEE B' },
+    { day: 'Fri', time: '9–11 AM', subject: 'Physics', batch: 'NEET B' },
   ];
   return (
     <div className={styles.mockupShell}>
       <div className={styles.mockupSectionLabel}>Weekly Timetable — Batch Overview</div>
-      <div className={styles.mockupDayTabs}>
-        {days.map((d) => (
-          <div key={d} className={`${styles.mockupDayTab} ${d === 'Mon' ? styles.mockupDayTabActive : ''}`}>{d}</div>
-        ))}
-      </div>
-      <div className={styles.mockupSlots}>
+      <div className={styles.mockupTimetable}>
         {slots.map((s) => (
-          <div key={s.day + s.time} className={`${styles.mockupSlot} ${s.active ? styles.mockupSlotActive : ''}`}>
-            <div className={styles.mockupSlotLeft}>
-              <div className={styles.mockupSlotSubject}>{s.subject}</div>
-              <div className={styles.mockupSlotMeta}>{s.batch} · {s.time}</div>
-            </div>
+          <div key={s.day + s.time} className={styles.mockupSlotRow}>
             <div className={styles.mockupSlotDay}>{s.day}</div>
+            <div className={styles.mockupSlotInfo}>
+              <div className={styles.mockupSlotTime}>{s.time}</div>
+              <div className={styles.mockupSlotSubject}>{s.subject}</div>
+            </div>
+            <div className={styles.mockupSlotBatch}>{s.batch}</div>
           </div>
         ))}
-      </div>
-      <div className={styles.mockupConflict}>
-        <span className={styles.mockupAtRiskIcon} style={{ color: '#2EAA6E' }}>✓</span>
-        <span>No scheduling conflicts detected</span>
       </div>
     </div>
   );
@@ -275,21 +266,7 @@ function TimetableMockup() {
 
 /* ── Feature data ── */
 const FEATURES: Feature[] = [
-  {
-    id: 'live-classes',
-    label: 'Live Classes',
-    icon: <VideoIcon />,
-    headline: 'Run a full live class — no Zoom subscription needed.',
-    sub: 'Fully integrated live classes with everything built in. No third-party tools, no extra billing, no switching apps mid-session.',
-    bullets: [
-      'Auto-recorded — replay available instantly after class',
-      'Attendance logged and synced to each student\'s profile',
-      'Interactive whiteboard with annotation tools',
-      'Built-in chat moderation and Q&A queue',
-      'Works on desktop and your branded mobile app',
-    ],
-    mockup: <LiveClassMockup />,
-  },
+
   {
     id: 'fee-management',
     label: 'Fee Management',

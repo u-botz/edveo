@@ -71,7 +71,7 @@ export default function HeroSection() {
 
         {/* Sub-headline */}
         <p className={styles.heroSub}>
-          Edveo replaces your fee registers, attendance sheets, and WhatsApp reminders with one simple dashboard — so you spend less time on admin and more time on teaching.
+          Edveo replaces your fee registers, attendance sheets, and WhatsApp reminders with one simple dashboard — and takes your entire institute online with your own branded app, website, and learning platform.
         </p>
 
         {/* Micro-copy — directly above primary CTA */}
@@ -234,9 +234,9 @@ export default function HeroSection() {
               <span className="sp-quote-mark">&quot;</span>
               <p className="sp-quote">Fee collection used to take my staff 3 days every month. Now it&apos;s done in the morning automatically.</p>
               <div className="sp-author-row">
-                <div className="sp-avatar">M</div>
+                <div className="sp-avatar">S</div>
                 <div className="sp-author-info">
-                  <p className="sp-name">Director</p>
+                  <p className="sp-name">Sayooj Neduveli</p>
                   <p className="sp-institute">Mentora LearnX, Manjeri</p>
                 </div>
               </div>
@@ -245,9 +245,9 @@ export default function HeroSection() {
               <span className="sp-quote-mark">&quot;</span>
               <p className="sp-quote">The AI told me which students were about to drop out before I even noticed. That alone is worth it.</p>
               <div className="sp-author-row">
-                <div className="sp-avatar">M</div>
+                <div className="sp-avatar">A</div>
                 <div className="sp-author-info">
-                  <p className="sp-name">Director</p>
+                  <p className="sp-name">Aiswarya</p>
                   <p className="sp-institute">Mentora Junior, Manjeri</p>
                 </div>
               </div>
@@ -255,12 +255,6 @@ export default function HeroSection() {
           </div>
         </div>
         {/* --- END SP-1 --- */}
-
-
-        <p className={styles.intelligenceBridge}>
-          Powered by Edveo Intelligence™ — the AI that knows your institute the way you do.
-        </p>
-
       </div>
     </section>
   );

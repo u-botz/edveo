@@ -18,7 +18,7 @@ const INSTITUTE_FAQS = [
 
 export default function PricingPageClient() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
-  const [tab, setTab] = useState<"online" | "teachers" | "institutes">("online");
+  const [tab, setTab] = useState<"online" | "teachers" | "institutes">("institutes");
 
   const price = (mo: number, yr: number) =>
     billing === "monthly" ? `₹${mo.toLocaleString("en-IN")}` : `₹${yr.toLocaleString("en-IN")}`;
@@ -73,7 +73,7 @@ export default function PricingPageClient() {
         {/* Segment tabs */}
         <div className={styles.segmentScrollOuter}>
           <div style={{ display: "inline-flex", background: "#fff", borderRadius: 999, padding: 4, boxShadow: "0 1px 4px rgba(0,0,0,0.08)", flexShrink: 0 }}>
-            {(["online", "teachers", "institutes"] as const).map((t) => (
+            {(["institutes", "teachers", "online"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => setTab(t)}

@@ -9,7 +9,6 @@ import CtaBanner from "./components/CtaBanner";
 import HeroSection from "./components/HeroSection";
 import FeatureExplorer from "./components/FeatureExplorer";
 import MobileAppBanner from "./components/MobileAppBanner";
-import { IntelligenceDemoSection } from "@/features/intelligence-demo";
 import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
 
 export default function Home() {
@@ -51,7 +50,7 @@ export default function Home() {
       </div>
 
       <div dangerouslySetInnerHTML={{ __html: `<!-- EDVEO DASHBOARD SECTION START -->
-<section style="padding:80px 0 0;background:#F9FAFB;">
+<section style="padding:80px 0 80px;background:#F9FAFB;">
 
 <div style="text-align:center;padding:0 24px;margin-bottom:40px;">
   <p style="font-size:13px;font-weight:700;letter-spacing:0.1em;color:#15803D;margin:0 0 12px;text-transform:uppercase;">Your Institute Dashboard</p>
@@ -67,16 +66,16 @@ export default function Home() {
 
 <div style="max-width:1200px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);background:#fff;aspect-ratio:16/10;position:relative;">
 
-  <div style="background:#1C1C1E;padding:12px 20px;display:flex;align-items:center;gap:8px;">
-    <div style="width:12px;height:12px;border-radius:50%;background:#FF5F57;"></div>
-    <div style="width:12px;height:12px;border-radius:50%;background:#FEBC2E;"></div>
-    <div style="width:12px;height:12px;border-radius:50%;background:#28C840;"></div>
-    <div style="background:#2C2C2E;border-radius:6px;padding:4px 0;font-size:12px;color:#9CA3AF;flex:1;max-width:320px;margin:0 auto;text-align:center;font-weight:500;">app.edveo.co/dashboard</div>
+  <div style="background:#fff;border-bottom:1px solid #E5E7EB;padding:12px 20px;display:flex;align-items:center;gap:8px;">
+    <div style="width:12px;height:12px;border-radius:50%;background:#FF5F57;border:1px solid #E0443E;"></div>
+    <div style="width:12px;height:12px;border-radius:50%;background:#FEBC2E;border:1px solid #D8A027;"></div>
+    <div style="width:12px;height:12px;border-radius:50%;background:#28C840;border:1px solid #1DAE33;"></div>
+    <div style="background:#F1F5F9;border-radius:6px;padding:4px 0;font-size:12px;color:#64748B;flex:1;max-width:320px;margin:0 auto;text-align:center;font-weight:500;border:1px solid #E2E8F0;">app.edveo.co/dashboard</div>
   </div>
 
   <div style="display:grid;grid-template-columns:240px 1fr;height:calc(100% - 40px);">
 
-    <div class="edveo-scroll" style="background:#fff;border-right:1px solid #E5E7EB;height:100%;overflow-y:auto;overflow-x:hidden;">
+    <div class="edveo-scroll" style="background:#fff;border-right:1px solid #E5E7EB;height:100%;overflow-y:auto;overflow-x:hidden;border-bottom-left-radius:16px;">
       <div style="background:#fff;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E5E7EB;height:64px;box-sizing:border-box;">
         <div style="display:flex;align-items:center;gap:12px;">
           <div style="width:32px;height:32px;background:#15803D;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">
@@ -107,7 +106,7 @@ export default function Home() {
       </div>
     </div>
 
-    <div class="edveo-scroll" style="background:#FAFAFA;height:100%;overflow-y:auto;overflow-x:hidden;">
+    <div class="edveo-scroll" style="background:#FAFAFA;height:100%;overflow-y:auto;overflow-x:hidden;border-bottom-right-radius:16px;">
 
       <div style="background:#fff;border-bottom:1px solid #E5E7EB;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;">
         <div style="display:flex;align-items:center;gap:24px;">
@@ -356,136 +355,345 @@ function eTab(t,btn){
 </script>
 <!-- EDVEO DASHBOARD SECTION END -->` }} />
 
+      <div dangerouslySetInnerHTML={{ __html: `<!-- GO ONLINE SECTION START -->
+<section style="background:#fff;padding:64px 0 0;">
+<div style="max-width:1200px;margin:0 auto;padding:0 40px;">
+
+  <div style="text-align:center;margin-bottom:56px;max-width:800px;margin-left:auto;margin-right:auto;">
+    <p style="font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#15803D;margin:0 0 12px;">TAKE YOUR INSTITUTE ONLINE</p>
+    <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;color:#0F172A;line-height:1.2;margin:0 0 12px;max-width:700px;margin-left:auto;margin-right:auto;">Your institute deserves better than WhatsApp groups and Google Drive links.</h2>
+    <p style="font-size:16px;color:#6B7280;line-height:1.6;margin:0;">Give your students a proper learning environment — video lessons, live classes, exams, and progress tracking — all under your institute's own name and brand.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;border-radius:12px;overflow:hidden;border:1px solid #E5E7EB;margin-bottom:56px;margin-left:0;margin-right:0;">
+
+    <div style="background:#FEF2F2;padding:32px 28px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.06em;color:#DC2626;margin-bottom:16px;">HOW MOST INSTITUTES DO IT TODAY</div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;">
+        <span style="font-size:24px;flex-shrink:0;margin-top:1px;">😩</span>
+        <div><div style="font-size:14px;color:#7F1D1D;line-height:1.5;">Record a class, upload to YouTube, share the link on WhatsApp</div><div style="font-size:12px;color:#DC2626;font-weight:500;margin-top:2px;">Anyone with the link can watch. No control. No tracking.</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;">
+        <span style="font-size:24px;flex-shrink:0;margin-top:1px;">😩</span>
+        <div><div style="font-size:14px;color:#7F1D1D;line-height:1.5;">Store PDFs and notes on Google Drive, share folder links</div><div style="font-size:12px;color:#DC2626;font-weight:500;margin-top:2px;">Folders get messy. Students can't find anything.</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;">
+        <span style="font-size:24px;flex-shrink:0;margin-top:1px;">😩</span>
+        <div><div style="font-size:14px;color:#7F1D1D;line-height:1.5;">Send exam papers on WhatsApp, collect answers via photos</div><div style="font-size:12px;color:#DC2626;font-weight:500;margin-top:2px;">Marking takes days. No auto-scoring. Results compiled manually.</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:24px;flex-shrink:0;margin-top:1px;">😩</span>
+        <div><div style="font-size:14px;color:#7F1D1D;line-height:1.5;">No idea which student is struggling in which topic</div><div style="font-size:12px;color:#DC2626;font-weight:500;margin-top:2px;">You find out only when exam results are bad — too late.</div></div>
+      </div>
+    </div>
+
+    <div style="background:#0F172A;display:flex;align-items:center;justify-content:center;min-width:52px;padding:0 18px;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.4);writing-mode:vertical-rl;">SWITCH TO EDVEO</div>
+        <div style="font-size:22px;color:#4ADE80;">→</div>
+      </div>
+    </div>
+
+    <div style="background:#F0FDF4;padding:32px 28px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:0.06em;color:#15803D;margin-bottom:16px;">WITH EDVEO — YOUR OWN PLATFORM</div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;">
+        <span style="font-size:24px;flex-shrink:0;margin-top:1px;">✅</span>
+        <div><div style="font-size:14px;color:#14532D;line-height:1.5;font-weight:500;">Upload recorded lessons — students watch inside your branded portal or app</div><div style="font-size:12px;color:#15803D;margin-top:2px;">Private. Organised by subject and topic. Trackable.</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;">
+        <span style="font-size:24px;flex-shrink:0;margin-top:1px;">✅</span>
+        <div><div style="font-size:14px;color:#14532D;line-height:1.5;font-weight:500;">Take live classes inside Edveo — attendance marked automatically</div><div style="font-size:12px;color:#15803D;margin-top:2px;">No Zoom links on WhatsApp. Students join from their portal or app.</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;">
+        <span style="font-size:24px;flex-shrink:0;margin-top:1px;">✅</span>
+        <div><div style="font-size:14px;color:#14532D;line-height:1.5;font-weight:500;">Create and assign online exams — auto-scored, results instant</div><div style="font-size:12px;color:#15803D;margin-top:2px;">Students take the test. Edveo marks it. You see the results.</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:24px;flex-shrink:0;margin-top:1px;">✅</span>
+        <div><div style="font-size:14px;color:#14532D;line-height:1.5;font-weight:500;">See exactly which student is weak in which topic — before exams</div><div style="font-size:12px;color:#15803D;margin-top:2px;">Topic-level mastery for every student. Intervene early.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:56px;max-width:100%;">
+    <div style="border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;background:#fff;">
+      <div style="width:48px;height:48px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+      <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:5px;">Recorded Video Lessons</div>
+      <div style="font-size:14px;color:#6B7280;line-height:1.6;margin-bottom:8px;">Upload and organise lessons by subject, chapter, and topic. Students watch on demand from their portal or mobile app.</div>
+      <div style="font-size:13px;color:#DC2626;font-weight:500;">Replaces: YouTube + Google Drive links on WhatsApp</div>
+    </div>
+    <div style="border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;background:#fff;">
+      <div style="width:48px;height:48px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg></div>
+      <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:5px;">Live Classes</div>
+      <div style="font-size:14px;color:#6B7280;line-height:1.6;margin-bottom:8px;">Host live sessions directly inside Edveo. Attendance is marked automatically when students join.</div>
+      <div style="font-size:13px;color:#DC2626;font-weight:500;">Replaces: Zoom links shared on WhatsApp groups</div>
+    </div>
+    <div style="border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;background:#fff;">
+      <div style="width:48px;height:48px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+      <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:5px;">Online Exams & Quizzes</div>
+      <div style="font-size:14px;color:#6B7280;line-height:1.6;margin-bottom:8px;">Create tests, assign to batches, auto-score answers. Results available instantly — no manual marking.</div>
+      <div style="font-size:13px;color:#DC2626;font-weight:500;">Replaces: WhatsApp paper photos, manual marking</div>
+    </div>
+    <div style="border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;background:#fff;">
+      <div style="width:48px;height:48px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+      <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:5px;">Assignments</div>
+      <div style="font-size:14px;color:#6B7280;line-height:1.6;margin-bottom:8px;">Assign homework digitally. Students submit inside the app. You review, grade, and give feedback — all in one place.</div>
+      <div style="font-size:13px;color:#DC2626;font-weight:500;">Replaces: PDF assignments on WhatsApp</div>
+    </div>
+    <div style="border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;background:#fff;">
+      <div style="width:48px;height:48px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+      <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:5px;">Branded Student App</div>
+      <div style="font-size:14px;color:#6B7280;line-height:1.6;margin-bottom:8px;">Your students download an app with your institute's name and logo. Not Edveo's name — yours.</div>
+      <div style="font-size:13px;color:#DC2626;font-weight:500;">Replaces: Generic WhatsApp groups</div>
+    </div>
+    <div style="border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;background:#fff;">
+      <div style="width:48px;height:48px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+      <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:5px;">Your Own Website</div>
+      <div style="font-size:14px;color:#6B7280;line-height:1.6;margin-bottom:8px;">Get a professional website at your own domain. Take admissions online. Be found on Google.</div>
+      <div style="font-size:13px;color:#DC2626;font-weight:500;">Replaces: No online presence at all</div>
+    </div>
+  </div>
+
+  <div style="background:#0F172A;border-radius:12px;padding:40px;max-width:100%;margin:0 0 40px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:#4ADE80;margin-bottom:8px;">STUDENT MASTERY TRACKING</div>
+        <div style="font-size:24px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:10px;">Know exactly which student is struggling — and in which topic — before the exam.</div>
+        <div style="font-size:15px;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:16px;">No more surprises on result day. Edveo tracks every student's performance at the topic level — so you can intervene while there's still time to help them.</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:14px;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:6px;"><span style="color:#4ADE80;">✓</span> Topic-level weakness detection</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:6px;"><span style="color:#4ADE80;">✓</span> Per-student progress across all subjects</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:6px;"><span style="color:#4ADE80;">✓</span> Automatically flags who needs extra attention</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:6px;"><span style="color:#4ADE80;">✓</span> Parents see their child's progress in real time</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:24px;border:1px solid rgba(255,255,255,0.08);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;">AK</div>
+          <div><div style="font-size:15px;font-weight:600;color:#fff;">Amal Krishnan</div><div style="font-size:12px;color:rgba(255,255,255,0.5);">NEET Batch A · Class 11</div></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:10px;">SUBJECT MASTERY</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:13px;color:rgba(255,255,255,0.7);width:140px;flex-shrink:0;">Physics — Optics</div><div style="flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;"><div style="width:82%;height:100%;background:#4ADE80;border-radius:4px;"></div></div><div style="font-size:12px;font-weight:700;color:#4ADE80;min-width:36px;text-align:right;">82%</div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:13px;color:rgba(255,255,255,0.7);width:140px;flex-shrink:0;">Chemistry — Org.</div><div style="flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;"><div style="width:61%;height:100%;background:#FBBF24;border-radius:4px;"></div></div><div style="font-size:12px;font-weight:700;color:#FBBF24;min-width:36px;text-align:right;">61%</div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:13px;color:rgba(255,255,255,0.7);width:140px;flex-shrink:0;">Biology — Genetics</div><div style="flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;"><div style="width:38%;height:100%;background:#F87171;border-radius:4px;"></div></div><div style="font-size:12px;font-weight:700;color:#F87171;min-width:36px;text-align:right;">38% ⚠</div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:13px;color:rgba(255,255,255,0.7);width:140px;flex-shrink:0;">Physics — Mechanics</div><div style="flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;"><div style="width:74%;height:100%;background:#4ADE80;border-radius:4px;"></div></div><div style="font-size:12px;font-weight:700;color:#4ADE80;min-width:36px;text-align:right;">74%</div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="font-size:13px;color:rgba(255,255,255,0.7);width:140px;flex-shrink:0;">Chemistry — Inorg.</div><div style="flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;"><div style="width:45%;height:100%;background:#F87171;border-radius:4px;"></div></div><div style="font-size:12px;font-weight:700;color:#F87171;min-width:36px;text-align:right;">45% ⚠</div></div>
+        </div>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);">
+          <div style="font-size:13px;color:#F87171;font-weight:600;">⚠ Needs attention in Biology — Genetics and Inorganic Chemistry</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:0;padding:32px 36px;max-width:100%;margin:40px 0 0;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;">
+    <div>
+      <div style="font-size:20px;font-weight:700;color:#0F172A;margin-bottom:5px;">Your institute. Your brand. Your domain.</div>
+      <div style="font-size:15px;color:#6B7280;line-height:1.6;">Students access everything through your own branded portal and mobile app — not a generic Edveo link. You look like a professional institute from day one.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:6px;padding:8px 16px;font-size:14px;color:#374151;font-family:monospace;white-space:nowrap;">🌐 <span style="color:#15803D;font-weight:600;">yourinstitute.com</span></div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:6px;padding:8px 16px;font-size:14px;color:#374151;font-family:monospace;white-space:nowrap;">🌐 <span style="color:#15803D;font-weight:600;">yourinstitute</span>.edveo.co</div>
+      <div style="font-size:12px;color:#9CA3AF;text-align:right;">Both options available</div>
+    </div>
+  </div>
+
+</div>
+</section>
+<!-- GO ONLINE SECTION END -->` }} />
+
+
 
 
       {/* Feature Explorer — tabbed, equal real estate for all 5 features */}
       <FeatureExplorer />
 
-      {/* Intelligence Demo Section */}
-      <IntelligenceDemoSection />
+      <div dangerouslySetInnerHTML={{ __html: `<!-- EDVEO AI FEATURE SECTION START -->
+<section style="background:#F9FAFB;padding:56px 0;border-top:1px solid #E5E7EB;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
+
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #E5E7EB;border-radius:999px;padding:5px 14px;font-size:11px;color:#374151;margin-bottom:16px;">
+        <div style="width:6px;height:6px;border-radius:50%;background:#15803D;"></div>
+        Edveo Intelligence™
+      </div>
+      <h2 style="font-size:32px;font-weight:700;color:#0F172A;line-height:1.2;margin:0 0 10px;">Your institute runs on autopilot.<br>Edveo Intelligence™ makes it happen.</h2>
+      <p style="font-size:14px;color:#6B7280;max-width:480px;margin:0 auto;line-height:1.6;">Not a chatbot. Not a gimmick. A built-in AI that watches your institute data and acts — so you don't have to.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;">
+
+      <div style="background:#fff;border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;">
+        <div style="width:36px;height:36px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px;">Sends fee reminders automatically</div>
+        <div style="font-size:12px;color:#6B7280;line-height:1.5;margin-bottom:10px;">Edveo detects overdue fees and sends WhatsApp reminders to parents — without you lifting a finger.</div>
+        <div style="font-size:11px;color:#15803D;font-weight:500;">✓ Zero manual follow-up. Ever.</div>
+      </div>
+
+      <div style="background:#fff;border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;">
+        <div style="width:36px;height:36px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px;">Flags at-risk students early</div>
+        <div style="font-size:12px;color:#6B7280;line-height:1.5;margin-bottom:10px;">When a student's attendance drops or quiz scores fall, Edveo alerts you immediately — before they drop out.</div>
+        <div style="font-size:11px;color:#15803D;font-weight:500;">✓ Catch problems before they become losses.</div>
+      </div>
+
+      <div style="background:#fff;border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;">
+        <div style="width:36px;height:36px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px;">Tells you which batch needs attention</div>
+        <div style="font-size:12px;color:#6B7280;line-height:1.5;margin-bottom:10px;">Every morning, Edveo gives you a daily brief — fees pending, attendance dips, and what needs your attention today.</div>
+        <div style="font-size:11px;color:#15803D;font-weight:500;">✓ Your institute summarised in 10 seconds.</div>
+      </div>
+
+    </div>
+
+    <div style="background:#0F172A;border-radius:12px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#4ADE80;flex-shrink:0;"></div>
+        <div style="font-size:13px;color:#fff;font-weight:500;">Edveo Intelligence™ is built in — always on, no setup needed.</div>
+      </div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.45);white-space:nowrap;flex-shrink:0;">Included in all plans · No extra charge</div>
+    </div>
+
+  </div>
+</section>
+<!-- EDVEO AI FEATURE SECTION END -->` }} />
 
       {/* Mobile App — standalone premium section */}
       <MobileAppBanner />
 
-      {/* ROI / Pain-to-Outcome Bridge */}
-      <section className={styles.roiSection} aria-labelledby="roi-section-heading">
-        <div className={styles.container}>
-          <p className={styles.roiEyebrow}>The cost of doing nothing</p>
-          <h2 id="roi-section-heading" className={styles.roiTitle}>
-            What your current setup is actually costing you
-          </h2>
-          <p className={styles.roiSubtitle}>
-            Three segments. Three different pain points. All verified from real operations.
-          </p>
+      <div dangerouslySetInnerHTML={{ __html: `<!-- COST SECTION START -->
+<section style="background:#F9FAFB;padding:64px 32px;">
 
-          <div className={styles.roiGrid}>
+  <div style="text-align:center;margin-bottom:48px;">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#DC2626;margin-bottom:12px;">THE COST OF DOING NOTHING</div>
+    <h2 style="font-size:32px;font-weight:700;color:#0F172A;line-height:1.2;margin-bottom:12px;">A typical day running your institute<br>without Edveo</h2>
+    <p style="font-size:14px;color:#6B7280;max-width:480px;margin:0 auto;line-height:1.6;">If any of these sound familiar, you're spending more time managing admin than teaching — and losing money doing it.</p>
+  </div>
 
-            {/* Offline institutes */}
-            <div className={styles.roiCard}>
-              <div className={styles.roiCardHeader}>
-                <div className={styles.roiPersonaBadge} data-persona="institute">🏫 Offline institutes</div>
-              </div>
-              <div className={styles.roiRow}>
-                <div className={styles.roiBefore}>
-                  <div className={styles.roiBeforeLabel}>Today</div>
-                  <div className={styles.roiBeforeItem}>₹40K–₹80K/yr lost to fee leakage from manual collection</div>
-                  <div className={styles.roiBeforeItem}>10–15 hrs/week chasing fees and attendance manually</div>
-                  <div className={styles.roiBeforeItem}>Parents calling for updates you can&apos;t easily pull</div>
-                </div>
-                <div className={styles.roiArrow} aria-hidden>→</div>
-                <div className={styles.roiAfter}>
-                  <div className={styles.roiAfterLabel}>With Edveo</div>
-                  <div className={styles.roiAfterItem}>Automated reminders collect fees without staff</div>
-                  <div className={styles.roiAfterItem}>Attendance and fees updated in real time</div>
-                  <div className={styles.roiAfterItem}>Parents get instant updates — zero calls to handle</div>
-                </div>
-              </div>
-              <div className={styles.roiOutcome}>
-                <span className={styles.roiOutcomeNumber}>8 hrs</span>
-                <span className={styles.roiOutcomeText}>saved every week on admin — from day one</span>
-              </div>
-            </div>
+  <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;margin-bottom:16px;max-width:900px;margin-left:auto;margin-right:auto;">
 
-            {/* Online academies */}
-            <div className={styles.roiCard}>
-              <div className={styles.roiCardHeader}>
-                <div className={styles.roiPersonaBadge} data-persona="edtech">🚀 Online academies</div>
-              </div>
-              <div className={styles.roiRow}>
-                <div className={styles.roiBefore}>
-                  <div className={styles.roiBeforeLabel}>Today</div>
-                  <div className={styles.roiBeforeItem}>₹10K–₹50K/mo across 5–6 disconnected tools</div>
-                  <div className={styles.roiBeforeItem}>Leads lost in spreadsheets and WhatsApp DMs</div>
-                  <div className={styles.roiBeforeItem}>No attribution — you can&apos;t see which channel converts</div>
-                </div>
-                <div className={styles.roiArrow} aria-hidden>→</div>
-                <div className={styles.roiAfter}>
-                  <div className={styles.roiAfterLabel}>With Edveo</div>
-                  <div className={styles.roiAfterItem}>One subscription replaces all tools — LMS + CRM + ERP</div>
-                  <div className={styles.roiAfterItem}>AI scores and prioritises every lead automatically</div>
-                  <div className={styles.roiAfterItem}>Full funnel visibility — channel tracked to enrolment</div>
-                </div>
-              </div>
-              <div className={styles.roiOutcome}>
-                <span className={styles.roiOutcomeNumber}>5–6 tools</span>
-                <span className={styles.roiOutcomeText}>replaced by one subscription on day one</span>
-              </div>
-            </div>
+    <div style="background:#0F172A;padding:12px 20px;display:flex;align-items:center;gap:8px;">
+      <div style="font-size:12px;font-weight:600;color:#fff;">📅 Monday morning — before Edveo</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-left:auto;">Happens every single week</div>
+    </div>
 
-            {/* Standalone teachers */}
-            <div className={styles.roiCard}>
-              <div className={styles.roiCardHeader}>
-                <div className={styles.roiPersonaBadge} data-persona="teacher">👩‍🏫 Standalone teachers</div>
-              </div>
-              <div className={styles.roiRow}>
-                <div className={styles.roiBefore}>
-                  <div className={styles.roiBeforeLabel}>Today</div>
-                  <div className={styles.roiBeforeItem}>Up to 30% of every sale paid to Udemy or Graphy</div>
-                  <div className={styles.roiBeforeItem}>No student data — the platform owns it, not you</div>
-                  <div className={styles.roiBeforeItem}>Your brand buried under their marketplace</div>
-                </div>
-                <div className={styles.roiArrow} aria-hidden>→</div>
-                <div className={styles.roiAfter}>
-                  <div className={styles.roiAfterLabel}>With Edveo</div>
-                  <div className={styles.roiAfterItem}>0% commission — every rupee of every sale is yours</div>
-                  <div className={styles.roiAfterItem}>You own your students and their data — always</div>
-                  <div className={styles.roiAfterItem}>Your name, your domain, your brand — fully white-label</div>
-                </div>
-              </div>
-              <div className={styles.roiOutcome}>
-                <span className={styles.roiOutcomeNumber}>₹10,000+/mo</span>
-                <span className={styles.roiOutcomeText}>in platform commissions on entry plans — kept by you</span>
-              </div>
-            </div>
+    <div style="padding:0;">
 
+      <div style="display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;padding:20px 20px;border-bottom:1px solid #F3F4F6;gap:0;">
+        <div style="padding-right:16px;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.06em;color:#DC2626;margin-bottom:6px;">THE PROBLEM</div>
+          <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+            <div style="font-size:12px;color:#7F1D1D;line-height:1.5;font-style:italic;">"I have to message every parent individually to remind them about fees. Some ignore me for weeks. I never know who has paid until my staff checks the register manually."</div>
           </div>
-
-          <p className={styles.roiDisclaimer}>
-            All figures sourced from ROI analysis and market data — no made-up averages
-          </p>
+          <div style="font-size:11px;color:#DC2626;font-weight:500;">⏱ 3–4 hrs/week lost chasing fees</div>
         </div>
-      </section>
-
-      {/* --- SP-3 INSERTION --- */}
-      <section className="sp-personas-section">
-        <h2 className="sp-section-heading">Institutes like yours are already live</h2>
-        <p className="sp-section-sub">One story for every type of educator on Edveo</p>
-        <div className="sp-testimonials-row">
-          <div className="sp-testimonial-card">
-            <div className="sp-badge sp-badge-offline">Offline Institute</div>
-            <p className="sp-quote">&quot;We recovered ₹60,000 in pending fees within the first month. I didn&apos;t chase a single parent — Edveo did it automatically.&quot;</p>
-            <p className="sp-name">Director</p>
-            <p className="sp-institute">Mentora LearnX, Manjeri, Kerala</p>
-          </div>
-          <div className="sp-testimonial-card">
-            <div className="sp-badge sp-badge-online">Online Academy</div>
-            <p className="sp-quote">&quot;We shut down 5 subscriptions the day we moved to Edveo. One platform replaced all of them and our lead conversion went up 40%.&quot;</p>
-            <p className="sp-name">Director</p>
-            <p className="sp-institute">Mentora Junior, Manjeri, Kerala</p>
-          </div>
+        <div style="display:flex;align-items:center;justify-content:center;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#F0FDF4;border:1px solid #DCFCE7;display:flex;align-items:center;justify-content:center;font-size:12px;color:#15803D;flex-shrink:0;">→</div>
         </div>
-      </section>
-      {/* --- END SP-3 --- */}
+        <div style="padding-left:16px;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.06em;color:#15803D;margin-bottom:6px;">WITH EDVEO</div>
+          <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+            <div style="font-size:12px;color:#14532D;line-height:1.5;">Edveo sends automatic fee reminders on WhatsApp. You see exactly who has paid, who hasn't, and how much is pending — in real time. Zero manual follow-up.</div>
+          </div>
+          <div style="font-size:11px;color:#15803D;font-weight:500;">✓ ₹40K–₹80K recovered per year</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;padding:20px 20px;border-bottom:1px solid #F3F4F6;gap:0;">
+        <div style="padding-right:16px;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.06em;color:#DC2626;margin-bottom:6px;">THE PROBLEM</div>
+          <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+            <div style="font-size:12px;color:#7F1D1D;line-height:1.5;font-style:italic;">"A student stopped coming 3 weeks ago. I found out only when their parent called asking why results were low. By then it was too late to help them."</div>
+          </div>
+          <div style="font-size:11px;color:#DC2626;font-weight:500;">⏱ Dropouts you never see coming</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#F0FDF4;border:1px solid #DCFCE7;display:flex;align-items:center;justify-content:center;font-size:12px;color:#15803D;flex-shrink:0;">→</div>
+        </div>
+        <div style="padding-left:16px;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.06em;color:#15803D;margin-bottom:6px;">WITH EDVEO</div>
+          <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+            <div style="font-size:12px;color:#14532D;line-height:1.5;">Edveo flags students with dropping attendance before they disappear. You get an alert when a student misses 3 classes in a row — while there's still time to intervene.</div>
+          </div>
+          <div style="font-size:11px;color:#15803D;font-weight:500;">✓ Catch at-risk students early</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;padding:20px 20px;border-bottom:1px solid #F3F4F6;gap:0;">
+        <div style="padding-right:16px;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.06em;color:#DC2626;margin-bottom:6px;">THE PROBLEM</div>
+          <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+            <div style="font-size:12px;color:#7F1D1D;line-height:1.5;font-style:italic;">"My attendance is in one register, fees in an Excel sheet, timetable on a whiteboard, and student contacts in WhatsApp. I need to open 4 things just to answer one parent's question."</div>
+          </div>
+          <div style="font-size:11px;color:#DC2626;font-weight:500;">⏱ 8–10 hrs/week on admin alone</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#F0FDF4;border:1px solid #DCFCE7;display:flex;align-items:center;justify-content:center;font-size:12px;color:#15803D;flex-shrink:0;">→</div>
+        </div>
+        <div style="padding-left:16px;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.06em;color:#15803D;margin-bottom:6px;">WITH EDVEO</div>
+          <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+            <div style="font-size:12px;color:#14532D;line-height:1.5;">Everything is in one dashboard — attendance, fees, timetable, student profiles, parent contacts. Answer any question in 10 seconds without leaving your phone.</div>
+          </div>
+          <div style="font-size:11px;color:#15803D;font-weight:500;">✓ One tab. Everything. Always.</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;padding:20px 20px;gap:0;">
+        <div style="padding-right:16px;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.06em;color:#DC2626;margin-bottom:6px;">THE PROBLEM</div>
+          <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+            <div style="font-size:12px;color:#7F1D1D;line-height:1.5;font-style:italic;">"I don't actually know if my institute is growing or shrinking. I have no monthly revenue number, no enrollment trend, nothing. I'm running blind."</div>
+          </div>
+          <div style="font-size:11px;color:#DC2626;font-weight:500;">⏱ No visibility = no control</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#F0FDF4;border:1px solid #DCFCE7;display:flex;align-items:center;justify-content:center;font-size:12px;color:#15803D;flex-shrink:0;">→</div>
+        </div>
+        <div style="padding-left:16px;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.06em;color:#15803D;margin-bottom:6px;">WITH EDVEO</div>
+          <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+            <div style="font-size:12px;color:#14532D;line-height:1.5;">Your institute health score updates daily — revenue, retention, enrollment trends, batch performance. You know exactly how your institute is doing at any moment.</div>
+          </div>
+          <div style="font-size:11px;color:#15803D;font-weight:500;">✓ Full clarity. Every day.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="background:#0F172A;border-radius:12px;padding:24px 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:900px;margin:0 auto 32px;">
+    <div style="text-align:center;padding:0 16px;border-right:1px solid rgba(255,255,255,0.08);">
+      <div style="font-size:28px;font-weight:700;color:#4ADE80;margin-bottom:4px;">8 hrs</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.4;">saved every week<br>on admin — from day one</div>
+    </div>
+    <div style="text-align:center;padding:0 16px;border-right:1px solid rgba(255,255,255,0.08);">
+      <div style="font-size:28px;font-weight:700;color:#4ADE80;margin-bottom:4px;">₹40K+</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.4;">in fee leakage recovered<br>per year on average</div>
+    </div>
+    <div style="text-align:center;padding:0 16px;">
+      <div style="font-size:28px;font-weight:700;color:#4ADE80;margin-bottom:4px;">0</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.4;">manual WhatsApp reminders<br>sent by you ever again</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <div style="font-size:13px;color:#6B7280;margin-bottom:14px;">Still running on WhatsApp and Excel? It's costing you more than you think.</div>
+    <a href="/register" style="display:inline-block;background:#15803D;color:#fff;font-size:13px;font-weight:600;padding:12px 28px;border-radius:8px;text-decoration:none;">See how Edveo fixes this →</a>
+  </div>
+
+</section>
+<!-- COST SECTION END -->` }} />
+
+
 
       {/* Go Live — objection-closer, lives near the decision point */}
       <section className={styles.timelineSection}>
@@ -580,18 +788,6 @@ function eTab(t,btn){
           </div>
         </div>
       </section>
-
-      {/* --- SP-4 INSERTION --- */}
-      <div className="sp-trust-bar">
-        <div className="sp-trust-title">Trusted by 120+ institutes across Kerala</div>
-        <div className="sp-stars">★★★★★</div>
-        <div className="sp-trust-sub">4.9 out of 5 &middot; Based on 80+ institute reviews</div>
-        <div className="sp-pills-row">
-          <span className="sp-pill">Mentora LearnX &middot; Manjeri, Kerala</span>
-          <span className="sp-pill">Mentora Junior &middot; Manjeri, Kerala</span>
-        </div>
-      </div>
-      {/* --- END SP-4 --- */}
 
       <CtaBanner
         variant="dark"
