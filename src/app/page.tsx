@@ -50,6 +50,18 @@ export default function Home() {
       </div>
 
       <div dangerouslySetInnerHTML={{ __html: `<!-- EDVEO DASHBOARD SECTION START -->
+<style>
+  @media (max-width: 992px) {
+    .mob-hide { display: none !important; }
+    .mob-col-1 { grid-template-columns: 1fr !important; }
+    .mob-col-2 { grid-template-columns: 1fr 1fr !important; }
+    .mob-auto-height { aspect-ratio: auto !important; height: auto !important; }
+    .mob-pad { padding: 16px !important; }
+    .mob-stack { flex-direction: column !important; align-items: stretch !important; }
+    .mob-arrow { writing-mode: horizontal-tb !important; transform: rotate(90deg); margin: 8px 0; }
+    .mob-text-center { text-align: center !important; }
+  }
+</style>
 <section style="padding:80px 0 80px;background:#F9FAFB;">
 
 <div style="text-align:center;padding:0 24px;margin-bottom:40px;">
@@ -64,7 +76,7 @@ export default function Home() {
   <button onclick="eTab('fee',this)" style="font-size:14px;font-weight:600;padding:10px 24px;border-radius:999px;border:1.5px solid #E5E7EB;background:#fff;color:#6B7280;cursor:pointer;transition:all 0.2s;">Fee Collection</button>
 </div>
 
-<div style="max-width:1200px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);background:#fff;aspect-ratio:16/10;position:relative;">
+<div class="mob-auto-height" style="max-width:1200px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);background:#fff;aspect-ratio:16/10;position:relative;">
 
   <div style="background:#fff;border-bottom:1px solid #E5E7EB;padding:12px 20px;display:flex;align-items:center;gap:8px;">
     <div style="width:12px;height:12px;border-radius:50%;background:#FF5F57;border:1px solid #E0443E;"></div>
@@ -73,9 +85,9 @@ export default function Home() {
     <div style="background:#F1F5F9;border-radius:6px;padding:4px 0;font-size:12px;color:#64748B;flex:1;max-width:320px;margin:0 auto;text-align:center;font-weight:500;border:1px solid #E2E8F0;">app.edveo.co/dashboard</div>
   </div>
 
-  <div style="display:grid;grid-template-columns:240px 1fr;height:calc(100% - 40px);">
+  <div class="mob-col-1 mob-auto-height" style="display:grid;grid-template-columns:240px 1fr;height:calc(100% - 40px);">
 
-    <div class="edveo-scroll" style="background:#fff;border-right:1px solid #E5E7EB;height:100%;overflow-y:auto;overflow-x:hidden;border-bottom-left-radius:16px;">
+    <div class="mob-hide edveo-scroll" style="background:#fff;border-right:1px solid #E5E7EB;height:100%;overflow-y:auto;overflow-x:hidden;border-bottom-left-radius:16px;">
       <div style="background:#fff;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E5E7EB;height:64px;box-sizing:border-box;">
         <div style="display:flex;align-items:center;gap:12px;">
           <div style="width:32px;height:32px;background:#15803D;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">
@@ -163,7 +175,7 @@ export default function Home() {
 
         <div id="edveo-panel-today" style="display:block;animation: fadeIn 0.3s ease-in-out;">
           <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#9CA3AF;margin-bottom:12px;">TODAY AT YOUR INSTITUTE</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+          <div class="mob-col-2" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
             <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
               <div style="font-size:11px;font-weight:600;color:#6B7280;margin-bottom:6px;">COLLECTED (MONTH)</div>
               <div style="font-size:28px;font-weight:800;color:#0F172A;line-height:1;margin-bottom:6px;letter-spacing:-0.02em;">₹2.4L</div>
@@ -213,7 +225,7 @@ export default function Home() {
           </div>
           
           <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#9CA3AF;margin-bottom:12px;">INSTITUTE PERFORMANCE</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="mob-col-1" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
             <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:20px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
                 <div style="font-size:14px;font-weight:700;color:#0F172A;">Programs &amp; batches</div>
@@ -243,7 +255,7 @@ export default function Home() {
           <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:20px;margin-bottom:24px;box-shadow:0 1px 2px rgba(0,0,0,0.05);">
             <div style="font-size:14px;font-weight:700;color:#0F172A;margin-bottom:4px;">Enrollment snapshot</div>
             <div style="font-size:12px;color:#6B7280;margin-bottom:16px;font-weight:500;">Across all batches</div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+            <div class="mob-col-2" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
               <div style="background:#F0FDF4;border:1px solid #DCFCE7;border-radius:8px;padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:#15803D;margin-bottom:4px;letter-spacing:-0.02em;">200</div><div style="font-size:12px;font-weight:600;color:#15803D;">Total students</div></div>
               <div style="background:#F0FDF4;border:1px solid #DCFCE7;border-radius:8px;padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:#15803D;margin-bottom:4px;letter-spacing:-0.02em;">12</div><div style="font-size:12px;font-weight:600;color:#15803D;">New this month</div></div>
               <div style="background:#FFFBEB;border:1px solid #FEF08A;border-radius:8px;padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:#854D0E;margin-bottom:4px;letter-spacing:-0.02em;">4</div><div style="font-size:12px;font-weight:600;color:#854D0E;">New this week</div></div>
@@ -365,7 +377,7 @@ function eTab(t,btn){
     <p style="font-size:16px;color:#6B7280;line-height:1.6;margin:0;">Give your students a proper learning environment — video lessons, live classes, exams, and progress tracking — all under your institute's own name and brand.</p>
   </div>
 
-  <div style="display:grid;grid-template-columns:1fr auto 1fr;border-radius:12px;overflow:hidden;border:1px solid #E5E7EB;margin-bottom:56px;margin-left:0;margin-right:0;">
+  <div class="mob-col-1" style="display:grid;grid-template-columns:1fr auto 1fr;border-radius:12px;overflow:hidden;border:1px solid #E5E7EB;margin-bottom:56px;margin-left:0;margin-right:0;">
 
     <div style="background:#FEF2F2;padding:32px 28px;">
       <div style="font-size:12px;font-weight:700;letter-spacing:0.06em;color:#DC2626;margin-bottom:16px;">HOW MOST INSTITUTES DO IT TODAY</div>
@@ -388,8 +400,8 @@ function eTab(t,btn){
     </div>
 
     <div style="background:#0F172A;display:flex;align-items:center;justify-content:center;min-width:52px;padding:0 18px;">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.4);writing-mode:vertical-rl;">SWITCH TO EDVEO</div>
+      <div class="mob-stack" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <div class="mob-arrow" style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.4);writing-mode:vertical-rl;">SWITCH TO EDVEO</div>
         <div style="font-size:22px;color:#4ADE80;">→</div>
       </div>
     </div>
@@ -416,7 +428,7 @@ function eTab(t,btn){
 
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:56px;max-width:100%;">
+  <div class="mob-col-1" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:56px;max-width:100%;">
     <div style="border:1.5px solid #E5E7EB;border-radius:12px;padding:20px;background:#fff;">
       <div style="width:48px;height:48px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
       <div style="font-size:16px;font-weight:700;color:#0F172A;margin-bottom:5px;">Recorded Video Lessons</div>
@@ -456,7 +468,7 @@ function eTab(t,btn){
   </div>
 
   <div style="background:#0F172A;border-radius:12px;padding:40px;max-width:100%;margin:0 0 40px;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+    <div class="mob-col-1" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
       <div>
         <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:#4ADE80;margin-bottom:8px;">STUDENT MASTERY TRACKING</div>
         <div style="font-size:24px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:10px;">Know exactly which student is struggling — and in which topic — before the exam.</div>
@@ -488,7 +500,7 @@ function eTab(t,btn){
     </div>
   </div>
 
-  <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:0;padding:32px 36px;max-width:100%;margin:40px 0 0;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;">
+  <div class="mob-col-1 mob-text-center mob-pad" style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:0;padding:32px 36px;max-width:100%;margin:40px 0 0;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;">
     <div>
       <div style="font-size:20px;font-weight:700;color:#0F172A;margin-bottom:5px;">Your institute. Your brand. Your domain.</div>
       <div style="font-size:15px;color:#6B7280;line-height:1.6;">Students access everything through your own branded portal and mobile app — not a generic Edveo link. You look like a professional institute from day one.</div>
