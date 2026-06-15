@@ -22,6 +22,7 @@ export default function SiteNavbar({ activePage }: Props) {
         </Link>
 
         <div className={styles.navLinks}>
+          <Link href="/product" className={activePage === "product" as any ? styles.navLinkActive : undefined}>Product</Link>
           <Link href="/solutions" className={activePage === "solutions" ? styles.navLinkActive : undefined}>Solutions</Link>
           <Link href="/pricing" className={activePage === "pricing" ? styles.navLinkActive : undefined}>Pricing</Link>
           <Link href="/about" className={activePage === "about" ? styles.navLinkActive : undefined}>About</Link>
@@ -48,6 +49,7 @@ export default function SiteNavbar({ activePage }: Props) {
       {/* Mobile drawer */}
       {open && (
         <div className={styles.mobileDrawer}>
+          <Link href="/product" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Product</Link>
           <Link href="/solutions" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Solutions</Link>
           <Link href="/pricing" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Pricing</Link>
           <Link href="/about" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>About</Link>

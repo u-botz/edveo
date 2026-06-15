@@ -65,7 +65,7 @@ export default function Home() {
   <button onclick="eTab('fee',this)" style="font-size:14px;font-weight:600;padding:10px 24px;border-radius:999px;border:1.5px solid #E5E7EB;background:#fff;color:#6B7280;cursor:pointer;transition:all 0.2s;">Fee Collection</button>
 </div>
 
-<div style="max-width:1200px;margin:0 auto;border-radius:16px 16px 0 0;overflow:hidden;border:1px solid #E5E7EB;border-bottom:none;box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);background:#fff;">
+<div style="max-width:1200px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);background:#fff;aspect-ratio:16/10;position:relative;">
 
   <div style="background:#1C1C1E;padding:12px 20px;display:flex;align-items:center;gap:8px;">
     <div style="width:12px;height:12px;border-radius:50%;background:#FF5F57;"></div>
@@ -74,15 +74,20 @@ export default function Home() {
     <div style="background:#2C2C2E;border-radius:6px;padding:4px 0;font-size:12px;color:#9CA3AF;flex:1;max-width:320px;margin:0 auto;text-align:center;font-weight:500;">app.edveo.co/dashboard</div>
   </div>
 
-  <div style="display:grid;grid-template-columns:240px 1fr;">
+  <div style="display:grid;grid-template-columns:240px 1fr;height:calc(100% - 40px);">
 
-    <div style="background:#fff;border-right:1px solid #E5E7EB;min-height:600px;">
-      <div style="background:#1A1A2E;padding:16px 20px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;background:#15803D;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">YI</div>
-        <div>
-          <div style="font-size:14px;font-weight:600;color:#fff;">Your Institute</div>
-          <div style="font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.08em;margin-top:2px;font-weight:600;">OWNER PORTAL</div>
+    <div class="edveo-scroll" style="background:#fff;border-right:1px solid #E5E7EB;height:100%;overflow-y:auto;overflow-x:hidden;">
+      <div style="background:#fff;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E5E7EB;height:64px;box-sizing:border-box;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:32px;height:32px;background:#15803D;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#0F172A;line-height:1.2;">Your Institute</div>
+            <div style="font-size:10px;color:#15803D;letter-spacing:0.05em;margin-top:2px;font-weight:700;">FACULTY PORTAL</div>
+          </div>
         </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style="cursor:pointer;"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
       </div>
       <div style="padding:16px 0;">
         <div style="padding:10px 20px;font-size:13px;color:#6B7280;font-weight:500;">Get Started</div>
@@ -102,32 +107,46 @@ export default function Home() {
       </div>
     </div>
 
-    <div style="background:#FAFAFA;">
+    <div class="edveo-scroll" style="background:#FAFAFA;height:100%;overflow-y:auto;overflow-x:hidden;">
 
-      <div style="background:#fff;border-bottom:1px solid #E5E7EB;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;">
-        <div style="display:flex;align-items:center;gap:16px;">
-          <div style="font-size:18px;font-weight:700;color:#0F172A;">Dashboard</div>
-          <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:8px 14px;font-size:13px;color:#9CA3AF;width:240px;display:flex;align-items:center;gap:8px;">
-             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-             Search students, courses...
+      <div style="background:#fff;border-bottom:1px solid #E5E7EB;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;">
+        <div style="display:flex;align-items:center;gap:24px;">
+          <div style="font-size:16px;font-weight:800;color:#0F172A;">Dashboard</div>
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:8px 14px;font-size:13px;color:#9CA3AF;width:280px;display:flex;align-items:center;gap:8px;">
+             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+             Search students, courses, quizzes...
           </div>
         </div>
-        <div style="display:flex;gap:10px;">
-          <div style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;background:#15803D;color:#fff;border:1px solid #15803D;box-shadow:0 1px 2px rgba(0,0,0,0.05);cursor:pointer;">+ Add Student</div>
-          <div style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;background:#fff;color:#374151;border:1px solid #E5E7EB;box-shadow:0 1px 2px rgba(0,0,0,0.05);cursor:pointer;">Record Payment</div>
-          <div style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;background:#fff;color:#374151;border:1px solid #E5E7EB;box-shadow:0 1px 2px rgba(0,0,0,0.05);cursor:pointer;">Add Lead</div>
-          <div style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;background:#fff;color:#374151;border:1px solid #E5E7EB;box-shadow:0 1px 2px rgba(0,0,0,0.05);cursor:pointer;">Timetable</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:32px;height:32px;background:#6366F1;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style="cursor:pointer;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <div style="position:relative;cursor:pointer;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <div style="position:absolute;top:-6px;right:-6px;background:#EF4444;color:#fff;font-size:10px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">2</div>
+          </div>
+          <div style="width:1px;height:24px;background:#E5E7EB;"></div>
+          <div style="width:32px;height:32px;background:#E0E7FF;color:#4F46E5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;cursor:pointer;">ss</div>
         </div>
       </div>
 
       <div style="padding:24px 32px;">
 
-        <div style="margin-bottom:20px;">
-          <div style="font-size:24px;font-weight:700;color:#0F172A;letter-spacing:-0.01em;">Good afternoon, sb</div>
-          <div style="font-size:13px;color:#6B7280;margin-bottom:8px;font-weight:500;">Monday, 15 Jun 2026</div>
-          <div style="display:inline-flex;align-items:center;gap:6px;background:#F0FDF4;border-radius:999px;padding:4px 12px;font-size:11px;font-weight:700;color:#15803D;margin-bottom:16px;letter-spacing:0.04em;">
-            <div style="width:6px;height:6px;border-radius:50%;background:#15803D;"></div>
-            INSTITUTE SYNCED
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
+          <div>
+            <div style="font-size:24px;font-weight:700;color:#0F172A;letter-spacing:-0.01em;">Good morning, Sayooj</div>
+            <div style="font-size:13px;color:#6B7280;margin-bottom:8px;font-weight:500;">Monday, 15 Jun 2026</div>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:#F0FDF4;border-radius:999px;padding:4px 12px;font-size:11px;font-weight:700;color:#15803D;letter-spacing:0.04em;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#15803D;"></div>
+              INSTITUTE SYNCED
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;background:#15803D;color:#fff;border:1px solid #15803D;box-shadow:0 1px 2px rgba(0,0,0,0.05);cursor:pointer;">+ Add Student</div>
+            <div style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;background:#fff;color:#374151;border:1px solid #E5E7EB;box-shadow:0 1px 2px rgba(0,0,0,0.05);cursor:pointer;">Record Payment</div>
+            <div style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;background:#fff;color:#374151;border:1px solid #E5E7EB;box-shadow:0 1px 2px rgba(0,0,0,0.05);cursor:pointer;">Add Lead</div>
+            <div style="font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;background:#fff;color:#374151;border:1px solid #E5E7EB;box-shadow:0 1px 2px rgba(0,0,0,0.05);cursor:pointer;">Timetable</div>
           </div>
         </div>
 
@@ -302,6 +321,26 @@ export default function Home() {
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
   }
+  .edveo-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #CBD5E1 transparent;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+  }
+  .edveo-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .edveo-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .edveo-scroll::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 10px;
+  }
+  .edveo-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
+  }
 </style>
 </section>
 
@@ -317,45 +356,7 @@ function eTab(t,btn){
 </script>
 <!-- EDVEO DASHBOARD SECTION END -->` }} />
 
-      <div style={{ borderTop: "1px solid #E5E7EB", paddingTop: "56px", paddingBottom: "56px", background: "#FFFFFF" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
-          <h2 className={heroStyles.audienceHeading}>BUILT FOR EVERY INSTITUTION TYPE</h2>
-          <div className={heroStyles.audienceCards} role="group" aria-label="Choose your path">
-            <Link href="/teacher" className={heroStyles.audienceCard}>
-              <div className={heroStyles.audienceCardIcon}>
-                <TeacherIcon />
-              </div>
-              <div className={heroStyles.audienceCardBody}>
-                <span className={heroStyles.audienceCardTitle}>I&apos;m a Teacher</span>
-                <span className={heroStyles.audienceCardDesc}>Sell courses under your brand and keep 100% of what you earn — zero commission.</span>
-              </div>
-              <span className={heroStyles.audienceCardArrow}>→</span>
-            </Link>
 
-            <Link href="/edtech" className={heroStyles.audienceCard}>
-              <div className={heroStyles.audienceCardIcon}>
-                <EdtechIcon />
-              </div>
-              <div className={heroStyles.audienceCardBody}>
-                <span className={heroStyles.audienceCardTitle}>I run an online academy</span>
-                <span className={heroStyles.audienceCardDesc}>Host live classes, sell courses, manage students and payments — without juggling 5 different tools.</span>
-              </div>
-              <span className={heroStyles.audienceCardArrow}>→</span>
-            </Link>
-
-            <Link href="/institutions" className={heroStyles.audienceCard}>
-              <div className={heroStyles.audienceCardIcon}>
-                <InstitutionIcon />
-              </div>
-              <div className={heroStyles.audienceCardBody}>
-                <span className={heroStyles.audienceCardTitle}>I run a coaching institute</span>
-                <span className={heroStyles.audienceCardDesc}>Manage students, fees, attendance, batches and staff — all from one dashboard. No more registers or WhatsApp chaos.</span>
-              </div>
-              <span className={heroStyles.audienceCardArrow}>→</span>
-            </Link>
-          </div>
-        </div>
-      </div>
 
       {/* Feature Explorer — tabbed, equal real estate for all 5 features */}
       <FeatureExplorer />
