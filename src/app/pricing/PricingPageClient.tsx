@@ -102,21 +102,28 @@ export default function PricingPageClient() {
               price={price(2999, 2666)}
               billing={billing}
               cta="Get started free"
+              ctaSub="No credit card required to try"
+              perfectFor="Up to 500 students · Up to 3 instructors"
               features={[
-                "Up to 500 students",
-                "Up to 3 instructors",
-                "50 GB storage",
+                "§Teaching & Content",
                 "Basic storefront (1 template)",
                 "Live classes (bring your own tool)",
                 "Quizzes & assignments",
+                "Course bundles",
+                "§Academy Operations",
                 "CRM & lead management",
                 "Student fee collection",
                 "Blog & FAQ",
-                "AI Agent — 20 credits/month",
-                "Course bundles",
+                "Analytics",
+                "§Marketing & Domain",
                 "Custom domain",
                 "Affiliate program",
-                "Analytics",
+                "§AI Assistant",
+                "AI Agent included — 20 credits/month",
+                "§Storage",
+                "50 GB storage",
+                "§Support",
+                "Community support",
               ]}
             />
             <PlanCard
@@ -126,23 +133,29 @@ export default function PricingPageClient() {
               billing={billing}
               cta="Get started free"
               popular
+              ctaSub="Most academies choose this plan"
+              perfectFor="Up to 1,500 students · Up to 50 instructors"
               features={[
-                "Up to 1,500 students",
-                "Up to 50 instructors",
+                "§Everything in Starter, plus:",
                 "Unlimited courses",
-                "50 GB storage",
-                "Cloudflare Stream — 1,000 min included",
                 "Course bundles & drip scheduling",
-                "Custom domain + remove Edveo branding",
                 "Student subscription billing (recurring)",
-                "Affiliate & referral program",
                 "Fee installments, discount codes & coupons",
                 "CRM pipeline analytics & source tracking",
                 "Basic analytics",
                 "Communication hub (full inbox)",
+                "§Marketing & Domain",
+                "Custom domain + remove Edveo branding",
+                "Affiliate & referral program",
                 "WhatsApp integration",
-                "AI Agent — 150 credits/month",
+                "§AI Assistant",
+                "AI Agent included — 150 credits/month",
                 "Edveo Studio (3 of 5 pillars)",
+                "§Storage",
+                "50 GB storage",
+                "Hosted Video — 1,000 min included",
+                "§Support",
+                "Email support",
               ]}
             />
             <PlanCard
@@ -153,11 +166,10 @@ export default function PricingPageClient() {
               cta="Contact Sales"
               ghost
               customSub="Based on size & requirements"
+              ctaSub="Built for scaling academies"
+              perfectFor="Unlimited students · Unlimited instructors"
               features={[
-                "Unlimited students",
-                "Unlimited instructors",
-                "Unlimited courses",
-                "Cloudflare Stream — 5,000 min included",
+                "§Everything in Growth, plus:",
                 "White label (full brand replacement)",
                 "Advanced affiliate + commission management",
                 "Full analytics + cohort & drop-off analysis",
@@ -165,11 +177,15 @@ export default function PricingPageClient() {
                 "AI financial reports",
                 "Custom roles (full RBAC)",
                 "Gamification & community forum",
+                "§AI Assistant",
+                "AI Agent included — 400 credits/month",
                 "AI Knowledge Base (custom academy context)",
-                "AI Agent — 400 credits/month",
                 "Edveo Studio (all 5 pillars)",
+                "§Storage",
+                "Hosted Video — 5,000 min included",
+                "§Support",
                 "Dedicated account manager",
-                "Priority support",
+                "Priority support (fastest response)",
               ]}
             />
           </>}
@@ -182,21 +198,28 @@ export default function PricingPageClient() {
               price="Free"
               billing={billing}
               cta="Get started free"
+              ctaSub="Free forever · No credit card required"
               showPriceSuffix={false}
+              perfectFor="Up to 100 students · 3 courses · 3 batches"
               features={[
-                "3 courses",
-                "3 batches",
-                "1 concurrent device",
-                "1 GB storage",
-                "Video via YouTube / Vimeo links only",
+                "§Teaching & Content",
                 "Live classes (bring your own tool)",
                 "Quizzes & assignments",
                 "Basic storefront (1 template)",
                 "Blog & FAQ",
-                "AI Agent — 20 credits/month",
-                "Custom domain",
+                "§Teacher Operations",
                 "CRM / lead management",
                 "Analytics",
+                "1 concurrent device access",
+                "§Marketing & Domain",
+                "Custom domain",
+                "§AI Assistant",
+                "AI Agent included — 20 credits/month",
+                "§Storage",
+                "1 GB storage",
+                "Videos via YouTube or Vimeo links only",
+                "§Support",
+                "Community support",
               ]}
             />
             <PlanCard
@@ -206,20 +229,26 @@ export default function PricingPageClient() {
               billing={billing}
               cta="Get started free"
               popular
+              ctaSub="Most popular for individual teachers"
+              perfectFor="Up to 500 students · 20 courses · 3 devices"
               features={[
-                "20 courses",
+                "§Everything in Starter, plus:",
                 "Unlimited batches",
-                "3 concurrent devices",
-                "10 GB storage",
-                "Cloudflare Stream — 500 min included",
-                "Custom domain",
-                "Remove Edveo branding",
-                "CRM & lead management",
                 "1-on-1 paid consultations",
-                "Basic analytics",
                 "Discount codes & promotions",
-                "AI Agent — 100 credits/month",
+                "§Teacher Operations",
+                "CRM & lead management",
+                "Basic analytics",
+                "§Marketing & Domain",
+                "Custom domain + remove Edveo branding",
+                "§AI Assistant",
+                "AI Agent included — 100 credits/month",
                 "Edveo Studio (3 of 5 pillars)",
+                "§Storage",
+                "10 GB storage",
+                "Hosted Video — 500 min included",
+                "§Support",
+                "Email support",
               ]}
             />
             <PlanCard
@@ -228,20 +257,22 @@ export default function PricingPageClient() {
               price={price(1499, 1249)}
               billing={billing}
               cta="Get started free"
+              ctaSub="Built for full-time professional educators"
+              perfectFor="Unlimited students · Unlimited courses · 10 devices"
               features={[
-                "Unlimited students",
-                "Unlimited courses",
-                "Unlimited batches",
-                "10 concurrent devices",
-                "50 GB storage",
-                "Cloudflare Stream — 2,000 min included",
+                "§Everything in Growth, plus:",
                 "White label (full brand replacement)",
                 "Full analytics + student performance insights",
                 "Student subscriptions (recurring billing)",
                 "Gamification & community forum",
-                "AI Agent — 250 credits/month",
+                "§AI Assistant",
+                "AI Agent included — 250 credits/month",
                 "Edveo Studio (all 5 pillars)",
-                "Priority support",
+                "§Storage",
+                "50 GB storage",
+                "Hosted Video — 2,000 min included",
+                "§Support",
+                "Priority support (fastest response)",
               ]}
             />
           </>}
