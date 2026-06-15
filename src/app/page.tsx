@@ -1,4 +1,7 @@
 import styles from "./page.module.css";
+import heroStyles from "./components/hero.module.css";
+import Link from "next/link";
+import { TeacherIcon, EdtechIcon, InstitutionIcon } from "./components/HeroSection";
 import SiteNavbar from "./components/SiteNavbar";
 import SiteFooter from "./components/SiteFooter";
 import WhatsAppFloat from "./components/WhatsAppFloat";
@@ -60,7 +63,45 @@ export default function Home() {
         </div>
       </div>
 
+      <div style={{ borderTop: "1px solid #E5E7EB", paddingTop: "56px", paddingBottom: "56px", background: "#FFFFFF" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
+          <h2 className={heroStyles.audienceHeading}>BUILT FOR EVERY INSTITUTION TYPE</h2>
+          <div className={heroStyles.audienceCards} role="group" aria-label="Choose your path">
+            <Link href="/teacher" className={heroStyles.audienceCard}>
+              <div className={heroStyles.audienceCardIcon}>
+                <TeacherIcon />
+              </div>
+              <div className={heroStyles.audienceCardBody}>
+                <span className={heroStyles.audienceCardTitle}>I&apos;m a Teacher</span>
+                <span className={heroStyles.audienceCardDesc}>Sell courses under your brand and keep 100% of what you earn — zero commission.</span>
+              </div>
+              <span className={heroStyles.audienceCardArrow}>→</span>
+            </Link>
 
+            <Link href="/edtech" className={heroStyles.audienceCard}>
+              <div className={heroStyles.audienceCardIcon}>
+                <EdtechIcon />
+              </div>
+              <div className={heroStyles.audienceCardBody}>
+                <span className={heroStyles.audienceCardTitle}>I Run an Edtech</span>
+                <span className={heroStyles.audienceCardDesc}>Scale your online academy with AI-powered sales, CRM, and multi-instructor ops.</span>
+              </div>
+              <span className={heroStyles.audienceCardArrow}>→</span>
+            </Link>
+
+            <Link href="/institutions" className={heroStyles.audienceCard}>
+              <div className={heroStyles.audienceCardIcon}>
+                <InstitutionIcon />
+              </div>
+              <div className={heroStyles.audienceCardBody}>
+                <span className={heroStyles.audienceCardTitle}>I Run an Offline Institute</span>
+                <span className={heroStyles.audienceCardDesc}>Manage batches, fees, attendance, and staff — all from one dashboard.</span>
+              </div>
+              <span className={heroStyles.audienceCardArrow}>→</span>
+            </Link>
+          </div>
+        </div>
+      </div>
 
       {/* Feature Explorer — tabbed, equal real estate for all 5 features */}
       <FeatureExplorer />

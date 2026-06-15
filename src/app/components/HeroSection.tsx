@@ -25,7 +25,7 @@ function ArrowIcon() {
   );
 }
 
-function TeacherIcon() {
+export function TeacherIcon() {
   return (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M12 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10z" />
@@ -34,7 +34,7 @@ function TeacherIcon() {
   );
 }
 
-function EdtechIcon() {
+export function EdtechIcon() {
   return (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <rect x="2" y="3" width="20" height="14" rx="2" />
@@ -45,7 +45,7 @@ function EdtechIcon() {
   );
 }
 
-function InstitutionIcon() {
+export function InstitutionIcon() {
   return (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11M8 10v11M16 10v11M12 10v11" />
@@ -145,44 +145,6 @@ export default function HeroSection() {
         </div>
         {/* --- END SP-1 --- */}
 
-        {/* --- FIX 3: Audience section wrapper --- */}
-        <div className={styles.audienceSectionWrapper}>
-          <h2 className={styles.audienceHeading}>BUILT FOR EVERY INSTITUTION TYPE</h2>
-          <div className={styles.audienceCards} role="group" aria-label="Choose your path">
-            <Link href="/teacher" className={styles.audienceCard}>
-              <div className={styles.audienceCardIcon}>
-                <TeacherIcon />
-              </div>
-              <div className={styles.audienceCardBody}>
-                <span className={styles.audienceCardTitle}>I&apos;m a Teacher</span>
-                <span className={styles.audienceCardDesc}>Sell courses under your brand and keep 100% of what you earn — zero commission.</span>
-              </div>
-              <span className={styles.audienceCardArrow}>→</span>
-            </Link>
-
-            <Link href="/edtech" className={styles.audienceCard}>
-              <div className={styles.audienceCardIcon}>
-                <EdtechIcon />
-              </div>
-              <div className={styles.audienceCardBody}>
-                <span className={styles.audienceCardTitle}>I Run an Edtech</span>
-                <span className={styles.audienceCardDesc}>Scale your online academy with AI-powered sales, CRM, and multi-instructor ops.</span>
-              </div>
-              <span className={styles.audienceCardArrow}>→</span>
-            </Link>
-
-            <Link href="/institutions" className={styles.audienceCard}>
-              <div className={styles.audienceCardIcon}>
-                <InstitutionIcon />
-              </div>
-              <div className={styles.audienceCardBody}>
-                <span className={styles.audienceCardTitle}>I Run an Offline Institute</span>
-                <span className={styles.audienceCardDesc}>Manage batches, fees, attendance, and staff — all from one dashboard.</span>
-              </div>
-              <span className={styles.audienceCardArrow}>→</span>
-            </Link>
-          </div>
-        </div>
 
         <p className={styles.intelligenceBridge}>
           Powered by Edveo Intelligence™ — the AI that knows your institute the way you do.
