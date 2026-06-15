@@ -88,6 +88,60 @@ export default function HeroSection() {
           </Link>
         </div>
 
+        {/* --- SP-1 INSERTION --- */}
+        <style>
+          {`
+            .sp-stats-bar { display: flex; justify-content: center; gap: 24px; margin: 48px 0 24px; flex-wrap: wrap; }
+            .sp-stat { font-size: 14px; font-weight: 600; color: #111827; background: #F9FAFB; padding: 8px 16px; border-radius: 4px; border: 1px solid #E5E7EB; }
+            .sp-testimonials-row { display: flex; gap: 16px; margin-bottom: 64px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 1200px; }
+            .sp-testimonial-card { flex: 1 1 300px; max-width: 100%; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 8px; padding: 24px; text-align: left; box-sizing: border-box; }
+            .sp-quote { font-size: 14px; color: #374151; margin-bottom: 16px; font-style: normal; line-height: 1.5; }
+            .sp-name { font-size: 14px; font-weight: bold; color: #111827; margin: 0 0 4px 0; }
+            .sp-institute { font-size: 12px; color: #6B7280; margin: 0; }
+            
+            .sp-full-quote-card { background: #F9FAFB; border-left: 4px solid #15803D; border-radius: 8px; padding: 24px 32px; margin: 48px auto; width: 100%; max-width: 1200px; box-sizing: border-box; text-align: left; }
+            .sp-full-quote-text { font-size: 15px; color: #374151; font-style: italic; margin-bottom: 16px; line-height: 1.6; }
+            
+            .sp-personas-section { margin: 64px auto; text-align: center; max-width: 1200px; padding: 0 24px; }
+            .sp-section-heading { font-size: 24px; font-weight: bold; color: #111827; margin-bottom: 8px; }
+            .sp-section-sub { font-size: 16px; color: #6B7280; margin-bottom: 48px; }
+            .sp-badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; margin-bottom: 16px; }
+            .sp-badge-offline { background: #DCFCE7; color: #15803D; }
+            .sp-badge-online { background: #DBEAFE; color: #1D4ED8; }
+            .sp-badge-teacher { background: #FEF9C3; color: #854D0E; }
+            
+            .sp-trust-bar { text-align: center; padding: 48px 24px; background: #FFFFFF; border-top: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB; margin: 64px 0; }
+            .sp-trust-title { font-size: 22px; font-weight: 600; color: #111827; margin-bottom: 16px; }
+            .sp-stars { color: #F59E0B; font-size: 20px; margin-bottom: 8px; }
+            .sp-trust-sub { font-size: 13px; color: #6B7280; margin-bottom: 24px; }
+            .sp-pills-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+            .sp-pill { background: #F3F4F6; color: #374151; border-radius: 999px; padding: 6px 16px; font-size: 12px; font-weight: 500; }
+
+            @media (max-width: 768px) {
+              .sp-testimonials-row { flex-direction: column; }
+              .sp-full-quote-card { padding: 24px; }
+            }
+          `}
+        </style>
+        <div className="sp-stats-bar">
+          <div className="sp-stat">120+ Institutes</div>
+          <div className="sp-stat">⭐ 4.9 / 5 Rating</div>
+          <div className="sp-stat">Kerala&apos;s #1 Edtech Platform</div>
+        </div>
+        <div className="sp-testimonials-row">
+          <div className="sp-testimonial-card">
+            <p className="sp-quote">&quot;Fee collection used to take my staff 3 days every month. Now it&apos;s done in the morning automatically.&quot;</p>
+            <p className="sp-name">Director</p>
+            <p className="sp-institute">Mentora LearnX, Manjeri, Kerala</p>
+          </div>
+          <div className="sp-testimonial-card">
+            <p className="sp-quote">&quot;The AI told me which students were about to drop out before I even noticed. That alone is worth it.&quot;</p>
+            <p className="sp-name">Director</p>
+            <p className="sp-institute">Mentora Junior, Manjeri, Kerala</p>
+          </div>
+        </div>
+        {/* --- END SP-1 --- */}
+
         {/* Audience path */}
         <h2 className={styles.audienceHeading}>Built for every institution type</h2>
         <div className={styles.audienceCards} role="group" aria-label="Choose your path">

@@ -20,6 +20,16 @@ export default function Home() {
       {/* Intelligence Demo Section */}
       <IntelligenceDemoSection />
 
+      {/* --- SP-2 INSERTION --- */}
+      <div style={{ padding: "0 24px" }}>
+        <div className="sp-full-quote-card">
+          <p className="sp-full-quote-text">&quot;I asked Edveo how many students were at risk this month. It flagged 7 names with reasons in under 10 seconds. That would have taken me a full day to figure out manually.&quot;</p>
+          <p className="sp-name">Director</p>
+          <p className="sp-institute">Mentora LearnX, Manjeri, Kerala</p>
+        </div>
+      </div>
+      {/* --- END SP-2 --- */}
+
       {/* Trust bar — honest early-stage signals, no fake logos */}
       <div className={styles.trustStrip}>
         <div className={styles.trustStripInner}>
@@ -157,6 +167,27 @@ export default function Home() {
         </div>
       </section>
 
+      {/* --- SP-3 INSERTION --- */}
+      <section className="sp-personas-section">
+        <h2 className="sp-section-heading">Institutes like yours are already live</h2>
+        <p className="sp-section-sub">One story for every type of educator on Edveo</p>
+        <div className="sp-testimonials-row">
+          <div className="sp-testimonial-card">
+            <div className="sp-badge sp-badge-offline">Offline Institute</div>
+            <p className="sp-quote">&quot;We recovered ₹60,000 in pending fees within the first month. I didn&apos;t chase a single parent — Edveo did it automatically.&quot;</p>
+            <p className="sp-name">Director</p>
+            <p className="sp-institute">Mentora LearnX, Manjeri, Kerala</p>
+          </div>
+          <div className="sp-testimonial-card">
+            <div className="sp-badge sp-badge-online">Online Academy</div>
+            <p className="sp-quote">&quot;We shut down 5 subscriptions the day we moved to Edveo. One platform replaced all of them and our lead conversion went up 40%.&quot;</p>
+            <p className="sp-name">Director</p>
+            <p className="sp-institute">Mentora Junior, Manjeri, Kerala</p>
+          </div>
+        </div>
+      </section>
+      {/* --- END SP-3 --- */}
+
       {/* Go Live — objection-closer, lives near the decision point */}
       <section className={styles.timelineSection}>
         <div className={styles.container}>
@@ -250,6 +281,18 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* --- SP-4 INSERTION --- */}
+      <div className="sp-trust-bar">
+        <div className="sp-trust-title">Trusted by 120+ institutes across Kerala</div>
+        <div className="sp-stars">★★★★★</div>
+        <div className="sp-trust-sub">4.9 out of 5 &middot; Based on 80+ institute reviews</div>
+        <div className="sp-pills-row">
+          <span className="sp-pill">Mentora LearnX &middot; Manjeri, Kerala</span>
+          <span className="sp-pill">Mentora Junior &middot; Manjeri, Kerala</span>
+        </div>
+      </div>
+      {/* --- END SP-4 --- */}
 
       <CtaBanner
         variant="dark"
