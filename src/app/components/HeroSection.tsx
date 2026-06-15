@@ -91,10 +91,11 @@ export default function HeroSection() {
         {/* --- SP-1 INSERTION --- */}
         <style>
           {`
-            .sp-stats-bar { display: flex; justify-content: center; gap: 24px; margin: 48px 0 24px; flex-wrap: wrap; }
+            .sp-wrapper { margin-bottom: 0; padding-bottom: 32px; width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; }
+            .sp-stats-bar { display: flex; justify-content: center; gap: 24px; margin: 24px 0 24px; flex-wrap: wrap; }
             .sp-stat { font-size: 14px; font-weight: 600; color: #111827; background: #F9FAFB; padding: 8px 16px; border-radius: 4px; border: 1px solid #E5E7EB; }
-            .sp-testimonials-row { display: flex; gap: 16px; margin-bottom: 64px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 1200px; }
-            .sp-testimonial-card { flex: 1 1 300px; max-width: 100%; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 8px; padding: 24px; text-align: left; box-sizing: border-box; }
+            .sp-testimonials-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; margin-bottom: 0; width: 100%; }
+            .sp-testimonial-card { background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 8px; padding: 24px; text-align: left; box-sizing: border-box; }
             .sp-quote { font-size: 14px; color: #374151; margin-bottom: 16px; font-style: normal; line-height: 1.5; }
             .sp-name { font-size: 14px; font-weight: bold; color: #111827; margin: 0 0 4px 0; }
             .sp-institute { font-size: 12px; color: #6B7280; margin: 0; }
@@ -118,65 +119,69 @@ export default function HeroSection() {
             .sp-pill { background: #F3F4F6; color: #374151; border-radius: 999px; padding: 6px 16px; font-size: 12px; font-weight: 500; }
 
             @media (max-width: 768px) {
-              .sp-testimonials-row { flex-direction: column; }
+              .sp-testimonials-row { grid-template-columns: 1fr; }
               .sp-full-quote-card { padding: 24px; }
             }
           `}
         </style>
-        <div className="sp-stats-bar">
-          <div className="sp-stat">120+ Institutes</div>
-          <div className="sp-stat">⭐ 4.9 / 5 Rating</div>
-          <div className="sp-stat">Kerala&apos;s #1 Edtech Platform</div>
-        </div>
-        <div className="sp-testimonials-row">
-          <div className="sp-testimonial-card">
-            <p className="sp-quote">&quot;Fee collection used to take my staff 3 days every month. Now it&apos;s done in the morning automatically.&quot;</p>
-            <p className="sp-name">Director</p>
-            <p className="sp-institute">Mentora LearnX, Manjeri, Kerala</p>
+        <div className="sp-wrapper">
+          <div className="sp-stats-bar">
+            <div className="sp-stat">5+ Institutes</div>
+            <div className="sp-stat">Early Access</div>
+            <div className="sp-stat">Built in Kerala</div>
           </div>
-          <div className="sp-testimonial-card">
-            <p className="sp-quote">&quot;The AI told me which students were about to drop out before I even noticed. That alone is worth it.&quot;</p>
-            <p className="sp-name">Director</p>
-            <p className="sp-institute">Mentora Junior, Manjeri, Kerala</p>
+          <div className="sp-testimonials-row">
+            <div className="sp-testimonial-card">
+              <p className="sp-quote">&quot;Fee collection used to take my staff 3 days every month. Now it&apos;s done in the morning automatically.&quot;</p>
+              <p className="sp-name">Director</p>
+              <p className="sp-institute">Mentora LearnX, Manjeri, Kerala</p>
+            </div>
+            <div className="sp-testimonial-card">
+              <p className="sp-quote">&quot;The AI told me which students were about to drop out before I even noticed. That alone is worth it.&quot;</p>
+              <p className="sp-name">Director</p>
+              <p className="sp-institute">Mentora Junior, Manjeri, Kerala</p>
+            </div>
           </div>
         </div>
         {/* --- END SP-1 --- */}
 
-        {/* Audience path */}
-        <h2 className={styles.audienceHeading}>Built for every institution type</h2>
-        <div className={styles.audienceCards} role="group" aria-label="Choose your path">
-          <Link href="/teacher" className={styles.audienceCard} data-variant="teachers">
-            <div className={styles.audienceCardIcon} data-variant="teachers">
-              <TeacherIcon />
-            </div>
-            <div className={styles.audienceCardBody}>
-              <span className={styles.audienceCardTitle}>I&apos;m a Teacher</span>
-              <span className={styles.audienceCardDesc}>Sell courses under your brand and keep 100% of what you earn — zero commission.</span>
-            </div>
-            <span className={styles.audienceCardArrow}><ArrowIcon /></span>
-          </Link>
+        {/* --- FIX 3: Audience section wrapper --- */}
+        <div className={styles.audienceSectionWrapper}>
+          <h2 className={styles.audienceHeading}>BUILT FOR EVERY INSTITUTION TYPE</h2>
+          <div className={styles.audienceCards} role="group" aria-label="Choose your path">
+            <Link href="/teacher" className={styles.audienceCard}>
+              <div className={styles.audienceCardIcon}>
+                <TeacherIcon />
+              </div>
+              <div className={styles.audienceCardBody}>
+                <span className={styles.audienceCardTitle}>I&apos;m a Teacher</span>
+                <span className={styles.audienceCardDesc}>Sell courses under your brand and keep 100% of what you earn — zero commission.</span>
+              </div>
+              <span className={styles.audienceCardArrow}>→</span>
+            </Link>
 
-          <Link href="/edtech" className={styles.audienceCard} data-variant="edtech">
-            <div className={styles.audienceCardIcon} data-variant="edtech">
-              <EdtechIcon />
-            </div>
-            <div className={styles.audienceCardBody}>
-              <span className={styles.audienceCardTitle}>I Run an Edtech</span>
-              <span className={styles.audienceCardDesc}>Scale your online academy with AI-powered sales, CRM, and multi-instructor ops.</span>
-            </div>
-            <span className={styles.audienceCardArrow}><ArrowIcon /></span>
-          </Link>
+            <Link href="/edtech" className={styles.audienceCard}>
+              <div className={styles.audienceCardIcon}>
+                <EdtechIcon />
+              </div>
+              <div className={styles.audienceCardBody}>
+                <span className={styles.audienceCardTitle}>I Run an Edtech</span>
+                <span className={styles.audienceCardDesc}>Scale your online academy with AI-powered sales, CRM, and multi-instructor ops.</span>
+              </div>
+              <span className={styles.audienceCardArrow}>→</span>
+            </Link>
 
-          <Link href="/institutions" className={styles.audienceCard} data-variant="institutions">
-            <div className={styles.audienceCardIcon} data-variant="institutions">
-              <InstitutionIcon />
-            </div>
-            <div className={styles.audienceCardBody}>
-              <span className={styles.audienceCardTitle}>I Run an Offline Institute</span>
-              <span className={styles.audienceCardDesc}>Manage batches, fees, attendance, and staff — all from one dashboard.</span>
-            </div>
-            <span className={styles.audienceCardArrow}><ArrowIcon /></span>
-          </Link>
+            <Link href="/institutions" className={styles.audienceCard}>
+              <div className={styles.audienceCardIcon}>
+                <InstitutionIcon />
+              </div>
+              <div className={styles.audienceCardBody}>
+                <span className={styles.audienceCardTitle}>I Run an Offline Institute</span>
+                <span className={styles.audienceCardDesc}>Manage batches, fees, attendance, and staff — all from one dashboard.</span>
+              </div>
+              <span className={styles.audienceCardArrow}>→</span>
+            </Link>
+          </div>
         </div>
 
         <p className={styles.intelligenceBridge}>
