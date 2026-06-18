@@ -368,12 +368,22 @@ function eTab(t,btn){
 <!-- EDVEO DASHBOARD SECTION END -->` }} />
 
       <div dangerouslySetInnerHTML={{ __html: `<!-- GO ONLINE SECTION START -->
+<style>
+  @media (max-width: 992px) {
+    .go-online-pad { padding: 0 16px !important; }
+    .go-online-title { font-size: 24px !important; line-height: 1.3 !important; }
+    .go-online-mid-banner { padding: 12px 16px !important; min-height: auto !important; }
+    .go-online-stack-row { flex-direction: row !important; gap: 8px !important; }
+    .go-online-text-horiz { writing-mode: horizontal-tb !important; transform: none !important; }
+    .go-online-card-pad { padding: 24px 16px !important; }
+  }
+</style>
 <section style="background:#fff;padding:64px 0 0;">
-<div style="max-width:1200px;margin:0 auto;padding:0 40px;">
+<div class="go-online-pad" style="max-width:1200px;margin:0 auto;padding:0 40px;">
 
   <div style="text-align:center;margin-bottom:56px;max-width:800px;margin-left:auto;margin-right:auto;">
     <p style="font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#15803D;margin:0 0 12px;">TAKE YOUR INSTITUTE ONLINE</p>
-    <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;color:#0F172A;line-height:1.2;margin:0 0 12px;max-width:700px;margin-left:auto;margin-right:auto;">Your institute deserves better than WhatsApp groups and Google Drive links.</h2>
+    <h2 class="go-online-title" style="font-size:32px;font-weight:800;letter-spacing:-0.02em;color:#0F172A;line-height:1.2;margin:0 0 12px;max-width:700px;margin-left:auto;margin-right:auto;">Your institute deserves better than WhatsApp groups and Google Drive links.</h2>
     <p style="font-size:16px;color:#6B7280;line-height:1.6;margin:0;">Give your students a proper learning environment — video lessons, live classes, exams, and progress tracking — all under your institute's own name and brand.</p>
   </div>
 
@@ -399,10 +409,10 @@ function eTab(t,btn){
       </div>
     </div>
 
-    <div style="background:#0F172A;display:flex;align-items:center;justify-content:center;min-width:52px;padding:0 18px;">
-      <div class="mob-stack" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-        <div class="mob-arrow" style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.4);writing-mode:vertical-rl;">SWITCH TO EDVEO</div>
-        <div style="font-size:22px;color:#4ADE80;">→</div>
+    <div class="go-online-mid-banner" style="background:#0F172A;display:flex;align-items:center;justify-content:center;min-width:52px;padding:0 18px;">
+      <div class="go-online-stack-row" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <div class="go-online-text-horiz" style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.4);writing-mode:vertical-rl;">SWITCH TO EDVEO</div>
+        <div style="font-size:22px;color:#4ADE80;display:flex;align-items:center;">→</div>
       </div>
     </div>
 
@@ -467,7 +477,7 @@ function eTab(t,btn){
     </div>
   </div>
 
-  <div style="background:#0F172A;border-radius:12px;padding:40px;max-width:100%;margin:0 0 40px;">
+  <div class="go-online-card-pad" style="background:#0F172A;border-radius:12px;padding:40px;max-width:100%;margin:0 0 40px;">
     <div class="mob-col-1" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
       <div>
         <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;color:#4ADE80;margin-bottom:8px;">STUDENT MASTERY TRACKING</div>
