@@ -62,7 +62,7 @@ export default function Home() {
     .mob-text-center { text-align: center !important; }
   }
 </style>
-<section style="padding:80px 0 80px;background:#F9FAFB;">
+<section class="mob-hide" style="padding:80px 0 80px;background:#F9FAFB;">
 
 <div style="text-align:center;padding:0 24px;margin-bottom:40px;">
   <p style="font-size:13px;font-weight:700;letter-spacing:0.1em;color:#15803D;margin:0 0 12px;text-transform:uppercase;">Your Institute Dashboard</p>
