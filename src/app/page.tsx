@@ -9,7 +9,7 @@ import CtaBanner from "./components/CtaBanner";
 import HeroSection from "./components/HeroSection";
 import FeatureExplorer from "./components/FeatureExplorer";
 import MobileAppBanner from "./components/MobileAppBanner";
-import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
+import { COMPANY_WHATSAPP_URL, COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 
 export default function Home() {
   return (
@@ -709,7 +709,7 @@ function eTab(t,btn){
 
   <div style="text-align:center;">
     <div style="font-size:13px;color:#6B7280;margin-bottom:14px;">Still running on WhatsApp and Excel? It's costing you more than you think.</div>
-    <a href="/register" style="display:inline-block;background:#15803D;color:#fff;font-size:13px;font-weight:600;padding:12px 28px;border-radius:8px;text-decoration:none;">See how Edveo fixes this →</a>
+    <a href="https://wa.me/919895656279?text=Hi%2C+I%27m+interested+in+Edveo+for+my+institute" target="_blank" rel="noopener noreferrer" style="display:inline-block;background:#15803D;color:#fff;font-size:13px;font-weight:600;padding:12px 28px;border-radius:8px;text-decoration:none;">See how Edveo fixes this →</a>
   </div>
 
 </section>
@@ -815,7 +815,7 @@ function eTab(t,btn){
         variant="dark"
         headline="Still managing fees on Excel and attendance in a register?"
         accentSub="Join 5 Kerala coaching institutes already running on Edveo. Free to start. No setup fees. Live in 5 minutes."
-        primaryLabel="Get started free →"
+        primaryLabel="Get a free demo →"
         secondaryLabel="Talk to an Expert"
         secondaryHref={COMPANY_WHATSAPP_URL}
         trustItems={["Free forever", "No credit card required", "Data stored in India", "Cancel anytime"]}

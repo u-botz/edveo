@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import styles from "./hero.module.css";
 
 function ArrowRightIcon() {
@@ -81,9 +82,9 @@ export default function HeroSection() {
 
         {/* Actions */}
         <div className={styles.heroActions}>
-          <Link href="/register" className={styles.primaryButton}>
-            Get started free <ArrowRightIcon />
-          </Link>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton}>
+            Get a free demo <ArrowRightIcon />
+          </a>
         </div>
 
         <style>

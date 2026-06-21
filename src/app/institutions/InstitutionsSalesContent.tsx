@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import styles from "../teacher/audience.module.css";
 
 export default function InstitutionsSalesContent() {
@@ -333,9 +334,9 @@ export default function InstitutionsSalesContent() {
               <Link href="/pricing?segment=online" className={styles.pricingTeaserBtn}>
                 See Full Pricing →
               </Link>
-              <Link href="/register" className={styles.pricingTeaserGhost}>
-                Get started free
-              </Link>
+              <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.pricingTeaserGhost}>
+                Chat with us →
+              </a>
             </div>
             <p className={styles.pricingTeaserNote}>Free forever · No credit card · Cancel anytime</p>
           </div>
@@ -345,13 +346,11 @@ export default function InstitutionsSalesContent() {
       {/* ── Section 7: Final CTA ── */}
       <section className={styles.finalCta}>
         <div className={styles.container}>
-          <h2 className={styles.finalTitle}>Get Started Free Right Now.</h2>
+          <h2 className={styles.finalTitle}>Ready to go live? Let&apos;s talk.</h2>
           <p className={styles.finalSub}>
-            Free forever. No credit card.
-            <br />
-            We&apos;ll set up your institute profile together — it takes 7 minutes.
+            Message us on WhatsApp — we&apos;ll set up your institute profile together in under 10 minutes.
           </p>
-          <Link href="/register" className={styles.finalBtn}>Get started free →</Link>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.finalBtn}>Chat with us on WhatsApp →</a>
           <p className={styles.finalTrust}>99.9% uptime SLA · Data stored in India · Cancel anytime</p>
         </div>
       </section>

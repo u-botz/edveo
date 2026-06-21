@@ -1,6 +1,7 @@
 import Link from "next/link";
 import EdveoLogo from "../components/EdveoLogo";
 import SiteFooter from "../components/SiteFooter";
+import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import navStyles from "../components/siteNavbar.module.css";
 import DashboardPreview from "../components/DashboardPreview";
 import styles from "./audience.module.css";
@@ -20,7 +21,7 @@ function TeacherNav() {
         </div>
         <div className={navStyles.navActions}>
           <Link href="/login" className={navStyles.btnLogin}>Login</Link>
-          <Link href="/register" className={navStyles.btnTrial}>Start Free</Link>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={navStyles.btnTrial}>Get a free demo</a>
         </div>
       </nav>
     </div>
@@ -393,9 +394,9 @@ function TeacherContent() {
               <Link href="/pricing?segment=teachers" className={styles.pricingTeaserBtn}>
                 See Full Pricing →
               </Link>
-              <Link href="/register" className={styles.pricingTeaserGhost}>
-                Get started free
-              </Link>
+              <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.pricingTeaserGhost}>
+                Chat with us →
+              </a>
             </div>
             <p className={styles.pricingTeaserNote}>Free forever · No credit card · Cancel anytime</p>
           </div>
@@ -411,9 +412,9 @@ function TeacherContent() {
             <br />
             Your branded academy is live before you finish your coffee.
           </p>
-          <Link href="/register" className={styles.finalBtn}>
-            Get started free →
-          </Link>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.finalBtn}>
+            Get a free demo →
+          </a>
           <p className={styles.finalTrust}>Zero commission · Data stored in India · Cancel anytime</p>
         </div>
       </section>

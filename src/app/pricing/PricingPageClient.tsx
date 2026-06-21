@@ -5,7 +5,7 @@ import Link from "next/link";
 import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
 import WhatsAppFloat from "../components/WhatsAppFloat";
-import { COMPANY_WHATSAPP_URL } from "@/lib/companyPublicInfo";
+import { COMPANY_WHATSAPP_URL, COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import styles from "./pricing.module.css";
 
 const INSTITUTE_FAQS = [
@@ -424,9 +424,9 @@ export default function PricingPageClient() {
           Chat with us on WhatsApp — we&apos;ll tell you exactly which plan fits your institute in under 10 minutes.
         </p>
         <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
-          <Link href="/register" style={{ background: "#fff", color: "#0D2D4E", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
-            Get started free →
-          </Link>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" style={{ background: "#fff", color: "#0D2D4E", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
+            Get a free demo →
+          </a>
           <a href={COMPANY_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ background: "#2EAA6E", color: "#fff", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
             Chat on WhatsApp →
           </a>
@@ -524,13 +524,13 @@ function PlanCard({
           {cta}
         </button>
       ) : (
-        <Link href="/register" style={{
+        <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" style={{
           display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, marginBottom: ctaSub ? 6 : 24,
           background: popular ? "#2EAA6E" : "#0D2D4E",
           color: "#fff", fontWeight: 700, fontSize: "0.9rem", textDecoration: "none",
         }}>
           {cta}
-        </Link>
+        </a>
       )}
 
       {ctaSub && (

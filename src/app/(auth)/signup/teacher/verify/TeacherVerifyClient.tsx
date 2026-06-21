@@ -193,8 +193,8 @@ export default function TeacherVerifyClient() {
           <p style={{ margin: 0, lineHeight: 1.5 }}>{errorMessage}</p>
         </div>
         <p style={{ margin: "8px 0 0", fontSize: 14, color: "#64748b" }}>
-          <Link href="/register" style={{ color: "#4f46e5" }}>
-            Back to registration
+          <Link href="/" style={{ color: "#4f46e5" }}>
+            Back to home
           </Link>
         </p>
       </div>

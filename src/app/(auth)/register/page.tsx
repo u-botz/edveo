@@ -1,29 +1,5 @@
-import { Suspense } from "react";
-import RegisterFlowClient from "./RegisterFlowClient";
-
-function RegisterFallback() {
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#FFFFFF",
-        color: "#64748B",
-        fontFamily: "var(--font-body, system-ui, sans-serif)",
-        fontSize: 15,
-      }}
-    >
-      Loading…
-    </div>
-  );
-}
+import { redirect } from "next/navigation";
 
 export default function RegisterPage() {
-  return (
-    <Suspense fallback={<RegisterFallback />}>
-      <RegisterFlowClient />
-    </Suspense>
-  );
+  redirect("/");
 }

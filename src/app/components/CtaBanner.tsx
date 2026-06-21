@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import styles from "./ctaBanner.module.css";
 
 export type CtaVariant = "dark" | "green" | "navy";
@@ -25,7 +26,7 @@ export default function CtaBanner({
   headline,
   accentSub,
   subheadline,
-  primaryLabel = "Get started free →",
+  primaryLabel = "Get a free demo →",
   primaryId,
   secondaryLabel = "Talk to an Expert →",
   secondaryHref = "/contact",
@@ -42,9 +43,9 @@ export default function CtaBanner({
       {subheadline && <p className={styles.sub}>{subheadline}</p>}
 
       <div className={styles.buttons}>
-        <Link href="/register" className={styles.btnPrimary} id={primaryId}>
+        <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.btnPrimary} id={primaryId}>
           {primaryLabel}
-        </Link>
+        </a>
         {isExternal ? (
           <a
             href={secondaryHref}

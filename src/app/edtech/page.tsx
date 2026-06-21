@@ -1,6 +1,7 @@
 import Link from "next/link";
 import EdveoLogo from "../components/EdveoLogo";
 import SiteFooter from "../components/SiteFooter";
+import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import navStyles from "../components/siteNavbar.module.css";
 import styles from "../teacher/audience.module.css";
 
@@ -19,7 +20,7 @@ function EdtechNav() {
         </div>
         <div className={navStyles.navActions}>
           <Link href="/login" className={navStyles.btnLogin}>Login</Link>
-          <Link href="/register" className={navStyles.btnTrial}>Book a Demo</Link>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={navStyles.btnTrial}>Book a Demo</a>
         </div>
       </nav>
     </div>
@@ -399,9 +400,9 @@ function EdtechContent() {
               <Link href="/pricing?segment=online" className={styles.pricingTeaserBtn}>
                 See Full Pricing →
               </Link>
-              <Link href="/register" className={styles.pricingTeaserGhost}>
-                Get started free
-              </Link>
+              <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.pricingTeaserGhost}>
+                Chat with us →
+              </a>
             </div>
             <p className={styles.pricingTeaserNote}>Free forever · No credit card · Cancel anytime</p>
           </div>
@@ -417,9 +418,9 @@ function EdtechContent() {
             <br />
             Book a live demo and we&apos;ll build your setup together.
           </p>
-          <Link href="/register" className={styles.finalBtn}>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.finalBtn}>
             Book a Demo →
-          </Link>
+          </a>
           <p className={styles.finalTrust}>Zero commission · White-label ready · Data stored in India</p>
         </div>
       </section>

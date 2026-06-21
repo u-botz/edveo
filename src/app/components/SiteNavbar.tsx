@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import EdveoLogo from "./EdveoLogo";
+import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import styles from "./siteNavbar.module.css";
 
 export type NavPage = "home" | "solutions" | "pricing" | "resources" | "about" | "contact";
@@ -30,7 +31,7 @@ export default function SiteNavbar({ activePage }: Props) {
         </div>
 
         <div className={styles.navActions}>
-          <Link href="/register" className={styles.btnTrial}>Get started free</Link>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.btnTrial}>Get a free demo</a>
         </div>
 
         {/* Hamburger */}
@@ -54,7 +55,7 @@ export default function SiteNavbar({ activePage }: Props) {
           <Link href="/pricing" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Pricing</Link>
           <Link href="/about" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>About</Link>
           <Link href="/contact" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Contact</Link>
-          <Link href="/register" className={styles.mobileDrawerCta} onClick={() => setOpen(false)}>Get started free →</Link>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.mobileDrawerCta} onClick={() => setOpen(false)}>Get a free demo →</a>
         </div>
       )}
     </div>

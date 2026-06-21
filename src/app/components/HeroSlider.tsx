@@ -1,3 +1,4 @@
+import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import styles from "../page.module.css";
 
 function WaIconHero() {
@@ -43,14 +44,14 @@ export default function HeroSlider() {
             </p>
 
             <div className={styles.heroCtas}>
-              <button type="button" className={styles.heroBtnPrimary}>
-                Get started free
+              <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.heroBtnPrimary}>
+                Get a free demo
                 <ArrowRightIcon />
-              </button>
-              <button type="button" className={styles.heroBtnWa}>
+              </a>
+              <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.heroBtnWa}>
                 <WaIconHero />
                 Chat on WhatsApp
-              </button>
+              </a>
             </div>
 
             <p className={styles.heroReassurance}>Free forever · No credit card required · Go live today</p>
