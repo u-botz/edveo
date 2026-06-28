@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 const LAST_UPDATED = "26 April 2026";
-const COMPANY_NAME = "Ubotz Technologies Private Limited";
+const COMPANY_NAME = "Edveo Technologies Private Limited";
 
 export default function TermsOfServicePage() {
   return (
@@ -29,7 +29,7 @@ export default function TermsOfServicePage() {
           <div className={styles.body}>
             <p>
               These Terms of Service (&quot;Terms&quot;) are a binding agreement between you and{" "}
-              {COMPANY_NAME} (&quot;Ubotz&quot;, &quot;we&quot;, &quot;us&quot;) for use of the Edveo
+              {COMPANY_NAME} (&quot;Edveo&quot;, &quot;we&quot;, &quot;us&quot;) for use of the Edveo
               software, websites, and related services (the &quot;Services&quot;).
             </p>
             <p>
