@@ -56,8 +56,9 @@ export function InstitutionIcon() {
   );
 }
 
+const words = ["Grow", "Run", "Scale"];
+
 export default function HeroSection() {
-  const words = ["Grow", "Run", "Scale", "Protect"];
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);
 
@@ -97,7 +98,8 @@ export default function HeroSection() {
             backgroundClip: "text"
           }}>
             {words[index]}
-          </span>{" "}
+          </span>
+          <br />
           Your Institution.
         </h1>
 
