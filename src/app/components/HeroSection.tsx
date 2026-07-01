@@ -89,7 +89,12 @@ export default function HeroSection() {
           <span style={{ 
             opacity: fade ? 1 : 0, 
             transition: "opacity 0.5s ease-in-out",
-            display: "inline-block"
+            display: "inline-block",
+            color: "#15803D",
+            background: "linear-gradient(90deg, #15803D 0%, #10B981 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text"
           }}>
             {words[index]}
           </span>{" "}
