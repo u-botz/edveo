@@ -1,3 +1,5 @@
+"use client";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import styles from "./hero.module.css";
@@ -55,6 +57,22 @@ export function InstitutionIcon() {
 }
 
 export default function HeroSection() {
+  const words = ["Grow", "Run", "Scale", "Protect"];
+  const [index, setIndex] = useState(0);
+  const [fade, setFade] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % words.length);
+        setFade(true);
+      }, 500);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className={styles.heroSection}>
       <div className={styles.heroBackground}></div>
@@ -67,12 +85,22 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1 className={styles.heroHeadline}>
-          Stop running your institute on WhatsApp and Excel.
+          AI Agents That{" "}
+          <span style={{ 
+            opacity: fade ? 1 : 0, 
+            transition: "opacity 0.5s ease-in-out",
+            display: "inline-block"
+          }}>
+            {words[index]}
+          </span>{" "}
+          Your Institution.
         </h1>
 
         {/* Sub-headline */}
         <p className={styles.heroSub}>
-          Edveo replaces your fee registers, attendance sheets, and WhatsApp reminders with one simple dashboard — and takes your entire institute online with your own branded app, website, and learning platform.
+          <span style={{ display: "block", marginBottom: "8px" }}>Every missed enquiry is a lost admission.</span>
+          <span style={{ display: "block", marginBottom: "8px" }}>Every unpaid fee is revenue you&apos;ve already earned.</span>
+          <span style={{ display: "block" }}>Edveo&apos;s agents handle both — automatically, 24/7.</span>
         </p>
 
         {/* Micro-copy — directly above primary CTA */}
