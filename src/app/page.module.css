@@ -882,8 +882,8 @@
 }
 
 .timelineNumberSuccess {
-  background-color: #22C55E;
-  border-color: #22C55E;
+  background-color: #2E90FA;
+  border-color: #2E90FA;
 }
 
 .timelineItem h3 {
@@ -906,7 +906,7 @@
 }
 
 .trustBarContainer {
-  background-color: rgba(46, 170, 110, 0.1);
+  background-color: rgba(46, 144, 250, 0.12);
   border-radius: 12px;
   padding: 20px 40px;
   display: flex;
@@ -921,7 +921,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #22C55E;
+  color: #5AA9FB;
   font-weight: 600;
   font-size: 1rem;
 }

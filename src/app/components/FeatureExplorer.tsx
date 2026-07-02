@@ -382,7 +382,7 @@ export default function FeatureExplorer() {
             <ul className={styles.featureBullets}>
               {active.bullets.map((b) => (
                 <li key={b} className={styles.featureBullet}>
-                  <svg className={styles.bulletCheck} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2EAA6E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <svg className={styles.bulletCheck} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#155EEF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                   <span>{b}</span>

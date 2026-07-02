@@ -1,7 +1,7 @@
 /* ── MobileAppBanner.module.css ── */
 
 .section {
-  background: #0D2D4E;
+  background: #0A2540;
   padding: 96px 24px;
   position: relative;
   overflow: hidden;
@@ -47,9 +47,9 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.1);
-  border: 1px solid rgba(74, 222, 128, 0.2);
+  color: #5AA9FB;
+  background: rgba(46, 144, 250, 0.12);
+  border: 1px solid rgba(46, 144, 250, 0.28);
   border-radius: 100px;
   padding: 6px 14px;
 }
@@ -65,7 +65,7 @@
 }
 
 .headlineAccent {
-  color: #4ade80;
+  color: #5AA9FB;
 }
 
 .sub {
@@ -115,8 +115,8 @@
   font-family: var(--font-body);
   font-size: 15px;
   font-weight: 700;
-  color: #0D2D4E;
-  background: #4ade80;
+  color: #0A2540;
+  background: #5AA9FB;
   border: none;
   border-radius: 10px;
   padding: 13px 24px;
@@ -125,7 +125,7 @@
 }
 
 .ctaPrimary:hover {
-  background: #22c55e;
+  background: #2E90FA;
   transform: translateY(-2px);
 }
 
@@ -187,7 +187,7 @@
   transform: translateX(-50%);
   width: 200px;
   height: 40px;
-  background: radial-gradient(ellipse at center, rgba(46, 170, 110, 0.25) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(46, 144, 250, 0.30) 0%, transparent 70%);
   pointer-events: none;
 }
 

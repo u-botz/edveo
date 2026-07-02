@@ -39,13 +39,13 @@
   background: rgba(234, 244, 253, 0.6); /* soft blue */
 }
 
-/* center right soft green gradient */
+/* center right soft blue gradient */
 .heroBackground::after {
   top: 10%;
   right: -50px;
   width: 600px;
   height: 600px;
-  background: rgba(213, 245, 227, 0.5); /* soft green */
+  background: rgba(213, 231, 253, 0.55); /* soft blue */
 }
 
 .heroContainer {
@@ -145,8 +145,8 @@
     border-color: rgba(13, 45, 78, 0.08);
   }
   50% {
-    box-shadow: 0 4px 18px rgba(46, 170, 110, 0.14), 0 0 0 1px rgba(46, 170, 110, 0.12);
-    border-color: rgba(46, 170, 110, 0.28);
+    box-shadow: 0 4px 18px rgba(21, 94, 239, 0.14), 0 0 0 1px rgba(21, 94, 239, 0.12);
+    border-color: rgba(21, 94, 239, 0.28);
   }
 }
 
@@ -155,12 +155,12 @@
   100% {
     opacity: 0.85;
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(46, 170, 110, 0.35);
+    box-shadow: 0 0 0 0 rgba(21, 94, 239, 0.35);
   }
   50% {
     opacity: 1;
     transform: scale(1.15);
-    box-shadow: 0 0 0 6px rgba(46, 170, 110, 0);
+    box-shadow: 0 0 0 6px rgba(21, 94, 239, 0);
   }
 }
 
@@ -172,9 +172,9 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: #2EAA6E;
+  color: #155EEF;
   text-transform: uppercase;
-  background: rgba(46, 170, 110, 0.1);
+  background: rgba(21, 94, 239, 0.1);
   padding: 4px 8px;
   border-radius: 100px;
 }
@@ -182,7 +182,7 @@
 .eyebrowBadgeDot {
   width: 6px;
   height: 6px;
-  background-color: #2EAA6E;
+  background-color: #155EEF;
   border-radius: 50%;
 }
 
@@ -312,7 +312,7 @@
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: #15803D;
+  color: #155EEF;
   text-align: center;
   margin-bottom: 24px;
 }
@@ -354,14 +354,14 @@
 }
 
 .audienceCard:hover {
-  border-color: #15803D;
+  border-color: #155EEF;
   background: #FFFFFF;
 }
 
 .audienceCardIcon {
   flex-shrink: 0;
-  color: #15803D;
-  background: #DCFCE7;
+  color: #155EEF;
+  background: #EAF1FE;
   border-radius: 8px;
   padding: 8px;
   margin-bottom: 12px;
@@ -390,7 +390,7 @@
 
 .audienceCardArrow {
   flex-shrink: 0;
-  color: #15803D;
+  color: #155EEF;
   font-weight: 600;
   margin-top: 12px;
   align-self: flex-start;

@@ -91,8 +91,8 @@ export default function HeroSection() {
             opacity: fade ? 1 : 0, 
             transition: "opacity 0.5s ease-in-out",
             display: "inline-block",
-            color: "#15803D",
-            background: "linear-gradient(90deg, #15803D 0%, #10B981 100%)",
+            color: "#155EEF",
+            background: "linear-gradient(90deg, #2E90FA 0%, #155EEF 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text"
@@ -162,7 +162,7 @@ export default function HeroSection() {
               transform: translateY(-2px);
               box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(255,255,255,0.8);
             }
-            .sp-stat-dot { width: 8px; height: 8px; border-radius: 50%; background: #15803D; box-shadow: 0 0 8px rgba(21, 128, 61, 0.4); }
+            .sp-stat-dot { width: 8px; height: 8px; border-radius: 50%; background: #155EEF; box-shadow: 0 0 8px rgba(21, 94, 239, 0.4); }
             
             .sp-testimonials-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-bottom: 0; width: 100%; }
             
@@ -190,7 +190,7 @@ export default function HeroSection() {
               position: absolute;
               top: 0; left: 0; right: 0;
               height: 4px;
-              background: linear-gradient(90deg, #15803D 0%, #34D399 100%);
+              background: linear-gradient(90deg, #2E90FA 0%, #155EEF 100%);
               opacity: 0;
               transition: opacity 0.3s ease;
             }
@@ -205,7 +205,7 @@ export default function HeroSection() {
               left: 24px;
               font-size: 64px;
               font-family: Georgia, serif;
-              color: rgba(21, 128, 61, 0.06);
+              color: rgba(21, 94, 239, 0.06);
               line-height: 1;
               pointer-events: none;
             }
@@ -229,8 +229,8 @@ export default function HeroSection() {
             .sp-avatar {
               width: 40px; height: 40px;
               border-radius: 50%;
-              background: #DCFCE7;
-              color: #15803D;
+              background: #EAF1FE;
+              color: #155EEF;
               display: flex; align-items: center; justify-content: center;
               font-weight: 700; font-size: 16px;
               flex-shrink: 0;

@@ -85,7 +85,7 @@
   font-weight: 600;
   font-size: 0.95rem;
   color: #ffffff;
-  background: #0f172a;
+  background: #0A2540;
   border: none;
   cursor: pointer;
   padding: 8px 8px 8px 24px;
@@ -99,9 +99,9 @@
 }
 
 .btnTrial:hover {
-  background: #1e293b;
+  background: #0F3057;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+  box-shadow: 0 4px 12px rgba(10, 37, 64, 0.2);
 }
 
 .btnTrialIcon {
@@ -111,7 +111,7 @@
   width: 32px;
   height: 32px;
   background: #ffffff;
-  color: #0f172a;
+  color: #0A2540;
   border-radius: 50%;
   transition: transform 0.3s ease;
 }

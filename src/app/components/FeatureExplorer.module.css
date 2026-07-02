@@ -20,7 +20,7 @@
   left: 50%;
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(16,185,129,0.05) 0%, rgba(255,255,255,0) 70%);
+  background: radial-gradient(circle, rgba(21,94,239,0.05) 0%, rgba(255,255,255,0) 70%);
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 0;
@@ -46,20 +46,20 @@
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #10b981;
+  color: #155EEF;
   margin: 0 0 16px;
   display: inline-block;
-  background: #ecfdf5;
+  background: #EAF1FE;
   padding: 6px 16px;
   border-radius: 999px;
-  border: 1px solid #d1fae5;
+  border: 1px solid #DCE4F5;
 }
 
 .title {
   font-family: var(--font-display);
   font-size: 32px;
   font-weight: 700;
-  color: #0f172a;
+  color: #0A2540;
   margin: 0 0 20px;
   letter-spacing: -0.02em;
   line-height: 1.2;
@@ -127,18 +127,18 @@
 }
 
 .tab:hover {
-  color: #0f172a;
+  color: #0A2540;
   background: #f1f5f9;
 }
 
 .tabActive {
-  background: #0f172a;
+  background: #0A2540;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+  box-shadow: 0 4px 12px rgba(10, 37, 64, 0.2);
   transform: translateY(-1px);
 }
 .tabActive:hover {
-  background: #1e293b;
+  background: #0F3057;
   color: #ffffff;
 }
 
@@ -183,22 +183,22 @@
 .featureIconWrap {
   width: 56px;
   height: 56px;
-  background: #f0fdf4;
-  color: #10b981;
+  background: #EAF1FE;
+  color: #155EEF;
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 32px;
-  border: 1px solid #d1fae5;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+  border: 1px solid #DCE4F5;
+  box-shadow: 0 4px 12px rgba(21, 94, 239, 0.15);
 }
 
 .featureHeadline {
   font-family: var(--font-display);
   font-size: 32px;
   font-weight: 800;
-  color: #0f172a;
+  color: #0A2540;
   margin: 0 0 16px;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -251,7 +251,7 @@
   font-family: var(--font-body);
   font-size: 15px;
   font-weight: 700;
-  color: #0f172a;
+  color: #0A2540;
   text-decoration: none;
   border-bottom: 2px solid transparent;
   width: fit-content;
@@ -259,7 +259,7 @@
 }
 
 .featureCta:hover {
-  color: #10b981;
+  color: #155EEF;
   gap: 12px;
 }
 
@@ -329,7 +329,7 @@
 .mockupClassName {
   font-size: 20px;
   font-weight: 700;
-  color: #0f172a;
+  color: #0A2540;
   margin-bottom: 12px;
 }
 .mockupMeta {
@@ -368,7 +368,7 @@
 }
 .mockupProgressBar {
   height: 100%;
-  background: #10b981;
+  background: #155EEF;
   border-radius: 999px;
   width: 0;
   animation: fillBar 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -377,7 +377,7 @@
 .mockupProgressPct {
   font-size: 12px;
   font-weight: 700;
-  color: #10b981;
+  color: #155EEF;
   text-align: right;
   margin-top: 8px;
 }
@@ -414,7 +414,7 @@
 
 .mockupChatUser {
   font-weight: 700;
-  color: #0f172a;
+  color: #0A2540;
   margin-right: 8px;
 }
 
@@ -446,12 +446,12 @@
   background: #fef2f2;
 }
 .mockupActionPrimary {
-  background: #10b981;
+  background: #155EEF;
   color: #ffffff;
-  border-color: #10b981;
+  border-color: #155EEF;
 }
 .mockupActionPrimary:hover {
-  background: #059669;
+  background: #1149C2;
 }
 
 /* Fee & Leads Rows */
@@ -499,7 +499,7 @@
 .mockupFeeName {
   font-size: 15px;
   font-weight: 700;
-  color: #0f172a;
+  color: #0A2540;
   margin-bottom: 4px;
 }
 .mockupFeeClass {
@@ -557,7 +557,7 @@
 .mockupStatValue {
   font-size: 28px;
   font-weight: 800;
-  color: #0f172a;
+  color: #0A2540;
   margin-bottom: 4px;
 }
 .mockupStatLabel {
@@ -568,7 +568,7 @@
 .mockupChartLabel {
   font-size: 14px;
   font-weight: 700;
-  color: #0f172a;
+  color: #0A2540;
   margin-bottom: 24px;
 }
 
@@ -594,7 +594,7 @@
   color: #475569;
 }
 .mockupBarScore {
-  color: #0f172a;
+  color: #0A2540;
 }
 .mockupBarTrack {
   flex: 1;
@@ -717,7 +717,7 @@
 .mockupSlotSubject {
   font-size: 15px;
   font-weight: 700;
-  color: #0f172a;
+  color: #0A2540;
 }
 .mockupSlotBatch {
   font-size: 13px;
