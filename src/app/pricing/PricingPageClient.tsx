@@ -281,7 +281,7 @@ export default function PricingPageClient() {
             <PlanCard
               name="Starter"
               who="For new and small institutes just getting started."
-              price={price(999, 833)}
+              price={price(1999, 1666)}
               billing={billing}
               cta="Start with Starter"
               ctaSub="No credit card required to try"
@@ -309,7 +309,7 @@ export default function PricingPageClient() {
             <PlanCard
               name="Growth"
               who="For growing institutes ready to run operations professionally."
-              price={price(1999, 1666)}
+              price={price(3999, 3333)}
               billing={billing}
               cta="Start Growing"
               ctaSub="Most institutes choose this plan"
@@ -338,9 +338,11 @@ export default function PricingPageClient() {
             <PlanCard
               name="Pro"
               who="For established institutes that need full control and advanced insights."
-              price={price(3999, 3333)}
+              price="Custom"
               billing={billing}
-              cta="Go Pro"
+              cta="Contact Sales"
+              ghost
+              customSub="Based on size & requirements"
               ctaSub="Built for serious institute management"
               perfectFor="Unlimited students · Unlimited branches · Unlimited staff"
               features={[

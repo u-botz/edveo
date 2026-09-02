@@ -6,7 +6,7 @@ import styles from "./headlineRotator.module.css";
 /* The rotating second line of the hero headline. Isolated into its own client
    component so HeroSection itself can stay on the server. */
 
-const WORDS = ["Intelligently.", "Automatically.", "Profitably.", "Effortlessly."];
+const WORDS = ["Intelligently", "Automatically", "Profitably", "Effortlessly"];
 
 const HOLD_MS = 2600;
 

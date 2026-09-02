@@ -108,7 +108,7 @@ export default function ProductPage() {
           <span className={styles.heroEyebrow}>Product overview</span>
           <h1 className={styles.heroTitle}>
             Everything you need to run your institute.{" "}
-            <span className={styles.heroAccent}>In one place.</span>
+            <span className={styles.heroAccent}>In one place</span>
           </h1>
           <p className={styles.heroSub}>
             Fees, attendance, admissions, timetables and payroll share a single record — so the

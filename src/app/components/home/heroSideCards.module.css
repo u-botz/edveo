@@ -256,8 +256,42 @@
   }
 }
 
-/* Below this the flanking elements would sit on top of the screen. */
-@media (max-width: 1340px) {
+/* Matches the device narrowing in heroDashboard.module.css: smaller cards
+   tucked closer, so the pair still clears the viewport at ~1300px. */
+@media (max-width: 1500px) {
+  .leftRail {
+    width: 260px;
+    right: calc(100% - 56px);
+    gap: 34px;
+  }
+
+  .askPanel {
+    width: 224px;
+    left: calc(100% - 96px);
+  }
+
+  .card {
+    padding: 11px 15px 11px 11px;
+  }
+
+  .cardTitle {
+    font-size: 12.5px;
+  }
+
+  .cardSub {
+    font-size: 11.5px;
+  }
+
+  .icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+  }
+}
+
+/* Past this there is no honest room left — hide them rather than clip them at
+   the section edge, which .heroSection overflow:hidden would otherwise do. */
+@media (max-width: 1300px) {
   .leftRail,
   .askPanel {
     display: none;

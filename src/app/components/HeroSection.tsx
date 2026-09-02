@@ -56,7 +56,7 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1 className={styles.heroHeadline}>
-          Run Your Institution.
+          Run Your Institution
           <br />
           <HeadlineRotator />
         </h1>

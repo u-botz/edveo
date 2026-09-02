@@ -2,9 +2,9 @@ import shell from "./home.module.css";
 import styles from "./statsBand.module.css";
 
 const STATS = [
-  { value: "5", label: "Institutes running on Edveo" },
-  { value: "5 min", label: "Average time to go live" },
-  { value: "₹0", label: "Setup and onboarding fees" },
+  { value: "10K+", label: "Students on the platform" },
+  { value: "50+", label: "Institutes running Edveo" },
+  { value: "0%", label: "Commission on fees you collect" },
 ];
 
 export default function StatsBand() {

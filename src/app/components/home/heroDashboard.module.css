@@ -69,9 +69,9 @@
   pointer-events: none;
   background: linear-gradient(
     112deg,
-    rgba(255, 255, 255, 0.16) 0%,
-    rgba(255, 255, 255, 0.05) 22%,
-    rgba(255, 255, 255, 0) 46%
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.03) 20%,
+    rgba(255, 255, 255, 0) 42%
   );
 }
 
@@ -104,9 +104,9 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 11px 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 14px;
+  background: #E9EEF8;
+  border-bottom: 0.8px solid #D7E0EF;
 }
 
 .dots {
@@ -116,18 +116,25 @@
 }
 
 .dots i {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18);
+  background: #C3CDDF;
 }
+
+/* Traffic lights, so the bar reads as a real window. */
+.dots i:nth-child(1) { background: #F0685E; }
+.dots i:nth-child(2) { background: #F4BE4F; }
+.dots i:nth-child(3) { background: #61C554; }
 
 .urlBar {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.05);
+  font-weight: 500;
+  color: #7C879F;
+  background: #FFFFFF;
+  border: 0.8px solid #DCE3F0;
   border-radius: 999px;
-  padding: 4px 14px;
+  padding: 4px 16px;
   letter-spacing: 0.01em;
 }
 
@@ -486,6 +493,16 @@
 }
 
 /* ── Responsive ── */
+
+/* The rail and panel need ~440px of clearance beside the device. Narrowing the
+   device here buys that back, keeping them visible on 1366px laptops instead of
+   dropping them at the first sign of pressure. */
+@media (max-width: 1500px) {
+  .stage {
+    max-width: 860px;
+  }
+}
+
 @media (max-width: 880px) {
   .stage {
     margin-top: 40px;

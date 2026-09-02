@@ -7,21 +7,24 @@ import styles from "./pricingTeaser.module.css";
 const PLANS = [
   {
     name: "Starter",
-    price: "₹999",
+    price: "₹1,999",
+    per: "/month",
     who: "New and small institutes finding their feet.",
     covers: "Up to 100 students · 1 branch · 5 staff",
     popular: false,
   },
   {
     name: "Growth",
-    price: "₹1,999",
+    price: "₹3,999",
+    per: "/month",
     who: "Growing institutes ready to run operations properly.",
     covers: "Up to 500 students · 2 branches · 15 staff",
     popular: true,
   },
   {
     name: "Pro",
-    price: "₹3,999",
+    price: "Custom",
+    per: "pricing",
     who: "Established institutes that need full control.",
     covers: "Unlimited students · branches · staff",
     popular: false,
@@ -49,7 +52,7 @@ export default function PricingTeaser() {
               <p className={styles.who}>{p.who}</p>
               <div className={styles.priceRow}>
                 <span className={styles.price}>{p.price}</span>
-                <span className={styles.per}>/month</span>
+                <span className={styles.per}>{p.per}</span>
               </div>
               <p className={styles.covers}>{p.covers}</p>
               <Link href="/pricing" className={p.popular ? styles.ctaPrimary : styles.ctaGhost}>
