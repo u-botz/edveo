@@ -3,7 +3,7 @@ import EdveoLogo from "../components/EdveoLogo";
 import SiteFooter from "../components/SiteFooter";
 import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import navStyles from "../components/siteNavbar.module.css";
-import DashboardPreview from "../components/DashboardPreview";
+
 import styles from "./audience.module.css";
 
 function TeacherNav() {
@@ -105,15 +105,7 @@ function TeacherContent() {
         </div>
       </section>
 
-      {/* ── Dashboard Preview ── */}
-      <section className={styles.dashboardPreviewSection}>
-        <div className={styles.dashboardPreviewHeader}>
-          <span className={styles.dashboardPreviewEyebrow}>YOUR ACTUAL DASHBOARD</span>
-          <h2 className={styles.dashboardPreviewTitle}>See what you get — day one</h2>
-          <p className={styles.dashboardPreviewSub}>A real-time view of your academy. Students, fees, attendance, CRM — all in one place.</p>
-        </div>
-        <DashboardPreview />
-      </section>
+
 
       {/* ── Section 2: Pain table ── */}
       <section className={`${styles.section} ${styles.sectionAlt}`}>

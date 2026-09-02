@@ -1,0 +1,27 @@
+/* Rotating headline word.
+   All variants share one grid cell, so the element is intrinsically as wide as
+   the longest word — the centred line never shifts on a swap, with no
+   hand-measured min-width to drift out of date. */
+.rotator {
+  display: inline-grid;
+  vertical-align: top;
+}
+
+.word {
+  grid-area: 1 / 1;
+  color: var(--blue-500, #5795F8);
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out, ease);
+  /* Keeps descenders from being clipped by the grid cell. */
+  padding-bottom: 0.06em;
+}
+
+.wordActive {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    transition: none;
+  }
+}

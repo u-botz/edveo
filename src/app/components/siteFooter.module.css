@@ -1,17 +1,24 @@
 /* ============================================
-   SITE FOOTER — white / light theme
+   SITE FOOTER — Light (webinar.gg pattern)
    ============================================ */
 
 .footer {
-  background-color: #ffffff;
-  color: var(--primary);
-  padding: 72px 48px 32px;
-  border-top: 1px solid #e2e8f0;
+  background-color: var(--bg-footer, #F8FBFF);
+  color: var(--ink-900, #010D36);
+  position: relative;
+  padding-top: 0;
+}
+
+.topAccent {
+  height: 1px;
+  width: 100%;
+  background: var(--nav-glass-border, rgba(0, 0, 0, 0.05));
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 72px 48px 0;
 }
 
 .footerGrid {
@@ -21,6 +28,33 @@
   margin-bottom: 56px;
 }
 
+.footerBrandCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footerBrandLink {
+  display: inline-block;
+  text-decoration: none;
+  line-height: 0;
+}
+
+/* EdveoLogo variant="footer" forces the PNG white; on a light ground it must
+   go dark instead. Descendant selector outranks .whiteFilter — no !important. */
+.footerBrandLink img {
+  filter: brightness(0);
+  opacity: 0.9;
+}
+
+.footerDesc {
+  font-size: 0.85rem;
+  color: var(--text-body, #475569);
+  max-width: 250px;
+  line-height: 1.7;
+  margin: 0;
+}
+
 .footerLinkCol {
   display: flex;
   flex-direction: column;
@@ -28,48 +62,32 @@
 }
 
 .footerLinkCol h4 {
-  color: var(--primary);
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.72rem;
+  color: var(--ink-900, #010D36);
+  font-weight: 600;
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 6px;
-}
-
-.footerLinkCol a {
-  color: #64748b;
-  font-size: 0.88rem;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footerLinkCol a:hover {
-  color: var(--secondary);
-}
-
-.footerBrandLink {
-  display: inline-block;
-  text-decoration: none;
-  line-height: 0;
+  letter-spacing: 0.06em;
   margin-bottom: 8px;
 }
 
-.footerDesc {
-  font-size: 0.85rem;
-  color: #64748b;
-  max-width: 230px;
-  line-height: 1.7;
-  margin: 0;
+.footerLinkCol a {
+  color: var(--text-body, #475569);
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerLinkCol a:hover {
+  color: var(--blue-600, #0B5CFF);
 }
 
 .footerBottom {
-  border-top: 1px solid #e2e8f0;
-  padding-top: 24px;
+  border-top: 0.8px solid var(--border, #E2E8F0);
+  padding: 24px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #94a3b8;
+  color: var(--text-muted, #9AA1B5);
   font-size: 0.8rem;
 }
 
@@ -80,10 +98,9 @@
 }
 
 @media (max-width: 768px) {
-  .footer {
-    padding: 56px 24px 28px;
+  .container {
+    padding: 56px 24px 0;
   }
-
   .footerGrid {
     grid-template-columns: 1fr;
   }

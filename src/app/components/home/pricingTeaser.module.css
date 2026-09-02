@@ -1,0 +1,151 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: stretch;
+}
+
+.card {
+  position: relative;
+  background: var(--surface-card, #FFFFFF);
+  border: 0.8px solid #FFFFFF;
+  border-radius: 24px;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 32px 64px -16px rgba(0, 5, 61, 0.06);
+}
+
+/* Only the recommended tier takes the brand outline — everything else stays
+   quiet so the eye lands in one place. */
+.cardPopular {
+  border: 2px solid var(--blue-600, #0B5CFF);
+  box-shadow: 0 32px 64px -16px rgba(11, 92, 255, 0.22);
+}
+
+.badge {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--blue-600, #0B5CFF);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: var(--radius-full, 9999px);
+  white-space: nowrap;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-900, #010D36);
+  margin: 0;
+}
+
+.who {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted, #9AA1B5);
+  margin: 0;
+  min-height: 44px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink-900, #010D36);
+  font-variant-numeric: tabular-nums;
+}
+
+.per {
+  font-size: 14px;
+  color: var(--text-muted, #9AA1B5);
+}
+
+.covers {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-body, #475569);
+  margin: 4px 0 20px;
+  padding-bottom: 20px;
+  border-bottom: 0.8px solid var(--border, #E2E8F0);
+}
+
+.ctaPrimary,
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: var(--radius-full, 9999px);
+  text-decoration: none;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+
+.ctaPrimary {
+  background: var(--blue-600, #0B5CFF);
+  color: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.25);
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px -4px rgba(59, 130, 246, 0.4);
+}
+
+.ctaGhost {
+  background: var(--blue-50, #EFF8FF);
+  color: var(--blue-600, #0B5CFF);
+  border: 0.8px solid var(--border-accent, rgba(11, 92, 255, 0.2));
+}
+
+.ctaGhost:hover {
+  background: #E1EFFF;
+}
+
+.ctaPrimary:focus-visible,
+.ctaGhost:focus-visible {
+  outline: 2px solid var(--blue-600, #0B5CFF);
+  outline-offset: 3px;
+}
+
+.foot {
+  text-align: center;
+  margin: 32px 0 0;
+  font-size: 14px;
+  color: var(--text-body, #475569);
+}
+
+.footLink {
+  color: var(--blue-600, #0B5CFF);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+  .who { min-height: 0; }
+}

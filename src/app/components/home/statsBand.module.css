@@ -1,0 +1,53 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.stat {
+  padding: 32px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Hairline separators rather than card chrome — webinar.gg keeps this band
+   completely flat, letting the numerals do the work. */
+.stat + .stat {
+  border-left: 0.8px solid var(--border, #E2E8F0);
+}
+
+.value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink-900, #010D36);
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted, #9AA1B5);
+  max-width: 200px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .stat + .stat {
+    border-left: none;
+    border-top: 0.8px solid var(--border, #E2E8F0);
+  }
+  .stat {
+    padding: 24px 16px;
+  }
+}

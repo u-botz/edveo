@@ -1,0 +1,214 @@
+/* ── Two-panel bento with a VS disc on the seam ── */
+.bento {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  position: relative;
+  margin-bottom: 56px;
+}
+
+.panel {
+  background: var(--surface-card, #FFFFFF);
+  border-radius: 40px;
+  border: 2px solid var(--border, #E2E8F0);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* The losing panel stays quiet; the winning one takes the brand outline and
+   the heavier shadow, so the eye lands on it first. */
+.panelBefore {
+  box-shadow: var(--shadow-sm);
+}
+
+.panelAfter {
+  border-color: var(--blue-600, #0B5CFF);
+  box-shadow: 0 32px 64px -16px rgba(11, 92, 255, 0.18);
+}
+
+.panelTag {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted, #9AA1B5);
+  background: var(--bg-wash-alt, #F1F5F9);
+  border-radius: var(--radius-full, 9999px);
+  padding: 6px 14px;
+  margin-bottom: 4px;
+}
+
+.panelTagAfter {
+  color: var(--blue-600, #0B5CFF);
+  background: var(--blue-50, #EFF8FF);
+}
+
+.panelTitle {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: var(--ink-900, #010D36);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.panelBody {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-body, #475569);
+  margin: 0;
+}
+
+.vsDisc {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--blue-600, #0B5CFF);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  z-index: 2;
+  border: 6px solid var(--sec-faint, #F8FAFF);
+  box-shadow: 0 10px 30px -8px rgba(11, 92, 255, 0.5);
+}
+
+/* ── Comparison table ── */
+.tableScroll {
+  overflow-x: auto;
+}
+
+.table {
+  min-width: 720px;
+  background: var(--surface-card, #FFFFFF);
+  border-radius: 30px 30px 24px 24px;
+  border: 0.8px solid var(--border, #E2E8F0);
+  overflow: hidden;
+}
+
+.thead,
+.tr {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  align-items: stretch;
+}
+
+.thead {
+  background: var(--bg-wash, #F8FAFC);
+  border-bottom: 0.8px solid var(--border, #E2E8F0);
+}
+
+.thLabel,
+.thBefore,
+.thAfter {
+  padding: 16px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted, #9AA1B5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thBefore {
+  border-left: 0.8px solid var(--border, #E2E8F0);
+}
+
+/* The Edveo column is outlined for its full height, header through last row. */
+.thAfter {
+  background: var(--surface-card, #FFFFFF);
+  border-left: 2px solid var(--blue-500, #5795F8);
+  border-right: 2px solid var(--blue-500, #5795F8);
+  border-top: 2px solid var(--blue-500, #5795F8);
+  border-radius: 20px 20px 0 0;
+}
+
+.thAfterBadge {
+  color: var(--blue-600, #0B5CFF);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.tr {
+  border-top: 0.8px solid var(--line-soft, #F1F5F9);
+  min-height: 72px;
+}
+
+.tdLabel,
+.tdBefore,
+.tdAfter {
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 1.55;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tdLabel {
+  font-weight: 600;
+  color: var(--ink-900, #010D36);
+}
+
+.tdBefore {
+  color: var(--text-muted, #9AA1B5);
+  border-left: 0.8px solid var(--border, #E2E8F0);
+}
+
+.tdAfter {
+  color: var(--text-secondary, #334155);
+  font-weight: 500;
+  background: rgba(59, 130, 244, 0.02);
+  border-left: 2px solid var(--blue-500, #5795F8);
+  border-right: 2px solid var(--blue-500, #5795F8);
+}
+
+.tr[data-last] .tdAfter {
+  border-bottom: 2px solid var(--blue-500, #5795F8);
+  border-radius: 0 0 20px 20px;
+}
+
+.iconBad {
+  color: var(--text-muted, #9AA1B5);
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.iconGood {
+  color: var(--success, #16C784);
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .bento {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .panel {
+    padding: 32px;
+    border-radius: 28px;
+  }
+  /* Disc moves to the vertical seam between stacked panels. */
+  .vsDisc {
+    width: 72px;
+    height: 72px;
+    font-size: 16px;
+  }
+}

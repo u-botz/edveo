@@ -1,111 +1,172 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
   /* ══════════════════════════════════════════════════════
-     INK NAVY DESIGN SYSTEM — canonical tokens
-     Rule: --ink-900 dominates. --blue-600 is the spark —
-     used only at moments that matter (accent word, links,
-     primary CTA, active states, the intelligence pill).
-     Green/amber/red are kept for STATUS meaning only.
+     EDVEO DESIGN SYSTEM — Webinar.gg-Inspired Refresh
+     Dark hero, glassmorphic nav, clean SaaS sections.
      ══════════════════════════════════════════════════════ */
-  /* brand */
-  --ink-900: #0A2540;
-  --ink-800: #0F3057;
-  --ink-700: #14396B;
-  --blue-600: #155EEF;
-  --blue-500: #2E90FA;
-  --blue-400: #5AA9FB;
-  /* backgrounds */
+
+  /* ── Dark palette (hero, CTA, footer) ── */
+  --dark-bg: #010D36;
+  --dark-surface: #02103E;
+  --dark-surface-2: #04164B;
+  --dark-border: rgba(255, 255, 255, 0.12);
+  --dark-border-strong: rgba(255, 255, 255, 0.18);
+  --dark-text: #FFFFFF;
+  --dark-text-muted: #CED1DB;
+  --dark-text-subtle: #9AA1B5;
+
+  /* ── Brand colors ── */
+  --blue-700: #1838B0;
+  --blue-600: #0B5CFF;
+  --blue-500: #5795F8;
+  --blue-400: #82B1FA;
+  --blue-300: #88B7FB;
+  --blue-100: #E9EBF0;
+  --blue-50: #EFF8FF;
+
+  /* ── Ink navy (text) ── */
+  --ink-900: #010D36;
+  --ink-800: #02103E;
+  --ink-700: #04164B;
+
+  /* ── Light palette (content sections) ── */
   --bg-page: #FFFFFF;
-  --bg-wash-a: #F6F9FF;
-  --bg-wash-b: #E9F1FE;
-  --bg-tint: #EAF1FE;
+  --bg-wash: #F8FAFC;
+  --bg-wash-alt: #F1F5F9;
+  --bg-tint: #EFF6FF;
+
+  /* ── Section grounds (webinar.gg rhythm: never the same ground twice) ──
+     Blue-biased rather than neutral slate, so the whole page reads cool. */
+  --sec-white: #FFFFFF;
+  --sec-tint: #E6F0FE;
+  --sec-faint: #F8FAFF;
+  --sec-tint-2: #E6F0FF;
+  --sec-faint-2: #F8FBFF;
   --surface-card: #FFFFFF;
   --surface-muted: #F4F7FC;
-  /* text */
-  --text-primary: #0A2540;
-  --text-body: #54607A;
-  --text-muted: #8A94AC;
+  --bg-footer: #F8FBFF;
+
+  /* ── Light glass (scrolled navbar) ── */
+  --nav-glass: rgba(255, 255, 255, 0.8);
+  --nav-glass-blur: 12px;
+  --nav-glass-border: rgba(0, 0, 0, 0.05);
+  --nav-height: 64px;
+
+  /* ── Text ── */
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-body: #475569;
+  --text-muted: #9AA1B5;
   --text-on-dark: #FFFFFF;
-  --text-accent: #155EEF;
-  /* borders */
-  --border: #DCE4F5;
-  --border-strong: #C3D0EC;
-  --focus-ring: rgba(21, 94, 239, 0.12);
-  /* semantic (keep — these carry information) */
-  --success: #0F9D58; --success-bg: #E7F3EC;
-  --warning: #EF9F27; --warning-bg: #FAEEDA;
-  --danger:  #E24B4A; --danger-bg:  #FCEBEB;
-  /* effects */
-  --accent-gradient: linear-gradient(120deg, #2E90FA, #155EEF);
-  --hero-gradient: linear-gradient(160deg, #F6F9FF 0%, #E9F1FE 100%);
-  --shadow-sm: 0 1px 6px rgba(15, 30, 60, 0.05);
-  --shadow-card: 0 2px 14px rgba(15, 30, 60, 0.06);
-  --shadow-cta: 0 6px 18px rgba(10, 37, 64, 0.22);
+  --text-accent: #0B5CFF;
 
-  /* ── Legacy token names, remapped onto Ink Navy ──
-     Kept so existing var(--primary)/var(--accent) usage
-     recolors automatically across the platform. */
-  --surface-container-lowest: #FFFFFF;
-  --surface-container-low: #F2F3F7;
-  --surface-container: #EDEEF2;
-  --surface: #F8F9FD;
-  --page-bg: #F5F6FA;
-  --tertiary-fixed: #D6E4EF;
-  --accent-light: #EAF1FE;              /* was green tint → blue tint */
+  /* ── Borders ── */
+  --border: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --border-accent: rgba(11, 92, 255, 0.2);
+  --focus-ring: rgba(11, 92, 255, 0.2);
 
-  --primary: #0A2540;                   /* ink-900 (was #0D2D4E) */
-  --secondary: #155EEF;                 /* blue-600 for links/active (was green) */
-  --accent: #155EEF;                    /* blue-600 spark (was #2EAA6E) */
-  --error: #E24B4A;
-  --body-text: #1A1A2E;
-  --outline-variant: rgba(195, 198, 207, 0.15); /* for ghost border */
+  /* ── Semantic colors ── */
+  --success: #16C784;
+  --success-bg: #ECFDF5;
+  --warning: #F59E0B;
+  --warning-bg: #FFFBEB;
+  --danger: #EF4444;
+  --danger-bg: #FEF2F2;
 
-  --primary-cta-gradient: linear-gradient(135deg, #0A2540 0%, #14396B 100%);
+  /* ── Glassmorphism ── */
+  --glass-bg: rgba(1, 13, 54, 0.6);
+  --glass-bg-light: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: 20px;
 
-  --shadow-navy: 0 4px 20px rgba(10, 37, 64, 0.08);
-  --shadow-navy-hover: 0 10px 40px rgba(10, 37, 64, 0.10);
-  --shadow-green: 0 4px 20px rgba(21, 94, 239, 0.10); /* now a blue accent glow */
+  /* ── Gradients ── */
+  /* Hero resolves to the page ground by its own bottom edge (webinar.gg pattern).
+     The last stop is white; .heroSection adds a feather overlay across the seam. */
+  --gradient-hero: linear-gradient(180deg, #010D36 0%, #02103E 45%, #051B59 90%, #FFFFFF 100%);
+  --hero-feather-height: 90px;
+  --gradient-accent: #0B5CFF;
+  --gradient-accent-hover: #1838B0;
+  --gradient-dark-section: linear-gradient(180deg, #010D36 0%, #04164B 100%);
+  --gradient-text: linear-gradient(90deg, #5795F8 0%, #82B1FA 100%);
+  --gradient-glow: radial-gradient(600px circle at 50% 0%, rgba(11, 92, 255, 0.15), transparent 70%);
 
-  /* Hero section */
-  --edveo-green-tint:   #F6F9FF;        /* was green tint → blue wash */
-  --hero-shadow: 0 40px 80px rgba(10, 37, 64, 0.18), 0 8px 24px rgba(10, 37, 64, 0.12);
-  --hero-float-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  /* ── Shadows ── */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 30px rgba(46, 144, 250, 0.15);
+  --shadow-card-hover: 0 20px 40px -12px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.06);
 
-  --font-display: 'Plus Jakarta Sans', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-data: 'JetBrains Mono', monospace;
+  /* ── Radii ── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
 
-  /* Intelligence Demo Section — emerald retargeted to Ink Navy blue */
-  --intel-navy:        #0A2540;   /* headlines, user message bubbles */
-  --intel-emerald:     #155EEF;   /* primary brand colour, CTA buttons, AI dot */
-  --intel-emerald-dark:#1149C2;   /* hover state */
-  --intel-emerald-bg:  #EAF1FE;   /* light accent backgrounds */
-  --intel-emerald-text:#0A2540;   /* text on accent backgrounds */
-  --intel-slate:       #64748B;   /* secondary text */
-  --intel-slate-light: #F8FAFF;   /* section background */
-  --intel-border:      #E2E8F0;   /* borders */
-  --intel-surface:     #FFFFFF;   /* shell background */
-  --intel-warn:        #F59E0B;   /* warning badges */
-  --intel-danger:      #DC2626;   /* danger badges */
-  --intel-muted-bg:    #F8FAFC;   /* muted backgrounds inside shell */
+  /* ── Spacing ── */
+  --section-padding: 96px;
+  --section-padding-mobile: 64px;
+  --container-max: 1200px;
+  --container-padding: 24px;
+
+  /* ── Typography ── */
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Transitions ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 150ms var(--ease-out);
+  --transition-base: 250ms var(--ease-out);
+  --transition-slow: 400ms var(--ease-out);
+
+  /* ── Legacy token mappings (backward compat) ── */
+  --primary: #0A2540;
+  --secondary: #155EEF;
+  --accent: #155EEF;
+  --accent-light: #EFF6FF;
+  --error: #EF4444;
+  --body-text: #0F172A;
+  --page-bg: #FFFFFF;
+  --outline-variant: rgba(226, 232, 240, 0.5);
+  --primary-cta-gradient: var(--gradient-accent);
+  --shadow-navy: var(--shadow-md);
+  --shadow-navy-hover: var(--shadow-lg);
+  --edveo-green-tint: #EFF6FF;
+  --hero-shadow: var(--shadow-xl);
 }
 
-* {
+/* ── Reset ── */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
-html,
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
 body {
   max-width: 100vw;
   overflow-x: clip;
-  background-color: var(--page-bg);
-  color: var(--body-text);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 a {
@@ -113,45 +174,46 @@ a {
   text-decoration: none;
 }
 
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ── Typography ── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  color: var(--primary);
-  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 0;
+  font-weight: 700;
 }
 
 h1 {
-  font-weight: 800; /* Hero statements */
-  font-size: 3.5rem;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
 }
 
 h2 {
-  font-weight: 700; /* Section headers */
-  font-size: 2.5rem;
-  line-height: 1.2;
+  font-weight: 700;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 h3 {
-  font-weight: 600; /* Card titles */
-  font-size: 1.5rem;
+  font-weight: 600;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  letter-spacing: -0.01em;
   line-height: 1.3;
 }
 
 p {
   font-family: var(--font-body);
-  font-weight: 400; /* Paragraphs provide breathing room */
-  margin-bottom: 1rem;
-}
-
-label {
-  font-weight: 500; /* Labels ensure clarity */
-}
-
-/* Utilities */
-.data-text {
-  font-family: var(--font-data);
-  font-weight: 400; /* Statistics, prices, timestamps */
+  font-weight: 400;
+  margin-bottom: 0;
+  line-height: 1.6;
 }
 
 button {
@@ -163,9 +225,135 @@ button {
   outline: none;
 }
 
-/* Grid/Container basics */
+/* ── Utility: Container ── */
 .container {
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--container-padding);
+}
+
+/* ── Utility: Section eyebrow label ── */
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue-600);
+  margin-bottom: 16px;
+}
+
+.section-eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue-600);
+  flex-shrink: 0;
+}
+
+/* ── Utility: Section heading block ── */
+.section-heading {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 56px;
+}
+
+.section-heading h2 {
+  margin-bottom: 16px;
+}
+
+.section-heading p {
+  font-size: 16px;
+  color: var(--text-body);
+  line-height: 1.7;
+}
+
+/* ── Utility: Gradient text ── */
+.gradient-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Scroll-reveal animations ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(46, 144, 250, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(46, 144, 250, 0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
 }

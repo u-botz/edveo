@@ -1,71 +1,62 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EdveoLogo from "./EdveoLogo";
 import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
 import styles from "./siteNavbar.module.css";
 
-export type NavPage = "home" | "solutions" | "pricing" | "resources" | "about" | "contact";
+export type NavPage = "home" | "solutions" | "pricing" | "resources" | "about" | "contact" | "product";
 
 type Props = {
+  /** Retained so existing pages keep compiling; the bar no longer renders section links. */
   activePage?: NavPage;
 };
 
-export default function SiteNavbar({ activePage }: Props) {
-  const [open, setOpen] = useState(false);
+export default function SiteNavbar({ activePage: _activePage }: Props) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    // The bar is white glass with dark text, so it may only turn opaque once it
+    // is over light ground. Flipping on a fixed offset put a grey slab on top of
+    // the dark hero, so the threshold tracks the hero's actual height instead.
+    const hero = document.querySelector<HTMLElement>("[data-hero]");
+
+    const handleScroll = () => {
+      const threshold = hero
+        ? hero.offsetHeight - 120
+        : 80; // pages without a dark hero flip almost immediately
+      setScrolled(window.scrollY > threshold);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    handleScroll(); // Check initial scroll position
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
 
   return (
-    <div className={styles.stickyWrapper}>
+    <div className={`${styles.stickyWrapper} ${scrolled ? styles.stickyWrapperScrolled : ''}`}>
       <nav className={styles.navbar}>
-        <Link href="/" className={styles.navBrand}>
+        <Link href="/" className={styles.navBrand} aria-label="Edveo home">
           <EdveoLogo variant="nav" />
         </Link>
 
-        <div className={styles.navLinks}>
-          <Link href="/product" className={activePage === "product" as any ? styles.navLinkActive : undefined}>Product</Link>
-          <Link href="/solutions" className={activePage === "solutions" ? styles.navLinkActive : undefined}>Solutions</Link>
-          <Link href="/pricing" className={activePage === "pricing" ? styles.navLinkActive : undefined}>Pricing</Link>
-          <Link href="/about" className={activePage === "about" ? styles.navLinkActive : undefined}>About</Link>
-          <Link href="/contact" className={activePage === "contact" ? styles.navLinkActive : undefined}>Contact</Link>
-        </div>
-
         <div className={styles.navActions}>
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.btnTrial}>
-            <span>Book A Demo</span>
-            <span className={styles.btnTrialIcon}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="7" y1="17" x2="17" y2="7" />
-                <polyline points="7 7 17 7 17 17" />
-              </svg>
-            </span>
+          <a
+            href={COMPANY_WHATSAPP_CTA_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.btnTrial}
+          >
+            Book A Demo
           </a>
         </div>
-
-        {/* Hamburger */}
-        <button
-          className={styles.mobileMenuBtn}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen(o => !o)}
-        >
-          <span className={styles.mobileMenuBar} />
-          <span className={styles.mobileMenuBar} />
-          <span className={styles.mobileMenuBar} />
-        </button>
       </nav>
-
-      {/* Mobile drawer */}
-      {open && (
-        <div className={styles.mobileDrawer}>
-          <Link href="/product" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Product</Link>
-          <Link href="/solutions" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Solutions</Link>
-          <Link href="/pricing" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Pricing</Link>
-          <Link href="/about" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>About</Link>
-          <Link href="/contact" className={styles.mobileDrawerLink} onClick={() => setOpen(false)}>Contact</Link>
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.mobileDrawerCta} onClick={() => setOpen(false)}>Get a free demo →</a>
-        </div>
-      )}
     </div>
   );
 }

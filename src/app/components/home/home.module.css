@@ -1,0 +1,80 @@
+/* ============================================
+   HOMEPAGE SECTIONS — shared shell
+   Section rhythm mirrors webinar.gg: uniform 80px vertical padding,
+   alternating blue-biased grounds, centred heading block.
+   ============================================ */
+
+.section {
+  padding: 80px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grounds */
+.groundWhite   { background: var(--sec-white, #FFFFFF); }
+.groundTint    { background: var(--sec-tint, #E6F0FE); }
+.groundFaint   { background: var(--sec-faint, #F8FAFF); }
+.groundTint2   { background: var(--sec-tint-2, #E6F0FF); }
+.groundFaint2  { background: var(--sec-faint-2, #F8FBFF); }
+
+.container {
+  max-width: var(--container-max, 1200px);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Heading block ── */
+.heading {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 56px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue-600, #0B5CFF);
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue-600, #0B5CFF);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ink-900, #010D36);
+  text-wrap: balance;
+  margin: 0 0 16px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--text-body, #475569);
+  line-height: 1.7;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 56px 16px;
+  }
+  .heading {
+    margin-bottom: 40px;
+  }
+}

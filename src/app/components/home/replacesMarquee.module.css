@@ -1,0 +1,80 @@
+.lead {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.kicker {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted, #9AA1B5);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Edge fade so items enter and leave rather than popping at the boundary. */
+.viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  gap: 2.5rem;
+  animation: marqueeScroll 40s linear infinite;
+}
+
+.trackReverse {
+  animation-direction: reverse;
+}
+
+.track:hover {
+  animation-play-state: paused;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted, #9AA1B5);
+}
+
+/* Struck through: these are the artefacts being retired. */
+.strike {
+  text-decoration: line-through;
+  text-decoration-color: var(--blue-400, #82B1FA);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  /* Half the track is one full copy of the list, plus the gap that follows it. */
+  to   { transform: translateX(calc(-50% - 1.25rem)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+    /* Static state must not sit mid-loop with a clipped first item. */
+    transform: none;
+  }
+}

@@ -1,0 +1,27 @@
+/* Concentric contour rings and glow points behind the hero content. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  /* Keeps the atmosphere off the headline and clear of the white resolve. */
+  -webkit-mask-image: radial-gradient(120% 88% at 50% 44%, transparent 0%, #000 58%),
+                      linear-gradient(to bottom, #000 0%, #000 68%, transparent 94%);
+  mask-image: radial-gradient(120% 88% at 50% 44%, transparent 0%, #000 58%),
+              linear-gradient(to bottom, #000 0%, #000 68%, transparent 94%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+.ringsLeft,
+.ringsRight {
+  transform-origin: center;
+}
+
+@media (max-width: 768px) {
+  .backdrop {
+    opacity: 0.65;
+  }
+}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import EdveoLogo from "./EdveoLogo";
 import styles from "./siteFooter.module.css";
 
@@ -29,13 +30,14 @@ const NAV_COLS = [
 export default function SiteFooter() {
   return (
     <footer className={styles.footer}>
+      <div className={styles.topAccent} />
       <div className={styles.container}>
         <div className={styles.footerGrid}>
           {/* Brand column */}
-          <div className={styles.footerLinkCol}>
-            <a href="/" className={styles.footerBrandLink}>
+          <div className={styles.footerBrandCol}>
+            <Link href="/" className={styles.footerBrandLink}>
               <EdveoLogo variant="footer" />
-            </a>
+            </Link>
             <p className={styles.footerDesc}>
               Built in Kerala, for Kerala. The simplest way to manage your coaching institute — fees, attendance, classes, and students, all in one place.
             </p>

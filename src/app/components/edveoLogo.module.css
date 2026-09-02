@@ -1,6 +1,6 @@
 /* Wordmark from /public/edveo-logo.png */
 
-.imgNav {
+.imgDefault, .imgNav {
   height: 48px;
   width: auto;
   display: block;
@@ -18,19 +18,13 @@
   display: block;
 }
 
-/* Navy wordmark on dark footer — light pad keeps colors accurate */
-.footerPad {
-  display: inline-flex;
-  align-items: center;
-  line-height: 0;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 12px 22px;
-  margin-bottom: 16px;
+/* White text variant using CSS filter */
+.whiteFilter {
+  filter: brightness(0) invert(1);
 }
 
 @media (max-width: 480px) {
-  .imgNav {
+  .imgDefault, .imgNav {
     height: 40px;
   }
 
@@ -40,9 +34,5 @@
 
   .imgFooter {
     height: 34px;
-  }
-
-  .footerPad {
-    padding: 10px 16px;
   }
 }

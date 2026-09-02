@@ -1,0 +1,265 @@
+/* ============================================
+   HERO SIDE CARDS — agent activity rail + Ask Edveo panel
+   Both flank the device and are hidden once there is no room beside it.
+   ============================================ */
+
+/* ── Left rail ── */
+.leftRail {
+  position: absolute;
+  z-index: 4;
+  top: 14%;
+  right: calc(100% - 78px);
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  align-items: flex-start;
+}
+
+.connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px 13px 13px;
+  border-radius: 16px;
+  /* Dark glass, so the cards belong to the hero rather than sitting on it. */
+  background: rgba(11, 20, 48, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 44px -18px rgba(0, 0, 0, 0.7);
+  animation: cardBob 7s ease-in-out infinite;
+}
+
+.card:nth-child(2) { animation-delay: 0s; }
+.card:nth-child(3) { animation-delay: 1.1s; }
+.card:nth-child(4) { animation-delay: 2.2s; }
+
+.icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.good {
+  background: rgba(22, 199, 132, 0.16);
+  color: #3FD9A0;
+}
+
+.warn {
+  background: rgba(245, 158, 11, 0.16);
+  color: #F7B34D;
+}
+
+.info {
+  background: rgba(11, 92, 255, 0.2);
+  color: #82B1FA;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.cardSub {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+
+/* ── Ask Edveo panel ── */
+.askPanel {
+  position: absolute;
+  z-index: 4;
+  top: 16%;
+  left: calc(100% - 120px);
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(9, 17, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 34px 70px -20px rgba(0, 0, 0, 0.8);
+}
+
+.askHead {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.askAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--blue-600, #0B5CFF);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.askAvatar svg {
+  width: 17px;
+  height: 17px;
+}
+
+.askName {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.015em;
+  flex: 1;
+}
+
+.askBadge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #82B1FA;
+  background: rgba(11, 92, 255, 0.22);
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
+/* Question reads as the user's own bubble: aligned right, brand-tinted. */
+.askQuestion {
+  align-self: flex-end;
+  max-width: 82%;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #FFFFFF;
+  background: rgba(11, 92, 255, 0.3);
+  border: 1px solid rgba(130, 177, 250, 0.28);
+  border-radius: 14px 14px 4px 14px;
+  padding: 9px 12px;
+}
+
+.askAnswer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px 14px 14px 4px;
+  padding: 12px;
+}
+
+.answerLine {
+  margin: 0 0 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.answerMeta {
+  margin: 0;
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.answerValue {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+  font-variant-numeric: tabular-nums;
+}
+
+.answerLink {
+  font-size: 12px;
+  font-weight: 700;
+  color: #82B1FA;
+}
+
+.askInput {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 6px 6px 6px 14px;
+}
+
+.askPlaceholder {
+  flex: 1;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.askSend {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--blue-600, #0B5CFF);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.askSend svg {
+  width: 14px;
+  height: 14px;
+}
+
+@keyframes cardBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+}
+
+/* Below this the flanking elements would sit on top of the screen. */
+@media (max-width: 1340px) {
+  .leftRail,
+  .askPanel {
+    display: none;
+  }
+}

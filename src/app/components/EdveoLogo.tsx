@@ -1,20 +1,29 @@
 import styles from "./edveoLogo.module.css";
 
-export type EdveoLogoVariant = "nav" | "navCompact" | "footer";
+export type EdveoLogoVariant = "nav" | "navCompact" | "footer" | "default";
 
 type Props = {
-  variant: EdveoLogoVariant;
+  variant?: EdveoLogoVariant;
 };
 
-export default function EdveoLogo({ variant }: Props) {
-  const imgClass =
-    variant === "footer" ? styles.imgFooter : variant === "navCompact" ? styles.imgNavCompact : styles.imgNav;
-
-  const img = <img src="/edveo-logo.png" alt="Edveo" className={imgClass} decoding="async" />;
-
+export default function EdveoLogo({ variant = "default" }: Props) {
+  const isWhite = variant === "nav" || variant === "footer";
+  
+  let imgClass = styles.imgDefault;
   if (variant === "footer") {
-    return <div className={styles.footerPad}>{img}</div>;
+    imgClass = styles.imgFooter;
+  } else if (variant === "navCompact") {
+    imgClass = styles.imgNavCompact;
+  } else if (variant === "nav") {
+    imgClass = styles.imgNav;
   }
 
-  return img;
+  return (
+    <img 
+      src="/edveo-logo.png" 
+      alt="Edveo" 
+      className={`${imgClass} ${isWhite ? styles.whiteFilter : ""}`} 
+      decoding="async" 
+    />
+  );
 }

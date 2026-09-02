@@ -1,0 +1,529 @@
+/* ============================================
+   HERO DASHBOARD — in-markup product shot
+   A light admin UI inside a dark bezel, so it reads as a screen against the
+   navy hero. Bottom dissolves into the hero fade.
+   ============================================ */
+
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 56px auto 0;
+}
+
+/* ── Device ──
+   A lid (dark bezel + inset screen) sitting on a base, tilted a few degrees so
+   it reads as a physical object rather than a rounded rectangle. */
+.device {
+  position: relative;
+  z-index: 1;
+  transform-style: preserve-3d;
+  transform: perspective(2200px) rotateX(3deg);
+}
+
+.lid {
+  position: relative;
+  border-radius: 20px 20px 8px 8px;
+  padding: 22px 13px 15px;
+  background:
+    linear-gradient(158deg, #39415A 0%, #1B2133 34%, #10151F 100%);
+  box-shadow:
+    /* rim light along the top edge of the bezel */
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.7) inset,
+    0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 44px 90px -28px rgba(0, 0, 0, 0.78),
+    0 12px 30px -12px rgba(0, 0, 0, 0.6);
+}
+
+.camera {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #05070D;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.06);
+}
+
+.screen {
+  position: relative;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #F6F8FD;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.55),
+    0 2px 14px rgba(0, 0, 0, 0.4) inset;
+  /* Only the last sliver dissolves — the UI itself stays fully crisp. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 93%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 93%, transparent 100%);
+}
+
+/* Faint diagonal sheen across the panel, as on a real screen. */
+.glare {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(
+    112deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.05) 22%,
+    rgba(255, 255, 255, 0) 46%
+  );
+}
+
+/* Base is wider than the lid and catches light along its front lip. */
+.base {
+  position: relative;
+  width: 112%;
+  margin: 0 -6%;
+  height: 15px;
+  border-radius: 0 0 12px 12px;
+  background: linear-gradient(180deg, #454E66 0%, #262D40 42%, #12161F 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.24) inset,
+    0 26px 40px -22px rgba(0, 0, 0, 0.8);
+}
+
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 108px;
+  height: 6px;
+  border-radius: 0 0 7px 7px;
+  background: linear-gradient(180deg, #1B2133 0%, #2B3348 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dots {
+  display: inline-flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.urlBar {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  padding: 4px 14px;
+  letter-spacing: 0.01em;
+}
+
+/* ── App shell ── */
+.app {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  background: #F6F8FD;
+  min-height: 460px;
+  text-align: left;
+}
+
+.sidebar {
+  background: #FFFFFF;
+  border-right: 0.8px solid #E6ECF7;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 4px 8px;
+}
+
+.brandMark {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--blue-600, #0B5CFF);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandName {
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: #010D36;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #64708C;
+}
+
+.navItemActive {
+  background: var(--blue-50, #EFF8FF);
+  color: var(--blue-600, #0B5CFF);
+  font-weight: 700;
+}
+
+.navIcon {
+  width: 15px;
+  height: 15px;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.navIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Main ── */
+.main {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.crumb {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #97A1BA;
+  margin-bottom: 3px;
+}
+
+.pageTitle {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #010D36;
+}
+
+.topRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.searchBox {
+  font-size: 11.5px;
+  color: #97A1BA;
+  background: #FFFFFF;
+  border: 0.8px solid #E6ECF7;
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.avatarSm {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #DCE8FF;
+  color: var(--blue-600, #0B5CFF);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Stat tiles ── */
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.statTile {
+  background: #FFFFFF;
+  border: 0.8px solid #E6ECF7;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.statLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #97A1BA;
+  line-height: 1.35;
+}
+
+.statValue {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #010D36;
+  font-variant-numeric: tabular-nums;
+}
+
+.statDelta {
+  font-size: 10.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.spark {
+  width: 100%;
+  height: 22px;
+  margin-top: 2px;
+  display: block;
+  opacity: 0.9;
+}
+
+.deltaUp {
+  color: #0F9D63;
+}
+
+.deltaFlat {
+  color: #97A1BA;
+}
+
+/* ── Panels ── */
+.panels {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+
+.chartPanel,
+.riskPanel {
+  background: #FFFFFF;
+  border: 0.8px solid #E6ECF7;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.panelTitle {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #010D36;
+}
+
+.panelMeta {
+  font-size: 10.5px;
+  color: #97A1BA;
+}
+
+.panelBadge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #B7791F;
+  background: #FDF4E3;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+/* Chart */
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex: 1;
+  min-height: 116px;
+  padding-top: 4px;
+}
+
+.barCol {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+
+.bar {
+  width: 100%;
+  max-width: 30px;
+  border-radius: 5px 5px 3px 3px;
+  background: #DCE8FF;
+  min-height: 6px;
+}
+
+/* Only the current month carries the brand colour. */
+.barPeak {
+  background: var(--blue-600, #0B5CFF);
+}
+
+.barLabel {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #97A1BA;
+}
+
+/* Risk list */
+.riskList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.riskRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #F8FAFF;
+  border-radius: 9px;
+  padding: 8px 10px;
+}
+
+.riskAvatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #E4EBF8;
+  color: #4B5A7A;
+  font-size: 9.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.riskText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+
+.riskName {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #010D36;
+}
+
+.riskWhy {
+  font-size: 10.5px;
+  color: #7C879F;
+}
+
+.riskFlag {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.flagWarn {
+  background: #F59E0B;
+}
+
+.flagBad {
+  background: #EF4444;
+}
+
+/* ── Responsive ── */
+@media (max-width: 880px) {
+  .stage {
+    margin-top: 40px;
+  }
+
+  .app {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .statRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .riskPanel {
+    display: none;
+  }
+  .screen {
+    -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  }
+}
+
+@media (max-width: 880px) {
+  .device {
+    transform: none;
+  }
+  .lid {
+    padding: 16px 9px 11px;
+  }
+}

@@ -7,11 +7,24 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  /* No viewport min-height: centered short content left a large dead band before the next section. */
   min-height: 0;
-  padding: 72px 20px 48px;
+  padding: 140px 20px 90px;
   overflow: hidden;
-  background-color: var(--page-bg);
+  background: var(--gradient-hero, linear-gradient(160deg, #0A1628 0%, #0F2847 50%, #132E52 100%));
+}
+
+/* Feather across the hero/page seam so the gradient's last stop meets the
+   page ground with no visible band. Sits above the gradient, below content. */
+.heroSection::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--hero-feather-height, 140px);
+  background: linear-gradient(to top, var(--bg-page, #FFFFFF), transparent);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* Background container for radial glows */
@@ -19,38 +32,38 @@
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
 .heroBackground::before,
 .heroBackground::after {
   content: "";
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
   z-index: -1;
 }
 
 /* top left soft gradient */
 .heroBackground::before {
-  top: -100px;
-  left: -100px;
-  width: 500px;
-  height: 500px;
-  background: rgba(234, 244, 253, 0.6); /* soft blue */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(600px circle at 20% 20%, rgba(46, 144, 250, 0.12), transparent);
 }
 
 /* center right soft blue gradient */
 .heroBackground::after {
-  top: 10%;
-  right: -50px;
-  width: 600px;
-  height: 600px;
-  background: rgba(213, 231, 253, 0.55); /* soft blue */
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(500px circle at 80% 80%, rgba(21, 94, 239, 0.08), transparent);
 }
 
 .heroContainer {
   position: relative;
-  z-index: 1;
+  /* Above .heroSection::after (z-index 1), which would otherwise wash the content. */
+  z-index: 2;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -62,139 +75,50 @@
 }
 
 /* ── Eyebrow Badge ── */
-.eyebrowBadge {
+.eyebrowBadgeSolo {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 6px 6px 6px 12px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  gap: 10px;
+  padding: 8px 16px 8px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 100px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   margin-bottom: 32px;
-}
-
-.eyebrowBadgeSolo {
-  gap: 0;
-  padding: 8px 22px 8px 14px;
   position: relative;
-  border-color: rgba(13, 45, 78, 0.08);
 }
 
-/* Pulsing accent dot — first flex item */
+/* Pulsing accent dot */
 .eyebrowBadgeSolo::before {
   content: "";
   display: block;
   flex-shrink: 0;
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--accent);
-  margin-right: 10px;
-  align-self: center;
+  background: var(--blue-500, #2E90FA);
+  animation: heroEyebrowDotPulse 2s ease-in-out infinite;
 }
 
 .eyebrowBadgeText {
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .eyebrowBadgeSolo {
-    animation: heroEyebrowIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both,
-      heroEyebrowGlow 3.2s ease-in-out 0.65s infinite;
-  }
-
-  .eyebrowBadgeSolo::before {
-    animation: heroEyebrowDotPulse 2.2s ease-in-out infinite;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .eyebrowBadgeSolo {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-
-  .eyebrowBadgeSolo::before {
-    animation: none;
-    opacity: 1;
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-@keyframes heroEyebrowIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes heroEyebrowGlow {
-  0%,
-  100% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    border-color: rgba(13, 45, 78, 0.08);
-  }
-  50% {
-    box-shadow: 0 4px 18px rgba(21, 94, 239, 0.14), 0 0 0 1px rgba(21, 94, 239, 0.12);
-    border-color: rgba(21, 94, 239, 0.28);
-  }
+  color: #ffffff;
 }
 
 @keyframes heroEyebrowDotPulse {
-  0%,
-  100% {
-    opacity: 0.85;
+  0%, 100% {
+    opacity: 0.8;
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(21, 94, 239, 0.35);
+    box-shadow: 0 0 0 0 rgba(46, 144, 250, 0.4);
   }
   50% {
     opacity: 1;
-    transform: scale(1.15);
-    box-shadow: 0 0 0 6px rgba(21, 94, 239, 0);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px rgba(46, 144, 250, 0);
   }
-}
-
-.eyebrowBadgeTag {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #155EEF;
-  text-transform: uppercase;
-  background: rgba(21, 94, 239, 0.1);
-  padding: 4px 8px;
-  border-radius: 100px;
-}
-
-.eyebrowBadgeDot {
-  width: 6px;
-  height: 6px;
-  background-color: #155EEF;
-  border-radius: 50%;
-}
-
-.eyebrowBadgeIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: rgba(0, 0, 0, 0.04);
-  border-radius: 50%;
-  color: #9ca3af;
 }
 
 /* ── Headline ── */
@@ -202,43 +126,56 @@
   font-family: var(--font-display);
   font-size: clamp(48px, 7.5vw, 84px);
   font-weight: 800;
-  color: var(--primary);
+  color: #ffffff;
   line-height: 1.1;
   letter-spacing: -0.03em;
   margin: 0 0 24px 0;
 }
 
-.underlineText {
-  position: relative;
+.gradientWord {
   display: inline-block;
-  color: var(--accent);
-  z-index: 1;
+  background: var(--gradient-text, linear-gradient(135deg, #5AA9FB 0%, #2E90FA 40%, #155EEF 100%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
-
-
 
 /* ── Sub-headline ── */
 .heroSub {
   font-family: var(--font-body);
   font-size: clamp(16px, 2vw, 20px);
-  color: rgba(26, 26, 46, 0.7); /* muted body-text */
+  color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
   max-width: 760px;
-  margin: 0 0 16px 0;
+  margin: 0 0 40px 0;
 }
 
-.darkText {
-  color: var(--body-text);
+.heroSubLine {
+  display: block;
+  margin-bottom: 8px;
+}
+.heroSubLine:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Micro-copy ── */
+.microCopy {
+  font-family: var(--font-body);
+  font-size: 13px;
   font-weight: 600;
+  color: var(--blue-400, #5AA9FB);
+  letter-spacing: 0.04em;
+  margin: 0 0 24px 0;
 }
 
 /* ── Actions ── */
 .heroActions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
-  margin-top: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
 
 .primaryButton {
@@ -246,265 +183,231 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background-color: var(--primary);
+  background: var(--gradient-accent, linear-gradient(135deg, #2E90FA 0%, #155EEF 100%));
   color: #ffffff;
   font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
-  padding: 14px 28px;
-  border-radius: 12px;
+  padding: 16px 32px;
+  border-radius: 9999px;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-  box-shadow: var(--shadow-navy);
-}
-
-.primaryButton:hover {
-  transform: translateY(-2px);
-  background-color: #0a2440;
-  box-shadow: 0 8px 24px rgba(13, 45, 78, 0.28);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(21, 94, 239, 0.2);
 }
 
 .secondaryButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background-color: #ffffff;
-  color: var(--primary);
+  gap: 10px;
+  color: #ffffff;
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
-  padding: 14px 28px;
-  border: 1px solid var(--outline-variant);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 14px 24px;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: background 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+  background: transparent;
+  border: 1px solid transparent;
 }
 
 .secondaryButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
-/* ── Micro-copy (trust line — teal like reference) ── */
-.microCopy {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent);
-  letter-spacing: 0.04em;
-  margin: 0 0 18px 0;
-}
-
-/* ── Audience path cards ── */
-.audienceSectionWrapper {
-  background: #FFFFFF;
-  padding: 48px 24px;
-  border-top: 1px solid #E5E7EB;
-  border-bottom: 1px solid #E5E7EB;
-  width: 100%;
-}
-
-.audienceHeading {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: #155EEF;
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-.audienceCards {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 0;
-  margin-bottom: 0;
-  width: 100%;
-}
-
-.intelligenceBridge {
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(26, 26, 46, 0.5);
-  line-height: 1.5;
-  max-width: 28rem;
-  margin: 20px auto 32px;
-  text-align: center;
-}
-
-.audienceCard {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 20px 20px;
-  border-radius: 12px;
-  border: 1.5px solid #E5E7EB;
-  background: #F9FAFB;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  text-align: left;
-}
-
-.audienceCard:hover {
-  border-color: #155EEF;
-  background: #FFFFFF;
-}
-
-.audienceCardIcon {
-  flex-shrink: 0;
-  color: #155EEF;
-  background: #EAF1FE;
-  border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 12px;
+.playIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.32);
 }
 
-.audienceCardBody {
-  flex: 1;
+.primaryButton:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 30px rgba(46, 144, 250, 0.3);
+}
+
+/* ── Stats Bar ── */
+.statsBar {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 0 0 48px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.statPill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease, background 0.2s ease;
+  cursor: default;
+}
+
+.statPill:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.statDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue-500, #2E90FA);
+  animation: heroEyebrowDotPulse 2s ease-in-out infinite;
+}
+
+/* ── Testimonials ── */
+.testimonialsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+  width: 100%;
+}
+
+.testimonialCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  text-align: left;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.testimonialCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.testimonialCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-text, linear-gradient(135deg, #5AA9FB 0%, #2E90FA 40%, #155EEF 100%));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.testimonialCard:hover::before {
+  opacity: 1;
+}
+
+.quoteMark {
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  font-size: 64px;
+  font-family: Georgia, serif;
+  color: rgba(255, 255, 255, 0.05);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.quote {
+  position: relative;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 24px;
+  font-style: italic;
+  line-height: 1.6;
+  z-index: 1;
+}
+
+.authorRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(46, 144, 250, 0.2);
+  color: var(--blue-500, #2E90FA);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.authorInfo {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
-.audienceCardTitle {
+.name {
   font-size: 15px;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 6px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
 }
 
-.audienceCardDesc {
+.institute {
   font-size: 13px;
-  color: #6B7280;
-  line-height: 1.5;
-}
-
-.audienceCardArrow {
-  flex-shrink: 0;
-  color: #155EEF;
-  font-weight: 600;
-  margin-top: 12px;
-  align-self: flex-start;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
 }
 
 /* ── Responsive ── */
-@media (max-width: 900px) {
-  .audienceHeading {
-    margin-top: 40px;
-    margin-bottom: 16px;
-    letter-spacing: 0.12em;
-  }
-
-  .audienceCards {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-}
-
 @media (max-width: 768px) {
   .heroSection {
-    padding: 60px 16px;
-    min-height: unset;
+    padding: 120px 16px 72px;
   }
-
-  .eyebrowBadge {
-    gap: 8px;
-    padding: 5px 5px 5px 10px;
-    margin-bottom: 20px;
-    max-width: 90vw;
+  .testimonialsRow {
+    grid-template-columns: 1fr;
   }
-
-  .eyebrowBadgeSolo {
-    padding: 7px 14px 7px 12px;
-  }
-
-  .eyebrowBadgeSolo::before {
-    width: 6px;
-    height: 6px;
-    margin-right: 8px;
-  }
-
-  .eyebrowBadgeText {
-    font-size: 11px;
-    max-width: none;
-    white-space: normal;
-    text-align: center;
-    line-height: 1.35;
-  }
-
   .heroHeadline {
     font-size: clamp(34px, 8vw, 56px);
-    margin-bottom: 16px;
   }
-
-  .heroSub {
-    font-size: 15px;
-    margin-bottom: 12px;
+  .testimonialCard {
+    padding: 24px;
   }
-
-  .heroActions {
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-
-  .audienceCard {
-    padding: 14px 16px;
-    gap: 12px;
+  .quoteMark {
+    left: 16px;
+    top: 12px;
   }
 }
 
 @media (max-width: 480px) {
   .heroSection {
-    padding: 48px 16px 40px;
+    padding: 100px 16px 56px;
   }
-
   .heroHeadline {
-    font-size: clamp(28px, 9vw, 40px);
+    font-size: clamp(30px, 9vw, 40px);
   }
-
-  .heroActions {
-    flex-direction: column;
+  .primaryButton {
     width: 100%;
-    align-items: stretch;
-  }
-
-  .primaryButton,
-  .secondaryButton {
-    width: 100%;
-    justify-content: center;
-    font-size: 15px;
-    padding: 13px 20px;
-  }
-
-  .audienceHeading {
-    margin-top: 32px;
-    font-size: 11px;
-  }
-
-  .audienceCards {
-    gap: 10px;
-  }
-
-  .audienceCardIcon {
-    width: 40px;
-    height: 40px;
-  }
-
-  .audienceCardTitle {
-    font-size: 14px;
-  }
-
-  .audienceCardDesc {
-    font-size: 12px;
   }
 }
-

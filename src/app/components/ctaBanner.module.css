@@ -1,100 +1,71 @@
 /* ============================================
-   CTA BANNER — dark card, green strip, navy bg
+   CTA BANNER — Dark Gradient CTA
    ============================================ */
 
-/* ---- Variants ---- */
-.dark {
-  background: linear-gradient(135deg, #001831 0%, #0D2D4E 100%);
-  background-image:
-    radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(135deg, #001831 0%, #0D2D4E 100%);
-  background-size: 32px 32px, 100% 100%;
-  border-radius: 0;
-  padding: 96px 48px;
-  text-align: center;
-  margin: 0;
+.section {
+  padding: 80px 24px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
   position: relative;
+  background: var(--gradient-dark-section, linear-gradient(160deg, #0A1628 0%, #0F2847 50%, #132E52 100%));
+  border-radius: 24px;
+  padding: 80px 48px;
+  text-align: center;
   overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
-.green {
-  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-  border-top: 1px solid #bbf7d0;
-  border-bottom: 1px solid #bbf7d0;
-  padding: 80px 24px;
-  text-align: center;
+.glowOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(600px circle at 50% 100%, rgba(46, 144, 250, 0.1), transparent);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.navy {
-  background: var(--primary);
-  padding: 80px 24px;
-  text-align: center;
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-/* ---- Typography ---- */
 .headline {
+  color: #ffffff;
   font-family: var(--font-display);
   font-weight: 800;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   letter-spacing: -0.025em;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+  line-height: 1.2;
 }
 
-.dark .headline {
-  color: #fff;
-  font-size: clamp(1.9rem, 3.8vw, 3.2rem);
-  max-width: 760px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.green .headline {
-  color: var(--primary);
-  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
-}
-
-.navy .headline {
-  color: #fff;
-  font-size: clamp(1.9rem, 3.5vw, 3rem);
-}
-
-.navy .headline span {
-  color: var(--accent);
+.accentSub {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 24px;
 }
 
 .sub {
+  color: rgba(255, 255, 255, 0.7);
   font-size: 1rem;
   line-height: 1.65;
-  margin-bottom: 36px;
-}
-
-.dark .sub {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.green .sub {
-  color: #374151;
-}
-
-.navy .sub {
-  color: rgba(255, 255, 255, 0.58);
-}
-
-/* ---- Accent sub (e.g. "There's a Better Way.") ---- */
-.accentSub {
-  color: var(--accent);
-  font-size: 1.1rem;
-  font-weight: 600;
   margin-bottom: 40px;
-  opacity: 0.9;
-  letter-spacing: 0.01em;
 }
 
-/* ---- Button group ---- */
 .buttons {
   display: flex;
   justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
+  margin-bottom: 32px;
 }
 
 .btnPrimary {
@@ -102,42 +73,21 @@
   align-items: center;
   gap: 8px;
   font-family: var(--font-body);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1rem;
-  padding: 15px 36px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+  padding: 14px 32px;
+  border-radius: 100px; /* pill shape */
+  background: var(--gradient-accent, linear-gradient(135deg, #2E90FA 0%, #155EEF 100%));
+  color: #ffffff;
+  text-decoration: none;
   transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.dark .btnPrimary,
-.navy .btnPrimary {
-  background: #ffffff;
-  color: var(--primary);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
-}
-
-.dark .btnSecondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.dark .btnSecondary:hover {
-  background: rgba(255, 255, 255, 0.14);
-  box-shadow: none;
-  transform: translateY(-1px);
-}
-
-.green .btnPrimary {
-  background: var(--primary-cta-gradient);
-  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
 .btnPrimary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 24px rgba(46, 144, 250, 0.4);
 }
 
 .btnSecondary {
@@ -147,58 +97,53 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 1rem;
-  padding: 15px 32px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  background: var(--accent);
-  color: #fff;
+  padding: 14px 32px;
+  border-radius: 100px; /* pill shape */
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
   text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
 }
 
 .btnSecondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(21, 94, 239, 0.30);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-/* Trust line below buttons */
 .trustLine {
-  margin-top: 24px;
-  font-size: 0.82rem;
   display: flex;
   justify-content: center;
-  gap: 4px;
+  align-items: center;
+  gap: 24px;
   flex-wrap: wrap;
 }
 
-.dark .trustLine,
-.navy .trustLine {
-  color: rgba(255, 255, 255, 0.35);
+.trustItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.9rem;
 }
 
-.green .trustLine {
-  color: #6b7280;
-}
-
-.trustLine span::after {
-  content: "·";
-  margin-left: 4px;
-  opacity: 0.5;
-}
-
-.trustLine span:last-child::after {
-  content: none;
-}
-
-@media (max-width: 480px) {
-  .dark {
-    margin: 0 16px 60px;
-    padding: 64px 24px;
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 16px;
   }
-
+  .card {
+    padding: 64px 24px;
+    border-radius: 20px;
+  }
   .buttons {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+  }
+  .btnPrimary, .btnSecondary {
+    justify-content: center;
+  }
+  .trustLine {
+    flex-direction: column;
+    gap: 12px;
   }
 }
