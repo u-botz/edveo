@@ -1,740 +1,620 @@
-.pricingPageBg {
-  flex: 1;
-  width: 100%;
-  background-color: #f5f6fa;
-}
+/* ============================================
+   PRICING PAGE
+   Dark page-hero (keeps the transparent navbar legible up top), then the
+   plan grid and FAQ on design-system grounds.
+   ============================================ */
 
-.pricingInner {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 24px 80px;
-}
-
-/* Hero */
-.pricingHero {
+.pageHero {
+  position: relative;
+  padding: 150px 24px 96px;
+  overflow: hidden;
+  background: var(--gradient-hero);
   text-align: center;
-  padding: 48px 0 40px;
 }
 
-.pricingEyebrow {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background-color: #eaf6f1;
-  color: #2eaa6e;
-  font-family: var(--font-body);
+.pageHero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--hero-feather-height, 90px);
+  background: linear-gradient(to top, var(--sec-faint, #F8FAFF), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pageHeroBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.pageHeroInner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heroEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 12px;
   font-weight: 700;
-  font-size: 11px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 20px;
+  color: #FFFFFF;
+  margin-bottom: 28px;
 }
 
-.pricingHeadline {
+.heroEyebrowDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue-500, #5795F8);
+}
+
+.heroTitle {
   font-family: var(--font-display);
+  font-size: clamp(38px, 5.4vw, 60px);
   font-weight: 800;
-  font-size: 48px;
-  line-height: 1.1;
-  color: #0d2d4e;
+  line-height: 1.08;
   letter-spacing: -0.03em;
-  margin-bottom: 16px;
+  color: #FFFFFF;
+  text-wrap: balance;
+  margin: 0 0 18px;
 }
 
-.pricingSubhead {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 1.55;
-  color: #4a5568;
-  max-width: 520px;
-  margin: 0 auto 28px;
+.heroAccent {
+  color: var(--blue-500, #5795F8);
+}
+
+.heroSub {
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 560px;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ── Plans section ── */
+.plansSection {
+  background: var(--sec-faint, #F8FAFF);
+  padding: 0 24px 88px;
+}
+
+.plansInner {
+  max-width: var(--container-max, 1200px);
+  margin: 0 auto;
+}
+
+/* Controls lift onto the seam between hero and section. */
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: -34px 0 44px;
+  position: relative;
+  z-index: 3;
 }
 
 .billingRow {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 14px;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 28px;
+  justify-content: center;
 }
 
-.billingPills {
+.pillGroup {
   display: inline-flex;
-  background: #fff;
-  border-radius: 999px;
-  padding: 4px;
   gap: 4px;
-}
-
-.billingBtn {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 14px;
-  padding: 10px 22px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  background: #f5f6fa;
-  color: #4a5568;
-  transition: background 0.15s, color 0.15s;
-}
-
-.billingBtnActive {
-  background-color: #2eaa6e;
-  color: #fff;
-}
-
-.billingBadge {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 11px;
-  color: #2eaa6e;
-}
-
-/* Segment tabs */
-.segmentWrap {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 32px;
-}
-
-.segmentPills {
-  display: inline-flex;
-  background: #ffffff;
-  border-radius: 999px;
   padding: 4px;
-  gap: 0;
-  flex-wrap: wrap;
-  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--surface-card, #FFFFFF);
+  border: 0.8px solid var(--border, #E2E8F0);
+  box-shadow: 0 12px 28px -14px rgba(0, 5, 61, 0.2);
 }
 
-.segmentBtn {
+.pill {
+  padding: 10px 26px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 14px;
-  padding: 10px 24px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
+  color: var(--text-body, #475569);
   background: transparent;
-  color: #4a5568;
+  white-space: nowrap;
+  transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+
+.pill:hover {
+  color: var(--ink-900, #010D36);
+}
+
+.pillActive {
+  background: var(--blue-600, #0B5CFF);
+  color: #FFFFFF;
+}
+
+.pillActive:hover {
+  color: #FFFFFF;
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--blue-600, #0B5CFF);
+  outline-offset: 2px;
+}
+
+.saveBadge {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F9D63;
+  background: var(--success-bg, #ECFDF5);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
   white-space: nowrap;
 }
 
-.segmentBtnActive {
-  background-color: #0d2d4e;
-  color: #fff;
+/* Segment tabs scroll horizontally on narrow screens. */
+.segmentScroll {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2px;
 }
 
-/* Ensure inactive tab panels stay fully removed from layout (overrides display: grid on panels). */
-.tabPanelHidden {
-  display: none !important;
+.segmentScroll::-webkit-scrollbar {
+  display: none;
 }
 
-/* Plan cards + tabs (same pattern as feature comparison) */
-.planCardsRegion {
-  margin-bottom: 40px;
+.segBtn {
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-body, #475569);
+  background: transparent;
+  white-space: nowrap;
+  transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
 }
 
-/* Plan cards grid */
+.segBtn:hover {
+  color: var(--ink-900, #010D36);
+}
+
+.segBtnActive {
+  background: var(--ink-900, #010D36);
+  color: #FFFFFF;
+}
+
+.segBtnActive:hover {
+  color: #FFFFFF;
+}
+
+.segBtn:focus-visible {
+  outline: 2px solid var(--blue-600, #0B5CFF);
+  outline-offset: 2px;
+}
+
+/* ── Plan cards ── */
 .cardsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   align-items: stretch;
-  margin-bottom: 0;
-}
-
-.segmentPlanFooter {
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: #64748b;
-  text-align: center;
-  margin: 24px 0 0;
-  line-height: 1.5;
+  margin-bottom: 32px;
 }
 
 .planCard {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 4px 24px rgba(13, 45, 78, 0.06);
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
-  min-height: 100%;
+  background: var(--surface-card, #FFFFFF);
+  border: 0.8px solid var(--border, #E2E8F0);
+  border-radius: 24px;
+  padding: 34px 28px;
+  box-shadow: 0 32px 64px -20px rgba(0, 5, 61, 0.07);
 }
 
+/* Only the recommended tier takes the brand outline, matching the homepage
+   teaser — the eye should land in exactly one place. */
 .planCardPopular {
-  background-color: #0d2d4e;
-  color: #fff;
+  border: 2px solid var(--blue-600, #0B5CFF);
+  box-shadow: 0 32px 64px -18px rgba(11, 92, 255, 0.24);
 }
 
 .popularBadge {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  background-color: #2eaa6e;
-  color: #fff;
-  font-family: var(--font-body);
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--blue-600, #0B5CFF);
+  color: #FFFFFF;
+  font-size: 11px;
   font-weight: 700;
-  font-size: 10px;
-  text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 6px 10px;
-  border-radius: 999px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
 }
 
 .planName {
   font-family: var(--font-display);
+  font-size: 1.1rem;
   font-weight: 700;
-  font-size: 18px;
-  color: #0d2d4e;
-  margin-bottom: 6px;
-}
-
-.planCardPopular .planName {
-  color: #fff;
-  padding-right: 100px;
+  letter-spacing: -0.015em;
+  color: var(--ink-900, #010D36);
+  margin: 0 0 6px;
 }
 
 .planWho {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 13px;
-  color: #4a5568;
-  margin-bottom: 20px;
-  min-height: 2.6em;
-}
-
-.planCardPopular .planWho {
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted, #9AA1B5);
+  margin: 0 0 20px;
+  min-height: 42px;
 }
 
 .priceBlock {
-  margin-bottom: 20px;
-  min-height: 52px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 6px;
 }
 
 .priceMain {
-  font-family: var(--font-data);
-  font-weight: 700;
-  font-size: 40px;
-  line-height: 1.1;
-  color: #0d2d4e;
-}
-
-.planCardPopular .priceMain {
-  color: #fff;
-}
-
-.priceAnnualRow {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.priceStrike {
-  font-family: var(--font-data);
-  font-size: 18px;
-  color: #4a5568;
-  text-decoration: line-through;
-}
-
-.planCardPopular .priceStrike {
-  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink-900, #010D36);
+  font-variant-numeric: tabular-nums;
 }
 
 .perMonth {
-  font-family: var(--font-body);
-  font-weight: 400;
   font-size: 14px;
-  color: #4a5568;
+  color: var(--text-muted, #9AA1B5);
 }
 
-.planCardPopular .perMonth {
-  color: rgba(255, 255, 255, 0.65);
+.annualNote {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0F9D63;
+  margin-bottom: 4px;
 }
 
 .customPrice {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 20px;
-  color: #0d2d4e;
-}
-
-.planCardPopular .customPrice {
-  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--ink-900, #010D36);
+  margin-bottom: 4px;
 }
 
 .customSub {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 13px;
-  color: #4a5568;
-  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--text-muted, #9AA1B5);
+  margin-bottom: 4px;
 }
 
-.planCardPopular .customSub {
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.ctaFull {
-  width: 100%;
-  padding: 14px 20px;
-  border-radius: 10px;
-  font-family: var(--font-body);
+.perfectFor {
+  font-size: 12.5px;
   font-weight: 600;
-  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-secondary, #334155);
+  background: var(--blue-50, #EFF8FF);
+  border-radius: 10px;
+  padding: 9px 12px;
+  margin: 14px 0 20px;
+}
+
+/* ── CTAs ── */
+.cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 13px 20px;
+  border-radius: var(--radius-full);
   border: none;
   cursor: pointer;
-  margin-bottom: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  background: var(--blue-50, #EFF8FF);
+  color: var(--blue-600, #0B5CFF);
+  box-shadow: none;
+  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
 }
 
-.ctaFullNoSub {
-  margin-bottom: 24px;
-}
-
-.ctaGradient {
-  background: linear-gradient(135deg, #001831 0%, #0d2d4e 100%);
-  color: #fff;
-}
-
-.ctaGreen {
-  background-color: #2eaa6e;
-  color: #fff;
+.cta:hover {
+  background: #E1EFFF;
 }
 
 .ctaPopular {
-  background: #fff;
-  color: #0d2d4e;
-  border: none;
+  background: var(--blue-600, #0B5CFF);
+  color: #FFFFFF;
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.25);
 }
 
 .ctaPopular:hover {
-  background: #f0f4f8;
+  background: var(--blue-600, #0B5CFF);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 22px -4px rgba(59, 130, 246, 0.42);
 }
 
-.ctaOutline {
+.ctaGhost {
   background: transparent;
-  border: 1.5px solid rgba(13, 45, 78, 0.25);
-  color: #0d2d4e;
+  color: var(--ink-900, #010D36);
+  border: 0.8px solid var(--border-strong, #CBD5E1);
 }
 
-.ctaOutline:hover {
-  border-color: rgba(13, 45, 78, 0.5);
-  background: rgba(13, 45, 78, 0.03);
+.ctaGhost:hover {
+  background: var(--bg-wash, #F8FAFC);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--blue-600, #0B5CFF);
+  outline-offset: 3px;
 }
 
 .ctaSub {
-  font-family: var(--font-body);
-  font-weight: 400;
   font-size: 12px;
-  color: #4a5568;
+  color: var(--text-muted, #9AA1B5);
   text-align: center;
-  margin-bottom: 24px;
-}
-
-.planCardPopular .ctaSub {
-  color: rgba(255, 255, 255, 0.5);
+  margin: 8px 0 0;
 }
 
 .divider {
-  height: 1px;
-  background: rgba(13, 45, 78, 0.08);
-  margin-bottom: 20px;
   border: none;
+  border-top: 0.8px solid var(--border, #E2E8F0);
+  margin: 22px 0 18px;
 }
 
-.planCardPopular .divider {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.featuresHeading {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #4a5568;
-  letter-spacing: 0.06em;
-  margin-bottom: 16px;
-}
-
-.planCardPopular .featuresHeading {
-  color: rgba(255, 255, 255, 0.5);
-}
-
+/* ── Feature list ── */
 .featureList {
   list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex: 1;
+  gap: 11px;
+}
+
+/* Section markers inside the list (source strings prefixed with §). */
+.featureGroup {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-muted, #9AA1B5);
+  padding-bottom: 6px;
+  margin-top: 10px;
+  border-bottom: 0.8px solid var(--line-soft, #F1F5F9);
+}
+
+.featureGroup:first-child {
+  margin-top: 0;
 }
 
 .featureItem {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 14px;
-  color: #1a1a2e;
-  line-height: 1.45;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-body, #475569);
 }
 
-.planCardPopular .featureItem {
-  color: #fff;
-}
-
-.checkIcon {
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: #2eaa6e;
-  position: relative;
-  margin-top: 2px;
-}
-
-.checkIcon::after {
-  content: "";
-  position: absolute;
-  left: 5px;
-  top: 3px;
-  width: 4px;
-  height: 7px;
-  border: solid #fff;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-
-.seeAllLink {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 13px;
-  color: #2eaa6e;
-  text-align: center;
-  display: block;
-  margin-top: auto;
-  padding-top: 8px;
-}
-
-.seeAllLink:hover {
-  text-decoration: underline;
-}
-
-/* Trust row */
-.trustRow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 13px;
-  color: #4a5568;
-  margin-bottom: 56px;
-  text-align: center;
-}
-
-.trustSep {
-  color: #4a5568;
-  opacity: 0.6;
-}
-
-.razorpayInline {
+.check {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--success-bg, #ECFDF5);
+  color: #0F9D63;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
-/* Comparison */
-.comparisonSection {
-  margin-bottom: 56px;
+.check svg {
+  width: 10px;
+  height: 10px;
 }
 
-.comparisonHeading {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 28px;
-  color: #0d2d4e;
+/* ── Notes and trust row ── */
+.segmentNote {
   text-align: center;
-  margin-bottom: 10px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-body, #475569);
+  margin: 0 0 32px;
 }
 
-.comparisonSub {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 16px;
-  color: #4a5568;
-  text-align: center;
-  margin-bottom: 24px;
+.trustRow {
+  display: flex;
+  justify-content: center;
+  gap: 10px 24px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--text-muted, #9AA1B5);
 }
 
-.tableWrap {
-  overflow-x: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(13, 45, 78, 0.06);
+.trustItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
 }
 
-.compareTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-body);
-  font-size: 14px;
+.trustItem svg {
+  width: 13px;
+  height: 13px;
+  color: #0F9D63;
+  flex-shrink: 0;
 }
 
-.compareTable thead th {
-  background-color: #0d2d4e;
-  color: #fff;
-  font-weight: 600;
-  padding: 16px 14px;
-  text-align: center;
-}
-
-.compareTable thead th:first-child {
-  text-align: left;
-  width: 40%;
-}
-
-.compareTable tbody td {
-  padding: 14px;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.compareTable tbody td:first-child {
-  text-align: left;
-  font-weight: 500;
-  color: #1a1a2e;
-}
-
-.compareTable tbody tr:nth-child(even) td {
-  background-color: #f5f6fa;
-}
-
-.compareTable tbody tr:nth-child(odd) td {
-  background-color: #ffffff;
-}
-
-.cellYes {
-  color: #2eaa6e;
-  font-weight: 600;
-  font-size: 16px;
-}
-
-.cellNo {
-  color: rgba(229, 62, 62, 0.7);
-  font-weight: 600;
-  font-size: 16px;
-}
-
-/* FAQ */
-.faqSection {
-  margin-bottom: 56px;
-}
-
-.faqHeading {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 28px;
-  color: #0d2d4e;
-  text-align: center;
-  margin-bottom: 8px;
-}
-
+/* ── FAQ ── */
 .faqList {
-  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 820px;
   margin: 0 auto;
 }
 
 .faqItem {
-  border: none;
-  border-radius: 8px;
-  margin-bottom: 0;
+  background: var(--surface-card, #FFFFFF);
+  border: 0.8px solid var(--blue-50, #EFF8FF);
+  border-radius: 24px;
+  transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+.faqItem:hover {
+  border-color: var(--blue-300, #88B7FB);
 }
 
 .faqItemOpen {
-  background-color: #f5f6fa;
+  border-color: var(--blue-300, #88B7FB);
+  box-shadow: 0 20px 40px -16px rgba(11, 92, 255, 0.18);
 }
 
-.faqQuestion {
+/* The question is a real heading for structure, but must not inherit the
+   global h3 type scale — the inner .faqQ owns its appearance. */
+.faqHeading {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.faqBtn {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  padding: 20px 0;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 26px;
   background: transparent;
   border: none;
   cursor: pointer;
   text-align: left;
   font-family: var(--font-body);
+  border-radius: 24px;
+}
+
+.faqBtn:focus-visible {
+  outline: 2px solid var(--blue-600, #0B5CFF);
+  outline-offset: -2px;
+}
+
+.faqQ {
+  font-size: 15.5px;
   font-weight: 600;
-  font-size: 16px;
-  color: #0d2d4e;
+  line-height: 1.45;
+  color: var(--ink-900, #010D36);
+  text-wrap: balance;
 }
 
 .faqIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   flex-shrink: 0;
-  font-size: 22px;
-  font-weight: 400;
-  color: #4a5568;
-  line-height: 1;
-}
-
-.faqAnswer {
-  padding: 0 0 20px;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 1.6;
-  color: #4a5568;
-  max-width: 95%;
-}
-
-/* Bottom CTA */
-.bottomCta {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  background: linear-gradient(135deg, #001831 0%, #0d2d4e 100%);
-  padding: 56px 24px;
-  text-align: center;
-  margin-bottom: 0;
-}
-
-.bottomCtaInner {
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-.bottomCtaTitle {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 36px;
-  color: #fff;
-  margin: 0 0 12px;
-}
-
-.bottomCtaSub {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.75);
-  margin-bottom: 28px;
-  line-height: 1.55;
-}
-
-.bottomCtaBtns {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.bottomBtnWhite {
-  background: #fff;
-  color: #0d2d4e;
-  padding: 14px 28px;
-  border-radius: 10px;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 15px;
-  border: none;
-  cursor: pointer;
-}
-
-.bottomBtnWa {
-  background: #2eaa6e;
-  color: #fff;
-  padding: 14px 28px;
-  border-radius: 10px;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 15px;
-  border: none;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-
-/* Scrollable segment tabs wrapper — used by PricingPageClient inline-style version */
-.segmentScrollOuter {
-  display: flex;
   justify-content: center;
-  margin-bottom: 40px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  padding: 0 4px;
+  background: var(--blue-50, #EFF8FF);
+  color: var(--blue-600, #0B5CFF);
+  transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
 }
 
-.segmentScrollOuter::-webkit-scrollbar {
-  display: none;
+.faqIcon svg {
+  width: 13px;
+  height: 13px;
 }
 
-@media (max-width: 900px) {
+.faqIconOpen {
+  background: var(--blue-600, #0B5CFF);
+  color: #FFFFFF;
+  transform: rotate(180deg);
+}
+
+.faqPanel {
+  padding: 0 26px 22px;
+}
+
+.faqA {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-body, #475569);
+  max-width: 65ch;
+  text-wrap: pretty;
+}
+
+/* ── Responsive ── */
+@media (max-width: 980px) {
   .cardsGrid {
     grid-template-columns: 1fr;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
   }
-
-  .pricingHeadline {
-    font-size: 36px;
-  }
-
-  .compareTable thead th,
-  .compareTable tbody td {
-    padding: 10px 8px;
-    font-size: 13px;
+  .planWho {
+    min-height: 0;
   }
 }
 
-@media (max-width: 640px) {
-  .segmentScrollOuter {
+@media (max-width: 768px) {
+  .pageHero {
+    padding: 120px 16px 80px;
+  }
+  .plansSection {
+    padding: 0 16px 64px;
+  }
+  .segmentScroll {
     justify-content: flex-start;
-    padding: 0 0 4px;
   }
-
-  .segmentPills {
-    flex-wrap: nowrap;
+  .faqItem {
+    border-radius: 20px;
   }
-
-  .segmentBtn {
-    padding: 9px 14px;
-    font-size: 13px;
+  .faqBtn {
+    padding: 17px 20px;
+    border-radius: 20px;
   }
-
-  .pricingHeadline {
-    font-size: 30px;
-  }
-
-  .planCard {
-    padding: 24px;
-  }
-
-  .bottomCtaTitle {
-    font-size: 26px;
+  .faqPanel {
+    padding: 0 20px 18px;
   }
 }
 
-@media (max-width: 480px) {
-  .pricingHeadline {
-    font-size: 26px;
-  }
-
-  .billingBtn {
-    padding: 9px 16px;
-    font-size: 13px;
+@media (prefers-reduced-motion: reduce) {
+  .ctaPopular:hover {
+    transform: none;
   }
 }

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
 import WhatsAppFloat from "../components/WhatsAppFloat";
+import CtaBanner from "../components/CtaBanner";
+import HeroBackdrop from "../components/home/HeroBackdrop";
 import { COMPANY_WHATSAPP_URL, COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
+import shell from "../components/home/home.module.css";
 import styles from "./pricing.module.css";
 
 const INSTITUTE_FAQS = [
@@ -16,6 +18,30 @@ const INSTITUTE_FAQS = [
   { q: "What payment methods are accepted?", a: "UPI, credit card, debit card, and net banking — all via Razorpay. GST invoice provided automatically." },
 ];
 
+const SEGMENTS = [
+  { id: "institutes", label: "Coaching Institutes" },
+  { id: "teachers", label: "Educators" },
+  { id: "online", label: "Online Academies" },
+] as const;
+
+const TRUST = ["Powered by Razorpay", "SSL Secured", "Cancel anytime", "Free to start"];
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M2 6l3 3 5-5" />
+    </svg>
+  );
+}
+
+function ChevronIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  );
+}
+
 export default function PricingPageClient() {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
   const [tab, setTab] = useState<"online" | "teachers" | "institutes">("institutes");
@@ -23,77 +49,74 @@ export default function PricingPageClient() {
   const price = (mo: number, yr: number) =>
     billing === "monthly" ? `₹${mo.toLocaleString("en-IN")}` : `₹${yr.toLocaleString("en-IN")}`;
 
+  const faqs = tab === "institutes" ? INSTITUTE_FAQS : FAQS;
+
   return (
-    <main style={{ background: "#f5f6fa", minHeight: "100vh" }}>
+    <main>
       <SiteNavbar activePage="pricing" />
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 24px 100px" }}>
-
-        {/* Hero */}
-        <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <h1 style={{ fontSize: "clamp(2rem,4vw,3rem)", fontWeight: 800, color: "#0D2D4E", marginBottom: 12 }}>
-            Simple, Transparent Pricing
+      {/* Dark page hero — also what keeps the transparent navbar legible up top */}
+      <section className={styles.pageHero} data-hero>
+        <div className={styles.pageHeroBg}>
+          <HeroBackdrop />
+        </div>
+        <div className={styles.pageHeroInner}>
+          <span className={styles.heroEyebrow}>
+            <span className={styles.heroEyebrowDot} />
+            Pricing
+          </span>
+          <h1 className={styles.heroTitle}>
+            Priced per institute,{" "}
+            <span className={styles.heroAccent}>not per seat</span>
           </h1>
-          <p style={{ color: "#4b5563", fontSize: "1.05rem", maxWidth: 500, margin: "0 auto" }}>
-            No setup fee. No hidden costs. Cancel anytime.
+          <p className={styles.heroSub}>
+            No per-teacher licence, no hidden costs, cancel anytime. Annual billing
+            pays for ten months and gives you twelve.
           </p>
         </div>
+      </section>
 
-        {/* Billing toggle */}
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, marginBottom: 32 }}>
-          <div style={{ display: "inline-flex", background: "#fff", borderRadius: 999, padding: 4, gap: 4, boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
-            <button
-              onClick={() => setBilling("monthly")}
-              style={{
-                padding: "10px 24px", borderRadius: 999, border: "none", cursor: "pointer",
-                fontWeight: 600, fontSize: 14,
-                background: billing === "monthly" ? "#2EAA6E" : "transparent",
-                color: billing === "monthly" ? "#fff" : "#4b5563",
-              }}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBilling("annual")}
-              style={{
-                padding: "10px 24px", borderRadius: 999, border: "none", cursor: "pointer",
-                fontWeight: 600, fontSize: 14,
-                background: billing === "annual" ? "#2EAA6E" : "transparent",
-                color: billing === "annual" ? "#fff" : "#4b5563",
-              }}
-            >
-              Annual
-            </button>
+      <section className={styles.plansSection}>
+        <div className={styles.plansInner}>
+
+          {/* Controls */}
+          <div className={styles.controls}>
+            <div className={styles.billingRow}>
+              <div className={styles.pillGroup} role="group" aria-label="Billing period">
+                {(["monthly", "annual"] as const).map((b) => (
+                  <button
+                    key={b}
+                    type="button"
+                    onClick={() => setBilling(b)}
+                    aria-pressed={billing === b}
+                    className={`${styles.pill} ${billing === b ? styles.pillActive : ""}`}
+                  >
+                    {b === "monthly" ? "Monthly" : "Annual"}
+                  </button>
+                ))}
+              </div>
+              {billing === "annual" && <span className={styles.saveBadge}>2 months free</span>}
+            </div>
+
+            <div className={styles.segmentScroll}>
+              <div className={styles.pillGroup} role="group" aria-label="Who this is for">
+                {SEGMENTS.map((seg) => (
+                  <button
+                    key={seg.id}
+                    type="button"
+                    onClick={() => setTab(seg.id)}
+                    aria-pressed={tab === seg.id}
+                    className={`${styles.segBtn} ${tab === seg.id ? styles.segBtnActive : ""}`}
+                  >
+                    {seg.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
-          {billing === "annual" && (
-            <span style={{ color: "#2EAA6E", fontWeight: 700, fontSize: 13 }}>2 months free</span>
-          )}
-        </div>
 
-        {/* Segment tabs */}
-        <div className={styles.segmentScrollOuter}>
-          <div style={{ display: "inline-flex", background: "#fff", borderRadius: 999, padding: 4, boxShadow: "0 1px 4px rgba(0,0,0,0.08)", flexShrink: 0 }}>
-            {(["institutes", "teachers", "online"] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                style={{
-                  padding: "10px 20px", borderRadius: 999, border: "none", cursor: "pointer",
-                  fontWeight: 600, fontSize: 14,
-                  background: tab === t ? "#0D2D4E" : "transparent",
-                  color: tab === t ? "#fff" : "#4b5563",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {t === "online" ? "Online Academies" : t === "teachers" ? "Educators" : "Coaching Institutes"}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Cards */}
-        <div className={styles.cardsGrid} style={{ marginBottom: 48 }}>
-
+          {/* Cards */}
+          <div className={styles.cardsGrid}>
           {/* ── Online academies ── */}
           {tab === "online" && <>
             <PlanCard
@@ -368,72 +391,48 @@ export default function PricingPageClient() {
             />
           </>}
 
+          </div>
+
+          {(tab === "online" || tab === "teachers") && (
+            <p className={styles.segmentNote}>
+              New accounts get 50 free AI credits on signup · buy additional credit packs anytime
+            </p>
+          )}
+
+          <div className={styles.trustRow}>
+            {TRUST.map((t) => (
+              <span key={t} className={styles.trustItem}>
+                <CheckIcon />
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
+      </section>
 
-        {tab === "online" && (
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: 13,
-              color: "#64748b",
-              margin: "0 0 48px",
-              lineHeight: 1.5,
-            }}
-          >
-            New academies get 50 free AI credits on signup · Buy additional credit packs anytime
-          </p>
-        )}
-
-        {tab === "teachers" && (
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: 13,
-              color: "#64748b",
-              margin: "0 0 48px",
-              lineHeight: 1.5,
-            }}
-          >
-            New teachers get 50 free AI credits on signup · Buy additional credit packs anytime
-          </p>
-        )}
-
-        {/* Trust row */}
-        <div style={{ display: "flex", justifyContent: "center", gap: 24, flexWrap: "wrap", color: "#6b7280", fontSize: 13, marginBottom: 64 }}>
-          {["Powered by Razorpay", "SSL Secured", "Cancel anytime", "No setup fee", "Free forever"].map((t) => (
-            <span key={t}>✓ {t}</span>
-          ))}
+      {/* FAQ */}
+      <section className={`${shell.section} ${shell.groundWhite}`}>
+        <div className={shell.container}>
+          <div className={shell.heading}>
+            <span className={shell.eyebrow}>FAQ</span>
+            <h2 className={shell.title}>Questions before you pick a plan</h2>
+          </div>
+          <div className={styles.faqList}>
+            {faqs.map((f, i) => (
+              <FaqItem key={f.q} q={f.q} a={f.a} defaultOpen={i === 0} />
+            ))}
+          </div>
         </div>
+      </section>
 
-        {/* FAQ */}
-        <div style={{ maxWidth: 700, margin: "0 auto" }}>
-          <h2 style={{ textAlign: "center", fontSize: "1.8rem", fontWeight: 800, color: "#0D2D4E", marginBottom: 32 }}>
-            Frequently Asked Questions
-          </h2>
-          {(tab === "institutes" ? INSTITUTE_FAQS : FAQS).map((f) => (
-            <FaqItem key={f.q} q={f.q} a={f.a} />
-          ))}
-        </div>
-
-      </div>
-
-      {/* CTA */}
-      <div style={{ background: "linear-gradient(135deg,#001831,#0D2D4E)", padding: "80px 24px", textAlign: "center" }}>
-        <h2 style={{ color: "#fff", fontSize: "clamp(1.6rem,3vw,2.4rem)", fontWeight: 800, marginBottom: 16 }}>
-          Not Sure Which Plan Is Right?
-        </h2>
-        <p style={{ color: "rgba(255,255,255,0.65)", marginBottom: 32 }}>
-          Chat with us on WhatsApp — we&apos;ll tell you exactly which plan fits your institute in under 10 minutes.
-        </p>
-        <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" style={{ background: "#fff", color: "#0D2D4E", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
-            Get a free demo →
-          </a>
-          <a href={COMPANY_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ background: "#2EAA6E", color: "#fff", fontWeight: 700, padding: "14px 32px", borderRadius: 8, textDecoration: "none" }}>
-            Chat on WhatsApp →
-          </a>
-        </div>
-      </div>
+      <CtaBanner
+        headline="Not sure which plan is right?"
+        accentSub="Chat with us on WhatsApp and we will tell you exactly which plan fits your institute in under 10 minutes."
+        primaryLabel="Get a free demo →"
+        secondaryLabel="Chat on WhatsApp"
+        secondaryHref={COMPANY_WHATSAPP_URL}
+        trustItems={["Free to start", "No credit card required", "Cancel anytime", "Data stored in India"]}
+      />
 
       <SiteFooter />
       <WhatsAppFloat />
@@ -441,7 +440,7 @@ export default function PricingPageClient() {
   );
 }
 
-/* ── Plan Card ── */
+/* ── Plan card ── */
 function PlanCard({
   name, who, price, billing, cta, ctaSub, features, popular, ghost, showPriceSuffix = true, customSub, perfectFor,
 }: {
@@ -458,139 +457,88 @@ function PlanCard({
   customSub?: string;
   perfectFor?: string;
 }) {
+  const isCustom = price === "Custom";
+
   return (
-    <div style={{
-      background: popular ? "#0D2D4E" : "#fff",
-      color: popular ? "#fff" : "#0D2D4E",
-      borderRadius: 16,
-      padding: 32,
-      boxShadow: popular ? "0 8px 32px rgba(13,45,78,0.18)" : "0 2px 16px rgba(13,45,78,0.07)",
-      display: "flex",
-      flexDirection: "column",
-      position: "relative",
-      border: popular ? "none" : "1px solid rgba(13,45,78,0.07)",
-    }}>
-      {popular && (
-        <span style={{
-          position: "absolute", top: 16, right: 16,
-          background: "#2EAA6E", color: "#fff",
-          fontSize: 10, fontWeight: 700, letterSpacing: "0.06em",
-          textTransform: "uppercase", padding: "5px 10px", borderRadius: 999,
-        }}>
-          ⭐ Most Popular
-        </span>
-      )}
-      <div style={{ fontWeight: 800, fontSize: "1.25rem", marginBottom: 6 }}>{name}</div>
-      <div style={{ fontSize: "0.82rem", opacity: 0.65, marginBottom: 20, lineHeight: 1.4 }}>{who}</div>
+    <div className={`${styles.planCard} ${popular ? styles.planCardPopular : ""}`}>
+      {popular && <span className={styles.popularBadge}>Most popular</span>}
 
-      {price === "Custom" ? (
-        <div style={{ marginBottom: 24 }}>
-          <div style={{ fontWeight: 800, fontSize: "1.6rem" }}>Custom Pricing</div>
-          <div style={{ fontSize: "0.78rem", opacity: 0.55, marginTop: 4 }}>
-            {customSub ?? "Based on size & requirements"}
+      <h3 className={styles.planName}>{name}</h3>
+      <p className={styles.planWho}>{who}</p>
+
+      {isCustom ? (
+        <>
+          <div className={styles.customPrice}>Custom pricing</div>
+          <div className={styles.customSub}>{customSub ?? "Based on size and requirements"}</div>
+        </>
+      ) : (
+        <>
+          <div className={styles.priceBlock}>
+            <span className={styles.priceMain}>{price}</span>
+            {showPriceSuffix && <span className={styles.perMonth}>/month</span>}
           </div>
-        </div>
-      ) : (
-        <div style={{ marginBottom: perfectFor ? 12 : 24 }}>
-          <span style={{ fontWeight: 800, fontSize: "2rem" }}>{price}</span>
-          {showPriceSuffix && (
-            <span style={{ fontSize: "0.85rem", opacity: 0.6, marginLeft: 4 }}>/month</span>
-          )}
           {billing === "annual" && price !== "Free" && (
-            <div style={{ fontSize: "0.75rem", marginTop: 4, color: popular ? "#a7f3d0" : "#2EAA6E" }}>
-              billed annually
-            </div>
+            <div className={styles.annualNote}>billed annually</div>
           )}
-        </div>
+        </>
       )}
 
-      {perfectFor && (
-        <div style={{
-          fontSize: "0.82rem", fontWeight: 600, marginBottom: 20,
-          padding: "8px 12px", borderRadius: 8,
-          background: popular ? "rgba(255,255,255,0.1)" : "rgba(46,170,110,0.08)",
-          color: popular ? "rgba(255,255,255,0.85)" : "#1a7a4a",
-          border: popular ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(46,170,110,0.2)",
-        }}>
-          {perfectFor}
-        </div>
-      )}
+      {perfectFor && <div className={styles.perfectFor}>{perfectFor}</div>}
 
-      {ghost ? (
-        <button style={{
-          width: "100%", padding: "12px 0", borderRadius: 8, marginBottom: ctaSub ? 6 : 24,
-          border: `1.5px solid ${popular ? "rgba(255,255,255,0.3)" : "rgba(13,45,78,0.2)"}`,
-          background: "transparent", cursor: "pointer", fontWeight: 700, fontSize: "0.9rem",
-          color: popular ? "#fff" : "#0D2D4E",
-        }}>
-          {cta}
-        </button>
-      ) : (
-        <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" style={{
-          display: "block", textAlign: "center", padding: "12px 0", borderRadius: 8, marginBottom: ctaSub ? 6 : 24,
-          background: popular ? "#2EAA6E" : "#0D2D4E",
-          color: "#fff", fontWeight: 700, fontSize: "0.9rem", textDecoration: "none",
-        }}>
-          {cta}
-        </a>
-      )}
+      <a
+        href={COMPANY_WHATSAPP_CTA_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${styles.cta} ${popular ? styles.ctaPopular : ""} ${ghost ? styles.ctaGhost : ""}`}
+      >
+        {cta}
+      </a>
 
-      {ctaSub && (
-        <div style={{ fontSize: "0.75rem", opacity: 0.6, textAlign: "center", marginBottom: 18 }}>{ctaSub}</div>
-      )}
+      {ctaSub && <p className={styles.ctaSub}>{ctaSub}</p>}
 
-      {price === "Free" && !ctaSub && (
-        <div style={{ fontSize: "0.75rem", opacity: 0.5, marginBottom: 16 }}>Free forever · No credit card</div>
-      )}
+      <hr className={styles.divider} />
 
-      <hr style={{ border: "none", borderTop: `1px solid ${popular ? "rgba(255,255,255,0.12)" : "rgba(13,45,78,0.08)"}`, marginBottom: 20 }} />
-
-      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
-        {features.map((f, i) => {
-          if (f.startsWith("§")) {
-            return (
-              <li key={i} style={{
-                fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
-                opacity: 0.5, marginTop: i === 0 ? 0 : 8, paddingBottom: 2,
-                borderBottom: `1px solid ${popular ? "rgba(255,255,255,0.1)" : "rgba(13,45,78,0.08)"}`,
-              }}>
-                {f.slice(1)}
-              </li>
-            );
-          }
-          return (
-            <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: "0.85rem", opacity: 0.85 }}>
-              <span style={{ color: "#2EAA6E", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>✓</span>
+      <ul className={styles.featureList}>
+        {features.map((f, i) =>
+          f.startsWith("§") ? (
+            <li key={i} className={styles.featureGroup}>
+              {f.slice(1)}
+            </li>
+          ) : (
+            <li key={i} className={styles.featureItem}>
+              <span className={styles.check}>
+                <CheckIcon />
+              </span>
               {f}
             </li>
-          );
-        })}
+          )
+        )}
       </ul>
     </div>
   );
 }
 
-/* ── FAQ Item ── */
-function FaqItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
+/* ── FAQ item ── */
+function FaqItem({ q, a, defaultOpen }: { q: string; a: string; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(Boolean(defaultOpen));
   return (
-    <div style={{ borderBottom: "1px solid rgba(13,45,78,0.08)", marginBottom: 0 }}>
-      <button
-        onClick={() => setOpen(!open)}
-        style={{
-          width: "100%", textAlign: "left", display: "flex", justifyContent: "space-between",
-          alignItems: "center", padding: "18px 0", background: "none", border: "none",
-          cursor: "pointer", fontWeight: 600, fontSize: "0.95rem", color: "#0D2D4E",
-        }}
-      >
-        {q}
-        <span style={{ fontSize: "1.2rem", color: "#2EAA6E", flexShrink: 0, marginLeft: 16 }}>{open ? "−" : "+"}</span>
-      </button>
-      {open && (
-        <div style={{ paddingBottom: 18, fontSize: "0.9rem", color: "#4b5563", lineHeight: 1.65 }}>
-          {a}
-        </div>
-      )}
+    <div className={`${styles.faqItem} ${open ? styles.faqItemOpen : ""}`}>
+      <h3 className={styles.faqHeading}>
+        <button
+          type="button"
+          className={styles.faqBtn}
+          aria-expanded={open}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span className={styles.faqQ}>{q}</span>
+          <span className={`${styles.faqIcon} ${open ? styles.faqIconOpen : ""}`}>
+            <ChevronIcon />
+          </span>
+        </button>
+      </h3>
+      <div className={styles.faqPanel} hidden={!open}>
+        <p className={styles.faqA}>{a}</p>
+      </div>
     </div>
   );
 }

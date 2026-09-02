@@ -1,107 +1,200 @@
 /* ============================================
-   SITE FOOTER — Light (webinar.gg pattern)
+   SITE FOOTER — light editorial panel (webinar.gg pattern)
+   Leads with a brand statement rather than a link list; the panel is inset
+   with rounded top corners so it reads as a surface the page rests on.
    ============================================ */
 
 .footer {
-  background-color: var(--bg-footer, #F8FBFF);
+  background-color: var(--bg-page, #FFFFFF);
+  padding: 0 24px;
   color: var(--ink-900, #010D36);
-  position: relative;
-  padding-top: 0;
 }
 
-.topAccent {
-  height: 1px;
-  width: 100%;
-  background: var(--nav-glass-border, rgba(0, 0, 0, 0.05));
-}
-
-.container {
-  max-width: 1200px;
+.panel {
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 72px 48px 0;
+  background: var(--bg-footer, #F8FBFF);
+  border: 0.8px solid var(--border, #E2E8F0);
+  border-bottom: none;
+  border-radius: 32px 32px 0 0;
+  padding: 72px 64px 0;
 }
 
-.footerGrid {
+.grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 40px;
-  margin-bottom: 56px;
+  grid-template-columns: 1.6fr repeat(4, 1fr);
+  gap: 48px 32px;
+  padding-bottom: 64px;
 }
 
-.footerBrandCol {
+/* ── Brand block ── */
+.brandCol {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 24px;
+  max-width: 420px;
 }
 
-.footerBrandLink {
+.brandLink {
   display: inline-block;
   text-decoration: none;
   line-height: 0;
 }
 
-/* EdveoLogo variant="footer" forces the PNG white; on a light ground it must
+/* EdveoLogo variant="footer" forces the PNG white; on a light ground it has to
    go dark instead. Descendant selector outranks .whiteFilter — no !important. */
-.footerBrandLink img {
+.brandLink img {
   filter: brightness(0);
   opacity: 0.9;
 }
 
-.footerDesc {
-  font-size: 0.85rem;
-  color: var(--text-body, #475569);
-  max-width: 250px;
-  line-height: 1.7;
-  margin: 0;
-}
-
-.footerLinkCol {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.footerLinkCol h4 {
+.statement {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.4vw, 42px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
   color: var(--ink-900, #010D36);
-  font-weight: 600;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 8px;
+  margin: 0;
+  text-wrap: balance;
 }
 
-.footerLinkCol a {
-  color: var(--text-body, #475569);
-  font-size: 0.88rem;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.footerLinkCol a:hover {
+.statementAccent {
   color: var(--blue-600, #0B5CFF);
 }
 
-.footerBottom {
-  border-top: 0.8px solid var(--border, #E2E8F0);
-  padding: 24px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--text-muted, #9AA1B5);
-  font-size: 0.8rem;
+.desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-body, #475569);
+  margin: 0;
+  max-width: 44ch;
+  text-wrap: pretty;
 }
 
-@media (max-width: 1024px) {
-  .footerGrid {
-    grid-template-columns: repeat(2, 1fr);
+/* ── Link columns ── */
+.linkCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.colTitle {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue-600, #0B5CFF);
+  margin: 0 0 2px;
+}
+
+.link {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink-900, #010D36);
+  text-decoration: none;
+  transition: color 0.2s var(--ease-out);
+}
+
+.link:hover {
+  color: var(--blue-600, #0B5CFF);
+}
+
+.link:focus-visible,
+.whatsapp:focus-visible,
+.brandLink:focus-visible {
+  outline: 2px solid var(--blue-600, #0B5CFF);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink-900, #010D36);
+  text-decoration: none;
+  transition: color 0.2s var(--ease-out);
+}
+
+.whatsapp:hover {
+  color: var(--blue-600, #0B5CFF);
+}
+
+.whatsappIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: var(--success-bg, #ECFDF5);
+  color: #0F9D63;
+  flex-shrink: 0;
+}
+
+.whatsappIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Bottom bar ── */
+.bottom {
+  border-top: 0.8px solid var(--border, #E2E8F0);
+  padding: 24px 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13.5px;
+  color: var(--text-muted, #9AA1B5);
+}
+
+.bottomMeta {
+  color: var(--text-muted, #9AA1B5);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .brandCol {
+    grid-column: 1 / -1;
+    max-width: 560px;
   }
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 56px 24px 0;
+  .footer {
+    padding: 0 16px;
   }
-  .footerGrid {
+  .panel {
+    padding: 48px 28px 0;
+    border-radius: 24px 24px 0 0;
+  }
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 24px;
+    padding-bottom: 44px;
+  }
+  .bottom {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
     grid-template-columns: 1fr;
+  }
+  .panel {
+    padding: 40px 20px 0;
   }
 }
