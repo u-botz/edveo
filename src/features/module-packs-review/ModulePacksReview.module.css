@@ -1,0 +1,177 @@
+/* ONBOARD-01 signup review step. Palette matches app/(auth)/register/page.module.css. */
+
+.panel {
+  border: 1px solid #D6E4EF;
+  border-radius: 12px;
+  background-color: #F8F9FD;
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.summary {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #0D2D4E;
+}
+
+.customise {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  padding: 6px 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1B6B3A;
+  cursor: pointer;
+}
+
+.customise:focus-visible {
+  outline: 2px solid #1B6B3A;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.chevron,
+.chevronOpen {
+  transition: transform 150ms ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.body {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.note {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background-color: #F0FAF5;
+  font-size: 12px;
+  color: #1B6B3A;
+}
+
+.group {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.groupTitle {
+  padding: 0;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748B;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid #E6EDF4;
+}
+
+.rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.rowName {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0D2D4E;
+}
+
+.rowDesc {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background-color: #F0FAF5;
+  color: #1B6B3A;
+}
+
+.switch {
+  appearance: none;
+  flex-shrink: 0;
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background-color: #CBD5E1;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  transition: transform 150ms ease;
+}
+
+.switch:checked {
+  background-color: #1B6B3A;
+}
+
+.switch:checked::after {
+  transform: translateX(16px);
+}
+
+.switch:focus-visible {
+  outline: 2px solid #1B6B3A;
+  outline-offset: 2px;
+}
+
+.lock {
+  flex-shrink: 0;
+  color: #94A3B8;
+}
+
+.footer {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #64748B;
+}

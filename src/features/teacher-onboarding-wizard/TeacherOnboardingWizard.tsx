@@ -25,6 +25,7 @@ import {
   type TrialPlan,
   type SignupSubmitResult,
 } from "@/lib/api/signupApi";
+import ModulePacksReview from "@/features/module-packs-review/ModulePacksReview";
 import {
   getStudentProfiles,
   getStudentProfileLabel,
@@ -86,6 +87,8 @@ export default function TeacherOnboardingWizard({
   const [institutionTypes, setInstitutionTypes] = useState<InstitutionType[]>([]);
   const [plans, setPlans] = useState<TrialPlan[]>([]);
   const [institutionTypeId, setInstitutionTypeId] = useState("");
+  /** ONBOARD-01: packs switched off on the review step; null while untouched (template applies). */
+  const [hiddenPacks, setHiddenPacks] = useState<string[] | null>(null);
   const [masterLoading, setMasterLoading] = useState(true);
   const [masterError, setMasterError] = useState<string | null>(null);
 
@@ -332,6 +335,8 @@ export default function TeacherOnboardingWizard({
           primarySubjectSlugs.length > 0 ? primarySubjectSlugs[0] : undefined,
         // legacy compat: set subject_slug so paid checkout path still works
         subject_slug: primarySubjectSlugs.length > 0 ? primarySubjectSlugs[0] : undefined,
+        // ONBOARD-01: only when the teacher changed something on the review step.
+        ...(hiddenPacks !== null ? { hidden_packs: hiddenPacks } : {}),
       });
 
       onSuccess({
@@ -927,7 +932,16 @@ export default function TeacherOnboardingWizard({
               {primarySubjectSlugs.length} selected
             </p>
           )}
-          <div style={{ height: 28 }} />
+          {/* ONBOARD-01 review step — optional and collapsed; renders nothing when not offered. */}
+          <div style={{ height: 20 }} />
+          <ModulePacksReview
+            category="standalone_teacher"
+            planId={standaloneSignupPlan?.id ?? null}
+            institutionTypeId={institutionTypeId ? parseInt(institutionTypeId, 10) : null}
+            typeLabel={institutionTypes.find((t) => String(t.id) === institutionTypeId)?.name ?? null}
+            onChange={setHiddenPacks}
+          />
+          <div style={{ height: 20 }} />
           <div className={styles.wizardNavRow}>
             <button
               type="button"

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Link from "next/link";
 import {
   User,
@@ -36,6 +36,7 @@ import { signupOAuthErrorMessage } from "@/lib/signupOAuthErrors";
 import TeacherOnboardingWizard, {
   type TeacherWizardResult,
 } from "@/features/teacher-onboarding-wizard/TeacherOnboardingWizard";
+import ModulePacksReview from "@/features/module-packs-review/ModulePacksReview";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -124,6 +125,29 @@ export default function RegisterFlowClient() {
   /** EdTech onboarding — single primary type. */
   const [edtechSection, setEdtechSection] = useState<"exam_focused" | "non_exam" | null>(null);
   const [edtechTypeId, setEdtechTypeId] = useState<number | null>(null);
+
+  // ── ONBOARD-01 review step ────────────────────────────────────────────────
+  /** Packs switched off on the review step; null while untouched (the template applies). */
+  const [hiddenPacks, setHiddenPacks] = useState<string[] | null>(null);
+
+  /** The plan this signup lands on — shared by the review step's preview and the submit. */
+  const signupPlan = useMemo(
+    () =>
+      category === "standalone_teacher"
+        ? pickStandaloneTeacherSelfServeSignupPlan(plans)
+        : plans.find((p) => p.self_serve_free_active) ??
+          plans.find((p) => p.is_trial) ??
+          plans.find((p) => p.price_monthly_cents === 0 && p.price_annual_cents === 0),
+    [category, plans]
+  );
+
+  /** The type the review step suggests from: the institute's primary type, or the EdTech type. */
+  const reviewTypeId =
+    category === "offline_institution"
+      ? offlinePrimaryId ?? offlineTypeIds[0] ?? null
+      : category === "edtech"
+        ? edtechTypeId
+        : null;
 
   // ── Idempotency key (generated once per page load) ─────────────────────────
   const idempotencyKeyRef = useRef<string>(generateIdempotencyKey());
@@ -386,12 +410,7 @@ export default function RegisterFlowClient() {
 
     if (!validateForm()) return;
 
-    const selectedPlan =
-      category === "standalone_teacher"
-        ? pickStandaloneTeacherSelfServeSignupPlan(plans)
-        : plans.find((p) => p.self_serve_free_active) ??
-          plans.find((p) => p.is_trial) ??
-          plans.find((p) => p.price_monthly_cents === 0 && p.price_annual_cents === 0);
+    const selectedPlan = signupPlan;
     if (!selectedPlan) {
       setGlobalError("No free trial plan available. Please contact support.");
       return;
@@ -436,6 +455,9 @@ export default function RegisterFlowClient() {
         ...(category === "edtech" || category === "offline_institution"
           ? { password: formData.password }
           : {}),
+        // Only when the owner changed something on the review step; otherwise the server applies
+        // the same starting set from the institution type's template.
+        ...(hiddenPacks !== null ? { hidden_packs: hiddenPacks } : {}),
       });
 
       if (
@@ -1076,6 +1098,17 @@ export default function RegisterFlowClient() {
                     to your email address. You can set a permanent password on first login.
                   </span>
                 </div>
+              )}
+
+              {/* ONBOARD-01 review step — optional, collapsed; teachers get it in the wizard instead. */}
+              {(category === "offline_institution" || category === "edtech") && reviewTypeId !== null && (
+                <ModulePacksReview
+                  category={category}
+                  planId={signupPlan?.id ?? null}
+                  institutionTypeId={reviewTypeId}
+                  typeLabel={institutionTypes.find((t) => t.id === reviewTypeId)?.name ?? null}
+                  onChange={setHiddenPacks}
+                />
               )}
 
               {/* For standalone_teacher: "Continue to workspace setup" advances to wizard sub-step */}

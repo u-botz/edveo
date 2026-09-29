@@ -258,6 +258,60 @@ export interface TrialSignupPayload {
   primary_institution_type_id?: number;
   secondary_institution_type_ids?: number[];
   teaching_domain_codes?: string[];
+  /**
+   * ONBOARD-01: module packs switched off on the review step. Omit when the step was not used —
+   * the backend then applies the institution type's template, which is what the step starts from.
+   */
+  hidden_packs?: string[];
+}
+
+// ─── Module packs review step (ONBOARD-01) ───────────────────────────────────
+
+export type SignupModulePackState = "always_on" | "available" | "locked";
+
+export interface SignupModulePack {
+  key: string;
+  label: string;
+  group: "core" | "run_the_institute" | "teach_and_test" | "talk_to_people" | "intelligence";
+  state: SignupModulePackState;
+  suggested: boolean;
+  /** What starts on if the owner just continues — the template rule, mirrored exactly. */
+  default_on: boolean;
+  requires: string[];
+  required_by: string[];
+}
+
+export interface SignupModulePacks {
+  packs: SignupModulePack[];
+  has_template: boolean;
+}
+
+/**
+ * The packs a new institute of this type would start with on this plan. Null when the review step
+ * should not be shown at all: the feature is switched off on the backend (404), or anything else
+ * goes wrong — signup must never depend on this optional step.
+ */
+export async function fetchSignupModulePacks(
+  category: TenantCategory,
+  planId: number,
+  institutionTypeId: number | null
+): Promise<SignupModulePacks | null> {
+  const qs = new URLSearchParams({ category, plan_id: String(planId) });
+  if (institutionTypeId !== null) {
+    qs.set("institution_type_id", String(institutionTypeId));
+  }
+  try {
+    const res = await fetch(`${BASE_URL}/api/public/signup/module-packs?${qs.toString()}`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) {
+      return null;
+    }
+    const json = (await res.json()) as { data?: SignupModulePacks };
+    return json.data ?? null;
+  } catch {
+    return null;
+  }
 }
 
 /** Teacher trial endpoint — enumeration-safe, no session token in body. */

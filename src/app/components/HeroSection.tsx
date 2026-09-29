@@ -82,6 +82,9 @@ export default function HeroSection() {
           </Link>
         </div>
 
+        {/* Category line — what Edveo is, under the pain-led pitch */}
+        <p className={styles.microCopy}>The digital operating system for institutions</p>
+
         {/* Product shot */}
         <HeroDashboard />
 

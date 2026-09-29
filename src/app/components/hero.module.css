@@ -166,7 +166,8 @@
   font-weight: 600;
   color: var(--blue-400, #5AA9FB);
   letter-spacing: 0.04em;
-  margin: 0 0 24px 0;
+  /* Sits under .heroActions; the product shot below brings its own top margin. */
+  margin: 16px 0 0 0;
 }
 
 /* ── Actions ── */
