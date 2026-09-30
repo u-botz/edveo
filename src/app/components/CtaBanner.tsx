@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
+import { signupHref } from "@/lib/signupLinks";
 import styles from "./ctaBanner.module.css";
 
 export type CtaVariant = "dark" | "green" | "navy";
@@ -12,6 +13,8 @@ type Props = {
   /** Normal sub-copy below headline */
   subheadline?: string;
   primaryLabel?: string;
+  /** Internal path or external URL. Defaults to self-signup. */
+  primaryHref?: string;
   primaryId?: string;
   secondaryLabel?: string;
   /** Internal path (e.g. "/contact") or external URL */
@@ -34,14 +37,16 @@ export default function CtaBanner({
   headline,
   accentSub,
   subheadline,
-  primaryLabel = "Get a free demo →",
+  primaryLabel = "Start free →",
+  primaryHref = signupHref(),
   primaryId,
-  secondaryLabel = "Talk to an Expert →",
-  secondaryHref = "/contact",
+  secondaryLabel = "Book a demo on WhatsApp",
+  secondaryHref = COMPANY_WHATSAPP_CTA_URL,
   secondaryId,
   trustItems,
 }: Props) {
   const isExternal = secondaryHref.startsWith("http");
+  const primaryIsExternal = primaryHref.startsWith("http");
 
   return (
     <section className={styles.section}>
@@ -56,9 +61,15 @@ export default function CtaBanner({
             {subheadline && <p className={styles.sub}>{subheadline}</p>}
 
             <div className={styles.buttons}>
-              <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.btnPrimary} id={primaryId}>
-                {primaryLabel}
-              </a>
+              {primaryIsExternal ? (
+                <a href={primaryHref} target="_blank" rel="noopener noreferrer" className={styles.btnPrimary} id={primaryId}>
+                  {primaryLabel}
+                </a>
+              ) : (
+                <Link href={primaryHref} className={styles.btnPrimary} id={primaryId}>
+                  {primaryLabel}
+                </Link>
+              )}
               {secondaryHref && (
                 isExternal ? (
                   <a

@@ -6,7 +6,9 @@ import SiteFooter from "../components/SiteFooter";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import CtaBanner from "../components/CtaBanner";
 import HeroBackdrop from "../components/home/HeroBackdrop";
+import Link from "next/link";
 import { COMPANY_WHATSAPP_URL, COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
+import { signupHref, type SignupAudience } from "@/lib/signupLinks";
 import shell from "../components/home/home.module.css";
 import styles from "./pricing.module.css";
 
@@ -42,9 +44,15 @@ function ChevronIcon() {
   );
 }
 
-export default function PricingPageClient() {
+type Segment = "online" | "teachers" | "institutes";
+
+function isSegment(value: string | undefined): value is Segment {
+  return value === "online" || value === "teachers" || value === "institutes";
+}
+
+export default function PricingPageClient({ initialSegment }: { initialSegment?: string }) {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
-  const [tab, setTab] = useState<"online" | "teachers" | "institutes">("institutes");
+  const [tab, setTab] = useState<Segment>(isSegment(initialSegment) ? initialSegment : "institutes");
 
   const price = (mo: number, yr: number) =>
     billing === "monthly" ? `₹${mo.toLocaleString("en-IN")}` : `₹${yr.toLocaleString("en-IN")}`;
@@ -125,6 +133,7 @@ export default function PricingPageClient() {
               price={price(2999, 2666)}
               billing={billing}
               cta="Get started free"
+              signup="edtech"
               ctaSub="No credit card required to try"
               perfectFor="Up to 500 students · Up to 3 instructors"
               features={[
@@ -155,6 +164,7 @@ export default function PricingPageClient() {
               price={price(5999, 5166)}
               billing={billing}
               cta="Get started free"
+              signup="edtech"
               popular
               ctaSub="Most academies choose this plan"
               perfectFor="Up to 1,500 students · Up to 50 instructors"
@@ -220,6 +230,7 @@ export default function PricingPageClient() {
               price="Free"
               billing={billing}
               cta="Get started free"
+              signup="teacher"
               ctaSub="Free forever · No credit card required"
               showPriceSuffix={false}
               perfectFor="Up to 100 students · 3 courses · 3 batches"
@@ -250,6 +261,7 @@ export default function PricingPageClient() {
               price={price(699, 583)}
               billing={billing}
               cta="Get started free"
+              signup="teacher"
               popular
               ctaSub="Most popular for individual teachers"
               perfectFor="Up to 500 students · 20 courses · 3 devices"
@@ -279,6 +291,7 @@ export default function PricingPageClient() {
               price={price(1499, 1249)}
               billing={billing}
               cta="Get started free"
+              signup="teacher"
               ctaSub="Built for full-time professional educators"
               perfectFor="Unlimited students · Unlimited courses · 10 devices"
               features={[
@@ -307,6 +320,7 @@ export default function PricingPageClient() {
               price={price(1999, 1666)}
               billing={billing}
               cta="Start with Starter"
+              signup="institute"
               ctaSub="No credit card required to try"
               perfectFor="Up to 100 students · 1 branch · 5 staff"
               features={[
@@ -335,6 +349,7 @@ export default function PricingPageClient() {
               price={price(3999, 3333)}
               billing={billing}
               cta="Start Growing"
+              signup="institute"
               ctaSub="Most institutes choose this plan"
               perfectFor="Up to 500 students · 2 branches · 15 staff"
               popular
@@ -428,7 +443,6 @@ export default function PricingPageClient() {
       <CtaBanner
         headline="Not sure which plan is right?"
         accentSub="Chat with us on WhatsApp and we will tell you exactly which plan fits your institute in under 10 minutes."
-        primaryLabel="Get a free demo →"
         secondaryLabel="Chat on WhatsApp"
         secondaryHref={COMPANY_WHATSAPP_URL}
         trustItems={["Free to start", "No credit card required", "Cancel anytime", "Data stored in India"]}
@@ -442,13 +456,15 @@ export default function PricingPageClient() {
 
 /* ── Plan card ── */
 function PlanCard({
-  name, who, price, billing, cta, ctaSub, features, popular, ghost, showPriceSuffix = true, customSub, perfectFor,
+  name, who, price, billing, cta, signup, ctaSub, features, popular, ghost, showPriceSuffix = true, customSub, perfectFor,
 }: {
   name: string;
   who: string;
   price: string;
   billing: "monthly" | "annual";
   cta: string;
+  /** Sends the button to self-signup with this card pre-selected; without it, WhatsApp (sales). */
+  signup?: SignupAudience;
   ctaSub?: string;
   features: string[];
   popular?: boolean;
@@ -485,14 +501,23 @@ function PlanCard({
 
       {perfectFor && <div className={styles.perfectFor}>{perfectFor}</div>}
 
-      <a
-        href={COMPANY_WHATSAPP_CTA_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`${styles.cta} ${popular ? styles.ctaPopular : ""} ${ghost ? styles.ctaGhost : ""}`}
-      >
-        {cta}
-      </a>
+      {signup ? (
+        <Link
+          href={signupHref(signup)}
+          className={`${styles.cta} ${popular ? styles.ctaPopular : ""} ${ghost ? styles.ctaGhost : ""}`}
+        >
+          {cta}
+        </Link>
+      ) : (
+        <a
+          href={COMPANY_WHATSAPP_CTA_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${styles.cta} ${popular ? styles.ctaPopular : ""} ${ghost ? styles.ctaGhost : ""}`}
+        >
+          {cta}
+        </a>
+      )}
 
       {ctaSub && <p className={styles.ctaSub}>{ctaSub}</p>}
 

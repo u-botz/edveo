@@ -33,6 +33,7 @@ import {
 } from "@/lib/api/signupApi";
 import { CONTACT_EMAIL } from "@/lib/contactEmail";
 import { signupOAuthErrorMessage } from "@/lib/signupOAuthErrors";
+import { categoryFromSignupParam } from "@/lib/signupLinks";
 import TeacherOnboardingWizard, {
   type TeacherWizardResult,
 } from "@/features/teacher-onboarding-wizard/TeacherOnboardingWizard";
@@ -79,8 +80,15 @@ export default function RegisterFlowClient() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [direction, setDirection] = useState<"right" | "left">("right");
 
+  // OAuth error from backend redirect (F-10 / §5.7), and ?for= from a "Start free" button
+  const searchParams = useSearchParams();
+
   // ── Screen 1 ──────────────────────────────────────────────────────────────
-  const [category, setCategory] = useState<TenantCategory | null>(null);
+  // Pre-selected from ?for= (teacher / institute / edtech) so the page a visitor came from picks
+  // their card; they still press Continue, and can choose another.
+  const [category, setCategory] = useState<TenantCategory | null>(() =>
+    categoryFromSignupParam(searchParams.get("for"))
+  );
 
   // ── API bootstrap data ────────────────────────────────────────────────────
   const [plans, setPlans] = useState<TrialPlan[]>([]);
@@ -152,8 +160,6 @@ export default function RegisterFlowClient() {
   // ── Idempotency key (generated once per page load) ─────────────────────────
   const idempotencyKeyRef = useRef<string>(generateIdempotencyKey());
 
-  // OAuth error from backend redirect (F-10 / §5.7)
-  const searchParams = useSearchParams();
   const oauthErrorText = signupOAuthErrorMessage(searchParams.get("error"));
 
   // ─────────────────────────────────────────────────────────────────────────

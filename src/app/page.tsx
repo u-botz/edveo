@@ -50,8 +50,7 @@ export default function Home() {
       <CtaBanner
         headline="Still managing fees on Excel and attendance in a register?"
         accentSub="Join 5 Kerala coaching institutes already running on Edveo. Free to start. No setup fees. Live in 5 minutes."
-        primaryLabel="Get a free demo →"
-        secondaryLabel="Talk to an Expert"
+        secondaryLabel="Book a demo on WhatsApp"
         secondaryHref={COMPANY_WHATSAPP_URL}
         trustItems={["Free forever", "No credit card required", "Data stored in India", "Cancel anytime"]}
       />

@@ -914,6 +914,21 @@
   transform: translateY(-1px);
 }
 
+/* The WhatsApp alternative under "Start free": a quieter second choice, not a second button. */
+.finalAlt {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: -12px 0 24px;
+}
+
+.finalAlt a {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .finalTrust {
   font-family: var(--font-body);
   font-size: 13px;

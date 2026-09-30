@@ -6,6 +6,15 @@ export const metadata: Metadata = {
   description: "Simple, transparent pricing for online academies and educators.",
 };
 
-export default function PricingPage() {
-  return <PricingPageClient />;
+/**
+ * `?segment=online|teachers|institutes` opens that tab — the Teacher, EdTech and Institutions pages
+ * link here that way. Read on the server (not useSearchParams) so the plans stay in the rendered HTML.
+ */
+export default async function PricingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { segment } = await searchParams;
+  return <PricingPageClient initialSegment={typeof segment === "string" ? segment : undefined} />;
 }

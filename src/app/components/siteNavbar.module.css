@@ -88,6 +88,43 @@
   outline-offset: 3px;
 }
 
+/* Second choice beside "Start free": outlined, white over the dark hero, dark on the scrolled glass. */
+.btnDemo {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 11px 24px;
+  border-radius: var(--radius-full, 9999px);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btnDemo:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.stickyWrapperScrolled .btnDemo {
+  color: var(--navy-900, #0D2D4E);
+  border-color: rgba(13, 45, 78, 0.25);
+}
+
+.stickyWrapperScrolled .btnDemo:hover {
+  background: rgba(13, 45, 78, 0.05);
+  border-color: rgba(13, 45, 78, 0.5);
+}
+
+.btnDemo:focus-visible {
+  outline: 2px solid var(--blue-600, #0B5CFF);
+  outline-offset: 3px;
+}
+
 @media (max-width: 480px) {
   .stickyWrapper {
     padding: 12px 16px;
@@ -98,6 +135,10 @@
   .btnTrial {
     padding: 10px 20px;
     font-size: 13px;
+  }
+  /* No room beside the logo and "Start free"; the floating WhatsApp button covers it. */
+  .btnDemo {
+    display: none;
   }
 }
 

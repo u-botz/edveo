@@ -2,6 +2,7 @@ import Link from "next/link";
 import EdveoLogo from "../components/EdveoLogo";
 import SiteFooter from "../components/SiteFooter";
 import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
+import { signupHref } from "@/lib/signupLinks";
 import navStyles from "../components/siteNavbar.module.css";
 
 import styles from "./audience.module.css";
@@ -21,7 +22,7 @@ function TeacherNav() {
         </div>
         <div className={navStyles.navActions}>
           <Link href="/login" className={navStyles.btnLogin}>Login</Link>
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={navStyles.btnTrial}>Get a free demo</a>
+          <Link href={signupHref("teacher")} className={navStyles.btnTrial}>Start free</Link>
         </div>
       </nav>
     </div>
@@ -404,9 +405,13 @@ function TeacherContent() {
             <br />
             Your branded academy is live before you finish your coffee.
           </p>
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.finalBtn}>
-            Get a free demo →
-          </a>
+          <Link href={signupHref("teacher")} className={styles.finalBtn}>
+            Start free →
+          </Link>
+          <p className={styles.finalAlt}>
+            Prefer a walkthrough?{" "}
+            <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer">Book a live demo on WhatsApp</a>
+          </p>
           <p className={styles.finalTrust}>Zero commission · Data stored in India · Cancel anytime</p>
         </div>
       </section>

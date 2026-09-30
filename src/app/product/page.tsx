@@ -187,8 +187,7 @@ export default function ProductPage() {
       <CtaBanner
         headline="See it running on your own institute's data."
         accentSub="Free to start. No setup fees. Live in 5 minutes."
-        primaryLabel="Get a free demo →"
-        secondaryLabel="Talk to an Expert"
+        secondaryLabel="Book a demo on WhatsApp"
         secondaryHref={COMPANY_WHATSAPP_URL}
         trustItems={["Free forever", "No credit card required", "Data stored in India", "Cancel anytime"]}
       />

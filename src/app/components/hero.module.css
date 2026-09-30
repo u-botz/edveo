@@ -173,10 +173,33 @@
 /* ── Actions ── */
 .heroActions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 16px;
   margin-bottom: 8px;
+}
+
+/* Second choice beside "Start free" — booking a demo on WhatsApp. */
+.outlineButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 15px 28px;
+  border-radius: 9999px;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transition: background 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+}
+
+.outlineButton:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .primaryButton {
@@ -408,7 +431,14 @@
   .heroHeadline {
     font-size: clamp(30px, 9vw, 40px);
   }
-  .primaryButton {
+  /* Stacked, not squeezed: a full-width primary used to crush the next button in the same row. */
+  .heroActions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .primaryButton,
+  .outlineButton {
     width: 100%;
   }
 }

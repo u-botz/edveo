@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
+import { signupHref } from "@/lib/signupLinks";
 import styles from "./hero.module.css";
 import HeroDashboard from "./home/HeroDashboard";
 import HeroBackdrop from "./home/HeroBackdrop";
@@ -69,8 +70,11 @@ export default function HeroSection() {
 
         {/* Actions */}
         <div className={styles.heroActions}>
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton}>
-            Book a Live Demo <ArrowRightIcon />
+          <Link href={signupHref()} className={styles.primaryButton}>
+            Start free <ArrowRightIcon />
+          </Link>
+          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.outlineButton}>
+            Book a live demo
           </a>
           <Link href="/product" className={styles.secondaryButton}>
             <span className={styles.playIcon}>

@@ -390,8 +390,7 @@ export default function SolutionsPage() {
       <CtaBanner
         headline="Every tool. One platform. Start today."
         accentSub="Your academy deserves better than a patchwork of four different tools."
-        primaryLabel="Get a free demo →"
-        secondaryLabel="Chat on WhatsApp"
+        secondaryLabel="Book a demo on WhatsApp"
         secondaryHref={COMPANY_WHATSAPP_URL}
         trustItems={["Free to start", "No credit card required", "Cancel anytime", "Local support"]}
       />

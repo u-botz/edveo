@@ -2,6 +2,7 @@ import Link from "next/link";
 import EdveoLogo from "../components/EdveoLogo";
 import SiteFooter from "../components/SiteFooter";
 import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
+import { signupHref } from "@/lib/signupLinks";
 import navStyles from "../components/siteNavbar.module.css";
 import styles from "../teacher/audience.module.css";
 
@@ -20,7 +21,7 @@ function EdtechNav() {
         </div>
         <div className={navStyles.navActions}>
           <Link href="/login" className={navStyles.btnLogin}>Login</Link>
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={navStyles.btnTrial}>Book a Demo</a>
+          <Link href={signupHref("edtech")} className={navStyles.btnTrial}>Start free</Link>
         </div>
       </nav>
     </div>
@@ -416,11 +417,15 @@ function EdtechContent() {
           <p className={styles.finalSub}>
             Free forever. No credit card required.
             <br />
-            Book a live demo and we&apos;ll build your setup together.
+            Set it up yourself in minutes, or book a live demo and we&apos;ll build it with you.
           </p>
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.finalBtn}>
-            Book a Demo →
-          </a>
+          <Link href={signupHref("edtech")} className={styles.finalBtn}>
+            Start free →
+          </Link>
+          <p className={styles.finalAlt}>
+            Prefer a walkthrough?{" "}
+            <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer">Book a live demo on WhatsApp</a>
+          </p>
           <p className={styles.finalTrust}>Zero commission · White-label ready · Data stored in India</p>
         </div>
       </section>

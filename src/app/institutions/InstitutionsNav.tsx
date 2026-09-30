@@ -1,6 +1,6 @@
 import Link from "next/link";
 import EdveoLogo from "../components/EdveoLogo";
-import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
+import { signupHref } from "@/lib/signupLinks";
 import styles from "../components/siteNavbar.module.css";
 
 export type NavPage = "solutions" | "pricing" | "about" | "contact";
@@ -45,10 +45,9 @@ export default function InstitutionsNav({ activePage }: Props) {
         </div>
 
         <div className={styles.navActions}>
-
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.btnTrial}>
-            Book a Demo
-          </a>
+          <Link href={signupHref("institute")} className={styles.btnTrial}>
+            Start free
+          </Link>
         </div>
       </nav>
     </div>

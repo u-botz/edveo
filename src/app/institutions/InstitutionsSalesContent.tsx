@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
+import { signupHref } from "@/lib/signupLinks";
 import styles from "../teacher/audience.module.css";
 
 export default function InstitutionsSalesContent() {
@@ -331,7 +332,7 @@ export default function InstitutionsSalesContent() {
               All plans include <strong>Edveo Intelligence™</strong> AI across every module.
             </p>
             <div className={styles.pricingTeaserActions}>
-              <Link href="/pricing?segment=online" className={styles.pricingTeaserBtn}>
+              <Link href="/pricing?segment=institutes" className={styles.pricingTeaserBtn}>
                 See Full Pricing →
               </Link>
               <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.pricingTeaserGhost}>
@@ -346,11 +347,15 @@ export default function InstitutionsSalesContent() {
       {/* ── Section 7: Final CTA ── */}
       <section className={styles.finalCta}>
         <div className={styles.container}>
-          <h2 className={styles.finalTitle}>Ready to go live? Let&apos;s talk.</h2>
+          <h2 className={styles.finalTitle}>Ready to go live?</h2>
           <p className={styles.finalSub}>
-            Message us on WhatsApp — we&apos;ll set up your institute profile together in under 10 minutes.
+            Set up your institute yourself in a few minutes — or message us on WhatsApp and we&apos;ll do it with you.
           </p>
-          <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer" className={styles.finalBtn}>Chat with us on WhatsApp →</a>
+          <Link href={signupHref("institute")} className={styles.finalBtn}>Start free →</Link>
+          <p className={styles.finalAlt}>
+            Prefer to talk first?{" "}
+            <a href={COMPANY_WHATSAPP_CTA_URL} target="_blank" rel="noopener noreferrer">Chat with us on WhatsApp</a>
+          </p>
           <p className={styles.finalTrust}>99.9% uptime SLA · Data stored in India · Cancel anytime</p>
         </div>
       </section>

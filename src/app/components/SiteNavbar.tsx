@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import EdveoLogo from "./EdveoLogo";
 import { COMPANY_WHATSAPP_CTA_URL } from "@/lib/companyPublicInfo";
+import { signupHref } from "@/lib/signupLinks";
 import styles from "./siteNavbar.module.css";
 
 export type NavPage = "home" | "solutions" | "pricing" | "resources" | "about" | "contact" | "product";
@@ -47,14 +48,18 @@ export default function SiteNavbar({ activePage: _activePage }: Props) {
         </Link>
 
         <div className={styles.navActions}>
+          {/* Hidden on phones, where the floating WhatsApp button already offers it. */}
           <a
             href={COMPANY_WHATSAPP_CTA_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.btnTrial}
+            className={styles.btnDemo}
           >
-            Book A Demo
+            Book a demo
           </a>
+          <Link href={signupHref()} className={styles.btnTrial}>
+            Start free
+          </Link>
         </div>
       </nav>
     </div>
