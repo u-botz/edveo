@@ -223,7 +223,13 @@ export interface SubdomainCheckResult {
 }
 
 export interface TrialSignupPayload {
+  /** The owner's own name — names their user account and addresses the emails. */
   name: string;
+  /**
+   * Institute / EdTech `initiate` only (ONBOARD-02): the institute's own name. The workspace is
+   * created under it, and the public website header shows it. Omitted → the owner's name is used.
+   */
+  institute_name?: string;
   email: string;
   phone: string;
   subdomain: string;

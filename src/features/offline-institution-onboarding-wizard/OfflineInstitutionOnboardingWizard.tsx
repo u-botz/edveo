@@ -233,6 +233,8 @@ export default function OfflineInstitutionOnboardingWizard({
     try {
       const result = await submitSignup("offline_institution", {
         name: prefillName,
+        // The workspace is named after the institute; prefillName is the owner's Google name.
+        institute_name: instituteName.trim(),
         email: prefillEmail,
         phone: phone.trim(),
         subdomain: normalizedSlug,

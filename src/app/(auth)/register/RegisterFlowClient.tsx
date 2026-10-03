@@ -459,7 +459,12 @@ export default function RegisterFlowClient() {
         captcha_token: null, // CAPTCHA deferred for production
         website_url: "", // honeypot — always empty
         ...(category === "edtech" || category === "offline_institution"
-          ? { password: formData.password }
+          ? {
+              password: formData.password,
+              // The workspace is named after the institute, not the owner — this field used to
+              // build only the subdomain, so every institute's website header showed its owner.
+              institute_name: formData.institute_name.trim(),
+            }
           : {}),
         // Only when the owner changed something on the review step; otherwise the server applies
         // the same starting set from the institution type's template.
